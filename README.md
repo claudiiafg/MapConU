@@ -1,6 +1,11 @@
 # MapConU
 390 Project
 
+## Requirements
+(Node.js)[https://nodejs.org/en/]
+
+Ionic: ```npm install -g ionic```
+
 
 ## Important commands
 to install dependencies:
