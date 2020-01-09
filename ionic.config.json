@@ -1,5 +1,7 @@
 {
   "name": "MapConU",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
