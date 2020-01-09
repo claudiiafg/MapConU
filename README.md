@@ -2,7 +2,7 @@
 390 Project
 
 ## Requirements
-(Node.js)[https://nodejs.org/en/]
+Node.js: https://nodejs.org/en/
 
 Ionic: ```npm install -g ionic```
 
