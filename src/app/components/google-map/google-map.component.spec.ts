@@ -9,7 +9,7 @@ describe('GoogleMapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GoogleMapComponent ],
+      declarations: [GoogleMapComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
