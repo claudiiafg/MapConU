@@ -28,7 +28,7 @@
     "@ionic/angular": "^4.7.1",
     "cordova-android": "8.1.0",
     "cordova-ios": "^5.1.1",
-    "cordova-plugin-firebase": "2.0.5",
+    "cordova-plugin-firebase": "^2.0.5",
     "core-js": "^2.5.4",
     "firebase": "^7.7.0",
     "rxjs": "~6.5.1",
@@ -76,8 +76,7 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-firebase": {}
+      "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
       "android",
