@@ -22,4 +22,14 @@ build ios app (open ios platform directory in xCode):
 build android app (open android platform directory in androidStudio):
 `ionic cordova build android`
 
-<!-- webhook test -->
+## API Key:
+
+To make sure you can work on the project, you will need a valid Google API Key.
+
+Once you have your key, navigate to src->environments
+
+![Path to environments](https://i.ibb.co/w7T2MxH/Selection-003.png)
+
+Create an env.ts file, and add this line of code: 
+
+`export const APIKey = "YOUR-API-KEY";`
