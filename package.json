@@ -29,6 +29,7 @@
     "cordova-android": "8.1.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-firebase": "^2.0.5",
+    "cordova-plugin-firebase-lib": "git+https://github.com/wizpanda/cordova-plugin-firebase.git",
     "core-js": "^2.5.4",
     "firebase": "^7.7.0",
     "rxjs": "~6.5.1",
@@ -79,8 +80,7 @@
       "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "android"
     ]
   }
 }
