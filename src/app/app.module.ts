@@ -9,11 +9,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GoogleMapComponent } from './components/google-map/google-map.component';
+import { OutdoorNavigationSideButtonsComponent} from "./components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component";
 import { AgmCoreModule } from '@agm/core';
 import { APIKey } from 'src/environments/env';
 
 @NgModule({
-  declarations: [AppComponent, GoogleMapComponent],
+  declarations: [AppComponent, GoogleMapComponent, OutdoorNavigationSideButtonsComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
