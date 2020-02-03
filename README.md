@@ -39,4 +39,5 @@ Create an env.ts file, and add this line of code:
 If you want to build on your phone, before doing so please change {{APIkey}} in the file config.xml to your own (same as previously mentioned)
 
 `<preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="{{APIkey}}" />`
+
 `<preference name="GOOGLE_MAPS_IOS_API_KEY" value="{{Apikey}}" />`
