@@ -12,6 +12,8 @@ import { GeolocationServices } from 'src/services/geolocationServices';
 export class GoogleMapComponent implements OnInit {
   private latitude: number = 45.4946; // to be change with geolocalisation
   private longitude: number = -73.5774;
+  private deviceLatitude;
+  private deviceLongitude;
   private height: number;
   private loading: any;
 
@@ -26,8 +28,9 @@ export class GoogleMapComponent implements OnInit {
   async ngOnInit() {
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition().then(() => {
-      console.log(this.geolocationServices.getCoordinates());
-
+      let coordinates = this.geolocationServices.getCoordinates();
+      this.deviceLatitude = coordinates.latitude;
+      this.deviceLongitude = coordinates.longitude;
     });
   }
 }
