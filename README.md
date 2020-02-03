@@ -30,6 +30,13 @@ Once you have your key, navigate to src->environments
 
 ![Path to environments](https://i.ibb.co/w7T2MxH/Selection-003.png)
 
-Create an env.ts file, and add this line of code: 
+Create an env.ts file, and add this line of code:
 
 `export const APIKey = "YOUR-API-KEY";`
+
+## Before building:
+
+If you want to build on your phone, before doing so please change {{APIkey}} in the file config.xml to your own (same as previously mentioned)
+
+`<preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="{{APIkey}}" />`
+`<preference name="GOOGLE_MAPS_IOS_API_KEY" value="{{Apikey}}" />`
