@@ -11,6 +11,11 @@ import { AppComponent } from './app.component';
 import { GoogleMapComponent } from './components/google-map/google-map.component';
 import { AgmCoreModule } from '@agm/core';
 import { APIKey } from 'src/environments/env';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+
+//services
+import { GeolocationServices } from 'src/services/geolocationServices';
 
 @NgModule({
   declarations: [AppComponent, GoogleMapComponent],
@@ -26,6 +31,8 @@ import { APIKey } from 'src/environments/env';
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
+    GeolocationServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

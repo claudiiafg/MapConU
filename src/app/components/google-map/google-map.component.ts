@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
+//services
+import { GeolocationServices } from 'src/services/geolocationServices';
+
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
@@ -14,6 +17,7 @@ export class GoogleMapComponent implements OnInit {
 
   constructor(
     private platform: Platform,
+    private geolocationServices: GeolocationServices,
 
   ) {
     this.height = platform.height();
@@ -21,5 +25,9 @@ export class GoogleMapComponent implements OnInit {
 
   async ngOnInit() {
     await this.platform.ready();
+    await this.geolocationServices.getCurrentPosition().then(() => {
+      console.log(this.geolocationServices.getCoordinates());
+
+    });
   }
 }
