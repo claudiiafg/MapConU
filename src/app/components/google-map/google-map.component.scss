@@ -1,22 +1,26 @@
-#map-canvas{
-  width: 100% !important;
-  height: 100% !important;
-}
+#google-map-component{
 
-#campus-change {
-  --background: var(--ConcordiaRed);
-  --background-activated: var(--ConcordiaRed);
-  color: white;
+  #campus-change {
+    --background: var(--ConcordiaRed);
+    --background-activated: var(--ConcordiaRed);
+    --inner-padding-bottom: 0px;
+    color: white;
 
-  .select-campus{
-    position: absolute;
+    .select-campus{
+      position: absolute;
+    }
   }
-}
 
-#position-marker{
-  width: 15px;
-  height: 15px;
-  background-color: blue;
-  border: 1px solid white;
-  border-radius: 50%;
+  #map-canvas{
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  #position-marker{
+    width: 15px;
+    height: 15px;
+    background-color: blue;
+    border: 1px solid white;
+    border-radius: 50%;
+  }
 }
