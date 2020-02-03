@@ -5,13 +5,13 @@
 
 #campus-change {
   --background: var(--ConcordiaRed);
+  --background-activated: var(--ConcordiaRed);
   color: white;
 
   .select-campus{
     position: absolute;
   }
 }
-
 
 #position-marker{
   width: 15px;
