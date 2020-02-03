@@ -10,7 +10,9 @@ import { GeolocationServices } from 'src/services/geolocationServices';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  loc: string;
+  private loc: string = '0';
+  private map;
+  private positionMarker;
   private height: number;
   private loading: any;
   private latitude: number = 45.4946; // to be change with geolocalisation
@@ -38,6 +40,12 @@ export class GoogleMapComponent implements OnInit {
       let coordinates = this.geolocationServices.getCoordinates();
       this.deviceLatitude = coordinates.latitude;
       this.deviceLongitude = coordinates.longitude;
+      console.log(coordinates);
     });
+  }
+
+  public changeCampus() {
+    this.latitude = this.locations[this.loc].latitude;
+    this.longitude = this.locations[this.loc].longitude;
   }
 }

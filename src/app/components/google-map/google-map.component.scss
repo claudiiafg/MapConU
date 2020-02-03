@@ -2,7 +2,22 @@
   width: 100% !important;
   height: 100% !important;
 }
+
 #campus-change {
   --background: rgb(99, 21, 35);
   color: white;
+  height: 50px;
+
+  .select-campus{
+    position: absolute;
+  }
+}
+
+
+#position-marker{
+  width: 15px;
+  height: 15px;
+  background-color: blue;
+  border: 1px solid white;
+  border-radius: 50%;
 }

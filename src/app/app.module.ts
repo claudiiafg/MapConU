@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GoogleMapComponent } from './components/google-map/google-map.component';
 import { AgmCoreModule } from '@agm/core';
+import { AgmOverlays } from "agm-overlays"
 import { APIKey } from 'src/environments/env';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
@@ -25,6 +26,7 @@ import { GeolocationServices } from 'src/services/geolocationServices';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    AgmOverlays,
     AgmCoreModule.forRoot({
       apiKey: APIKey
     }),

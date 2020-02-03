@@ -1,17 +1,18 @@
 <ion-item id="campus-change">
-  <ion-select interface="popover" [(ngModel)]="loc" (ionChange)="changeCampus()">
-    <ion-select-option value="0">SGW Campus</ion-select-option>
-    <ion-select-option value="1">Loyola Campus</ion-select-option>
-  </ion-select>
+    <ion-select interface="popover" [(ngModel)]="loc" (ionChange)="changeCampus()" class="select-campus">
+      <ion-select-option value="0">SGW Campus</ion-select-option>
+      <ion-select-option value="1">Loyola Campus</ion-select-option>
+    </ion-select>
 </ion-item>
 
 <agm-map
   [style.height.px]="height"
-  [zoom]="16"
+  [zoom]="15"
   [latitude]="latitude"
   [longitude]="longitude">
-      <agm-marker
-        [latitude]="deviceLatitude"
-        [longitude]="deviceLongitude">
-      </agm-marker>
+      <agm-overlay
+          [latitude]="deviceLatitude"
+          [longitude]="deviceLongitude">
+            <div id="position-marker"></div>
+      </agm-overlay>
 </agm-map>

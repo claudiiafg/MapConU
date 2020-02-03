@@ -46,4 +46,12 @@ export class GeolocationServices {
     return coordinates;
   }
 
+  getLatitude(){
+    return this.latitude;
+  }
+
+  getLongitude(){
+    return this.longitude;
+  }
+
 }
