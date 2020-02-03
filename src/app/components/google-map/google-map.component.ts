@@ -7,10 +7,17 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  private latitude: number = 45.4946; // to be change with geolocalisation
-  private longitude: number = -73.5774;
+  loc: string;
   private height: number;
   private loading: any;
+  private latitude: number = 45.4946; // to be change with geolocalisation
+  private longitude: number = -73.5774;
+
+  //To add default locations
+  locations = [
+    { latitude: 45.495729, longitude: -73.578041 },
+    { latitude: 45.458240, longitude: -73.640452 }
+  ];
 
   constructor(
     private platform: Platform,
