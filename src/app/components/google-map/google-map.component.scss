@@ -4,9 +4,8 @@
 }
 
 #campus-change {
-  --background: rgb(99, 21, 35);
+  --background: var(--ConcordiaRed);
   color: white;
-  height: 50px;
 
   .select-campus{
     position: absolute;

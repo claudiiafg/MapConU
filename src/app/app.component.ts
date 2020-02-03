@@ -10,7 +10,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  
+  private concordiaRed: string = '#932439';
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -21,8 +22,18 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.setStatusBarParameters(true, false, this.concordiaRed);
       this.splashScreen.hide();
     });
+  }
+
+  setStatusBarParameters( show: boolean, overWebView: boolean, color: string){
+    if (show) {
+        this.statusBar.show();
+    } else {
+        this.statusBar.hide();
+    }
+    this.statusBar.overlaysWebView(overWebView);
+    this.statusBar.backgroundColorByHexString(color);
   }
 }
