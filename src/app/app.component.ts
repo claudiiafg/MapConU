@@ -10,7 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  private concordiaRed: string = '#932439';
+  private concordiaRed: string = '#800000';
 
   constructor(
     private platform: Platform,
@@ -27,11 +27,11 @@ export class AppComponent {
     });
   }
 
-  setStatusBarParameters( show: boolean, overWebView: boolean, color: string){
+  setStatusBarParameters(show: boolean, overWebView: boolean, color: string) {
     if (show) {
-        this.statusBar.show();
+      this.statusBar.show();
     } else {
-        this.statusBar.hide();
+      this.statusBar.hide();
     }
     this.statusBar.overlaysWebView(overWebView);
     this.statusBar.backgroundColorByHexString(color);
