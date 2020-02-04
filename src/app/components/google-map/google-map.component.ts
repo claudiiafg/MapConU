@@ -8,9 +8,10 @@ import { Platform } from '@ionic/angular';
 })
 export class GoogleMapComponent implements OnInit {
   loc: string;
-  latitude: number = 45.4946; // to be change with geolocalisation
-  longitude: number = -73.5774;
-  height: number;
+  private height: number;
+  private loading: any;
+  private latitude: number = 45.4946; // to be change with geolocalisation
+  private longitude: number = -73.5774;
 
   //To add default locations
   locations = [
@@ -18,14 +19,14 @@ export class GoogleMapComponent implements OnInit {
     { latitude: 45.458240, longitude: -73.640452 }
   ];
 
-  constructor(platform: Platform) {
+  constructor(
+    private platform: Platform,
+
+  ) {
     this.height = platform.height();
   }
 
-  ngOnInit() {}
-
-  public changeCampus() {
-    this.latitude = this.locations[this.loc].latitude;
-    this.longitude = this.locations[this.loc].longitude;
+  async ngOnInit() {
+    await this.platform.ready();
   }
 }
