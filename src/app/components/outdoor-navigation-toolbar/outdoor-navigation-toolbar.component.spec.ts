@@ -9,7 +9,7 @@ describe('OudtoorNavigationToolbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OutdoorNavigationToolbarComponent ],
+      declarations: [OutdoorNavigationToolbarComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

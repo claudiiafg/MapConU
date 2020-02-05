@@ -23,13 +23,12 @@ export class GoogleMapComponent implements OnInit {
   //To add default locations
   locations = [
     { latitude: 45.495729, longitude: -73.578041 },
-    { latitude: 45.458240, longitude: -73.640452 }
+    { latitude: 45.45824, longitude: -73.640452 }
   ];
 
   constructor(
     private platform: Platform,
-    private geolocationServices: GeolocationServices,
-
+    private geolocationServices: GeolocationServices
   ) {
     this.height = platform.height();
   }
