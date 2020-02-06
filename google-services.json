@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "694512177200",
+    "firebase_url": "https://mapconu.firebaseio.com",
+    "project_id": "mapconu",
+    "storage_bucket": "mapconu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694512177200:android:17b663022a546f95ca9df5",
+        "android_client_info": {
+          "package_name": "com.mapconu.mapconu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694512177200-7rsl2i3tp4mjvk7mvufvbd3nboai7gv0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYi6fCt0jxWZrt8D5v3XxrFbnDfrGcHKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694512177200-7rsl2i3tp4mjvk7mvufvbd3nboai7gv0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "694512177200-390tkj3jbf9t2i2sn7vgo57o0d3huama.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mapconu.mapconu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
