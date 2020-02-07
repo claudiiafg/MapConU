@@ -16,6 +16,7 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { AgmCoreModule } from '@agm/core';
 import { AgmOverlays } from "agm-overlays"
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AgmDirectionModule } from 'agm-direction';
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -27,7 +28,7 @@ import { OutdoorNavigationToolbarComponent} from "./components/outdoor-navigatio
 
 //env variables
 import { APIKey } from 'src/environments/env';
-import { AgmDirectionModule } from 'agm-direction';
+import { environment } from '../environments/environment';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
@@ -54,7 +55,7 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    FormsModule
+    FormsModule,
     AgmDirectionModule
   ],
   providers: [
