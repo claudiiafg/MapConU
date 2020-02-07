@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
+import { AgmMap } from '@agm/core';
+import { google } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-google-map',
@@ -29,6 +31,7 @@ export class GoogleMapComponent implements OnInit {
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
+    private events: Events,
 
   ) {
     this.height = platform.height();
@@ -36,12 +39,14 @@ export class GoogleMapComponent implements OnInit {
 
   async ngOnInit() {
     await this.platform.ready();
-    await this.geolocationServices.getCurrentPosition().then(() => {
-      let coordinates = this.geolocationServices.getCoordinates();
+    await this.geolocationServices.getCurrentPosition();
+    this.events.subscribe('coordinatesChanged', (coordinates) =>{
       this.deviceLatitude = coordinates.latitude;
       this.deviceLongitude = coordinates.longitude;
-      console.log(coordinates);
+      console.log(this.deviceLatitude);
+      console.log(this.deviceLongitude);
     });
+
   }
 
   public changeCampus() {
