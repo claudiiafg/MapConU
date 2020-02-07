@@ -1,4 +1,8 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA,
+  NO_ERRORS_SCHEMA
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -23,25 +27,35 @@ import { OutdoorNavigationToolbarComponent} from "./components/outdoor-navigatio
 
 //env variables
 import { APIKey } from 'src/environments/env';
-import { environment } from '../environments/environment';
+import { AgmDirectionModule } from 'agm-direction';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
+import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 
 @NgModule({
-  declarations: [AppComponent, GoogleMapComponent, OutdoorNavigationSideButtonsComponent, IndoorNavigationSideButtonsComponent, OutdoorNavigationToolbarComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+    GoogleMapComponent,
+    OutdoorNavigationSideButtonsComponent,
+    IndoorNavigationSideButtonsComponent,
+    OutdoorNavigationToolbarComponent,
+    SearchPopoverComponent
+  ],
+  entryComponents: [SearchPopoverComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     AgmOverlays,
     AgmCoreModule.forRoot({
-      apiKey: APIKey
+      apiKey: APIKey,
+      libraries: ['places']
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     FormsModule
+    AgmDirectionModule
   ],
   providers: [
     StatusBar,
@@ -51,6 +65,7 @@ import { GeolocationServices } from 'src/services/geolocationServices';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [SearchPopoverComponent]
 })
 export class AppModule {}

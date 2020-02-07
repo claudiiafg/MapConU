@@ -7,7 +7,6 @@ export class GeolocationServices {
   private latitude;
   private longitude;
 
-
   constructor(
     private geolocation: Geolocation,
     private events: Events,
@@ -15,9 +14,13 @@ export class GeolocationServices {
 
 
   async getCurrentPosition(){
-    await this.geolocation.getCurrentPosition().then( (resp) => {
+    await this.geolocation
+    .getCurrentPosition()
+    .then( (resp) => {
       this.latitude = resp.coords.latitude;
       this.longitude = resp.coords.longitude;
+      console.log(this.latitude);
+      console.log(this.longitude);
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -41,24 +44,23 @@ export class GeolocationServices {
     });
   }
 
-  unsuscribeToPosition(){
+  unsuscribeToPosition() {
     navigator.geolocation.clearWatch;
   }
 
-  getCoordinates(){
+  getCoordinates() {
     let coordinates = {
       latitude: this.latitude,
       longitude: this.longitude
-    }
+    };
     return coordinates;
   }
 
-  getLatitude(){
+  getLatitude() {
     return this.latitude;
   }
 
-  getLongitude(){
+  getLongitude() {
     return this.longitude;
   }
-
 }

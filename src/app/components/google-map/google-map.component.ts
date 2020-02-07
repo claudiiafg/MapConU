@@ -5,6 +5,7 @@ import { Platform, Events } from '@ionic/angular';
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { AgmMap } from '@agm/core';
 import { google } from '@agm/core/services/google-maps-types';
+import { SearchService } from 'src/services/search.service';
 
 @Component({
   selector: 'app-google-map',
@@ -21,11 +22,34 @@ export class GoogleMapComponent implements OnInit {
   private longitude: number = -73.5774;
   private deviceLatitude;
   private deviceLongitude;
+  private destination: any;
+  private origin: any;
+
+  //Options to be change dynamically when user click
+  walkingOptions = {
+    renderOptions: {
+      polylineOptions: {
+        strokeColor: '#9F33FF',
+        strokeOpacity: 0.6,
+        strokeWeight: 5
+      }
+    }
+  };
+
+  transitOptions = {
+    renderOptions: {
+      polylineOptions: {
+        strokeColor: '#4CFF33',
+        strokeOpacity: 0.6,
+        strokeWeight: 5
+      }
+    }
+  };
 
   //To add default locations
   locations = [
     { latitude: 45.495729, longitude: -73.578041 },
-    { latitude: 45.458240, longitude: -73.640452 }
+    { latitude: 45.45824, longitude: -73.640452 }
   ];
 
   constructor(
@@ -33,8 +57,9 @@ export class GoogleMapComponent implements OnInit {
     private geolocationServices: GeolocationServices,
     private events: Events,
 
+    private searchService: SearchService
   ) {
-    this.height = platform.height();
+    this.height = platform.height() - 65;
   }
 
   async ngOnInit() {
@@ -46,7 +71,20 @@ export class GoogleMapComponent implements OnInit {
       console.log(this.deviceLatitude);
       console.log(this.deviceLongitude);
     });
+    this.subscribeToUserInput();
+  }
 
+  public subscribeToUserInput() {
+    this.searchService.origin.subscribe(resp => {
+      if (Array.isArray(resp) && resp.length) {
+        this.origin = { lat: resp[0], lng: resp[1] };
+      }
+    });
+    this.searchService.destination.subscribe(resp => {
+      if (Array.isArray(resp) && resp.length) {
+        this.destination = { lat: resp[0], lng: resp[1] };
+      }
+    });
   }
 
   public changeCampus() {

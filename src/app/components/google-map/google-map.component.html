@@ -1,4 +1,4 @@
-<div id='google-map-component'>
+<div id="google-map-component">
   <!-- <ion-item id="campus-change">
       <ion-select interface="popover" [(ngModel)]="loc" (ionChange)="changeCampus()" class="select-campus">
         <ion-select-option value="0">SGW Campus</ion-select-option>
@@ -10,11 +10,28 @@
     [style.height.px]="height"
     [zoom]="14"
     [latitude]="latitude"
-    [longitude]="longitude">
-        <agm-overlay
-            [latitude]="deviceLatitude"
-            [longitude]="deviceLongitude">
-              <div id="position-marker"></div>
-        </agm-overlay>
+    [longitude]="longitude"
+  >
+    <agm-overlay [latitude]="deviceLatitude" [longitude]="deviceLongitude">
+      <div id="position-marker"></div>
+    </agm-overlay>
+    <ng-container *ngIf="origin && destination">
+      <agm-direction
+        [origin]="origin"
+        [destination]="destination"
+        [travelMode]="'WALKING'"
+        [renderOptions]="walkingOptions.renderOptions"
+      >
+      </agm-direction>
+      <agm-direction
+        [origin]="origin"
+        [destination]="destination"
+        [travelMode]="'TRANSIT'"
+        [renderOptions]="transitOptions.renderOptions"
+      >
+      </agm-direction>
+      <agm-direction [origin]="origin" [destination]="destination">
+      </agm-direction>
+    </ng-container>
   </agm-map>
 </div>
