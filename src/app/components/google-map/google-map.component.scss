@@ -1,22 +1,21 @@
-#google-map-component{
-
+#google-map-component {
   #campus-change {
     --background: var(--ConcordiaRed);
     --background-activated: var(--ConcordiaRed);
     --inner-padding-bottom: 0px;
     color: white;
 
-    .select-campus{
+    .select-campus {
       position: absolute;
     }
   }
 
-  #map-canvas{
+  #map-canvas {
     width: 100% !important;
     height: 100% !important;
   }
 
-  #position-marker{
+  #position-marker {
     width: 15px;
     height: 15px;
     background-color: blue;

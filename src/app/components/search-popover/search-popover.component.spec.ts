@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { OutdoorNavigationToolbarComponent } from './outdoor-navigation-toolbar.component';
+import { SearchPopoverComponent } from './search-popover.component';
 
-describe('OudtoorNavigationToolbarComponent', () => {
-  let component: OutdoorNavigationToolbarComponent;
-  let fixture: ComponentFixture<OutdoorNavigationToolbarComponent>;
+describe('SearchPopoverComponent', () => {
+  let component: SearchPopoverComponent;
+  let fixture: ComponentFixture<SearchPopoverComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OutdoorNavigationToolbarComponent],
+      declarations: [ SearchPopoverComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(OutdoorNavigationToolbarComponent);
+    fixture = TestBed.createComponent(SearchPopoverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
