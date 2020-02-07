@@ -24,6 +24,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
+import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 
 @NgModule({
   declarations: [
@@ -31,9 +32,10 @@ import { GeolocationServices } from 'src/services/geolocationServices';
     GoogleMapComponent,
     OutdoorNavigationSideButtonsComponent,
     IndoorNavigationSideButtonsComponent,
-    OutdoorNavigationToolbarComponent
+    OutdoorNavigationToolbarComponent,
+    SearchPopoverComponent
   ],
-  entryComponents: [],
+  entryComponents: [SearchPopoverComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -51,6 +53,7 @@ import { GeolocationServices } from 'src/services/geolocationServices';
     GeolocationServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [SearchPopoverComponent]
 })
 export class AppModule {}
