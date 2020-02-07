@@ -42,7 +42,8 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     AppRoutingModule,
     AgmOverlays,
     AgmCoreModule.forRoot({
-      apiKey: APIKey
+      apiKey: APIKey,
+      libraries: ['places']
     }),
     FormsModule
   ],
