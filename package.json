@@ -28,6 +28,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.7.1",
     "agm-overlays": "^1.4.1",
+    "android": "0.0.8",
     "cordova-android": "^8.1.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-device": "2.0.2",
@@ -92,7 +93,8 @@
       "cordova-plugin-googlemaps": {}
     },
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
