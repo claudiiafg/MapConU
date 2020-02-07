@@ -105,6 +105,4 @@
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="4.0.2" />
-    <engine name="ios" spec="^5.1.1" />
-    <engine name="android" spec="8.0.0" />
 </widget>
