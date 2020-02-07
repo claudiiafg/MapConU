@@ -3,8 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig : {
+    apiKey: "AIzaSyAhXWyk4Rvk_RPdAUg8zNQgR2495FStqWE",
+    authDomain: "mapconu.firebaseapp.com",
+    databaseURL: "https://mapconu.firebaseio.com",
+    projectId: "mapconu",
+    storageBucket: "mapconu.appspot.com",
+    messagingSenderId: "694512177200",
+    appId: "1:694512177200:web:7e560986e0bbb06cca9df5",
+    measurementId: "G-HGKDHFL6XT"
+  }
 };
+
 
 
 
