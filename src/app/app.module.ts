@@ -21,6 +21,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmOverlays } from 'agm-overlays';
 import { APIKey } from 'src/environments/env';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AgmDirectionModule } from 'agm-direction';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
@@ -45,7 +46,8 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
       apiKey: APIKey,
       libraries: ['places']
     }),
-    FormsModule
+    FormsModule,
+    AgmDirectionModule
   ],
   providers: [
     StatusBar,

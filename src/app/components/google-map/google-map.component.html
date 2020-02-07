@@ -15,5 +15,23 @@
     <agm-overlay [latitude]="deviceLatitude" [longitude]="deviceLongitude">
       <div id="position-marker"></div>
     </agm-overlay>
+    <ng-container *ngIf="origin && destination">
+      <agm-direction
+        [origin]="origin"
+        [destination]="destination"
+        [travelMode]="'WALKING'"
+        [renderOptions]="walkingOptions.renderOptions"
+      >
+      </agm-direction>
+      <agm-direction
+        [origin]="origin"
+        [destination]="destination"
+        [travelMode]="'TRANSIT'"
+        [renderOptions]="transitOptions.renderOptions"
+      >
+      </agm-direction>
+      <agm-direction [origin]="origin" [destination]="destination">
+      </agm-direction>
+    </ng-container>
   </agm-map>
 </div>

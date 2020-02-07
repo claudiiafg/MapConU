@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { MapsAPILoader } from '@agm/core';
+import { SearchService } from 'src/services/search.service';
 
 @Component({
   selector: 'app-search-popover',
@@ -17,12 +18,15 @@ import { MapsAPILoader } from '@agm/core';
 export class SearchPopoverComponent implements OnInit, AfterViewInit {
   @ViewChild('to', { static: false }) public toAddressRef: ElementRef;
   @ViewChild('from', { static: false }) public fromAddressRef: ElementRef;
-  public addressTo: string;
-  public addressFrom: string;
+  latitudeTo: number;
+  longitudeTo: number;
+  latitudeFrom: number;
+  longitudeFrom: number;
   constructor(
     public popoverController: PopoverController,
     public mapsAPILoader: MapsAPILoader,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    public searchService: SearchService
   ) {}
 
   ngOnInit() {}
@@ -57,8 +61,8 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
             return;
           }
 
-          this.addressTo = place.formatted_address;
-          console.log(this.addressTo);
+          this.latitudeTo = place.geometry.location.lat();
+          this.longitudeTo = place.geometry.location.lng();
         });
       });
 
@@ -72,8 +76,8 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
             return;
           }
 
-          this.addressFrom = place.formatted_address;
-          console.log(this.addressFrom);
+          this.latitudeFrom = place.geometry.location.lat();
+          this.longitudeFrom = place.geometry.location.lng();
         });
       });
     });
@@ -81,5 +85,13 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
 
   async closePopover() {
     await this.popoverController.dismiss();
+  }
+
+  public updateMap() {
+    this.closePopover();
+    if (this.latitudeTo && this.latitudeFrom) {
+      this.searchService.origin.next([this.latitudeFrom, this.longitudeFrom]);
+      this.searchService.destination.next([this.latitudeTo, this.longitudeTo]);
+    }
   }
 }

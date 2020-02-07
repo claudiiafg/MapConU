@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
+import { SearchService } from 'src/services/search.service';
 
 @Component({
   selector: 'app-google-map',
@@ -19,6 +20,29 @@ export class GoogleMapComponent implements OnInit {
   private longitude: number = -73.5774;
   private deviceLatitude;
   private deviceLongitude;
+  private destination: any;
+  private origin: any;
+
+  //Options to be change dynamically when user click
+  walkingOptions = {
+    renderOptions: {
+      polylineOptions: {
+        strokeColor: '#9F33FF',
+        strokeOpacity: 0.6,
+        strokeWeight: 5
+      }
+    }
+  };
+
+  transitOptions = {
+    renderOptions: {
+      polylineOptions: {
+        strokeColor: '#4CFF33',
+        strokeOpacity: 0.6,
+        strokeWeight: 5
+      }
+    }
+  };
 
   //To add default locations
   locations = [
@@ -28,7 +52,8 @@ export class GoogleMapComponent implements OnInit {
 
   constructor(
     private platform: Platform,
-    private geolocationServices: GeolocationServices
+    private geolocationServices: GeolocationServices,
+    private searchService: SearchService
   ) {
     this.height = platform.height() - 65;
   }
@@ -39,7 +64,20 @@ export class GoogleMapComponent implements OnInit {
       let coordinates = this.geolocationServices.getCoordinates();
       this.deviceLatitude = coordinates.latitude;
       this.deviceLongitude = coordinates.longitude;
-      console.log(coordinates);
+    });
+    this.subscribeToUserInput();
+  }
+
+  public subscribeToUserInput() {
+    this.searchService.origin.subscribe(resp => {
+      if (Array.isArray(resp) && resp.length) {
+        this.origin = { lat: resp[0], lng: resp[1] };
+      }
+    });
+    this.searchService.destination.subscribe(resp => {
+      if (Array.isArray(resp) && resp.length) {
+        this.destination = { lat: resp[0], lng: resp[1] };
+      }
     });
   }
 
