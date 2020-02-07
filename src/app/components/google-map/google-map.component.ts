@@ -30,7 +30,7 @@ export class GoogleMapComponent implements OnInit {
     private platform: Platform,
     private geolocationServices: GeolocationServices
   ) {
-    this.height = platform.height();
+    this.height = platform.height() - 65;
   }
 
   async ngOnInit() {
