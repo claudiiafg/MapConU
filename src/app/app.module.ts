@@ -33,6 +33,8 @@ import { environment } from '../environments/environment';
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
+import { UserServices } from 'src/services/userServices';
+
 
 @NgModule({
   declarations: [
@@ -64,6 +66,7 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     SplashScreen,
     Geolocation,
     GeolocationServices,
+    UserServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
