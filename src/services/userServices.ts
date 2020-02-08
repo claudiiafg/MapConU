@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Events } from '@ionic/angular';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'src/models/userModel';
@@ -15,7 +14,6 @@ export class UserServices {
 
 
   constructor(
-    private events: Events,
     public AFauth : AngularFireAuth,
 		private db : AngularFirestore,
   ) {}
