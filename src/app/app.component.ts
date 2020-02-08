@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {DataSharingService} from "./services/data-sharing.service";
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
   private concordiaRed: string = '#800000';
+  message: any;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private data: DataSharingService
   ) {
     this.initializeApp();
   }
@@ -24,6 +27,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.setStatusBarParameters(true, false, this.concordiaRed);
       this.splashScreen.hide();
+      this.data.currentMessage.subscribe(message => this.message = message)
     });
   }
 
