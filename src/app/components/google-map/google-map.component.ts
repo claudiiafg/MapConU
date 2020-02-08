@@ -11,6 +11,7 @@ import { DataSharingService} from "../../services/data-sharing.service";
   templateUrl: './google-map.component.html',
   styleUrls: ['./google-map.component.scss']
 })
+
 export class GoogleMapComponent implements OnInit {
   private map;
   private positionMarker;
