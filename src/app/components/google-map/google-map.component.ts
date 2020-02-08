@@ -1,5 +1,5 @@
 import {Component, OnInit, OnChanges, SimpleChanges, Input} from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
@@ -13,16 +13,13 @@ import { DataSharingService} from "../../../services/data-sharing.service";
 })
 
 export class GoogleMapComponent implements OnInit {
-  private map;
-  private positionMarker;
-  private height: number;
+  private height: number = 0;
   private loading: any;
   private latitude: number = 45.4946; // to be change with geolocalisation
   private longitude: number = -73.5774;
-  private deviceLatitude;
-  private deviceLongitude;
   private destination: any;
   private origin: any;
+  private markers: any[] = [];
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -51,9 +48,18 @@ export class GoogleMapComponent implements OnInit {
     { latitude: 45.45824, longitude: -73.640452 }
   ];
 
+  positionMarkerIcon = {
+    url: 'assets/icon/position-marker.png',
+    scaledSize: {
+      width: 15,
+      height: 15
+    }
+  };
+
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
+    private events: Events,
     private data: DataSharingService,
     private searchService: SearchService
   ) {
@@ -62,16 +68,19 @@ export class GoogleMapComponent implements OnInit {
 
   async ngOnInit() {
     await this.platform.ready();
-    await this.geolocationServices.getCurrentPosition().then(() => {
-      let coordinates = this.geolocationServices.getCoordinates();
-      this.deviceLatitude = coordinates.latitude;
-      this.deviceLongitude = coordinates.longitude;
-      console.log(coordinates);
-      this.data.currentMessage.subscribe(incomingMessage => {
+    await this.geolocationServices.getCurrentPosition();
+    this.events.subscribe('coordinatesChanged', (coordinates) =>{
+      let tempMarker = {
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude
+      }
+      this.markers = [];
+      this.markers.push(tempMarker);
+    });
+    this.data.currentMessage.subscribe(incomingMessage => {
         this.latitude = incomingMessage.latitude;
         this.longitude = incomingMessage.longitude;
       });
-    });
     this.subscribeToUserInput();
   }
 
