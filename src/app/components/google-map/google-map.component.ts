@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnChanges, SimpleChanges, Input} from '@angular/core';
 import { Platform, Events } from '@ionic/angular';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchService } from 'src/services/search.service';
+import { DataSharingService} from "../../../services/data-sharing.service";
 
 var google;
 
@@ -12,9 +13,10 @@ var google;
   templateUrl: './google-map.component.html',
   styleUrls: ['./google-map.component.scss']
 })
+
 export class GoogleMapComponent implements OnInit {
-  private loc: string = '0';
   private height: number = 0;
+  private loading: any;
   private latitude: number = 45.4946; // to be change with geolocalisation
   private longitude: number = -73.5774;
   private destination: any;
@@ -60,7 +62,7 @@ export class GoogleMapComponent implements OnInit {
     private platform: Platform,
     private geolocationServices: GeolocationServices,
     private events: Events,
-
+    private data: DataSharingService,
     private searchService: SearchService
   ) {
     this.height = platform.height() - 65;
@@ -77,6 +79,10 @@ export class GoogleMapComponent implements OnInit {
       this.markers = [];
       this.markers.push(tempMarker);
     });
+    this.data.currentMessage.subscribe(incomingMessage => {
+        this.latitude = incomingMessage.latitude;
+        this.longitude = incomingMessage.longitude;
+      });
     this.subscribeToUserInput();
   }
 
@@ -93,8 +99,8 @@ export class GoogleMapComponent implements OnInit {
     });
   }
 
-  public changeCampus() {
-    this.latitude = this.locations[this.loc].latitude;
-    this.longitude = this.locations[this.loc].longitude;
+  //use to send data to other components
+  sendMessage(updatedMessage){
+    this.data.updateMessage(updatedMessage);
   }
 }
