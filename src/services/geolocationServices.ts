@@ -4,14 +4,14 @@ import { Events } from '@ionic/angular';
 
 @Injectable()
 export class GeolocationServices {
-  private latitude;
-  private longitude;
+
+  private latitude : number;
+  private longitude : number;
 
   constructor(
     private geolocation: Geolocation,
     private events: Events,
   ) {}
-
 
   async getCurrentPosition(){
     await this.geolocation
@@ -19,8 +19,6 @@ export class GeolocationServices {
     .then( (resp) => {
       this.latitude = resp.coords.latitude;
       this.longitude = resp.coords.longitude;
-      console.log(this.latitude);
-      console.log(this.longitude);
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -35,6 +33,7 @@ export class GeolocationServices {
       if(data){
         this.latitude = data.coords.latitude;
         this.longitude = data.coords.longitude;
+        console.log('another one');
         let coordinates = {
           latitude: this.latitude,
           longitude: this.longitude

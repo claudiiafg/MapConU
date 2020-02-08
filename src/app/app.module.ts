@@ -64,9 +64,12 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     Geolocation,
     GeolocationServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FirestoreSettingsToken, useValue: {} }
+    { provide: FirestoreSettingsToken, useValue: {} },
   ],
   bootstrap: [AppComponent],
-  exports: [SearchPopoverComponent]
+  exports: [SearchPopoverComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule {}

@@ -3,9 +3,9 @@ import { Platform, Events } from '@ionic/angular';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
-import { AgmMap } from '@agm/core';
-import { google } from '@agm/core/services/google-maps-types';
 import { SearchService } from 'src/services/search.service';
+
+var google;
 
 @Component({
   selector: 'app-google-map',
@@ -14,16 +14,12 @@ import { SearchService } from 'src/services/search.service';
 })
 export class GoogleMapComponent implements OnInit {
   private loc: string = '0';
-  private map;
-  private positionMarker;
-  private height: number;
-  private loading: any;
+  private height: number = 0;
   private latitude: number = 45.4946; // to be change with geolocalisation
   private longitude: number = -73.5774;
-  private deviceLatitude;
-  private deviceLongitude;
   private destination: any;
   private origin: any;
+  private markers: any[] = [];
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -52,6 +48,14 @@ export class GoogleMapComponent implements OnInit {
     { latitude: 45.45824, longitude: -73.640452 }
   ];
 
+  positionMarkerIcon = {
+    url: 'assets/icon/position-marker.png',
+    scaledSize: {
+      width: 15,
+      height: 15
+    }
+  };
+
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
@@ -66,10 +70,12 @@ export class GoogleMapComponent implements OnInit {
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition();
     this.events.subscribe('coordinatesChanged', (coordinates) =>{
-      this.deviceLatitude = coordinates.latitude;
-      this.deviceLongitude = coordinates.longitude;
-      console.log(this.deviceLatitude);
-      console.log(this.deviceLongitude);
+      let tempMarker = {
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude
+      }
+      this.markers = [];
+      this.markers.push(tempMarker);
     });
     this.subscribeToUserInput();
   }
