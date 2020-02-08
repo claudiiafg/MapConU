@@ -2,12 +2,17 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   --inner-padding-bottom: 0px;
-  padding-left: 6em;
+  padding-left: 4em;
   color: white;
 }
 
   .select-campus{
     position: absolute;
     max-width: fit-content;
+  }
+
+  .search-location{
+   position: relative;
+    padding: 0;
   }
 
