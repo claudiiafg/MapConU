@@ -13,6 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 //libraries
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AgmCoreModule } from '@agm/core';
 import { AgmOverlays } from "agm-overlays"
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -58,6 +59,7 @@ import { UserServices } from 'src/services/userServices';
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     FormsModule,
     AgmDirectionModule
   ],
@@ -70,8 +72,10 @@ import { UserServices } from 'src/services/userServices';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
-  bootstrap: [AppComponent],
-  exports: [SearchPopoverComponent],
+  bootstrap: [ AppComponent ],
+  exports: [
+    SearchPopoverComponent
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

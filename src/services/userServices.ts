@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
 export class UserServices {
   private userID : string;
   public user: User;
-  private usersList : User[] = [];
 	private usersList$ : Observable<User[]> = new Observable<User[]>();
   private usersCollection$ : AngularFirestoreCollection<User>;
 
@@ -23,11 +22,6 @@ export class UserServices {
 
   initSubscription(){
     this.subscribeToDatabase()
-    .then(() => {
-      this.usersList$.subscribe((response) => {
-        this.usersList = response;
-      });
-    })
     .catch((error) => {
       console.log(error)
     });
@@ -37,8 +31,8 @@ export class UserServices {
   private async subscribeToDatabase() : Promise<any> {
     const user = await this.getUserData();
     if(user){
-      this.userID = user.id;
       this.user = user;
+      this.userID = user.id;
     }
     this.usersCollection$ = await this.db.collection<User>('users');
     this.usersList$ = this.db.collection<User>('users').valueChanges().pipe(
@@ -95,22 +89,19 @@ export class UserServices {
 		}
   }
 
-  getUser(userID : string) : User{
-    return this.usersList.filter(user => user.id === userID)[0];
-  }
-
-  getUserList(): User[]{
-    return this.usersList;
-  }
-
   createUser(userName : string, email : string, password : string, apiKey : string)	{
-		const tempUser : User = {
-      id : '',
-      username : userName,
-      email : email,
-      googleApiKey: apiKey
-		}
-    this.createNewUser(tempUser, password);
+    if((email && email.length > 0) && (password && password.length > 0)){
+      const tempUser : User = {
+        id : '',
+        username : userName,
+        email : email,
+        googleApiKey: apiKey
+  		}
+      this.createNewUser(tempUser, password);
+    } else {
+      console.log('insufficient info to create an account');
+    }
+
   }
 
   modifyUser(userID : string, username : string, email : string, apiKey : string){
