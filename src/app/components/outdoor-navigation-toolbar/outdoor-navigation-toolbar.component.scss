@@ -1,23 +1,13 @@
-.campus{
-  position: relative;
-  background-color: #800000;
-  font-size: 1.6em;
-  width: max-content;
-  height: max-content;
-  margin-left: 25%;
-}
-
 #campus-change {
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   --inner-padding-bottom: 0px;
+  padding-left: 6em;
   color: white;
+}
 
   .select-campus{
     position: absolute;
+    max-width: fit-content;
   }
-}
-
-
-//TODO: figure out how to style arrow
 

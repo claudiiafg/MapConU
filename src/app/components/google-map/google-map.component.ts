@@ -69,8 +69,6 @@ export class GoogleMapComponent implements OnInit {
       this.data.currentMessage.subscribe(incomingMessage => {
         this.latitude = incomingMessage.latitude;
         this.longitude = incomingMessage.longitude;
-        console.log(incomingMessage);
-        console.log(typeof(incomingMessage.latitude));
       });
     });
     this.subscribeToUserInput();

@@ -4,15 +4,10 @@
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
     <ion-item id="campus-change">
-      <ion-select interface="popover" [(ngModel)]="loc" (ionChange)="changeCampus()" class="select-campus">
+      <ion-select placeholder = "Select Campus" interface="popover" [(ngModel)]="loc" (ionChange)="changeCampus()" class="select-campus">
         <ion-select-option value="0">SGW Campus</ion-select-option>
         <ion-select-option value="1">Loyola Campus</ion-select-option>
       </ion-select>
     </ion-item>
-
-    <!--<select class="campus">
-      <option value="sgw">SGW Campus</option>
-      <option value="loy">Loyola Campus</option>
-    </select> -->
   </ion-toolbar>
 </ion-header>
