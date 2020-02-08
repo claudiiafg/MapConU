@@ -1,5 +1,5 @@
 import {Component, OnInit,} from '@angular/core';
-import {DataSharingService} from "../../services/data-sharing.service";
+import {DataSharingService} from "../../../services/data-sharing.service";
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',

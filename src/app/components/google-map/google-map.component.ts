@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchService } from 'src/services/search.service';
-import { DataSharingService} from "../../services/data-sharing.service";
+import { DataSharingService} from "../../../services/data-sharing.service";
 
 @Component({
   selector: 'app-google-map',
