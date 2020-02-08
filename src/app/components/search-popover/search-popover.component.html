@@ -1,0 +1,38 @@
+<div class="input-group">
+  <input
+    id="fromAddress"
+    placeholder=""
+    type="text"
+    (keydown.enter)="$event.preventDefault()"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="off"
+    #from
+    required
+  />
+  <span class="highlight"></span>
+  <span class="bar"></span>
+  <label>Starting Point</label>
+</div>
+
+<div class="input-group">
+  <input
+    id="toAddress"
+    placeholder=""
+    type="text"
+    (keydown.enter)="$event.preventDefault()"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="off"
+    #to
+    required
+  />
+  <span class="highlight"></span>
+  <span class="bar"></span>
+  <label>Destination</label>
+</div>
+
+<ion-button id="closeButton" shape="square" (click)="closePopover()"
+  ><ion-icon name="close-circle-outline"></ion-icon
+></ion-button>
+<ion-button id="goButton" (click)="updateMap()" shape="square">GO</ion-button>

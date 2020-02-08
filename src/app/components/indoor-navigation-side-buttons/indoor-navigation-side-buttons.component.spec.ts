@@ -9,7 +9,7 @@ describe('IndoorNavigationSideButtonsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndoorNavigationSideButtonsComponent ],
+      declarations: [IndoorNavigationSideButtonsComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

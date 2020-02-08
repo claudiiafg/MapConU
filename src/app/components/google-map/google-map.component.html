@@ -1,20 +1,33 @@
-<div id='google-map-component'>
-  <!-- <ion-item id="campus-change">
-      <ion-select interface="popover" [(ngModel)]="loc" (ionChange)="changeCampus()" class="select-campus">
-        <ion-select-option value="0">SGW Campus</ion-select-option>
-        <ion-select-option value="1">Loyola Campus</ion-select-option>
-      </ion-select>
-  </ion-item> -->
+<div id="google-map-component">
 
-  <agm-map
-    [style.height.px]="height"
-    [zoom]="15"
-    [latitude]="latitude"
-    [longitude]="longitude">
-        <agm-overlay
-            [latitude]="deviceLatitude"
-            [longitude]="deviceLongitude">
-              <div id="position-marker"></div>
-        </agm-overlay>
+  <agm-map  [style.height.px]="height"
+            [zoom]="14"
+            [latitude]="latitude"
+            [longitude]="longitude"
+            [gestureHandling]="greedy"
+            id='map'>
+
+    <agm-marker *ngFor="let m of markers"
+                [iconUrl]="positionMarkerIcon"
+                [latitude]="m.latitude"
+                [longitude]="m.longitude">
+    </agm-marker>
+
+    <ng-container *ngIf="origin && destination">
+      <agm-direction  [origin]="origin"
+                      [destination]="destination"
+                      [travelMode]="'WALKING'"
+                      [renderOptions]="walkingOptions.renderOptions">
+      </agm-direction>
+
+      <agm-direction  [origin]="origin"
+                      [destination]="destination"
+                      [travelMode]="'TRANSIT'"
+                      [renderOptions]="transitOptions.renderOptions">
+      </agm-direction>
+
+      <agm-direction [origin]="origin" [destination]="destination"></agm-direction>
+    </ng-container>
+
   </agm-map>
 </div>
