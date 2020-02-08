@@ -51,7 +51,8 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     AgmOverlays,
     AgmCoreModule.forRoot({
       apiKey: APIKey,
-      libraries: ['places']
+      libraries: ['places'],
+      apiVersion: '3.31'
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,

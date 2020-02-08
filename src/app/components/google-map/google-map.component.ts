@@ -6,8 +6,6 @@ import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchService } from 'src/services/search.service';
 import { DataSharingService} from "../../../services/data-sharing.service";
 
-var google;
-
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',

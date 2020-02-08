@@ -33,7 +33,6 @@ export class GeolocationServices {
       if(data){
         this.latitude = data.coords.latitude;
         this.longitude = data.coords.longitude;
-        console.log('another one');
         let coordinates = {
           latitude: this.latitude,
           longitude: this.longitude

@@ -1,9 +1,10 @@
 <div id="google-map-component">
 
-  <agm-map [style.height.px]="height"
+  <agm-map  [style.height.px]="height"
             [zoom]="14"
             [latitude]="latitude"
             [longitude]="longitude"
+            [gestureHandling]="greedy"
             id='map'>
 
     <agm-marker *ngFor="let m of markers"
