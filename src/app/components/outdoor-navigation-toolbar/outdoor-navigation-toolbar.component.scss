@@ -6,13 +6,25 @@
   color: white;
 }
 
-  .select-campus{
-    position: absolute;
-    max-width: fit-content;
-  }
+.select-campus{
+  position: absolute;
+  max-width: fit-content;
+}
 
-  .search-location{
-   position: relative;
-    padding: 0;
-  }
+.search-location{
+ position: relative;
+  padding: 0;
+}
 
+.sc-ion-searchbar-ios-h {
+  padding: 0;
+  display: contents;
+}
+
+.searchbar-input-container .sc-ion-searchbar-ios {
+  height: 40px;
+}
+
+.select-campus {
+  position: initial;
+}
