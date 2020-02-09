@@ -1,6 +1,6 @@
 export interface User {
-  id : string,
-  username : string,
-  email : string,
-  googleApiKey: string
+  id: string;
+  username: string;
+  email: string;
+  googleApiKey: string;
 }

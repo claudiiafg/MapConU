@@ -4,11 +4,21 @@
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
     <ion-item id="campus-change">
-      <ion-select placeholder = "Select Campus" interface="popover" [(ngModel)]="loc" (ionChange)="changeCampus()" class="select-campus">
+      <ion-select
+        placeholder="Select Campus"
+        interface="popover"
+        [(ngModel)]="loc"
+        (ionChange)="changeCampus()"
+        class="select-campus"
+      >
         <ion-select-option value="0">SGW Campus</ion-select-option>
         <ion-select-option value="1">Loyola Campus</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-toolbar>
-  <ion-searchbar class="search-location" placeholder="Search for a location.." autocomplete="on"></ion-searchbar>
+  <ion-searchbar
+    class="search-location"
+    placeholder="Search for a location.."
+    autocomplete="on"
+  ></ion-searchbar>
 </ion-header>
