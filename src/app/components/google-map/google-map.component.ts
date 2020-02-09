@@ -63,7 +63,7 @@ export class GoogleMapComponent implements OnInit {
     private data: DataSharingService,
     private searchService: SearchService
   ) {
-    this.height = platform.height() - 65;
+    this.height = platform.height() - 90;
   }
 
   async ngOnInit() {
