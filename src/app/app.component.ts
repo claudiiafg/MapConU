@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { DataSharingService } from "../services/data-sharing.service";
+import { DataSharingService } from '../services/data-sharing.service';
 import { UserServices } from 'src/services/userServices';
 
 @Component({
@@ -20,7 +20,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private data: DataSharingService,
-    private userServices: UserServices,
+    private userServices: UserServices
   ) {
     this.initializeApp();
   }
@@ -29,9 +29,9 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.setStatusBarParameters(true, false, this.concordiaRed);
       this.splashScreen.hide();
-      this.data.currentMessage.subscribe(message => this.message = message);
+      this.data.currentMessage.subscribe(message => (this.message = message));
 
-      this.userServices.AFauth.auth.onAuthStateChanged((user) => {
+      this.userServices.AFauth.auth.onAuthStateChanged(user => {
         if (user) {
           // Start by initiating the services once the user has logged in
           this.userServices.initSubscription();

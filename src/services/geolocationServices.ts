@@ -4,39 +4,38 @@ import { Events } from '@ionic/angular';
 
 @Injectable()
 export class GeolocationServices {
+  private latitude: number;
+  private longitude: number;
 
-  private latitude : number;
-  private longitude : number;
+  constructor(private geolocation: Geolocation, private events: Events) {}
 
-  constructor(
-    private geolocation: Geolocation,
-    private events: Events,
-  ) {}
-
-  async getCurrentPosition(){
+  async getCurrentPosition() {
     await this.geolocation
-    .getCurrentPosition()
-    .then( (resp) => {
-      this.latitude = resp.coords.latitude;
-      this.longitude = resp.coords.longitude;
-
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
+      .getCurrentPosition()
+      .then(resp => {
+        this.latitude = resp.coords.latitude;
+        this.longitude = resp.coords.longitude;
+      })
+      .catch(error => {
+        console.log('Error getting location', error);
+      });
 
     this.subscribeToPosition();
   }
 
-  subscribeToPosition(){
-    let watch = this.geolocation.watchPosition({ maximumAge: 1000, enableHighAccuracy: true });
-    watch.subscribe((data) => {
-      if(data){
+  subscribeToPosition() {
+    let watch = this.geolocation.watchPosition({
+      maximumAge: 1000,
+      enableHighAccuracy: true
+    });
+    watch.subscribe(data => {
+      if (data) {
         this.latitude = data.coords.latitude;
         this.longitude = data.coords.longitude;
         let coordinates = {
           latitude: this.latitude,
           longitude: this.longitude
-        }
+        };
         this.events.publish('coordinatesChanged', coordinates);
       }
     });

@@ -9,7 +9,7 @@ describe('SearchPopoverComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchPopoverComponent ],
+      declarations: [SearchPopoverComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

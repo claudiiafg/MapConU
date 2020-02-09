@@ -18,7 +18,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       event: ev,
       translucent: true
     });
-    
+
     return await popover.present();
   }
 }

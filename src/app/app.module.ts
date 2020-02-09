@@ -12,10 +12,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 //libraries
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import {
+  AngularFirestoreModule,
+  FirestoreSettingsToken
+} from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AgmCoreModule } from '@agm/core';
-import { AgmOverlays } from "agm-overlays"
+import { AgmOverlays } from 'agm-overlays';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AgmDirectionModule } from 'agm-direction';
 
@@ -23,9 +26,9 @@ import { AgmDirectionModule } from 'agm-direction';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GoogleMapComponent } from './components/google-map/google-map.component';
-import { OutdoorNavigationSideButtonsComponent} from "./components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component";
-import { IndoorNavigationSideButtonsComponent} from "./components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component";
-import { OutdoorNavigationToolbarComponent} from "./components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component";
+import { OutdoorNavigationSideButtonsComponent } from './components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component';
+import { IndoorNavigationSideButtonsComponent } from './components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component';
+import { OutdoorNavigationToolbarComponent } from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -35,7 +38,6 @@ import { environment } from '../environments/environment';
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { UserServices } from 'src/services/userServices';
-
 
 @NgModule({
   declarations: [
@@ -70,14 +72,10 @@ import { UserServices } from 'src/services/userServices';
     GeolocationServices,
     UserServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FirestoreSettingsToken, useValue: {} },
+    { provide: FirestoreSettingsToken, useValue: {} }
   ],
-  bootstrap: [ AppComponent ],
-  exports: [
-    SearchPopoverComponent
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  bootstrap: [AppComponent],
+  exports: [SearchPopoverComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

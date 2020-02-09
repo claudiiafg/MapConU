@@ -1,17 +1,22 @@
-import {Component, OnInit, OnChanges, SimpleChanges, Input} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  Input
+} from '@angular/core';
 import { Platform, Events } from '@ionic/angular';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchService } from 'src/services/search.service';
-import { DataSharingService} from "../../../services/data-sharing.service";
+import { DataSharingService } from '../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
   styleUrls: ['./google-map.component.scss']
 })
-
 export class GoogleMapComponent implements OnInit {
   private height: number = 0;
   private loading: any;
@@ -63,24 +68,24 @@ export class GoogleMapComponent implements OnInit {
     private data: DataSharingService,
     private searchService: SearchService
   ) {
-    this.height = platform.height() - 65;
+    this.height = platform.height() - 90;
   }
 
   async ngOnInit() {
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition();
-    this.events.subscribe('coordinatesChanged', (coordinates) =>{
+    this.events.subscribe('coordinatesChanged', coordinates => {
       let tempMarker = {
         latitude: coordinates.latitude,
         longitude: coordinates.longitude
-      }
+      };
       this.markers = [];
       this.markers.push(tempMarker);
     });
     this.data.currentMessage.subscribe(incomingMessage => {
-        this.latitude = incomingMessage.latitude;
-        this.longitude = incomingMessage.longitude;
-      });
+      this.latitude = incomingMessage.latitude;
+      this.longitude = incomingMessage.longitude;
+    });
     this.subscribeToUserInput();
   }
 
@@ -98,7 +103,7 @@ export class GoogleMapComponent implements OnInit {
   }
 
   //use to send data to other components
-  sendMessage(updatedMessage){
+  sendMessage(updatedMessage) {
     this.data.updateMessage(updatedMessage);
   }
 }
