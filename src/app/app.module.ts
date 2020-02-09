@@ -6,26 +6,36 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+//libraries
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AgmCoreModule } from '@agm/core';
+import { AgmOverlays } from "agm-overlays"
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AgmDirectionModule } from 'agm-direction';
+
+//pages
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GoogleMapComponent } from './components/google-map/google-map.component';
-import { OutdoorNavigationSideButtonsComponent } from './components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component';
-import { IndoorNavigationSideButtonsComponent } from './components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component';
-import { OutdoorNavigationToolbarComponent } from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
-import { AgmCoreModule } from '@agm/core';
-import { AgmOverlays } from 'agm-overlays';
+import { OutdoorNavigationSideButtonsComponent} from "./components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component";
+import { IndoorNavigationSideButtonsComponent} from "./components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component";
+import { OutdoorNavigationToolbarComponent} from "./components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component";
+
+//env variables
 import { APIKey } from 'src/environments/env';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { AgmDirectionModule } from 'agm-direction';
+import { environment } from '../environments/environment';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
+import { UserServices } from 'src/services/userServices';
+
 
 @NgModule({
   declarations: [
@@ -44,8 +54,12 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     AgmOverlays,
     AgmCoreModule.forRoot({
       apiKey: APIKey,
-      libraries: ['places']
+      libraries: ['places'],
+      apiVersion: '3.31'
     }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     FormsModule,
     AgmDirectionModule
   ],
@@ -54,9 +68,16 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     SplashScreen,
     Geolocation,
     GeolocationServices,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    UserServices,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: FirestoreSettingsToken, useValue: {} },
   ],
-  bootstrap: [AppComponent],
-  exports: [SearchPopoverComponent]
+  bootstrap: [ AppComponent ],
+  exports: [
+    SearchPopoverComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule {}
