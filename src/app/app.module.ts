@@ -13,6 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 //libraries
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AgmCoreModule } from '@agm/core';
 import { AgmOverlays } from "agm-overlays"
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -33,6 +34,8 @@ import { environment } from '../environments/environment';
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
+import { UserServices } from 'src/services/userServices';
+
 
 @NgModule({
   declarations: [
@@ -56,6 +59,7 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     FormsModule,
     AgmDirectionModule
   ],
@@ -64,11 +68,14 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
     SplashScreen,
     Geolocation,
     GeolocationServices,
+    UserServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
-  bootstrap: [AppComponent],
-  exports: [SearchPopoverComponent],
+  bootstrap: [ AppComponent ],
+  exports: [
+    SearchPopoverComponent
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
