@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "npm run install-puppeteer && ng e2e",
     "install-puppeteer": "cd node_modules/puppeteer && npm run install",
-    "testHeadless": "npm run install-puppeteer && ng test --code-coverage --watch=false --browsers=ChromeHeadless --reporters=progress,junit"
+    "testHeadless": "npm run install-puppeteer && ng test --code-coverage --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
