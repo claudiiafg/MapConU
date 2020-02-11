@@ -4,16 +4,19 @@
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
     <ion-item slot="start" class="building">{{building}}</ion-item>
+
     <ion-item id="floor-change">
-      <ion-select
-              [(ngModel)]="floors"
-              interface="popover"
-              class="select-floor"
-              (ionChange)="changeFloor()">
-        <ion-select-option *ngFor="let floor of floors | slice: 0:maxFloors">{{floor}}</ion-select-option>
-      </ion-select>
+        <ion-select
+                [(ngModel)]="floors"
+                interface="popover"
+                class="select-floor"
+                (ionChange)="changeFloor()"
+                id='floor-item'>
+            <ion-select-option *ngFor="let floor of floors | slice: 0:maxFloors">{{floor}}</ion-select-option>
+        </ion-select>
     </ion-item>
   </ion-toolbar>
+
   <ion-button
           class="up-button"
           (click)="moveUpFloor()"
