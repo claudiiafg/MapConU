@@ -6,15 +6,15 @@
   color: white;
 }
 
+.select-floor {
+  position: relative;
+  max-width: fit-content;
+}
+
 .building {
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   color: white;
-}
-
-.select-floor {
-  position: absolute;
-  max-width: fit-content;
 }
 
 .up-button, .down-button {
@@ -42,4 +42,5 @@
 .searchbar-input-container .sc-ion-searchbar-ios {
   height: 40px;
 }
+
 

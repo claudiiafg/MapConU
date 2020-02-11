@@ -1,6 +1,5 @@
 import {Component, NgModule, OnInit} from '@angular/core';
 import {DataSharingService} from "../../../services/data-sharing.service";
-import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "../../app.component";
 
 @Component({
@@ -61,8 +60,6 @@ export class IndoorNavigationToolbarComponent implements OnInit {
         break;
       }
     }
-
-    console.log("max floors: " + this.maxFloors);
     this.currentFloor = 1;
 
   }
@@ -82,5 +79,4 @@ export class IndoorNavigationToolbarComponent implements OnInit {
       this.currentFloor--;
     }
   }
-
 }
