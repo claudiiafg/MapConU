@@ -49,7 +49,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
 
   ngOnInit() {
     //placeholder because logic to come from outdoor-nav is not implemented yet can be deleted when it is
-    this.building = "John Molson Building"
+    this.building = "Hall Building";
 
     //sets max number of allowed floors for the selected building
     let i;

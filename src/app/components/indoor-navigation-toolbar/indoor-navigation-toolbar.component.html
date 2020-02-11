@@ -1,37 +1,37 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-button slot="end" size="large" fill="solid" shape="round">
-      <ion-icon name="settings" size="large"></ion-icon>
+    <ion-toolbar color="primary">
+        <ion-button slot="end" size="large" fill="solid" shape="round">
+            <ion-icon name="settings" size="large"></ion-icon>
+        </ion-button>
+        <ion-item slot="start" class="building">{{building}}</ion-item>
+
+        <ion-item id="floor-change">
+            <ion-select
+                    [(ngModel)]="floors"
+                    interface="popover"
+                    class="select-floor"
+                    (ionChange)="changeFloor()"
+                    id='floor-item'>
+                <ion-select-option *ngFor="let floor of floors | slice: 0:maxFloors">{{floor}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-toolbar>
+
+    <ion-button
+            class="up-button"
+            (click)="moveUpFloor()"
+    >
+        Move Up
     </ion-button>
-    <ion-item slot="start" class="building">{{building}}</ion-item>
-
-    <ion-item id="floor-change">
-        <ion-select
-                [(ngModel)]="floors"
-                interface="popover"
-                class="select-floor"
-                (ionChange)="changeFloor()"
-                id='floor-item'>
-            <ion-select-option *ngFor="let floor of floors | slice: 0:maxFloors">{{floor}}</ion-select-option>
-        </ion-select>
-    </ion-item>
-  </ion-toolbar>
-
-  <ion-button
-          class="up-button"
-          (click)="moveUpFloor()"
-  >
-    Move Up
-  </ion-button>
-  <ion-button
-          class="down-button"
-          (click)="moveDownFloor()"
-  >
-    Move Down
-  </ion-button>
-  <ion-searchbar
-          class="search-location"
-          placeholder="Search for a location.."
-          autocomplete="on"
-  ></ion-searchbar>
+    <ion-button
+            class="down-button"
+            (click)="moveDownFloor()"
+    >
+        Move Down
+    </ion-button>
+    <ion-searchbar
+            class="search-location"
+            placeholder="Search for a location.."
+            autocomplete="on"
+    ></ion-searchbar>
 </ion-header>
