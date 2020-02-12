@@ -105,4 +105,5 @@
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="4.0.2" />
+    <plugin name="cordova-plugin-indooratlas" spec="git+https://github.com/IndoorAtlas/cordova-plugin.git" />
 </widget>

@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { DataSharingService } from '../services/data-sharing.service';
 import { UserServices } from 'src/services/userServices';
+declare var cordova; // <====== declare this
 
 @Component({
   selector: 'app-root',
@@ -37,6 +38,7 @@ export class AppComponent {
           this.userServices.initSubscription();
         }
       });
+      cordova.plugins.indooratlas.initialize({ apiKey: '' });
     });
   }
 
