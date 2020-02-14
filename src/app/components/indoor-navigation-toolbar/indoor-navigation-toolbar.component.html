@@ -7,12 +7,15 @@
 
         <ion-item id="floor-change">
             <ion-select
-                    [(ngModel)]="floors"
-                    interface="popover"
-                    class="select-floor"
                     (ionChange)="changeFloor()"
-                    id='floor-item'>
-                <ion-select-option *ngFor="let floor of floors | slice: 0:maxFloors">{{floor}}</ion-select-option>
+                    [(ngModel)]="updateFloor"
+                    [selectedText]=currentFloor.valueOf()
+                    class="select-floor"
+                    id='floor-item'
+                    interface="popover"
+                    placeholder="1">
+                <ion-select-option [value]="floor"
+                                   *ngFor="let floor of floors | slice: 0:maxFloors">{{floor}}</ion-select-option>
             </ion-select>
         </ion-item>
     </ion-toolbar>

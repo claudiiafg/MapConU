@@ -65,7 +65,9 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   }
 
   changeFloor() {
+    console.log(this.currentFloor + " is current floor");
     this.currentFloor = this.updateFloor;
+    console.log(this.updateFloor + " is update floor");
   }
 
   moveUpFloor() {
