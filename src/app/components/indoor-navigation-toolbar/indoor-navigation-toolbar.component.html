@@ -15,7 +15,7 @@
                     interface="popover"
                     placeholder="1">
                 <ion-select-option [value]="floor"
-                                   *ngFor="let floor of floors | slice: 0:maxFloors">{{floor}}</ion-select-option>
+                                   *ngFor="let floor of floors | slice: minFloorIndex:maxFloorIndex">{{floor}}</ion-select-option>
             </ion-select>
         </ion-item>
     </ion-toolbar>
