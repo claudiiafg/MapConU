@@ -2,7 +2,7 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   --inner-padding-bottom: 0px;
-  padding-left: 4em;
+  padding-left: 5em;
   color: white;
   display: contents;
 }
@@ -16,18 +16,19 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   color: white;
+  padding-left: 1em;
 }
 
 .up-button, .down-button {
-  color: black;
+  color: white;
   text-transform: none;
-  --background: #d6d6c2;
   max-width: fit-content;
+  --border-color: white;
 }
 
 .up-button {
-  padding-left: 5em;
-  padding-right: 4em;
+  padding-left: 7em;
+  padding-right: 3em;
 }
 
 .search-location {
@@ -44,6 +45,19 @@
   height: 40px;
 }
 
+
 .popover-content {
-  display: content;
+  --display: content;
 }
+
+.indoorToolbar {
+  background-color: var(--ConcordiaRed);
+}
+
+.settings-button {
+  --color: white;
+  --shape: round;
+  --size: large;
+  padding-right: 0.5em;
+}
+

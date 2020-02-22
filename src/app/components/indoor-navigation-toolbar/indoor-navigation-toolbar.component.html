@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header class=indoorToolbar>
     <ion-toolbar color="primary">
-        <ion-button slot="end" size="large" fill="solid" shape="round">
+        <ion-button class="settings-button" fill="outline" slot="end">
             <ion-icon name="settings" size="large"></ion-icon>
         </ion-button>
         <ion-item slot="start" class="building">{{building}}</ion-item>
@@ -21,16 +21,20 @@
     </ion-toolbar>
 
     <ion-button
-            class="up-button"
             (click)="moveUpFloor()"
+            class="up-button"
+            shape="round"
+            fill="outline"
     >
-        Move Up
+        <ion-icon name="arrow-up"></ion-icon>
     </ion-button>
     <ion-button
             class="down-button"
             (click)="moveDownFloor()"
+            shape="round"
+            fill="outline"
     >
-        Move Down
+        <ion-icon name="arrow-down"></ion-icon>
     </ion-button>
     <ion-searchbar
             class="search-location"
