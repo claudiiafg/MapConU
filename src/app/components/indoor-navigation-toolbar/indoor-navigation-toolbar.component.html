@@ -19,24 +19,25 @@
             </ion-select>
         </ion-item>
     </ion-toolbar>
-
-    <ion-button
-            (click)="moveUpFloor()"
-            class="up-button"
-            shape="round"
-            fill="outline"
-    >
-        <ion-icon name="arrow-up"></ion-icon>
-    </ion-button>
-    <ion-button
-            class="down-button"
-            (click)="moveDownFloor()"
-            shape="round"
-            fill="outline"
-            float-end
-    >
-        <ion-icon name="arrow-down"></ion-icon>
-    </ion-button>
+    <div class="move-floor">
+        <ion-button
+                (click)="moveUpFloor()"
+                class="up-button"
+                shape="round"
+                fill="outline"
+        >
+            <ion-icon name="arrow-up"></ion-icon>
+        </ion-button>
+        <ion-button
+                class="down-button"
+                (click)="moveDownFloor()"
+                shape="round"
+                fill="outline"
+                float-end
+        >
+            <ion-icon name="arrow-down"></ion-icon>
+        </ion-button>
+    </div>
     <ion-searchbar
             class="search-location"
             placeholder="Search for a location.."

@@ -25,15 +25,6 @@
   max-width: fit-content;
   --border-color: white;
 }
-
-.up-button {
-  padding-left: 3em;
-}
-
-.down-button {
-  padding-right: 3em;
-}
-
 .search-location {
   position: relative;
   padding: 0;
@@ -64,3 +55,7 @@
   padding-right: 0.5em;
 }
 
+.move-floor {
+  display:flex;
+  justify-content: space-around;
+}
