@@ -30,9 +30,5 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
 
   public changeCampus() {
     this.sendMessage(this.locations[this.loc]);
-    console.log(
-      'this is the msg' + this.message.longitude + ', ' + this.message.latitude
-    );
-    console.log(typeof this.message.latitude);
   }
 }
