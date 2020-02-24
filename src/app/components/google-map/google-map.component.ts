@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  Input
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Platform, Events } from '@ionic/angular';
 
 //services
@@ -18,13 +12,12 @@ import { DataSharingService } from '../../../services/data-sharing.service';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  private height: number = 0;
-  private loading: any;
-  private latitude: number = 45.4946; // to be change with geolocalisation
-  private longitude: number = -73.5774;
-  private destination: any;
-  private origin: any;
-  private markers: any[] = [];
+  public height: number;
+  public latitude: number;
+  public longitude: number;
+  public destination: any;
+  public origin: any;
+  public markers: any[] = [];
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -79,6 +72,8 @@ export class GoogleMapComponent implements OnInit {
         latitude: coordinates.latitude,
         longitude: coordinates.longitude
       };
+      this.latitude = coordinates.latitude;
+      this.longitude = coordinates.longitude;
       this.markers = [];
       this.markers.push(tempMarker);
     });

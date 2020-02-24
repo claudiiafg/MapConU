@@ -9,7 +9,7 @@ describe('SettingsToolbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsToolbarComponent ],
+      declarations: [SettingsToolbarComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
