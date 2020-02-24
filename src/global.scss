@@ -36,3 +36,8 @@ ion-backdrop{
 .popover-arrow{
   display: none !important;
 }
+
+ion-fab-button{
+  --background-activated: white;
+  --background-focused: white;
+}

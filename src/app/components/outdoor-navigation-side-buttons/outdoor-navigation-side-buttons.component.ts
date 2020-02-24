@@ -9,7 +9,11 @@ import { PoiPopoverComponent } from '../poi-popover/poi-popover.component';
   styleUrls: ['./outdoor-navigation-side-buttons.component.scss']
 })
 export class OutdoorNavigationSideButtonsComponent implements OnInit {
-  constructor(public popoverController: PopoverController) {}
+  public poiClicked: boolean = false;
+
+  constructor(
+    public popoverController: PopoverController
+  ) {}
 
   ngOnInit() {}
 
@@ -25,10 +29,15 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       return await popover.present();
 
     } else if(mode === 'poi'){
+      this.poiClicked = !this.poiClicked;
       const popover = await this.popoverController.create({
         component: PoiPopoverComponent,
         event: ev,
         translucent: false,
+      });
+
+      popover.onDidDismiss().then(()=> {
+        this.poiClicked = false;
       });
 
       popover.style.cssText = '--width: 200px; top: -30px; left: 25%;';
