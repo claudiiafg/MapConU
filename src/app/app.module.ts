@@ -37,6 +37,7 @@ import { environment } from '../environments/environment';
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
+import { PoiPopoverComponent } from './components/poi-popover/poi-popover.component';
 import { UserServices } from 'src/services/userServices';
 import {IndoorNavigationToolbarComponent} from "./components/indoor-navigation-toolbar/indoor-navigation-toolbar.component";
 
@@ -48,10 +49,14 @@ import {IndoorNavigationToolbarComponent} from "./components/indoor-navigation-t
     IndoorNavigationSideButtonsComponent,
     OutdoorNavigationToolbarComponent,
     SearchPopoverComponent,
+    PoiPopoverComponent,
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent
   ],
-  entryComponents: [SearchPopoverComponent],
+  entryComponents: [
+    SearchPopoverComponent,
+    PoiPopoverComponent
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
