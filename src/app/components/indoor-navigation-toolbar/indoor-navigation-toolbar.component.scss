@@ -19,7 +19,8 @@
   padding-left: 1em;
 }
 
-.up-button, .down-button {
+.up-button,
+.down-button {
   color: white;
   text-transform: none;
   max-width: fit-content;
@@ -39,7 +40,6 @@
   height: 40px;
 }
 
-
 .popover-content {
   --display: content;
 }
@@ -56,6 +56,6 @@
 }
 
 .move-floor {
-  display:flex;
+  display: flex;
   justify-content: space-around;
 }
