@@ -7,6 +7,120 @@
     [gestureHandling]="'greedy'"
     id="map"
   >
+    <agm-polygon
+            [paths]="hallCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="jmsbCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="lbCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="fgCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="fbCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="evCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="gnCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="adCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="ccCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="spCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="cjCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="vlCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="pyCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
+    <agm-polygon
+            [paths]="fcCoords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.5"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
     <agm-marker
       *ngFor="let m of markers"
       [iconUrl]="positionMarkerIcon"
@@ -36,6 +150,15 @@
         [origin]="origin"
         [destination]="destination"
       ></agm-direction>
+
+      <agm-polygon
+              [paths]="hallCoords"
+              [fillColor]="concordiaRed"
+              [fillOpacity]="0.5"
+              [strokeColor]="concordiaRed"
+              [strokeWeight]="2">
+
+      </agm-polygon>
     </ng-container>
   </agm-map>
 </div>
