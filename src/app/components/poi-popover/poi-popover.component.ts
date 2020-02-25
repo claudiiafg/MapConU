@@ -19,6 +19,7 @@ export class PoiPopoverComponent {
   private drugstore: boolean = false;
   private hotels: boolean = false;
   private grocery: boolean = false;
+  private isFirstOpen: boolean;
 
 
   constructor(
@@ -30,7 +31,6 @@ export class PoiPopoverComponent {
 
   ngOnInit(){
     let currentToggles = this.poiServices.getCurrentToggles();
-    console.log(currentToggles);
     this.restaurants = currentToggles.restaurants;
     this.coffee = currentToggles.coffee;
     this.gas = currentToggles.gas;
@@ -38,6 +38,7 @@ export class PoiPopoverComponent {
     this.hotels = currentToggles.hotels;
     this.grocery = currentToggles.grocery;
   }
+
 
   update(toggle : string){
     let value;
@@ -54,7 +55,8 @@ export class PoiPopoverComponent {
       toggle : toggle,
       value : value
     }
-    this.events.publish('poi-toggle-changed', data, Date.now())
+    this.events.publish('poi-toggle-changed', data, Date.now());
+
   }
 
   closePopover() {

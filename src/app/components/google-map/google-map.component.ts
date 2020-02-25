@@ -112,12 +112,12 @@ export class GoogleMapComponent implements OnInit {
       const toggleValue = res.value;
       console.log(toggleName + ': ' + toggleValue);
       switch(toggleName){
-        case 'restaurants':   this.currentToggles.restaurants = toggleValue;
-        case 'coffee shops':  this.currentToggles.coffee = toggleValue;
-        case 'gas stations':  this.currentToggles.gas = toggleValue;
-        case 'drugstores':    this.currentToggles.drugstore = toggleValue;
-        case 'hotels':        this.currentToggles.hotels = toggleValue;
-        case 'groceries':     this.currentToggles.grocery = toggleValue;
+        case 'restaurants':   this.currentToggles.restaurants = toggleValue; break;
+        case 'coffee shops':  this.currentToggles.coffee = toggleValue; break;
+        case 'gas stations':  this.currentToggles.gas = toggleValue; break;
+        case 'drugstores':    this.currentToggles.drugstore = toggleValue; break;
+        case 'hotels':        this.currentToggles.hotels = toggleValue; break;
+        case 'groceries':     this.currentToggles.grocery = toggleValue; break;
       }
       this.poiServices.setCurrentToggles(this.currentToggles);
       if(toggleValue){

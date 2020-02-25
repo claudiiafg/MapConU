@@ -32,18 +32,29 @@ export class PoiServices {
         type: type
       }, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for(let place of results){
-            let tempPlace = {
-              latitude: place.geometry.location.lat().toString(),
-              longitude: place.geometry.location.lng().toString(),
-              type: type
+          if(!self.hasType(type)){
+            for(let place of results){
+              let tempPlace = {
+                latitude: place.geometry.location.lat().toString(),
+                longitude: place.geometry.location.lng().toString(),
+                type: type
+              }
+              self.poiMarkers.push(tempPlace);
             }
-            self.poiMarkers.push(tempPlace);
+            resolve(self.poiMarkers);
           }
-          resolve(self.poiMarkers);
         }
       });
     });
+  }
+
+  hasType(type : string){
+    for(let marker of this.poiMarkers){
+      if(marker.type === type){
+        return true;
+      }
+    }
+    return false;
   }
 
   removePOIMarkers(type : string) : any{
