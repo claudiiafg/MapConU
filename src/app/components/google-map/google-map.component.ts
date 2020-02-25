@@ -5,6 +5,7 @@ import { Platform, Events } from '@ionic/angular';
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { SearchService } from 'src/services/search.service';
 import { DataSharingService } from '../../../services/data-sharing.service';
+import { PoiServices } from 'src/services/poiServices';
 
 @Component({
   selector: 'app-google-map',
@@ -12,12 +13,21 @@ import { DataSharingService } from '../../../services/data-sharing.service';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  public height: number;
-  public latitude: number;
-  public longitude: number;
-  public destination: any;
-  public origin: any;
-  public markers: any[] = [];
+  private height: number;
+  private latitude: number;
+  private longitude: number;
+  private destination: any;
+  private origin: any;
+  private positionMarkers: any[] = [];
+  private poiMarkers: any[] = [];
+  private currentToggles = {
+    restaurants : false,
+    coffee : false,
+    gas: false,
+    drugstore : false,
+    hotels : false,
+    grocery : false,
+  }
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -54,12 +64,21 @@ export class GoogleMapComponent implements OnInit {
     }
   };
 
+  poiMarkerIcon = {
+    url: 'assets/icon/poi-marker.png',
+    scaledSize: {
+      width: 20,
+      height: 20
+    }
+  };
+
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
     private events: Events,
     private data: DataSharingService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private poiServices : PoiServices,
   ) {
     this.height = platform.height() - 106;
   }
@@ -67,6 +86,8 @@ export class GoogleMapComponent implements OnInit {
   async ngOnInit() {
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition();
+
+    //subscribe to changes in current position
     this.events.subscribe('coordinatesChanged', coordinates => {
       let tempMarker = {
         latitude: coordinates.latitude,
@@ -74,14 +95,42 @@ export class GoogleMapComponent implements OnInit {
       };
       this.latitude = coordinates.latitude;
       this.longitude = coordinates.longitude;
-      this.markers = [];
-      this.markers.push(tempMarker);
+      this.positionMarkers = [];
+      this.positionMarkers.push(tempMarker);
     });
+
     this.data.currentMessage.subscribe(incomingMessage => {
       this.latitude = incomingMessage.latitude;
       this.longitude = incomingMessage.longitude;
     });
+
     this.subscribeToUserInput();
+
+    //subscribe to changes in POI toggles
+    this.events.subscribe('poi-toggle-changed', (res) => {
+      let toggleName = res.toggle;
+      let toggleValue = res.value;
+      console.log(toggleName + ': ' + toggleValue);
+      switch(toggleName){
+        case 'restaurants':   this.currentToggles.restaurants = toggleValue;
+        case 'coffee shops':  this.currentToggles.coffee = toggleValue;
+        case 'gas stations':  this.currentToggles.gas = toggleValue;
+        case 'drugstores':    this.currentToggles.drugstore = toggleValue;
+        case 'hotels':        this.currentToggles.hotels = toggleValue;
+        case 'groceries':     this.currentToggles.grocery = toggleValue;
+      }
+      this.poiServices.setCurrentToggles(this.currentToggles);
+      if(toggleValue){
+        this.poiServices.getPOIMarkers(toggleName);
+      } else {
+        this.poiServices.removePOIMarkers(toggleName);
+      }
+    });
+
+    this.events.subscribe('poi-clicked', () => {
+      this.events.publish('set-poi-toggles', this.currentToggles ,Date.now());
+    });
+
   }
 
   public subscribeToUserInput() {
@@ -98,7 +147,7 @@ export class GoogleMapComponent implements OnInit {
   }
 
   //use to send data to other components
-  sendMessage(updatedMessage) {
+  sendMessage(updatedMessage : string) {
     this.data.updateMessage(updatedMessage);
   }
 }

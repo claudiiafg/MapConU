@@ -2,75 +2,62 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  NgZone,
-  ElementRef,
-  ViewChild
 } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
-import { MapsAPILoader } from '@agm/core';
-import { SearchService } from 'src/services/search.service';
-import { GeolocationServices } from 'src/services/geolocationServices';
+import { PopoverController, Events } from '@ionic/angular';
+import { PoiServices } from 'src/services/poiServices';
+
 
 @Component({
   selector: 'app-poi-popover',
   templateUrl: './poi-popover.component.html',
   styleUrls: ['./poi-popover.component.scss']
 })
-export class PoiPopoverComponent implements OnInit, AfterViewInit {
-  private map;
+export class PoiPopoverComponent {
+  private restaurants: boolean = false;
+  private coffee: boolean = false;
+  private gas: boolean = false;
+  private drugstore: boolean = false;
+  private hotels: boolean = false;
+  private grocery: boolean = false;
+
 
   constructor(
     private popoverController: PopoverController,
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
-    private searchService: SearchService,
-    private geolocationServices: GeolocationServices
+    private events: Events,
+    private poiServices : PoiServices,
+
   ) {}
 
-
-  ngOnInit() {
-    this.map = <HTMLDivElement>document.getElementById('google-map-component');
-    let service = new google.maps.places.PlacesService(this.map);
-    service.nearbySearch({
-      location: {
-        lat: this.geolocationServices.getLatitude(), 
-        lng: this.geolocationServices.getLongitude()
-      },
-      radius: 500,
-      type: 'store'
-    }, (results,status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log(results)
-        for (var i = 0; i < results.length; i++) {
-          // this.createMarker(results[i]);
-        }
-      }
-    });
-
+  ngOnInit(){
+    const currentToggles = this.poiServices.getCurrentToggles();
+    this.restaurants = currentToggles.restaurants;
+    this.coffee = currentToggles.coffee;
+    this.gas = currentToggles.gas;
+    this.drugstore = currentToggles.drugstore;
+    this.hotels = currentToggles.hotels;
+    this.grocery = currentToggles.grocery;
   }
 
-  createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: this.map,
-    position: placeLoc
-  });
+  update(toggle : string){
+    let value: boolean;
+    switch(toggle){
+      case 'restaurants':   value = this.restaurants;
+      case 'coffee shops':        value = this.coffee;
+      case 'gas stations':           value = this.gas;
+      case 'drugstores':     value = this.drugstore;
+      case 'hotels':        value = this.hotels;
+      case 'groceries':       value = this.grocery;
+    }
 
-  google.maps.event.addListener(marker, 'click', function() {
-    // infowindow.setContent(place.name);
-    // infowindow.open(map, this);
-  });
-}
-
-  ngAfterViewInit() {}
-
-  findAdress() {}
-
-  async closePopover() {
-    await this.popoverController.dismiss();
+    const data = {
+      toggle : toggle,
+      value : value
+    }
+    this.events.publish('poi-toggle-changed', data, Date.now())
   }
 
-  public updateMap() {
-
+  closePopover() {
+    this.popoverController.dismiss();
   }
+
 }

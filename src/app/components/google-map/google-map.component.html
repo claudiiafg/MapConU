@@ -1,3 +1,9 @@
+<agm-map id='tempMap'
+  [latitude]="latitude"
+  [longitude]="longitude">
+</agm-map>
+
+
 <div id="google-map-component">
   <agm-map
     [style.height.px]="height"
@@ -8,10 +14,18 @@
     id="map"
   >
     <agm-marker
-      *ngFor="let m of markers"
+      *ngFor="let m of positionMarkers"
       [iconUrl]="positionMarkerIcon"
       [latitude]="m.latitude"
       [longitude]="m.longitude"
+    >
+    </agm-marker>
+
+    <agm-marker
+      *ngFor="let p of poiMarkers"
+      [iconUrl]="poiMarkerIcon"
+      [latitude]="p.latitude"
+      [longitude]="p.longitude"
     >
     </agm-marker>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, Events } from '@ionic/angular';
 import { SearchPopoverComponent } from '../search-popover/search-popover.component';
 import { PoiPopoverComponent } from '../poi-popover/poi-popover.component';
 
@@ -12,7 +12,9 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
 
   constructor(
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    private events: Events,
+
   ) {}
 
   ngOnInit() {}
@@ -30,6 +32,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
 
     } else if(mode === 'poi'){
       this.poiClicked = !this.poiClicked;
+      this.events.publish('poi-clicked', Date.now());
       const popover = await this.popoverController.create({
         component: PoiPopoverComponent,
         event: ev,
