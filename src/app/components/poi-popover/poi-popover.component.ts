@@ -29,7 +29,8 @@ export class PoiPopoverComponent {
   ) {}
 
   ngOnInit(){
-    const currentToggles = this.poiServices.getCurrentToggles();
+    let currentToggles = this.poiServices.getCurrentToggles();
+    console.log(currentToggles);
     this.restaurants = currentToggles.restaurants;
     this.coffee = currentToggles.coffee;
     this.gas = currentToggles.gas;
@@ -39,14 +40,14 @@ export class PoiPopoverComponent {
   }
 
   update(toggle : string){
-    let value: boolean;
+    let value;
     switch(toggle){
-      case 'restaurants':   value = this.restaurants;
-      case 'coffee shops':        value = this.coffee;
-      case 'gas stations':           value = this.gas;
-      case 'drugstores':     value = this.drugstore;
-      case 'hotels':        value = this.hotels;
-      case 'groceries':       value = this.grocery;
+      case 'restaurants':   value = this.restaurants; break;
+      case 'coffee shops':        value = this.coffee; break;
+      case 'gas stations':           value = this.gas; break;
+      case 'drugstores':     value = this.drugstore; break;
+      case 'hotels':        value = this.hotels; break;
+      case 'groceries':       value = this.grocery; break;
     }
 
     const data = {

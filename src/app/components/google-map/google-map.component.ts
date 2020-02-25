@@ -20,7 +20,7 @@ export class GoogleMapComponent implements OnInit {
   private origin: any;
   private positionMarkers: any[] = [];
   private poiMarkers: any[] = [];
-  private currentToggles = {
+  private currentToggles : any = {
     restaurants : false,
     coffee : false,
     gas: false,
@@ -107,9 +107,9 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToUserInput();
 
     //subscribe to changes in POI toggles
-    this.events.subscribe('poi-toggle-changed', (res) => {
-      let toggleName = res.toggle;
-      let toggleValue = res.value;
+    this.events.subscribe('poi-toggle-changed', async (res) => {
+      const toggleName = res.toggle;
+      const toggleValue = res.value;
       console.log(toggleName + ': ' + toggleValue);
       switch(toggleName){
         case 'restaurants':   this.currentToggles.restaurants = toggleValue;
@@ -121,9 +121,10 @@ export class GoogleMapComponent implements OnInit {
       }
       this.poiServices.setCurrentToggles(this.currentToggles);
       if(toggleValue){
-        this.poiServices.getPOIMarkers(toggleName);
+        this.currentToggles = await this.poiServices.getPOIMarkers(toggleName);
+        console.log(this.currentToggles);
       } else {
-        this.poiServices.removePOIMarkers(toggleName);
+        this.currentToggles = this.poiServices.removePOIMarkers(toggleName);
       }
     });
 
