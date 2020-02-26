@@ -1,11 +1,11 @@
 import {
-  Component,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  Input,
+    Component,
+    OnInit,
+    OnChanges,
+    SimpleChanges,
+    Input,
 } from '@angular/core';
-import {Platform, Events} from '@ionic/angular';
+import {Platform, Events, AlertController} from '@ionic/angular';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
@@ -20,8 +20,9 @@ import { PoiServices } from 'src/services/poiServices';
 })
 export class GoogleMapComponent implements OnInit {
   private height: number = 0;
-  private latitude: number = 45.495729;
-  private longitude: number = -73.578041;
+  private loading: any;
+  private latitude: number = 45.4946; // to be change with geolocalisation
+  private longitude: number = -73.5774;
   private destination: any;
   private origin: any;
   private concordiaRed = '#800000';
@@ -36,7 +37,7 @@ export class GoogleMapComponent implements OnInit {
     grocery : false,
   }
   private overlayCoords: any[] = [];
-  
+
   //Options to be change dynamically when user click
   walkingOptions = {
     renderOptions: {
@@ -275,14 +276,14 @@ export class GoogleMapComponent implements OnInit {
         {lat: 45.458743, lng: -73.639479},
         {lat: 45.458536, lng: -73.638923}
     ];
-  poiMarkerIcon = {
-    url: 'assets/icon/poi-marker.png',
-    scaledSize: {
-      width: 20,
-      height: 20
-    }
-  };
-  previous;
+    poiMarkerIcon = {
+        url: 'assets/icon/poi-marker.png',
+        scaledSize: {
+            width: 20,
+            height: 20
+        }
+    };
+    previous;
 
   constructor(
     private platform: Platform,
@@ -291,7 +292,10 @@ export class GoogleMapComponent implements OnInit {
     private data: DataSharingService,
     private searchService: SearchService,
     private poiServices : PoiServices,
+    private alertController: AlertController
+
   ) {
+
     this.height = platform.height() - 106;
   }
 
@@ -386,32 +390,58 @@ export class GoogleMapComponent implements OnInit {
       });
 
       this.overlayCoords = [
-          {coords: this.hallCoords},
-          {coords: this.jmsbCoords},
-          {coords: this.lbCoords},
-          {coords: this.fbCoords},
-          {coords: this.fgCoords},
-          {coords: this.evCoords},
-          {coords: this.gmCoords},
-          {coords: this.gnCoords},
-          {coords: this.annexCoords},
-          {coords: this.tdCoords},
-          {coords: this.vaCoords},
-          {coords: this.adCoords},
-          {coords: this.ccCoords},
-          {coords: this.spCoords},
-          {coords: this.cjCoords},
-          {coords: this.vlCoords},
-          {coords: this.ptCoords},
-          {coords: this.scCoords},
-          {coords: this.pyCoords},
-          {coords: this.raCoords},
-          {coords: this.haCoords}
+          {name: 'Hall Building', coords: this.hallCoords},
+          {name: 'John Molson Building', coords: this.jmsbCoords},
+          {name: 'JW McConnell Building', coords: this.lbCoords},
+          {name: 'Faubourg Building', coords: this.fbCoords},
+          {name: 'Faubourg Ste Catherine Building', coords: this.fgCoords},
+          {name: 'EV Building', coords: this.evCoords},
+          {name: 'Guy-De Maisonneuve Building', coords: this.gmCoords},
+          {name: 'Grey Nuns', coords: this.gnCoords},
+          {name: 'Concordia Annexes', coords: this.annexCoords},
+          {name: 'TD Building', coords: this.tdCoords},
+          {name: 'Visual Arts Building', coords: this.vaCoords},
+          {name: 'Administration Building', coords: this.adCoords},
+          {name: 'Central Building', coords: this.ccCoords},
+          {name: 'Richard J. Renaud Science Complex', coords: this.spCoords},
+          {name: 'Communication Studies and Journalism Building', coords: this.cjCoords},
+          {name: 'Vanier Library', coords: this.vlCoords},
+          {name: 'Oscar Peterson Concert Hall', coords: this.ptCoords},
+          {name: 'Student Center', coords: this.scCoords},
+          {name: 'Psychology Building', coords: this.pyCoords},
+          {name: 'Recreation and Athletics Complex', coords: this.raCoords},
+          {name: 'Hingston Hall', coords: this.haCoords}
       ];
   }
 
-  //use to send data to other components
-  sendMessage(updatedMessage : string) {
-    this.data.updateMessage(updatedMessage);
-  }
+    async showAlert(building: string) {
+        const alert = await this.alertController.create({
+            header: building,
+            subHeader: "(address to be added)",
+            buttons: [{
+                text: "Map",
+                cssClass: "alert-buttons",
+                handler: (goIndoors) => {
+                    console.log("placeholder for indoor code");
+                }
+            },
+                {
+                    text: "Directions",
+                    cssClass: "alert-buttons",
+                    handler: (goHere) => {
+                        console.log("placeholder for get directions to this building");
+                    }
+
+                }]
+        });
+
+        await alert.present();
+        let result = await alert.onDidDismiss();
+
+    }
+
+    //use to send data to other components
+    sendMessage(updatedMessage) {
+        this.data.updateMessage(updatedMessage);
+    }
 }

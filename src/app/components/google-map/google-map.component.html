@@ -18,7 +18,9 @@
             [fillColor]="concordiaRed"
             [fillOpacity]="0.3"
             [strokeColor]="concordiaRed"
-            [strokeWeight]="2">
+            [strokeWeight]="2"
+            (polyClick)="showAlert(oc.name)"
+    >
     </agm-polygon>
 
     <agm-marker
