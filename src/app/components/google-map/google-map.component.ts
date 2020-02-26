@@ -26,6 +26,7 @@ export class GoogleMapComponent implements OnInit {
   private origin: any;
   concordiaRed = '#800000';
   private markers: any[] = [];
+    private overlayCoords: any[] = [];
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -165,12 +166,11 @@ export class GoogleMapComponent implements OnInit {
         {lat: 45.458384, lng: -73.639766},
         {lat: 45.458268, lng: -73.639468},
         {lat: 45.458172, lng: -73.639528},
-    {lat: 45.458207, lng: -73.639618},
-    {lat: 45.457912, lng: -73.639848},
-    {lat: 45.457875, lng: -73.639775},
-    {lat: 45.457803, lng: -73.639829}
-
-  ];
+        {lat: 45.458207, lng: -73.639618},
+        {lat: 45.457912, lng: -73.639848},
+        {lat: 45.457875, lng: -73.639775},
+        {lat: 45.457803, lng: -73.639829}
+    ];
 
   ccCoords = [
     {lat: 45.458079, lng: -73.640012},
@@ -267,7 +267,6 @@ export class GoogleMapComponent implements OnInit {
         {lat: 45.458536, lng: -73.638923}
     ];
 
-
     constructor(
       private platform: Platform,
       private geolocationServices: GeolocationServices,
@@ -297,16 +296,40 @@ export class GoogleMapComponent implements OnInit {
   }
 
   public subscribeToUserInput() {
-    this.searchService.origin.subscribe(resp => {
-      if (Array.isArray(resp) && resp.length) {
-        this.origin = { lat: resp[0], lng: resp[1] };
-      }
-    });
-    this.searchService.destination.subscribe(resp => {
-      if (Array.isArray(resp) && resp.length) {
-        this.destination = { lat: resp[0], lng: resp[1] };
-      }
-    });
+      this.searchService.origin.subscribe(resp => {
+          if (Array.isArray(resp) && resp.length) {
+              this.origin = {lat: resp[0], lng: resp[1]};
+          }
+      });
+      this.searchService.destination.subscribe(resp => {
+          if (Array.isArray(resp) && resp.length) {
+              this.destination = {lat: resp[0], lng: resp[1]};
+          }
+      });
+
+      this.overlayCoords = [
+          {coords: this.hallCoords},
+          {coords: this.jmsbCoords},
+          {coords: this.lbCoords},
+          {coords: this.fbCoords},
+          {coords: this.fgCoords},
+          {coords: this.evCoords},
+          {coords: this.gmCoords},
+          {coords: this.gnCoords},
+          {coords: this.annexCoords},
+          {coords: this.tdCoords},
+          {coords: this.vaCoords},
+          {coords: this.adCoords},
+          {coords: this.ccCoords},
+          {coords: this.spCoords},
+          {coords: this.cjCoords},
+          {coords: this.vlCoords},
+          {coords: this.ptCoords},
+          {coords: this.scCoords},
+          {coords: this.pyCoords},
+          {coords: this.raCoords},
+          {coords: this.haCoords}
+      ];
   }
 
   //use to send data to other components
