@@ -1,9 +1,9 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {IonicModule} from "@ionic/angular";
 
-import {OutdoorViewPage} from './outdoor-view.page';
+import {OutdoorViewPage} from "./outdoor-view.page";
 
-describe('OutdoorViewPage', () => {
+describe("OutdoorViewPage", () => {
   let component: OutdoorViewPage;
   let fixture: ComponentFixture<OutdoorViewPage>;
 
@@ -18,7 +18,7 @@ describe('OutdoorViewPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

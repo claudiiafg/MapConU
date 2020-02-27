@@ -112,12 +112,12 @@ export class GoogleMapComponent implements OnInit {
       {lat: 45.496894, lng: -73.577268}
   ];
 
-  fgCoords = [
-      {lat: 45.494367, lng: -73.57844},
-      {lat: 45.49419, lng: -73.577981},
-      {lat: 45.49448, lng: -73.577654},
-      {lat: 45.494702, lng: -73.578037}
-  ];
+    fgCoords = [
+        {lat: 45.494367, lng: -73.57844},
+        {lat: 45.49419, lng: -73.577981},
+        {lat: 45.49448, lng: -73.577654},
+        {lat: 45.494702, lng: -73.578037}
+    ];
 
     fbCoords = [
         {lat: 45.494922, lng: -73.577777},
@@ -307,8 +307,8 @@ export class GoogleMapComponent implements OnInit {
         private navController: NavController,
         private router: Router
     ) {
-    this.height = platform.height() - 106;
-  }
+        this.height = platform.height() - 106;
+    }
 
   async ngOnInit() {
     await this.platform.ready();
@@ -432,24 +432,39 @@ export class GoogleMapComponent implements OnInit {
       ];
   }
 
+    /*
+    Creates popup containing Concordia building descriptions.
+     */
     async showAlert(building: string, address: string) {
         this.buildingToNavigateTo = building;
         const alert = await this.alertController.create({
             header: building,
             subHeader: address,
+            cssClass: "alert-css",
             buttons: [
                 {
                     text: "Map",
-                    cssClass: "alert-buttons",
+                    cssClass: "alert-button-map",
                     handler: goIndoors => {
                         this.router.navigateByUrl("/indoor");
+                        return true;
+                    }
+                },
+
+                {
+                    text: "xxx",
+                    role: "cancel",
+                    cssClass: "alert-button-cancel",
+                    handler: () => {
+                        console.log("Cancel clicked");
                     }
                 },
                 {
-                    text: "Directions",
-                    cssClass: "alert-buttons",
+                    text: "Go",
+                    cssClass: "alert-button-go",
                     handler: () => {
                         this.goHere();
+                        return true;
                     }
                 }
             ]
@@ -459,6 +474,10 @@ export class GoogleMapComponent implements OnInit {
         let result = await alert.onDidDismiss();
     }
 
+    /*
+    Shows the user a path from their location to the Concordia building whose information they are looking at when the
+    'Go' button is clicked on the building information popup
+     */
     goHere() {
         let buildingLat: number;
         let buildingLng: number;

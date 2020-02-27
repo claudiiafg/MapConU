@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
-import {IonicModule} from '@ionic/angular';
+import {IonicModule} from "@ionic/angular";
 
-import {OutdoorViewPageRoutingModule} from './outdoor-view-routing.module';
+import {OutdoorViewPageRoutingModule} from "./outdoor-view-routing.module";
 
-import {OutdoorViewPage} from './outdoor-view.page';
+import {OutdoorViewPage} from "./outdoor-view.page";
 import {OutdoorNavigationToolbarComponent} from "../../components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component";
 import {OutdoorNavigationSideButtonsComponent} from "../../components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component";
 import {GoogleMapComponent} from "../../components/google-map/google-map.component";
@@ -19,9 +19,7 @@ import {SearchPopoverComponent} from "../../components/search-popover/search-pop
     IonicModule,
     OutdoorViewPageRoutingModule
   ],
-  exports: [
-    OutdoorViewPage
-  ],
+  exports: [OutdoorViewPage],
   declarations: [
     OutdoorViewPage,
     OutdoorNavigationToolbarComponent,
