@@ -1,16 +1,12 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { DataSharingService } from '../../../services/data-sharing.service';
-import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
   templateUrl: './indoor-navigation-toolbar.component.html',
   styleUrls: ['./indoor-navigation-toolbar.component.scss']
 })
-@NgModule({
-  declarations: [AppComponent],
-  bootstrap: [AppComponent]
-})
+
 export class IndoorNavigationToolbarComponent implements OnInit {
   building: string;
   maxFloorIndex: number;

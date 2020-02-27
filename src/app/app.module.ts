@@ -27,23 +27,25 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AgmDirectionModule } from 'agm-direction';
 
 //pages
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { GoogleMapComponent } from './components/google-map/google-map.component';
-import { OutdoorNavigationSideButtonsComponent } from './components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component';
-import { IndoorNavigationSideButtonsComponent } from './components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component';
-import { OutdoorNavigationToolbarComponent } from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
-import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
-import { IndoorMapComponent } from './components/indoor-map/indoor-map.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {GoogleMapComponent} from './components/google-map/google-map.component';
+import {OutdoorNavigationSideButtonsComponent} from './components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component';
+import {IndoorNavigationSideButtonsComponent} from './components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component';
+import {OutdoorNavigationToolbarComponent} from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
+import {SettingsToolbarComponent} from './components/settings-toolbar/settings-toolbar.component';
+import {IndoorMapComponent} from './components/indoor-map/indoor-map.component';
+import {OutdoorViewPage} from "./pages/outdoor-view/outdoor-view.page";
+import {IndoorViewPage} from "./pages/indoor-view/indoor-view.page";
 
 //services
-import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
-import { UserServices } from 'src/services/userServices';
-import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
+import {GeolocationServices} from 'src/services/geolocationServices';
+import {SearchPopoverComponent} from './components/search-popover/search-popover.component';
+import {UserServices} from 'src/services/userServices';
+import {IndoorNavigationToolbarComponent} from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
 
 //floorplans
-import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
+import {MB1FloorPlan} from './floor-plans/jmsb/mb1/mb1';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     SearchPopoverComponent,
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent,
-    MB1FloorPlan
+    MB1FloorPlan,
+    OutdoorViewPage,
+    IndoorViewPage
   ],
   entryComponents: [SearchPopoverComponent],
   imports: [
@@ -81,11 +85,11 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     Geolocation,
     GeolocationServices,
     UserServices,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FirestoreSettingsToken, useValue: {} }
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    {provide: FirestoreSettingsToken, useValue: {}}
   ],
   bootstrap: [AppComponent],
-  exports: [SearchPopoverComponent],
+  exports: [SearchPopoverComponent, IndoorNavigationToolbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
