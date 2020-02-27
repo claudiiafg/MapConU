@@ -35,8 +35,8 @@ export class GoogleMapComponent implements OnInit {
     hotels : false,
     grocery : false,
   }
-  private overlayCoords;
-
+  private overlayCoords: any[] = [];
+  
   //Options to be change dynamically when user click
   walkingOptions = {
     renderOptions: {
