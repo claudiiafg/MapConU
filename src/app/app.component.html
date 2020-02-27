@@ -1,7 +1,22 @@
 <ion-app>
   <header>
-    <app-outdoor-navigation-toolbar></app-outdoor-navigation-toolbar>
+    <div *ngIf="isOutdoor">
+      <app-outdoor-navigation-toolbar></app-outdoor-navigation-toolbar>
+    </div>
+    <div *ngIf="!isOutdoor">
+      <app-indoor-navigation-toolbar></app-indoor-navigation-toolbar>
+    </div>
   </header>
-  <app-outdoor-navigation-side-buttons></app-outdoor-navigation-side-buttons>
-  <app-google-map></app-google-map>
+  <div *ngIf="isOutdoor">
+    <app-outdoor-navigation-side-buttons></app-outdoor-navigation-side-buttons>
+  </div>
+  <div *ngIf="!isOutdoor">
+    <app-indoor-navigation-side-buttons></app-indoor-navigation-side-buttons>
+  </div>
+  <div *ngIf="isOutdoor">
+    <app-google-map></app-google-map>
+  </div>
+  <div *ngIf="!isOutdoor">
+    <app-indoor-map></app-indoor-map>
+  </div>
 </ion-app>
