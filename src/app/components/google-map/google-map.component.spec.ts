@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {IonicModule} from "@ionic/angular";
 
-import { GoogleMapComponent } from './google-map.component';
+import {GoogleMapComponent} from "./google-map.component";
 
-describe('GoogleMapComponent', () => {
+describe("GoogleMapComponent", () => {
   let component: GoogleMapComponent;
   let fixture: ComponentFixture<GoogleMapComponent>;
 
@@ -18,7 +18,7 @@ describe('GoogleMapComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
