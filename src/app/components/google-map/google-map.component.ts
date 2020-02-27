@@ -85,6 +85,9 @@ export class GoogleMapComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.latitude = this.locations[0].latitude;
+    this.longitude = this.locations[0].longitude;
+
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition();
 
