@@ -123,7 +123,7 @@ export class GoogleMapComponent implements OnInit {
       this.poiServices.setCurrentToggles(this.currentToggles);
       //if value is true add all markers to map (one by one to trigger HTML updates)
       if(toggleValue){
-        await this.poiServices.setPOIMarkers(toggleName);
+        await this.poiServices.setPOIMarkers(toggleName, this.latitude, this.longitude);
         let tempMarkers = this.poiServices.getPOIMarkers();
         this.poiMarkers = [];
         for(let marker of tempMarkers){

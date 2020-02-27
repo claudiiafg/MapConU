@@ -17,7 +17,7 @@ export class PoiServices {
     private geolocationServices: GeolocationServices,
   ) {}
 
-  setPOIMarkers(type: string){
+  setPOIMarkers(type: string, lat: number, lng: number){
     //important so it doesn't break our map (if use ours, it tries to render it again)
     let tempMap = <HTMLDivElement>document.getElementById('tempMap');
     let service = new google.maps.places.PlacesService(tempMap);
@@ -25,11 +25,11 @@ export class PoiServices {
     return new Promise( function( resolve, reject ) {
       service.nearbySearch({
         location: {
-          lat: self.geolocationServices.getLatitude(),
-          lng: self.geolocationServices.getLongitude()
+          lat: lat,
+          lng: lng
         },
         radius: 100,
-        type: type
+        keyword: type
       }, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           if(!self.hasType(type)){
@@ -46,7 +46,7 @@ export class PoiServices {
             resolve(self.poiMarkers);
           }
         } else {
-          reject(status);
+          console.error(status);
         }
       });
     });
