@@ -9,4 +9,9 @@ import { Component } from '@angular/core';
 export class MB1FloorPlan {
 
   constructor(){}
+
+
+  logSomething(){
+    console.log('hi there');
+  }
 }
