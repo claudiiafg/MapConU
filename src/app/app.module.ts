@@ -37,12 +37,17 @@ import { PoiPopoverComponent } from './components/poi-popover/poi-popover.compon
 //env variables
 import { APIKey } from 'src/environments/env';
 import { environment } from '../environments/environment';
+import {OutdoorViewPage} from "./pages/outdoor-view/outdoor-view.page";
+import {IndoorViewPage} from "./pages/indoor-view/indoor-view.page";
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
+import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { UserServices } from 'src/services/userServices';
 import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
-import { PoiServices } from 'src/services/poiServices';
+
+//floorplans
+import {MB1FloorPlan} from './floor-plans/jmsb/mb1/mb1';
 
 PoiServices
 @NgModule({
@@ -57,7 +62,9 @@ PoiServices
     PoiPopoverComponent,
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent,
-    MB1FloorPlan
+    MB1FloorPlan,
+    OutdoorViewPage,
+    IndoorViewPage
   ],
   entryComponents: [SearchPopoverComponent],
   imports: [
@@ -87,7 +94,7 @@ PoiServices
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
   bootstrap: [AppComponent],
-  exports: [SearchPopoverComponent],
+  exports: [SearchPopoverComponent, IndoorNavigationToolbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
