@@ -295,9 +295,10 @@ export class GoogleMapComponent implements OnInit {
     private poiServices: PoiServices,
     private alertController: AlertController,
     private navController: NavController,
-    private router: Router
+    private router: Router,
+    private dataSharingService: DataSharingService
   ) {
-    this.height = platform.height() - 106;
+    this.subscribeToMapSize();
   }
 
   async ngOnInit() {
@@ -577,6 +578,12 @@ export class GoogleMapComponent implements OnInit {
   //use to send data to other components
   sendMessage(updatedMessage: any) {
     this.data.updateMessage(updatedMessage);
+  }
+
+  public subscribeToMapSize() {
+    this.dataSharingService.mapSize.subscribe(size => {
+      this.height = size;
+    });
   }
 
   public onResponse($event: any) {}

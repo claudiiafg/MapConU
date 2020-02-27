@@ -7,8 +7,9 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, Platform } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
+import { DataSharingService } from 'src/services/data-sharing.service';
 
 @Component({
   selector: 'app-search-popover',
@@ -26,7 +27,9 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
     public popoverController: PopoverController,
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
-    public directionService: DirectionService
+    public directionService: DirectionService,
+    private platform: Platform,
+    private dataSharingService: DataSharingService
   ) {}
 
   ngOnInit() {}
@@ -91,6 +94,7 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
     this.closePopover();
     if (this.latitudeTo && this.latitudeFrom) {
       this.directionService.isDirectionSet.next(true);
+      this.dataSharingService.updateMapSize(-148);
 
       this.directionService.origin.next([
         this.latitudeFrom,
