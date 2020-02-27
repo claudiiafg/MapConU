@@ -37,6 +37,7 @@ export class GoogleMapComponent implements OnInit {
     grocery : false,
   }
   private overlayCoords: any[] = [];
+    private buildingToNavigateTo: string;
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -410,11 +411,13 @@ export class GoogleMapComponent implements OnInit {
           {name: 'Student Center', coords: this.scCoords},
           {name: 'Psychology Building', coords: this.pyCoords},
           {name: 'Recreation and Athletics Complex', coords: this.raCoords},
-          {name: 'Hingston Hall', coords: this.haCoords}
+          {name: 'Hingston Hall', coords: this.haCoords},
+          {name: 'FC Smith Building', coords: this.fcCoords}
       ];
   }
 
     async showAlert(building: string) {
+        this.buildingToNavigateTo = building;
         const alert = await this.alertController.create({
             header: building,
             subHeader: "(address to be added)",
@@ -428,8 +431,8 @@ export class GoogleMapComponent implements OnInit {
                 {
                     text: "Directions",
                     cssClass: "alert-buttons",
-                    handler: (goHere) => {
-                        console.log("placeholder for get directions to this building");
+                    handler: () => {
+                        this.goHere();
                     }
 
                 }]
@@ -438,6 +441,24 @@ export class GoogleMapComponent implements OnInit {
         await alert.present();
         let result = await alert.onDidDismiss();
 
+
+    }
+
+    goHere() {
+        let buildingLat: number;
+        let buildingLng: number;
+
+        for (let i = 0; i < this.overlayCoords.length; i++) {
+            if (this.overlayCoords[i].name === this.buildingToNavigateTo) {
+
+                buildingLat = this.overlayCoords[i].coords[0].lat;
+                buildingLng = this.overlayCoords[i].coords[0].lng;
+            }
+        }
+        this.searchService.origin.next([this.geolocationServices.getLatitude(), this.geolocationServices.getLongitude()]);
+        this.searchService.destination.next([buildingLat, buildingLng]);
+
+        this.buildingToNavigateTo = null;
     }
 
     //use to send data to other components
