@@ -35,12 +35,14 @@ import { IndoorNavigationSideButtonsComponent } from './components/indoor-naviga
 import { OutdoorNavigationToolbarComponent } from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
 import { IndoorMapComponent } from './components/indoor-map/indoor-map.component';
+import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
+import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
+import { PoiPopoverComponent } from './components/poi-popover/poi-popover.component';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { UserServices } from 'src/services/userServices';
-import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
+import { PoiServices } from 'src/services/poiServices';
 
 //floorplans
 import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
@@ -54,11 +56,15 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     IndoorNavigationSideButtonsComponent,
     OutdoorNavigationToolbarComponent,
     SearchPopoverComponent,
+    PoiPopoverComponent,
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent,
     MB1FloorPlan
   ],
-  entryComponents: [SearchPopoverComponent],
+  entryComponents: [
+    SearchPopoverComponent,
+    PoiPopoverComponent
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -81,6 +87,7 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     Geolocation,
     GeolocationServices,
     UserServices,
+    PoiServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

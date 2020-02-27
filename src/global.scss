@@ -24,3 +24,17 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+
+ion-backdrop{
+  position: fixed;
+}
+
+.popover-arrow{
+  display: none !important;
+}
+
+ion-fab-button{
+  --background-activated: white;
+  --background-focused: white;
+}
