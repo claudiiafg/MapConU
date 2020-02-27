@@ -5,12 +5,13 @@ import {
     SimpleChanges,
     Input,
 } from '@angular/core';
-import {Platform, Events, AlertController} from '@ionic/angular';
+import {Platform, Events, AlertController, NavController} from '@ionic/angular';
 
 //services
-import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchService } from 'src/services/search.service';
-import { DataSharingService } from '../../../services/data-sharing.service';
+import {GeolocationServices} from 'src/services/geolocationServices';
+import {SearchService} from 'src/services/search.service';
+import {DataSharingService} from '../../../services/data-sharing.service';
+import {Router} from "@angular/router";
 import { PoiServices } from 'src/services/poiServices';
 
 @Component({
@@ -286,17 +287,17 @@ export class GoogleMapComponent implements OnInit {
     };
     previous;
 
-  constructor(
-    private platform: Platform,
-    private geolocationServices: GeolocationServices,
-    private events: Events,
-    private data: DataSharingService,
-    private searchService: SearchService,
-    private poiServices : PoiServices,
-    private alertController: AlertController
-
-  ) {
-
+    constructor(
+        private platform: Platform,
+        private geolocationServices: GeolocationServices,
+        private events: Events,
+        private data: DataSharingService,
+        private searchService: SearchService,
+        private poiServices : PoiServices,
+        private alertController: AlertController,
+        private navController: NavController,
+        private router: Router
+    ) {
     this.height = platform.height() - 106;
   }
 
@@ -416,6 +417,7 @@ export class GoogleMapComponent implements OnInit {
       ];
   }
 
+
     async showAlert(building: string) {
         this.buildingToNavigateTo = building;
         const alert = await this.alertController.create({
@@ -425,7 +427,7 @@ export class GoogleMapComponent implements OnInit {
                 text: "Map",
                 cssClass: "alert-buttons",
                 handler: (goIndoors) => {
-                    console.log("placeholder for indoor code");
+                    this.router.navigateByUrl('/indoor');
                 }
             },
                 {
@@ -461,8 +463,4 @@ export class GoogleMapComponent implements OnInit {
         this.buildingToNavigateTo = null;
     }
 
-    //use to send data to other components
-    sendMessage(updatedMessage) {
-        this.data.updateMessage(updatedMessage);
-    }
 }
