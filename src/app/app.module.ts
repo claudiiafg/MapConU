@@ -46,7 +46,9 @@ import { IndoorNavigationToolbarComponent } from './components/indoor-navigation
 
 //floorplans
 import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
-import { PoiServices } from '../services/poiServices';
+
+import { PoiServices } from 'src/services/poiServices';
+import { TimeFooterComponent } from './components/time-footer/time-footer.component';
 
 PoiServices;
 @NgModule({
@@ -63,7 +65,8 @@ PoiServices;
     IndoorNavigationToolbarComponent,
     MB1FloorPlan,
     OutdoorViewPage,
-    IndoorViewPage
+    IndoorViewPage,
+    TimeFooterComponent
   ],
   entryComponents: [SearchPopoverComponent, PoiPopoverComponent],
   imports: [
