@@ -20,14 +20,12 @@ export class PoiServices {
   setPOIMarkers(type: string, lat: number, lng: number){
     //important so it doesn't break our map (if use ours, it tries to render it again)
     let tempMap = <HTMLDivElement>document.getElementById('tempMap');
+    var location = new google.maps.LatLng(lat, lng);
     let service = new google.maps.places.PlacesService(tempMap);
     let self = this;
     return new Promise( function( resolve, reject ) {
       service.nearbySearch({
-        location: {
-          lat: lat,
-          lng: lng
-        },
+        location: location,
         radius: 100,
         keyword: type
       }, (results, status) => {

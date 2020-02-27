@@ -20,8 +20,8 @@ import { PoiServices } from 'src/services/poiServices';
 })
 export class GoogleMapComponent implements OnInit {
   private height: number = 0;
-  private latitude: number;
-  private longitude: number;
+  private latitude: number = 45.495729;
+  private longitude: number = -73.578041;
   private destination: any;
   private origin: any;
   private concordiaRed = '#800000';
@@ -35,6 +35,7 @@ export class GoogleMapComponent implements OnInit {
     hotels : false,
     grocery : false,
   }
+  private overlayCoords;
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -295,9 +296,6 @@ export class GoogleMapComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.latitude = this.locations[0].latitude;
-    this.longitude = this.locations[0].longitude;
-
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition();
 
@@ -334,6 +332,10 @@ export class GoogleMapComponent implements OnInit {
       this.poiServices.setCurrentToggles(this.currentToggles);
       //if value is true add all markers to map (one by one to trigger HTML updates)
       if(toggleValue){
+        if(!this.latitude && !this.longitude){
+          this.latitude = 45.495729;
+          this.longitude = -73.578041;
+        }
         await this.poiServices.setPOIMarkers(toggleName, this.latitude, this.longitude);
         let tempMarkers = this.poiServices.getPOIMarkers();
         this.poiMarkers = [];
