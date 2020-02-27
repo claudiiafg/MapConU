@@ -3,7 +3,8 @@
     <ion-icon name="calendar"></ion-icon>
   </ion-fab-button>
   <ion-fab-button>
-    <ion-icon name="pin"></ion-icon>
+    <ion-icon *ngIf='!poiClicked' name="pin" (click)="presentPopover($event, 'poi')"></ion-icon>
+    <ion-icon *ngIf='poiClicked' name="close" (click)="presentPopover($event, 'poi')"></ion-icon>
   </ion-fab-button>
   <ion-fab-button>
     <ion-icon name="bus"></ion-icon>
@@ -12,6 +13,6 @@
 
 <ion-fab vertical="bottom" horizontal="start" slot="fixed">
   <ion-fab-button class="nav-button">
-    <ion-icon name="compass" (click)="presentPopover($event)"></ion-icon>
+    <ion-icon name="compass"  (click)="presentPopover($event, 'search')"></ion-icon>
   </ion-fab-button>
 </ion-fab>

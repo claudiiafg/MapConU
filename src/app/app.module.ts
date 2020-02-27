@@ -30,16 +30,19 @@ import { OutdoorNavigationSideButtonsComponent } from './components/outdoor-navi
 import { IndoorNavigationSideButtonsComponent } from './components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component';
 import { OutdoorNavigationToolbarComponent } from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
+import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
+import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
+import { PoiPopoverComponent } from './components/poi-popover/poi-popover.component';
 //env variables
 import { APIKey } from 'src/environments/env';
 import { environment } from '../environments/environment';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { UserServices } from 'src/services/userServices';
-import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
+import { PoiServices } from 'src/services/poiServices';
 
+PoiServices
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,10 +51,14 @@ import { IndoorNavigationToolbarComponent } from './components/indoor-navigation
     IndoorNavigationSideButtonsComponent,
     OutdoorNavigationToolbarComponent,
     SearchPopoverComponent,
+    PoiPopoverComponent,
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent
   ],
-  entryComponents: [SearchPopoverComponent],
+  entryComponents: [
+    SearchPopoverComponent,
+    PoiPopoverComponent
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -74,6 +81,7 @@ import { IndoorNavigationToolbarComponent } from './components/indoor-navigation
     Geolocation,
     GeolocationServices,
     UserServices,
+    PoiServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
