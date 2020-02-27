@@ -3,9 +3,14 @@ import {
     OnInit,
     OnChanges,
     SimpleChanges,
-    Input,
-} from '@angular/core';
-import {Platform, Events, AlertController, NavController} from '@ionic/angular';
+    Input
+} from "@angular/core";
+import {
+    Platform,
+    Events,
+    AlertController,
+    NavController
+} from "@ionic/angular";
 
 //services
 import {GeolocationServices} from 'src/services/geolocationServices';
@@ -75,47 +80,51 @@ export class GoogleMapComponent implements OnInit {
     }
   };
 
-  //coordinates for concordia building overlays
-  hallCoords = [
-    {lat: 45.496836, lng: -73.578858},
-    {lat: 45.497164, lng: -73.579539},
-    {lat: 45.497720, lng: -73.579029},
-    {lat: 45.497385, lng: -73.578348}
-  ];
+    /*
+      These arrays store the latitude, longitude points used to draw the polygons
+      that highlight the Concordia buildings
+    */
 
-  jmsbCoords = [
-    {lat: 45.495531, lng: -73.579197},
-    {lat: 45.495357, lng: -73.579378},
-    {lat: 45.495222, lng: -73.579117},
-    {lat: 45.495165, lng: -73.579174},
-    {lat: 45.495008, lng: -73.578808},
-    {lat: 45.495040, lng: -73.578780},
-    {lat: 45.495007, lng: -73.578725},
-    {lat: 45.495209, lng: -73.578507}
-  ];
+    hallCoords = [
+        {lat: 45.496836, lng: -73.578858},
+        {lat: 45.497164, lng: -73.579539},
+        {lat: 45.49772, lng: -73.579029},
+        {lat: 45.497385, lng: -73.578348}
+    ];
+
+    jmsbCoords = [
+        {lat: 45.495531, lng: -73.579197},
+        {lat: 45.495357, lng: -73.579378},
+        {lat: 45.495222, lng: -73.579117},
+        {lat: 45.495165, lng: -73.579174},
+        {lat: 45.495008, lng: -73.578808},
+        {lat: 45.49504, lng: -73.57878},
+        {lat: 45.495007, lng: -73.578725},
+        {lat: 45.495209, lng: -73.578507}
+    ];
 
   lbCoords = [
-    {lat: 45.497285, lng: -73.578091},
-    {lat: 45.496681, lng: -73.578678},
-    {lat: 45.496249, lng: -73.577721},
-    {lat: 45.496497, lng: -73.577474},
-    {lat: 45.496544, lng: -73.577608},
-    {lat: 45.496894, lng: -73.577268}
+      {lat: 45.497285, lng: -73.578091},
+      {lat: 45.496681, lng: -73.578678},
+      {lat: 45.496249, lng: -73.577721},
+      {lat: 45.496497, lng: -73.577474},
+      {lat: 45.496544, lng: -73.577608},
+      {lat: 45.496894, lng: -73.577268}
   ];
 
   fgCoords = [
-    {lat: 45.494367, lng: -73.578440},
-    {lat: 45.494190, lng: -73.577981},
-    {lat: 45.494480, lng: -73.577654},
-    {lat: 45.494702, lng: -73.578037}
+      {lat: 45.494367, lng: -73.57844},
+      {lat: 45.49419, lng: -73.577981},
+      {lat: 45.49448, lng: -73.577654},
+      {lat: 45.494702, lng: -73.578037}
   ];
 
-  fbCoords = [
-    {lat: 45.494922, lng: -73.577777},
-    {lat: 45.494653, lng: -73.577217},
-    {lat: 45.494395, lng: -73.577517},
-    {lat: 45.494702, lng: -73.578037}
-  ];
+    fbCoords = [
+        {lat: 45.494922, lng: -73.577777},
+        {lat: 45.494653, lng: -73.577217},
+        {lat: 45.494395, lng: -73.577517},
+        {lat: 45.494702, lng: -73.578037}
+    ];
 
     evCoords = [
         {lat: 45.496057, lng: -73.577718},
@@ -319,64 +328,62 @@ export class GoogleMapComponent implements OnInit {
       this.latitude = incomingMessage.latitude;
       this.longitude = incomingMessage.longitude;
     });
-
     this.subscribeToUserInput();
+      //subscribe to changes in POI toggles
+      this.events.subscribe('poi-toggle-changed', async (res) => {
+          const toggleName = res.toggle;
+          const toggleValue = res.value;
+          console.log(toggleName + ': ' + toggleValue);
+          switch(toggleName){
+              case 'restaurant':   this.currentToggles.restaurants = toggleValue; break;
+              case 'coffee shop':  this.currentToggles.coffee = toggleValue; break;
+              case 'gas station':  this.currentToggles.gas = toggleValue; break;
+              case 'drugstore':    this.currentToggles.drugstore = toggleValue; break;
+              case 'hotel':        this.currentToggles.hotels = toggleValue; break;
+              case 'groceries':     this.currentToggles.grocery = toggleValue; break;
+          }
+          this.poiServices.setCurrentToggles(this.currentToggles);
+          //if value is true add all markers to map (one by one to trigger HTML updates)
+          if(toggleValue){
+              if(!this.latitude && !this.longitude){
+                  this.latitude = 45.495729;
+                  this.longitude = -73.578041;
+              }
+              await this.poiServices.setPOIMarkers(toggleName, this.latitude, this.longitude);
+              let tempMarkers = this.poiServices.getPOIMarkers();
+              this.poiMarkers = [];
+              for(let marker of tempMarkers){
+                  this.poiMarkers.push(marker);
+              }
 
-    //subscribe to changes in POI toggles
-    this.events.subscribe('poi-toggle-changed', async (res) => {
-      const toggleName = res.toggle;
-      const toggleValue = res.value;
-      console.log(toggleName + ': ' + toggleValue);
-      switch(toggleName){
-        case 'restaurant':   this.currentToggles.restaurants = toggleValue; break;
-        case 'coffee shop':  this.currentToggles.coffee = toggleValue; break;
-        case 'gas station':  this.currentToggles.gas = toggleValue; break;
-        case 'drugstore':    this.currentToggles.drugstore = toggleValue; break;
-        case 'hotel':        this.currentToggles.hotels = toggleValue; break;
-        case 'groceries':     this.currentToggles.grocery = toggleValue; break;
-      }
-      this.poiServices.setCurrentToggles(this.currentToggles);
-      //if value is true add all markers to map (one by one to trigger HTML updates)
-      if(toggleValue){
-        if(!this.latitude && !this.longitude){
-          this.latitude = 45.495729;
-          this.longitude = -73.578041;
-        }
-        await this.poiServices.setPOIMarkers(toggleName, this.latitude, this.longitude);
-        let tempMarkers = this.poiServices.getPOIMarkers();
-        this.poiMarkers = [];
-        for(let marker of tempMarkers){
-          this.poiMarkers.push(marker);
-        }
+              //if value is false remove all markers of that type from the map
+          } else {
+              this.currentToggles = this.poiServices.getCurrentToggles();
+              let tempMarkers = this.poiServices.removePOIMarkers(toggleName);
+              this.poiMarkers = [];
+              for(let marker of tempMarkers){
+                  this.poiMarkers.push(marker);
+              }
+          }
+      });
 
-      //if value is false remove all markers of that type from the map
-      } else {
-        this.currentToggles = this.poiServices.getCurrentToggles();
-        let tempMarkers = this.poiServices.removePOIMarkers(toggleName);
-        this.poiMarkers = [];
-        for(let marker of tempMarkers){
-          this.poiMarkers.push(marker);
-        }
-      }
-    });
-
-    //as a toggle is clicke, update the current toggles
-    this.events.subscribe('poi-clicked', () => {
-      this.events.publish('set-poi-toggles', this.currentToggles ,Date.now());
-    });
-
-    this.events.subscribe('campusChanged', () => {
-      this.poiMarkers = [];
-      this.currentToggles = this.poiServices.resetPOIMarkers();
-    });
+      //as a toggle is clicke, update the current toggles
+      this.events.subscribe('poi-clicked', () => {
+          this.events.publish('set-poi-toggles', this.currentToggles ,Date.now());
+      });
+      this.events.subscribe('campusChanged', () => {
+          this.poiMarkers = [];
+          this.currentToggles = this.poiServices.resetPOIMarkers();
+      });
   }
 
-  //show name of POI when clicked on a marker
-  clickedMarker(infowindow) {
-    if (this.previous) {
-      this.previous.close();
-    }
-    this.previous = infowindow;
+    //show name of POI when clicked on a marker
+    clickedMarker(infowindow) {
+        if (this.previous) {
+            this.previous.close();
+        }
+        this.previous = infowindow;
+
   }
 
   public subscribeToUserInput() {
@@ -391,59 +398,65 @@ export class GoogleMapComponent implements OnInit {
           }
       });
 
+      /*
+      Array containing all Concordia building data in one place, used to dynamically create highlighting polygons and
+      get information building name, address and coordinates for the building information alerts that appeat when a
+      building is clicked
+       */
       this.overlayCoords = [
-          {name: 'Hall Building', coords: this.hallCoords},
-          {name: 'John Molson Building', coords: this.jmsbCoords},
-          {name: 'JW McConnell Building', coords: this.lbCoords},
-          {name: 'Faubourg Building', coords: this.fbCoords},
-          {name: 'Faubourg Ste Catherine Building', coords: this.fgCoords},
-          {name: 'EV Building', coords: this.evCoords},
-          {name: 'Guy-De Maisonneuve Building', coords: this.gmCoords},
-          {name: 'Grey Nuns', coords: this.gnCoords},
-          {name: 'Concordia Annexes', coords: this.annexCoords},
-          {name: 'TD Building', coords: this.tdCoords},
-          {name: 'Visual Arts Building', coords: this.vaCoords},
-          {name: 'Administration Building', coords: this.adCoords},
-          {name: 'Central Building', coords: this.ccCoords},
-          {name: 'Richard J. Renaud Science Complex', coords: this.spCoords},
-          {name: 'Communication Studies and Journalism Building', coords: this.cjCoords},
-          {name: 'Vanier Library', coords: this.vlCoords},
-          {name: 'Oscar Peterson Concert Hall', coords: this.ptCoords},
-          {name: 'Student Center', coords: this.scCoords},
-          {name: 'Psychology Building', coords: this.pyCoords},
-          {name: 'Recreation and Athletics Complex', coords: this.raCoords},
-          {name: 'Hingston Hall', coords: this.haCoords},
-          {name: 'FC Smith Building', coords: this.fcCoords}
+          {name: "Hall Building", address: "1455 De Maisonneeuve Blvd. W.", coords: this.hallCoords},
+          {name: "John Molson Building", address: "1450 Guy St.", coords: this.jmsbCoords},
+          {name: "JW McConnell Building", address: "1400 De Maisonneeuve Blvd. W.", coords: this.lbCoords},
+          {name: "Faubourg Building", address: "1250 Guy St.", coords: this.fbCoords},
+          {name: "Faubourg Ste Catherine Building", coords: this.fgCoords},
+          {name: "EV Building", address: "1515 St. Catherine W.", coords: this.evCoords},
+          {name: "Guy-De Maisonneuve Building", address: "1550 De Maisonneeuve Blvd. W.", coords: this.gmCoords},
+          {name: "Grey Nuns", address: "1190 Guy St.", coords: this.gnCoords},
+          {name: "Concordia Annexes", address: "2010-2110 Mackay St.", coords: this.annexCoords},
+          {name: "TD Building", address: "1410 Guy St.", coords: this.tdCoords},
+          {name: "Visual Arts Building", address: "1395 Rene Levsque Blvd. W.", coords: this.vaCoords},
+          {name: "Administration Building", address: "7141 Sherbrooke W.", coords: this.adCoords},
+          {name: "Central Building", address: "7141 Sherbrooke W.", coords: this.ccCoords},
+          {name: "Richard J. Renaud Science Complex", address: "7141 Sherbrooke W.", coords: this.spCoords},
+          {
+              name: "Communication Studies and Journalism Building", address: "7141 Sherbrooke W.",
+              coords: this.cjCoords
+          },
+          {name: "Vanier Library", address: "7141 Sherbrooke W.", coords: this.vlCoords},
+          {name: "Oscar Peterson Concert Hall", address: "7141 Sherbrooke W.", coords: this.ptCoords},
+          {name: "Student Center", address: "7141 Sherbrooke W.", coords: this.scCoords},
+          {name: "Psychology Building", address: "7141 Sherbrooke W.", coords: this.pyCoords},
+          {name: "Recreation and Athletics Complex", address: "7200 Sherbrooke W.", coords: this.raCoords},
+          {name: "Hingston Hall", address: "7141 Sherbrooke W.", coords: this.haCoords},
+          {name: "FC Smith Building", address: "7141 Sherbrooke W.", coords: this.fcCoords}
       ];
   }
 
-
-    async showAlert(building: string) {
+    async showAlert(building: string, address: string) {
         this.buildingToNavigateTo = building;
         const alert = await this.alertController.create({
             header: building,
-            subHeader: "(address to be added)",
-            buttons: [{
-                text: "Map",
-                cssClass: "alert-buttons",
-                handler: (goIndoors) => {
-                    this.router.navigateByUrl('/indoor');
-                }
-            },
+            subHeader: address,
+            buttons: [
+                {
+                    text: "Map",
+                    cssClass: "alert-buttons",
+                    handler: goIndoors => {
+                        this.router.navigateByUrl("/indoor");
+                    }
+                },
                 {
                     text: "Directions",
                     cssClass: "alert-buttons",
                     handler: () => {
                         this.goHere();
                     }
-
-                }]
+                }
+            ]
         });
 
         await alert.present();
         let result = await alert.onDidDismiss();
-
-
     }
 
     goHere() {
@@ -452,15 +465,16 @@ export class GoogleMapComponent implements OnInit {
 
         for (let i = 0; i < this.overlayCoords.length; i++) {
             if (this.overlayCoords[i].name === this.buildingToNavigateTo) {
-
                 buildingLat = this.overlayCoords[i].coords[0].lat;
                 buildingLng = this.overlayCoords[i].coords[0].lng;
             }
         }
-        this.searchService.origin.next([this.geolocationServices.getLatitude(), this.geolocationServices.getLongitude()]);
+        this.searchService.origin.next([
+            this.geolocationServices.getLatitude(),
+            this.geolocationServices.getLongitude()
+        ]);
         this.searchService.destination.next([buildingLat, buildingLng]);
 
         this.buildingToNavigateTo = null;
     }
-
 }
