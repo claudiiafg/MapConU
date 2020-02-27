@@ -10,8 +10,6 @@
      <a (click)='logSomething()'>
        <path id="mb1-210" fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" d="m547.747246,241.14286l62.85715,0l199.32896,53.41003l0,179.44711l-178.12618,47.72877l-84.05993,0l0,-280.58591z"/>
      </a>
-     <!-- NODE POINT FOR Classroom MB1.210-->
-     <circle cx="560" cy="500" r="5" fill="red"/>
 
      <!-- Elevators -->
      <rect fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" id="rect3942" width="42.104248" height="41.428608" x="613.461536" y="540.42859"/>
@@ -20,34 +18,36 @@
      <rect fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" id="rect3944" width="41.785706" height="39.285767" x="613.461536" y="625.42853"/>
      <rect fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" id="rect3946" width="38.928589" height="39.285767" x="655.247246" y="625.42853"/>
      <rect fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" id="rect3948" width="39.285702" height="39.285767" x="694.175826" y="625.42853"/>
-     <!-- NODE POINT FOR Elevators-->
-     <circle cx="674" cy="603" r="5" fill="red"/>
 
      <!-- Possible Bathroom? -->
      <path fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" d="m769.211536,764.71875l0,45.375l0,22.47462l24.25,0l0,-22.47462l56.5625,0l0,-45.375l-80.8125,0z" id="path3958"/>
-     <!-- NODE POINT FOR Bathrooms-->
-     <circle cx="824" cy="843" r="5" fill="red"/>
 
-     <!-- NODE POINT FOR HALLWAY-->
+     <!-- NODE POINT-->
      <circle cx="510" cy="931" r="5" fill="blue"/>  <!-- entrance (main reference)-->
      <circle cx="560" cy="931" r="5" fill="blue"/>  <!-- (E)-->
      <circle cx="700" cy="931" r="5" fill="blue"/>  <!-- (E - N)-->
      <circle cx="700" cy="843" r="5" fill="blue"/>  <!-- (EN) to turn to bathroom on right-->
+     <circle cx="824" cy="843" r="5" fill="red"/>   <!-- (ENW) bathroom -->
 
      <circle cx="560" cy="931" r="5" fill="blue"/>  <!-- (N)-->
      <circle cx="560" cy="820" r="5" fill="blue"/>  <!-- (WN) to turn to escalators down-->
      <circle cx="485" cy="820" r="5" fill="blue"/>  <!-- (WN) front of escalators-->
+     <circle cx="674" cy="603" r="5" fill="red"/>   <!-- (WN) escalators-->
      <circle cx="485" cy="780" r="5" fill="red"/>   <!-- (WN - N) Escalators -->
      <circle cx="455" cy="780" r="5" fill="red"/>   <!-- (WN - N) Stairs down-->
      <circle cx="560" cy="603" r="5" fill="blue"/>  <!-- (N) to turn to elevators up-->
      <circle cx="560" cy="542" r="5" fill="blue"/>  <!-- (N) to go to class or turn left-->
+     <circle cx="560" cy="500" r="5" fill="red"/>   <!-- (N) node to classroom -->
      <circle cx="530" cy="542" r="5" fill="blue"/>  <!-- (N) to go to stairs or turn left-->
      <circle cx="530" cy="500" r="5" fill="red"/>   <!-- (N) Stairs up-->
      <circle cx="480" cy="542" r="5" fill="blue"/>  <!-- (WN) left of stairs-->
      <circle cx="480" cy="200" r="5" fill="blue"/>  <!-- (WN - N) get out-->
 
-
-
+     <!-- LINES BETWEEN POINTS-->
+     <line x1="510" y1="931" x2="560" y2="931" style="stroke:blue; stroke-width:2" />
+     <line x1="560" y1="931" x2="700" y2="931" style="stroke:blue; stroke-width:2" />
+     <line x1="700" y1="931" x2="700" y2="843" style="stroke:blue; stroke-width:2" />
+     <line x1="700" y1="843" x2="824" y2="843" style="stroke:blue; stroke-width:2" />
 
 
 
@@ -89,5 +89,4 @@
      <path fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" d="m545.604396,169l0,-39.49008" id="path4001"/>
     </g>
   </svg>
-
 </div>
