@@ -1,23 +1,12 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  Input
-} from '@angular/core';
-import {
-  Platform,
-  Events,
-  AlertController,
-  NavController
-} from '@ionic/angular';
-
+import { Component, OnInit } from '@angular/core';
+import { Events, Platform , AlertController,
+  NavController} from '@ionic/angular';
+import { DirectionService } from 'src/services/direction.service';
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
-import { DirectionService } from 'src/services/direction.service';
+import { PoiServices } from 'src/services/poiServices';
 import { DataSharingService } from '../../../services/data-sharing.service';
 import { Router } from '@angular/router';
-import { PoiServices } from 'src/services/poiServices';
 
 @Component({
   selector: 'app-google-map',
@@ -25,16 +14,15 @@ import { PoiServices } from 'src/services/poiServices';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  private height: number = 0;
-  private loading: any;
-  private latitude: number = 45.4946; // to be change with geolocalisation
-  private longitude: number = -73.5774;
-  private destination: any;
-  private origin: any;
-  private concordiaRed = '#800000';
-  private positionMarkers: any[] = [];
-  private poiMarkers: any[] = [];
-  private currentToggles: any = {
+  public height: number = 0;
+  public latitude: number = 45.495729;
+  public longitude: number = -73.578041;
+  public destination: any;
+  public origin: any;
+  public concordiaRed = '#800000';
+  public positionMarkers: any[] = [];
+  public poiMarkers: any[] = [];
+  public currentToggles: any = {
     restaurants: false,
     coffee: false,
     gas: false,
@@ -288,6 +276,7 @@ export class GoogleMapComponent implements OnInit {
     { lat: 45.458743, lng: -73.639479 },
     { lat: 45.458536, lng: -73.638923 }
   ];
+
   poiMarkerIcon = {
     url: 'assets/icon/poi-marker.png',
     scaledSize: {
