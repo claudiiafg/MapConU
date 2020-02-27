@@ -10,6 +10,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+//env variables
+import { APIKey } from 'src/environments/env';
+import { environment } from '../environments/environment';
+
 //libraries
 import { AngularFireModule } from '@angular/fire';
 import {
@@ -30,9 +34,7 @@ import { OutdoorNavigationSideButtonsComponent } from './components/outdoor-navi
 import { IndoorNavigationSideButtonsComponent } from './components/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component';
 import { OutdoorNavigationToolbarComponent } from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
-//env variables
-import { APIKey } from 'src/environments/env';
-import { environment } from '../environments/environment';
+import { IndoorMapComponent } from './components/indoor-map/indoor-map.component';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
@@ -40,16 +42,21 @@ import { SearchPopoverComponent } from './components/search-popover/search-popov
 import { UserServices } from 'src/services/userServices';
 import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
 
+//floorplans
+import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
+
 @NgModule({
   declarations: [
     AppComponent,
     GoogleMapComponent,
+    IndoorMapComponent,
     OutdoorNavigationSideButtonsComponent,
     IndoorNavigationSideButtonsComponent,
     OutdoorNavigationToolbarComponent,
     SearchPopoverComponent,
     SettingsToolbarComponent,
-    IndoorNavigationToolbarComponent
+    IndoorNavigationToolbarComponent,
+    MB1FloorPlan
   ],
   entryComponents: [SearchPopoverComponent],
   imports: [
