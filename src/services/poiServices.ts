@@ -17,7 +17,7 @@ export class PoiServices {
     private geolocationServices: GeolocationServices,
   ) {}
 
-  getPOIMarkers(type: string){
+  setPOIMarkers(type: string){
     //important so it doesn't break our map (if use ours, it tries to render it again)
     let tempMap = <HTMLDivElement>document.getElementById('tempMap');
     let service = new google.maps.places.PlacesService(tempMap);
@@ -33,19 +33,27 @@ export class PoiServices {
       }, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           if(!self.hasType(type)){
+            console.log(results);
             for(let place of results){
               let tempPlace = {
                 latitude: place.geometry.location.lat().toString(),
                 longitude: place.geometry.location.lng().toString(),
+                data: place,
                 type: type
               }
               self.poiMarkers.push(tempPlace);
             }
             resolve(self.poiMarkers);
           }
+        } else {
+          reject(status);
         }
       });
     });
+  }
+
+  getPOIMarkers(){
+    return this.poiMarkers;
   }
 
   hasType(type : string){

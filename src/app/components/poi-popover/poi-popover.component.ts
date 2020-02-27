@@ -43,11 +43,11 @@ export class PoiPopoverComponent {
   update(toggle : string){
     let value;
     switch(toggle){
-      case 'restaurants':   value = this.restaurants; break;
-      case 'coffee shops':        value = this.coffee; break;
-      case 'gas stations':           value = this.gas; break;
-      case 'drugstores':     value = this.drugstore; break;
-      case 'hotels':        value = this.hotels; break;
+      case 'restaurant':   value = this.restaurants; break;
+      case 'coffee shop':        value = this.coffee; break;
+      case 'gas station':           value = this.gas; break;
+      case 'drugstore':     value = this.drugstore; break;
+      case 'hotel':        value = this.hotels; break;
       case 'groceries':       value = this.grocery; break;
     }
 

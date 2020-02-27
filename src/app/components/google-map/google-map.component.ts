@@ -71,6 +71,7 @@ export class GoogleMapComponent implements OnInit {
       height: 20
     }
   };
+  previous;
 
   constructor(
     private platform: Platform,
@@ -112,17 +113,21 @@ export class GoogleMapComponent implements OnInit {
       const toggleValue = res.value;
       console.log(toggleName + ': ' + toggleValue);
       switch(toggleName){
-        case 'restaurants':   this.currentToggles.restaurants = toggleValue; break;
-        case 'coffee shops':  this.currentToggles.coffee = toggleValue; break;
-        case 'gas stations':  this.currentToggles.gas = toggleValue; break;
-        case 'drugstores':    this.currentToggles.drugstore = toggleValue; break;
-        case 'hotels':        this.currentToggles.hotels = toggleValue; break;
+        case 'restaurant':   this.currentToggles.restaurants = toggleValue; break;
+        case 'coffee shop':  this.currentToggles.coffee = toggleValue; break;
+        case 'gas station':  this.currentToggles.gas = toggleValue; break;
+        case 'drugstore':    this.currentToggles.drugstore = toggleValue; break;
+        case 'hotel':        this.currentToggles.hotels = toggleValue; break;
         case 'groceries':     this.currentToggles.grocery = toggleValue; break;
       }
       this.poiServices.setCurrentToggles(this.currentToggles);
       if(toggleValue){
-        this.currentToggles = await this.poiServices.getPOIMarkers(toggleName);
-        console.log(this.currentToggles);
+        await this.poiServices.setPOIMarkers(toggleName);
+        let tempMarkers = this.poiServices.getPOIMarkers();
+        this.poiMarkers = [];
+        for(let marker of tempMarkers){
+          this.poiMarkers.push(marker);
+        }
       } else {
         this.currentToggles = this.poiServices.removePOIMarkers(toggleName);
       }
@@ -131,7 +136,13 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('poi-clicked', () => {
       this.events.publish('set-poi-toggles', this.currentToggles ,Date.now());
     });
+  }
 
+  clickedMarker(infowindow) {
+    if (this.previous) {
+      this.previous.close();
+    }
+    this.previous = infowindow;
   }
 
   public subscribeToUserInput() {
