@@ -121,6 +121,7 @@ export class GoogleMapComponent implements OnInit {
         case 'groceries':     this.currentToggles.grocery = toggleValue; break;
       }
       this.poiServices.setCurrentToggles(this.currentToggles);
+      //if value is true add all markers to map (one by one to trigger HTML updates)
       if(toggleValue){
         await this.poiServices.setPOIMarkers(toggleName);
         let tempMarkers = this.poiServices.getPOIMarkers();
@@ -128,16 +129,25 @@ export class GoogleMapComponent implements OnInit {
         for(let marker of tempMarkers){
           this.poiMarkers.push(marker);
         }
+
+      //if value is false remove all markers of that type from the map
       } else {
-        this.currentToggles = this.poiServices.removePOIMarkers(toggleName);
+        this.currentToggles = this.poiServices.getCurrentToggles();
+        let tempMarkers = this.poiServices.removePOIMarkers(toggleName);
+        this.poiMarkers = [];
+        for(let marker of tempMarkers){
+          this.poiMarkers.push(marker);
+        }
       }
     });
 
+    //as a toggle is clicke, update the current toggles
     this.events.subscribe('poi-clicked', () => {
       this.events.publish('set-poi-toggles', this.currentToggles ,Date.now());
     });
   }
 
+  //show name of POI when clicked on a marker
   clickedMarker(infowindow) {
     if (this.previous) {
       this.previous.close();
