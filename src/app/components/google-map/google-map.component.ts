@@ -94,8 +94,6 @@ export class GoogleMapComponent implements OnInit {
         latitude: coordinates.latitude,
         longitude: coordinates.longitude
       };
-      this.latitude = coordinates.latitude;
-      this.longitude = coordinates.longitude;
       this.positionMarkers = [];
       this.positionMarkers.push(tempMarker);
     });
@@ -144,6 +142,11 @@ export class GoogleMapComponent implements OnInit {
     //as a toggle is clicke, update the current toggles
     this.events.subscribe('poi-clicked', () => {
       this.events.publish('set-poi-toggles', this.currentToggles ,Date.now());
+    });
+
+    this.events.subscribe('campusChanged', () => {
+      this.poiMarkers = [];
+      this.currentToggles = this.poiServices.resetPOIMarkers();
     });
   }
 

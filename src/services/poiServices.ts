@@ -83,4 +83,16 @@ export class PoiServices {
   getCurrentToggles() : any{
     return this.currentToggles;
   }
+
+  resetPOIMarkers(){
+    this.currentToggles = {
+      restaurants : false,
+      coffee : false,
+      gas: false,
+      drugstore : false,
+      hotels : false,
+      grocery : false,
+    }
+    return this.currentToggles;
+  }
 }
