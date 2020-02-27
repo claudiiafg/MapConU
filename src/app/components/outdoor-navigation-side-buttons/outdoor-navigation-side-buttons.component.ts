@@ -43,7 +43,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
         this.poiClicked = false;
       });
 
-      popover.style.cssText = '--width: 200px; top: 290px; left: 25%;';
+      popover.style.cssText = '--width: 200px; top: 30%; left: calc(50% - 100px);';
       return await popover.present();
     }
 
