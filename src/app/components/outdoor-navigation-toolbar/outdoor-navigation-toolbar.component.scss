@@ -32,3 +32,16 @@
 .settings-button {
   --color: white;
 }
+
+.navigation-buttons-div {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--ConcordiaRed);
+}
+
+.navigation-buttons {
+  color: white;
+  text-transform: none;
+  max-width: fit-content;
+  --border-color: white;
+}

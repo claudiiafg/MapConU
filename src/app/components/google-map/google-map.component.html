@@ -47,6 +47,8 @@
         [destination]="destination"
         [travelMode]="'WALKING'"
         [renderOptions]="walkingOptions.renderOptions"
+        (onResponse)="onResponse($event)"
+        [provideRouteAlternatives]="provideRouteAlternatives"
       >
       </agm-direction>
 
@@ -55,12 +57,16 @@
         [destination]="destination"
         [travelMode]="'TRANSIT'"
         [renderOptions]="transitOptions.renderOptions"
+        (onResponse)="onResponse($event)"
+        [provideRouteAlternatives]="provideRouteAlternatives"
       >
       </agm-direction>
 
       <agm-direction
         [origin]="origin"
         [destination]="destination"
+        (onResponse)="onResponse($event)"
+        [provideRouteAlternatives]="provideRouteAlternatives"
       ></agm-direction>
     </ng-container>
   </agm-map>

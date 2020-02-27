@@ -1,14 +1,14 @@
+import { MapsAPILoader } from '@agm/core';
 import {
-  Component,
-  OnInit,
   AfterViewInit,
-  NgZone,
+  Component,
   ElementRef,
+  NgZone,
+  OnInit,
   ViewChild
 } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { MapsAPILoader } from '@agm/core';
-import { SearchService } from 'src/services/search.service';
+import { DirectionService } from 'src/services/direction.service';
 
 @Component({
   selector: 'app-search-popover',
@@ -26,7 +26,7 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
     public popoverController: PopoverController,
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
-    public searchService: SearchService
+    public directionService: DirectionService
   ) {}
 
   ngOnInit() {}
@@ -90,8 +90,17 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
   public updateMap() {
     this.closePopover();
     if (this.latitudeTo && this.latitudeFrom) {
-      this.searchService.origin.next([this.latitudeFrom, this.longitudeFrom]);
-      this.searchService.destination.next([this.latitudeTo, this.longitudeTo]);
+      this.directionService.isDirectionSet.next(true);
+
+      this.directionService.origin.next([
+        this.latitudeFrom,
+        this.longitudeFrom
+      ]);
+
+      this.directionService.destination.next([
+        this.latitudeTo,
+        this.longitudeTo
+      ]);
     }
   }
 }

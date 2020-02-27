@@ -14,7 +14,7 @@ import {
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchService } from 'src/services/search.service';
+import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from '../../../services/data-sharing.service';
 import { Router } from '@angular/router';
 import { PoiServices } from 'src/services/poiServices';
@@ -45,6 +45,7 @@ export class GoogleMapComponent implements OnInit {
   private overlayCoords: any[] = [];
   private buildingToNavigateTo: string;
 
+  public provideRouteAlternatives: boolean = true;
   //Options to be change dynamically when user click
   walkingOptions = {
     renderOptions: {
@@ -301,7 +302,7 @@ export class GoogleMapComponent implements OnInit {
     private geolocationServices: GeolocationServices,
     private events: Events,
     private data: DataSharingService,
-    private searchService: SearchService,
+    private directionService: DirectionService,
     private poiServices: PoiServices,
     private alertController: AlertController,
     private navController: NavController,
@@ -402,12 +403,12 @@ export class GoogleMapComponent implements OnInit {
   }
 
   public subscribeToUserInput() {
-    this.searchService.origin.subscribe(resp => {
+    this.directionService.origin.subscribe(resp => {
       if (Array.isArray(resp) && resp.length) {
         this.origin = { lat: resp[0], lng: resp[1] };
       }
     });
-    this.searchService.destination.subscribe(resp => {
+    this.directionService.destination.subscribe(resp => {
       if (Array.isArray(resp) && resp.length) {
         this.destination = { lat: resp[0], lng: resp[1] };
       }
@@ -576,12 +577,18 @@ export class GoogleMapComponent implements OnInit {
         buildingLng = this.overlayCoords[i].coords[0].lng;
       }
     }
-    this.searchService.origin.next([
+    this.directionService.origin.next([
       this.geolocationServices.getLatitude(),
       this.geolocationServices.getLongitude()
     ]);
-    this.searchService.destination.next([buildingLat, buildingLng]);
+    this.directionService.destination.next([buildingLat, buildingLng]);
 
     this.buildingToNavigateTo = null;
   }
+  //use to send data to other components
+  sendMessage(updatedMessage: any) {
+    this.data.updateMessage(updatedMessage);
+  }
+
+  public onResponse($event: any) {}
 }
