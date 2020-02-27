@@ -31,8 +31,6 @@ import { IndoorNavigationSideButtonsComponent } from './components/indoor-naviga
 import { OutdoorNavigationToolbarComponent } from './components/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
 import { IndoorMapComponent } from './components/indoor-map/indoor-map.component';
-import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
-import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { PoiPopoverComponent } from './components/poi-popover/poi-popover.component';
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -48,8 +46,9 @@ import { IndoorNavigationToolbarComponent } from './components/indoor-navigation
 
 //floorplans
 import {MB1FloorPlan} from './floor-plans/jmsb/mb1/mb1';
+import {PoiServices} from "../services/poiServices";
 
-PoiServices
+PoiServices;
 @NgModule({
   declarations: [
     AppComponent,

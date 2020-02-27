@@ -1,7 +1,4 @@
-<agm-map id='tempMap'
-  [latitude]="latitude"
-  [longitude]="longitude">
-</agm-map>
+<agm-map id="tempMap" [latitude]="latitude" [longitude]="longitude"></agm-map>
 
 <div id="google-map-component">
   <agm-map
@@ -12,16 +9,16 @@
     [gestureHandling]="'greedy'"
     id="map"
   >
-    <agm-polygon
-            *ngFor="let oc of overlayCoords"
-            [paths]="oc.coords"
-            [fillColor]="concordiaRed"
-            [fillOpacity]="0.3"
-            [strokeColor]="concordiaRed"
-            [strokeWeight]="2"
-            (polyClick)="showAlert(oc.name, oc.address)"
-    >
-    </agm-polygon>
+      <agm-polygon
+              *ngFor="let oc of overlayCoords"
+              [paths]="oc.coords"
+              [fillColor]="concordiaRed"
+              [fillOpacity]="0.3"
+              [strokeColor]="concordiaRed"
+              [strokeWeight]="2"
+              (polyClick)="showAlert(oc.name, oc.address)"
+      >
+      </agm-polygon>
 
     <agm-marker
       *ngFor="let m of positionMarkers"
@@ -31,16 +28,18 @@
     >
     </agm-marker>
 
-    <agm-marker
-      *ngFor="let m of poiMarkers; let i = index"
-      [iconUrl]="poiMarkerIcon"
-      [latitude]="m.latitude"
-      [longitude]="m.longitude"
-      (markerClick)="clickedMarker(infoWindow)">
+      <agm-marker
+              *ngFor="let m of poiMarkers; let i = index"
+              [iconUrl]="poiMarkerIcon"
+              [latitude]="m.latitude"
+              [longitude]="m.longitude"
+              (markerClick)="clickedMarker(infoWindow)"
+      >
           <agm-info-window #infoWindow>
-            <strong>{{m.data.name}}</strong><br>
+              <strong>{{ m.data.name }}</strong
+              ><br/>
           </agm-info-window>
-    </agm-marker>
+      </agm-marker>
 
     <ng-container *ngIf="origin && destination">
       <agm-direction
@@ -51,18 +50,18 @@
       >
       </agm-direction>
 
-      <agm-direction
-              [origin]="origin"
-              [destination]="destination"
-              [travelMode]="'TRANSIT'"
-              [renderOptions]="transitOptions.renderOptions"
-      >
-      </agm-direction>
+        <agm-direction
+                [origin]="origin"
+                [destination]="destination"
+                [travelMode]="'TRANSIT'"
+                [renderOptions]="transitOptions.renderOptions"
+        >
+        </agm-direction>
 
-      <agm-direction
-              [origin]="origin"
-              [destination]="destination"
-      ></agm-direction>
+        <agm-direction
+                [origin]="origin"
+                [destination]="destination"
+        ></agm-direction>
     </ng-container>
   </agm-map>
 </div>

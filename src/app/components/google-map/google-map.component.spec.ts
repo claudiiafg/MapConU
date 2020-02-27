@@ -4,12 +4,12 @@ import {IonicModule} from "@ionic/angular";
 import {GoogleMapComponent} from "./google-map.component";
 
 describe("GoogleMapComponent", () => {
-  let component: GoogleMapComponent;
-  let fixture: ComponentFixture<GoogleMapComponent>;
+    let component: GoogleMapComponent;
+    let fixture: ComponentFixture<GoogleMapComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [GoogleMapComponent],
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [GoogleMapComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
