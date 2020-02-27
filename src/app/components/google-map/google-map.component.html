@@ -7,6 +7,15 @@
     [gestureHandling]="'greedy'"
     id="map"
   >
+    <agm-polygon
+            *ngFor="let oc of overlayCoords"
+            [paths]="oc.coords"
+            [fillColor]="concordiaRed"
+            [fillOpacity]="0.3"
+            [strokeColor]="concordiaRed"
+            [strokeWeight]="2">
+    </agm-polygon>
+
     <agm-marker
       *ngFor="let m of markers"
       [iconUrl]="positionMarkerIcon"
@@ -25,16 +34,16 @@
       </agm-direction>
 
       <agm-direction
-        [origin]="origin"
-        [destination]="destination"
-        [travelMode]="'TRANSIT'"
-        [renderOptions]="transitOptions.renderOptions"
+              [origin]="origin"
+              [destination]="destination"
+              [travelMode]="'TRANSIT'"
+              [renderOptions]="transitOptions.renderOptions"
       >
       </agm-direction>
 
       <agm-direction
-        [origin]="origin"
-        [destination]="destination"
+              [origin]="origin"
+              [destination]="destination"
       ></agm-direction>
     </ng-container>
   </agm-map>

@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform, Events } from '@ionic/angular';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  Input,
+} from '@angular/core';
+import {Platform, Events} from '@ionic/angular';
 
 //services
-import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchService } from 'src/services/search.service';
-import { DataSharingService } from '../../../services/data-sharing.service';
+import {GeolocationServices} from 'src/services/geolocationServices';
+import {SearchService} from 'src/services/search.service';
+import {DataSharingService} from '../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-google-map',
@@ -12,12 +18,15 @@ import { DataSharingService } from '../../../services/data-sharing.service';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  public height: number;
-  public latitude: number;
-  public longitude: number;
-  public destination: any;
-  public origin: any;
-  public markers: any[] = [];
+  private height: number = 0;
+  private loading: any;
+  private latitude: number = 45.4946; // to be change with geolocalisation
+  private longitude: number = -73.5774;
+  private destination: any;
+  private origin: any;
+  concordiaRed = '#800000';
+  private markers: any[] = [];
+    private overlayCoords: any[] = [];
 
   //Options to be change dynamically when user click
   walkingOptions = {
@@ -54,12 +63,216 @@ export class GoogleMapComponent implements OnInit {
     }
   };
 
-  constructor(
-    private platform: Platform,
-    private geolocationServices: GeolocationServices,
-    private events: Events,
-    private data: DataSharingService,
-    private searchService: SearchService
+  //coordinates for concordia building overlays
+  hallCoords = [
+    {lat: 45.496836, lng: -73.578858},
+    {lat: 45.497164, lng: -73.579539},
+    {lat: 45.497720, lng: -73.579029},
+    {lat: 45.497385, lng: -73.578348}
+  ];
+
+  jmsbCoords = [
+    {lat: 45.495531, lng: -73.579197},
+    {lat: 45.495357, lng: -73.579378},
+    {lat: 45.495222, lng: -73.579117},
+    {lat: 45.495165, lng: -73.579174},
+    {lat: 45.495008, lng: -73.578808},
+    {lat: 45.495040, lng: -73.578780},
+    {lat: 45.495007, lng: -73.578725},
+    {lat: 45.495209, lng: -73.578507}
+  ];
+
+  lbCoords = [
+    {lat: 45.497285, lng: -73.578091},
+    {lat: 45.496681, lng: -73.578678},
+    {lat: 45.496249, lng: -73.577721},
+    {lat: 45.496497, lng: -73.577474},
+    {lat: 45.496544, lng: -73.577608},
+    {lat: 45.496894, lng: -73.577268}
+  ];
+
+  fgCoords = [
+    {lat: 45.494367, lng: -73.578440},
+    {lat: 45.494190, lng: -73.577981},
+    {lat: 45.494480, lng: -73.577654},
+    {lat: 45.494702, lng: -73.578037}
+  ];
+
+  fbCoords = [
+    {lat: 45.494922, lng: -73.577777},
+    {lat: 45.494653, lng: -73.577217},
+    {lat: 45.494395, lng: -73.577517},
+    {lat: 45.494702, lng: -73.578037}
+  ];
+
+    evCoords = [
+        {lat: 45.496057, lng: -73.577718},
+        {lat: 45.495793, lng: -73.577176},
+        {lat: 45.495143, lng: -73.577821},
+        {lat: 45.495596, lng: -73.578766},
+        {lat: 45.495945, lng: -73.578428},
+        {lat: 45.495736, lng: -73.578031}
+    ];
+
+    gmCoords = [
+        {lat: 45.495596, lng: -73.578766},
+        {lat: 45.495945, lng: -73.578428},
+        {lat: 45.496125, lng: -73.578814},
+        {lat: 45.495774, lng: -73.579154}
+    ];
+
+    gnCoords = [
+        {lat: 45.493338, lng: -73.576621},
+        {lat: 45.493781, lng: -73.577758},
+        {lat: 45.494406, lng: -73.577115},
+        {lat: 45.494026, lng: -73.576289},
+        {lat: 45.494127, lng: -73.576176},
+        {lat: 45.494026, lng: -73.575993},
+        {lat: 45.493932, lng: -73.576090},
+        {lat: 45.493714, lng: -73.575639},
+        {lat: 45.493571, lng: -73.575784},
+        {lat: 45.493770, lng: -73.576197}
+    ];
+
+    annexCoords = [
+        {lat: 45.496721, lng: -73.579157},
+        {lat: 45.497092, lng: -73.579916},
+        {lat: 45.496944, lng: -73.580066},
+        {lat: 45.496563, lng: -73.579303}
+    ];
+
+    tdCoords = [
+        {lat: 45.494734, lng: -73.578952},
+        {lat: 45.494861, lng: -73.578799},
+        {lat: 45.494656, lng: -73.578450},
+        {lat: 45.494540, lng: -73.578610}
+    ];
+
+    vaCoords = [
+        {lat: 45.495392, lng: -73.573756},
+        {lat: 45.495673, lng: -73.574319},
+        {lat: 45.496193, lng: -73.573784},
+        {lat: 45.496073, lng: -73.573539},
+        {lat: 45.495820, lng: -73.573805},
+        {lat: 45.495664, lng: -73.573488}
+    ];
+
+    adCoords = [
+        {lat: 45.457922, lng: -73.640125},
+        {lat: 45.457998, lng: -73.640067},
+        {lat: 45.457975, lng: -73.640007},
+        {lat: 45.458281, lng: -73.639775},
+        {lat: 45.458299, lng: -73.639826},
+        {lat: 45.458384, lng: -73.639766},
+        {lat: 45.458268, lng: -73.639468},
+        {lat: 45.458172, lng: -73.639528},
+        {lat: 45.458207, lng: -73.639618},
+        {lat: 45.457912, lng: -73.639848},
+        {lat: 45.457875, lng: -73.639775},
+        {lat: 45.457803, lng: -73.639829}
+    ];
+
+  ccCoords = [
+    {lat: 45.458079, lng: -73.640012},
+    {lat: 45.458366, lng: -73.640796},
+    {lat: 45.458534, lng: -73.640678},
+    {lat: 45.458240, lng: -73.639897}
+  ];
+
+  spCoords = [
+    {lat: 45.457213, lng: -73.640656},
+    {lat: 45.457527, lng: -73.641469},
+    {lat: 45.458167, lng: -73.640975},
+    {lat: 45.458329, lng: -73.641415},
+    {lat: 45.457469, lng: -73.642075},
+    {lat: 45.456982, lng: -73.640833}
+  ];
+
+  cjCoords = [
+    {lat: 45.457217, lng: -73.640015},
+    {lat: 45.457362, lng: -73.640074},
+    {lat: 45.457409, lng: -73.640203},
+    {lat: 45.457177, lng: -73.640393},
+    {lat: 45.457311, lng: -73.640734},
+    {lat: 45.457597, lng: -73.640501},
+    {lat: 45.457650, lng: -73.640632},
+    {lat: 45.457828, lng: -73.640479},
+    {lat: 45.457652, lng: -73.640021},
+    {lat: 45.457495, lng: -73.640144},
+    {lat: 45.457439, lng: -73.640026},
+    {lat: 45.457469, lng: -73.639809},
+    {lat: 45.457388, lng: -73.639758},
+    {lat: 45.457285, lng: -73.639795},
+    {lat: 45.457226, lng: -73.639905}
+  ];
+
+  vlCoords = [
+      {lat: 45.458869, lng: -73.638234},
+      {lat: 45.458617, lng: -73.638422},
+      {lat: 45.458848, lng: -73.639028},
+      {lat: 45.459047, lng: -73.638862},
+      {lat: 45.459094, lng: -73.638961},
+      {lat: 45.459199, lng: -73.638881},
+      {lat: 45.459161, lng: -73.638779},
+      {lat: 45.459311, lng: -73.638658},
+      {lat: 45.459140, lng: -73.638191},
+      {lat: 45.459222, lng: -73.638127},
+      {lat: 45.459108, lng: -73.637843},
+      {lat: 45.458807, lng: -73.638068}
+  ];
+
+    ptCoords = [
+        {lat: 45.459161, lng: -73.638779},
+        {lat: 45.459311, lng: -73.638658},
+        {lat: 45.459493, lng: -73.639133},
+        {lat: 45.459347, lng: -73.639245}
+    ];
+
+    scCoords = [
+        {lat: 45.458964, lng: -73.639054},
+        {lat: 45.459123, lng: -73.639460},
+        {lat: 45.459347, lng: -73.639245},
+        {lat: 45.459199, lng: -73.638881},
+    ];
+
+    pyCoords = [
+        {lat: 45.459238, lng: -73.640544},
+        {lat: 45.459083, lng: -73.640149},
+        {lat: 45.458720, lng: -73.640426},
+        {lat: 45.458857, lng: -73.640839}
+    ];
+
+    raCoords = [
+        {lat: 45.456378, lng: -73.637352},
+        {lat: 45.456726, lng: -73.637086},
+        {lat: 45.457195, lng: -73.638339},
+        {lat: 45.456872, lng: -73.638620}
+    ];
+
+    haCoords = [
+        {lat: 45.458924, lng: -73.641813},
+        {lat: 45.459277, lng: -73.641558},
+        {lat: 45.459127, lng: -73.641165},
+        {lat: 45.459517, lng: -73.640872},
+        {lat: 45.459906, lng: -73.642033},
+        {lat: 45.459631, lng: -73.642295},
+        {lat: 45.459526, lng: -73.642027},
+        {lat: 45.459118, lng: -73.642342}
+    ];
+
+    fcCoords = [
+        {lat: 45.458370, lng: -73.639044},
+        {lat: 45.458551, lng: -73.639624},
+        {lat: 45.458743, lng: -73.639479},
+        {lat: 45.458536, lng: -73.638923}
+    ];
+
+    constructor(
+      private platform: Platform,
+      private geolocationServices: GeolocationServices,
+      private events: Events,
+      private data: DataSharingService,
+      private searchService: SearchService
   ) {
     this.height = platform.height() - 106;
   }
@@ -72,8 +285,6 @@ export class GoogleMapComponent implements OnInit {
         latitude: coordinates.latitude,
         longitude: coordinates.longitude
       };
-      this.latitude = coordinates.latitude;
-      this.longitude = coordinates.longitude;
       this.markers = [];
       this.markers.push(tempMarker);
     });
@@ -85,16 +296,40 @@ export class GoogleMapComponent implements OnInit {
   }
 
   public subscribeToUserInput() {
-    this.searchService.origin.subscribe(resp => {
-      if (Array.isArray(resp) && resp.length) {
-        this.origin = { lat: resp[0], lng: resp[1] };
-      }
-    });
-    this.searchService.destination.subscribe(resp => {
-      if (Array.isArray(resp) && resp.length) {
-        this.destination = { lat: resp[0], lng: resp[1] };
-      }
-    });
+      this.searchService.origin.subscribe(resp => {
+          if (Array.isArray(resp) && resp.length) {
+              this.origin = {lat: resp[0], lng: resp[1]};
+          }
+      });
+      this.searchService.destination.subscribe(resp => {
+          if (Array.isArray(resp) && resp.length) {
+              this.destination = {lat: resp[0], lng: resp[1]};
+          }
+      });
+
+      this.overlayCoords = [
+          {coords: this.hallCoords},
+          {coords: this.jmsbCoords},
+          {coords: this.lbCoords},
+          {coords: this.fbCoords},
+          {coords: this.fgCoords},
+          {coords: this.evCoords},
+          {coords: this.gmCoords},
+          {coords: this.gnCoords},
+          {coords: this.annexCoords},
+          {coords: this.tdCoords},
+          {coords: this.vaCoords},
+          {coords: this.adCoords},
+          {coords: this.ccCoords},
+          {coords: this.spCoords},
+          {coords: this.cjCoords},
+          {coords: this.vlCoords},
+          {coords: this.ptCoords},
+          {coords: this.scCoords},
+          {coords: this.pyCoords},
+          {coords: this.raCoords},
+          {coords: this.haCoords}
+      ];
   }
 
   //use to send data to other components
