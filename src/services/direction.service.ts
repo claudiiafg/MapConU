@@ -25,6 +25,7 @@ export class DirectionService {
 
   public setStepsIcons(steps: any) {
     let stepsWithIcons = steps;
+    let counter = 1;
     for (var key in stepsWithIcons) {
       // Travel icons
       if (stepsWithIcons[key].travel_mode === 'WALKING') {
@@ -45,7 +46,11 @@ export class DirectionService {
       if (stepsWithIcons[key].maneuver.includes('merge')) {
         stepsWithIcons[key].maneuver_icon = 'git-merge';
       }
+
+      stepsWithIcons[key].position = counter;
+      counter++;
     }
+
     return stepsWithIcons;
   }
 }
