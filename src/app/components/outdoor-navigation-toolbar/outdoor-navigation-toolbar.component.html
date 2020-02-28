@@ -24,22 +24,32 @@
   </ion-toolbar>
   <ng-container *ngIf="isDirectionSet">
     <div class="navigation-buttons-div">
-      <ion-button class="navigation-buttons" shape="round" fill="outline">
+      <ion-button
+        class="navigation-buttons"
+        [style.color]="walkColor"
+        shape="round"
+        fill="outline"
+        (click)="changeTravelMode('walk')"
+      >
         <ion-icon name="walk"></ion-icon>
       </ion-button>
       <ion-button
         class="navigation-buttons"
+        [style.color]="transitColor"
         shape="round"
         fill="outline"
         float-end
+        (click)="changeTravelMode('transit')"
       >
         <ion-icon name="train"></ion-icon>
       </ion-button>
       <ion-button
         class="navigation-buttons"
+        [style.color]="carColor"
         shape="round"
         fill="outline"
         float-end
+        (click)="changeTravelMode('car')"
       >
         <ion-icon name="car"></ion-icon>
       </ion-button>

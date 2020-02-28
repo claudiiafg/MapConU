@@ -8,6 +8,8 @@ export class DirectionService {
   public origin = new BehaviorSubject([]);
   public destination = new BehaviorSubject([]);
   public isDirectionSet = new BehaviorSubject(false);
+  public travelMode = 'walk';
+  public changeTravelMode = new BehaviorSubject('walk');
 
   constructor() {}
 }

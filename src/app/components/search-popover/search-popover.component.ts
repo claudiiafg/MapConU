@@ -94,7 +94,7 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
     this.closePopover();
     if (this.latitudeTo && this.latitudeFrom) {
       this.directionService.isDirectionSet.next(true);
-      this.dataSharingService.updateMapSize(-200);
+      this.dataSharingService.updateMapSize(-210);
 
       this.directionService.origin.next([
         this.latitudeFrom,

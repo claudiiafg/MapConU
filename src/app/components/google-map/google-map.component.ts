@@ -22,6 +22,7 @@ export class GoogleMapComponent implements OnInit {
   public concordiaRed = '#800000';
   public positionMarkers: any[] = [];
   public poiMarkers: any[] = [];
+  public travelMode = 'walk';
   public currentToggles: any = {
     restaurants: false,
     coffee: false,
@@ -35,20 +36,10 @@ export class GoogleMapComponent implements OnInit {
 
   public provideRouteAlternatives: boolean = true;
   //Options to be change dynamically when user click
-  walkingOptions = {
+  polylineOptions = {
     renderOptions: {
       polylineOptions: {
-        strokeColor: '#9F33FF',
-        strokeOpacity: 0.6,
-        strokeWeight: 5
-      }
-    }
-  };
-
-  transitOptions = {
-    renderOptions: {
-      polylineOptions: {
-        strokeColor: '#4CFF33',
+        strokeColor: '#339fff',
         strokeOpacity: 0.6,
         strokeWeight: 5
       }
@@ -297,13 +288,14 @@ export class GoogleMapComponent implements OnInit {
     private navController: NavController,
     private router: Router,
     private dataSharingService: DataSharingService
-  ) {
-    this.subscribeToMapSize();
-  }
+  ) {}
 
   async ngOnInit() {
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition();
+
+    this.subscribeToMapSize();
+    this.subscribeToTravelMode();
 
     //subscribe to changes in current position
     this.events.subscribe('coordinatesChanged', coordinates => {
@@ -586,5 +578,13 @@ export class GoogleMapComponent implements OnInit {
     });
   }
 
-  public onResponse($event: any) {}
+  public subscribeToTravelMode() {
+    this.directionService.changeTravelMode.subscribe(travelMode => {
+      this.travelMode = travelMode;
+    });
+  }
+
+  public onResponse($event: any) {
+    console.log($event);
+  }
 }
