@@ -43,9 +43,11 @@ import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { UserServices } from 'src/services/userServices';
 import { PoiServices } from '../services/poiServices';
+
+//floor plans
+import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
 
 
 @NgModule({
