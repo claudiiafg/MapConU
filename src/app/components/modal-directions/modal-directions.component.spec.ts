@@ -9,7 +9,7 @@ describe('ModalDirectionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalDirectionsComponent ],
+      declarations: [ModalDirectionsComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -45,3 +45,10 @@
   max-width: fit-content;
   --border-color: white;
 }
+
+.back-button {
+  --color: white;
+  --shape: round;
+  --size: large;
+  padding-right: 0.5em;
+}

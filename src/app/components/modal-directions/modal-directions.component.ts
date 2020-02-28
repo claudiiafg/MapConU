@@ -10,8 +10,7 @@ export class ModalDirectionsComponent implements OnInit {
   @Input() steps: any;
   constructor(private modalController: ModalController) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public dismiss() {
     this.modalController.dismiss({

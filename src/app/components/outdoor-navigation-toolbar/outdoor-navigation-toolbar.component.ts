@@ -25,7 +25,8 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
   constructor(
     private data: DataSharingService,
     private events: Events,
-    public directionService: DirectionService
+    public directionService: DirectionService,
+    private dataSharingService: DataSharingService
   ) {
     this.data.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
@@ -65,5 +66,12 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
       this.transitColor = 'white';
       this.walkColor = 'yellow';
     }
+  }
+
+  public goBack() {
+    this.directionService.origin.next([]);
+    this.directionService.destination.next([]);
+    this.directionService.isDirectionSet.next(false);
+    this.dataSharingService.updateMapSize(-106);
   }
 }

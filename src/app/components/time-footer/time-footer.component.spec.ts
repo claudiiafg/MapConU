@@ -9,7 +9,7 @@ describe('TimeFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimeFooterComponent ],
+      declarations: [TimeFooterComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

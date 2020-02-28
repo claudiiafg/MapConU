@@ -491,11 +491,15 @@ export class GoogleMapComponent implements OnInit {
     this.directionService.origin.subscribe(resp => {
       if (Array.isArray(resp) && resp.length) {
         this.origin = { lat: resp[0], lng: resp[1] };
+      } else {
+        this.origin = null;
       }
     });
     this.directionService.destination.subscribe(resp => {
       if (Array.isArray(resp) && resp.length) {
         this.destination = { lat: resp[0], lng: resp[1] };
+      } else {
+        this.destination = null;
       }
     });
   }
