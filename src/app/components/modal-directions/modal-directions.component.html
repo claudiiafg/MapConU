@@ -8,13 +8,14 @@
         <ion-icon name="{{ step.maneuver_icon }}"></ion-icon>
       </ng-container>
       <ion-icon name="{{ step.travel_icon }}"></ion-icon>
-      | Distance: {{ step.distance.text }}, Time:  {{ step.duration.text }} <br />
+      | Distance: {{ step.distance.text }}, Time: {{ step.duration.text }}
+      <br />
 
       <p>
         <b>{{ step.position }}.</b>
-        {{ step.instructions }}
+        {{ step.instructions | stripTags }}
       </p>
     </div>
-    <hr>
+    <hr />
   </ng-container>
 </ion-content>

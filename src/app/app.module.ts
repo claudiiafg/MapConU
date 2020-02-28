@@ -40,6 +40,7 @@ import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
 import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { TimeFooterComponent } from './components/time-footer/time-footer.component';
 import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
+import { NgPipesModule } from 'ngx-pipes';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     AngularFirestoreModule,
     AngularFireAuthModule,
     FormsModule,
-    AgmDirectionModule
+    AgmDirectionModule,
+    NgPipesModule
   ],
   providers: [
     StatusBar,
