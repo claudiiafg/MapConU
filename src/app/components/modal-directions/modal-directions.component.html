@@ -2,7 +2,17 @@
   <ion-icon name="close"></ion-icon>
 </ion-button>
 <ion-content>
-  <p>
-    modal-directions works!
-  </p>
+  <ng-container *ngFor="let step of steps">
+    <div>
+      <ng-container *ngIf="step.maneuver_icon">
+        <ion-icon name="{{ step.maneuver_icon }}"></ion-icon>
+      </ng-container>
+      <ion-icon name="{{ step.travel_icon }}"></ion-icon>
+      {{ step.distance.text }} | {{ step.duration.text }} <br />
+
+      <p>
+        {{ step.instructions }}
+      </p>
+    </div>
+  </ng-container>
 </ion-content>

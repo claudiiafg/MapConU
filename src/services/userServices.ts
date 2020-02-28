@@ -65,7 +65,6 @@ export class UserServices {
           .collection<User>('users')
           .doc(tempUser.id)
           .set(tempUser);
-        console.log(result.user);
       })
       .catch(error => {
         console.log(error.message);

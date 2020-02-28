@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,9 +7,11 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./modal-directions.component.scss']
 })
 export class ModalDirectionsComponent implements OnInit {
+  @Input() steps: any;
   constructor(private modalController: ModalController) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public dismiss() {
     this.modalController.dismiss({

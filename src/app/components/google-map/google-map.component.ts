@@ -316,7 +316,6 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('poi-toggle-changed', async res => {
       const toggleName = res.toggle;
       const toggleValue = res.value;
-      console.log(toggleName + ': ' + toggleValue);
       switch (toggleName) {
         case 'restaurant':
           this.currentToggles.restaurants = toggleValue;
@@ -585,6 +584,21 @@ export class GoogleMapComponent implements OnInit {
   }
 
   public onResponse($event: any) {
-    console.log($event);
+    this.sendDirectionInfo($event);
+    this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
+  }
+
+  public sendDirectionInfo(directionInfo: any) {
+    let fare: string;
+    if (directionInfo.routes[0].fare) {
+      fare = directionInfo.routes[0].fare.text;
+    } else {
+      fare = 'CA$0.00';
+    }
+    this.directionService.directionInfo.next({
+      time: directionInfo.routes[0].legs[0].duration.text,
+      distance: directionInfo.routes[0].legs[0].distance.text,
+      fare
+    });
   }
 }
