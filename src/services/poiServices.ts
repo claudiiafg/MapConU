@@ -21,20 +21,24 @@ export class PoiServices {
     var location = new google.maps.LatLng(lat, lng);
     let service = new google.maps.places.PlacesService(tempMap);
     let self = this;
-    return new Promise( function( resolve, reject ) {
-      service.nearbySearch({
-        location: location,
-        radius: 100,
-        keyword: type
-      }, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          if(!self.hasType(type)){
-            for(let place of results){
-              let tempPlace = {
-                latitude: place.geometry.location.lat().toString(),
-                longitude: place.geometry.location.lng().toString(),
-                data: place,
-                type: type
+    return new Promise(function(resolve, reject) {
+      service.nearbySearch(
+        {
+          location: location,
+          radius: 100,
+          keyword: type
+        },
+        (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            if (!self.hasType(type)) {
+              for (let place of results) {
+                let tempPlace = {
+                  latitude: place.geometry.location.lat().toString(),
+                  longitude: place.geometry.location.lng().toString(),
+                  data: place,
+                  type: type
+                };
+                self.poiMarkers.push(tempPlace);
               }
               resolve(self.poiMarkers);
             }
