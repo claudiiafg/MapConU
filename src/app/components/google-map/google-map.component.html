@@ -1,7 +1,4 @@
-<agm-map id='tempMap'
-  [latitude]="latitude"
-  [longitude]="longitude">
-</agm-map>
+<agm-map id="tempMap" [latitude]="latitude" [longitude]="longitude"></agm-map>
 
 <div id="google-map-component">
   <agm-map
@@ -13,12 +10,14 @@
     id="map"
   >
     <agm-polygon
-            *ngFor="let oc of overlayCoords"
-            [paths]="oc.coords"
-            [fillColor]="concordiaRed"
-            [fillOpacity]="0.3"
-            [strokeColor]="concordiaRed"
-            [strokeWeight]="2">
+      *ngFor="let oc of overlayCoords"
+      [paths]="oc.coords"
+      [fillColor]="concordiaRed"
+      [fillOpacity]="0.3"
+      [strokeColor]="concordiaRed"
+      [strokeWeight]="2"
+      (polyClick)="showAlert(oc.name, oc.address)"
+    >
     </agm-polygon>
 
     <agm-marker
@@ -34,10 +33,12 @@
       [iconUrl]="poiMarkerIcon"
       [latitude]="m.latitude"
       [longitude]="m.longitude"
-      (markerClick)="clickedMarker(infoWindow)">
-          <agm-info-window #infoWindow>
-            <strong>{{m.data.name}}</strong><br>
-          </agm-info-window>
+      (markerClick)="clickedMarker(infoWindow)"
+    >
+      <agm-info-window #infoWindow>
+        <strong>{{ m.data.name }}</strong
+        ><br />
+      </agm-info-window>
     </agm-marker>
 
     <ng-container *ngIf="origin && destination">
@@ -50,16 +51,16 @@
       </agm-direction>
 
       <agm-direction
-              [origin]="origin"
-              [destination]="destination"
-              [travelMode]="'TRANSIT'"
-              [renderOptions]="transitOptions.renderOptions"
+        [origin]="origin"
+        [destination]="destination"
+        [travelMode]="'TRANSIT'"
+        [renderOptions]="transitOptions.renderOptions"
       >
       </agm-direction>
 
       <agm-direction
-              [origin]="origin"
-              [destination]="destination"
+        [origin]="origin"
+        [destination]="destination"
       ></agm-direction>
     </ng-container>
   </agm-map>

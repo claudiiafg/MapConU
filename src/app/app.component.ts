@@ -14,6 +14,7 @@ import { UserServices } from 'src/services/userServices';
 export class AppComponent {
   private concordiaRed: string = '#800000';
   message: any;
+  private isOutdoor: boolean = false;
 
   constructor(
     private platform: Platform,
