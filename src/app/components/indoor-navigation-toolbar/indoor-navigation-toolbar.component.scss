@@ -16,7 +16,6 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   color: white;
-  padding-left: 1em;
 }
 
 .up-button,
@@ -49,6 +48,13 @@
 }
 
 .settings-button {
+  --color: white;
+  --shape: round;
+  --size: large;
+  padding-right: 0.5em;
+}
+
+.back-button {
   --color: white;
   --shape: round;
   --size: large;

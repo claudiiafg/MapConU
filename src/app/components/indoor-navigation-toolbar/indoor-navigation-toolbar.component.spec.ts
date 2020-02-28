@@ -1,7 +1,7 @@
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {IonicModule} from "@ionic/angular";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
 
-import {IndoorNavigationToolbarComponent} from "./indoor-navigation-toolbar.component";
+import { IndoorNavigationToolbarComponent } from "./indoor-navigation-toolbar.component";
 
 describe("IndoorNavigationToolbarComponent", () => {
   let component: IndoorNavigationToolbarComponent;

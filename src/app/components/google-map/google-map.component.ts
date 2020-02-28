@@ -531,7 +531,7 @@ export class GoogleMapComponent implements OnInit {
             cssClass: "alert-css",
             buttons: [
                 {
-                    text: "Map",
+                    text: "Enter",
                     cssClass: "alert-button-map",
                     handler: goIndoors => {
                         this.router.navigateByUrl("/indoor");
@@ -540,7 +540,7 @@ export class GoogleMapComponent implements OnInit {
                 },
 
                 {
-                    text: "xxx",
+                    text: "X",
                     role: "cancel",
                     cssClass: "alert-button-cancel",
                     handler: () => {
