@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { IonicModule } from "@ionic/angular";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import { IndoorNavigationToolbarComponent } from "./indoor-navigation-toolbar.component";
+import { IndoorNavigationToolbarComponent } from './indoor-navigation-toolbar.component';
 
-describe("IndoorNavigationToolbarComponent", () => {
+describe('IndoorNavigationToolbarComponent', () => {
   let component: IndoorNavigationToolbarComponent;
   let fixture: ComponentFixture<IndoorNavigationToolbarComponent>;
 
@@ -18,7 +18,7 @@ describe("IndoorNavigationToolbarComponent", () => {
     fixture.detectChanges();
   }));
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

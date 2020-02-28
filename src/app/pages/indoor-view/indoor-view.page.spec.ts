@@ -1,7 +1,7 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {IonicModule} from '@ionic/angular';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import {IndoorViewPage} from './indoor-view.page';
+import { IndoorViewPage } from './indoor-view.page';
 
 describe('IndoorViewPage', () => {
   let component: IndoorViewPage;

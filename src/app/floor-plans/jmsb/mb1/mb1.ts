@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: 'mb1.html',
   styleUrls: ['./mb1.scss']
 })
-
 export class MB1FloorPlan {
-
-  constructor(){}
+  constructor() {}
 }

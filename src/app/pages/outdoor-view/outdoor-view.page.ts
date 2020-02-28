@@ -1,17 +1,15 @@
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-outdoor-view",
-  templateUrl: "./outdoor-view.page.html",
-  styleUrls: ["./outdoor-view.page.scss"]
+  selector: 'app-outdoor-view',
+  templateUrl: './outdoor-view.page.html',
+  styleUrls: ['./outdoor-view.page.scss']
 })
 export class OutdoorViewPage implements OnInit {
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   navigate(path: []) {
     this.router.navigate(path);

@@ -17,11 +17,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
     { latitude: 45.45824, longitude: -73.640452 }
   ];
 
-  constructor(
-    private data: DataSharingService,
-    private events: Events,
-
-  ) {
+  constructor(private data: DataSharingService, private events: Events) {
     this.data.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
     );
@@ -35,6 +31,6 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
 
   public changeCampus() {
     this.sendMessage(this.locations[this.loc]);
-    this.events.publish('campusChanged', Date.now())
+    this.events.publish('campusChanged', Date.now());
   }
 }

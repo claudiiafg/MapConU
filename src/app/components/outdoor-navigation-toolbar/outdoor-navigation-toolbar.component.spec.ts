@@ -1,9 +1,9 @@
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {IonicModule} from "@ionic/angular";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import {OutdoorNavigationToolbarComponent} from "./outdoor-navigation-toolbar.component";
+import { OutdoorNavigationToolbarComponent } from './outdoor-navigation-toolbar.component';
 
-describe("OudtoorNavigationToolbarComponent", () => {
+describe('OudtoorNavigationToolbarComponent', () => {
   let component: OutdoorNavigationToolbarComponent;
   let fixture: ComponentFixture<OutdoorNavigationToolbarComponent>;
 
@@ -18,7 +18,7 @@ describe("OudtoorNavigationToolbarComponent", () => {
     fixture.detectChanges();
   }));
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

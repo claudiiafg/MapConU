@@ -35,8 +35,8 @@ import { PoiPopoverComponent } from './components/poi-popover/poi-popover.compon
 //env variables
 import { APIKey } from 'src/environments/env';
 import { environment } from '../environments/environment';
-import {OutdoorViewPage} from "./pages/outdoor-view/outdoor-view.page";
-import {IndoorViewPage} from "./pages/indoor-view/indoor-view.page";
+import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
+import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
@@ -45,8 +45,8 @@ import { UserServices } from 'src/services/userServices';
 import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
 
 //floorplans
-import {MB1FloorPlan} from './floor-plans/jmsb/mb1/mb1';
-import {PoiServices} from "../services/poiServices";
+import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
+import { PoiServices } from '../services/poiServices';
 
 PoiServices;
 @NgModule({
@@ -65,10 +65,7 @@ PoiServices;
     OutdoorViewPage,
     IndoorViewPage
   ],
-  entryComponents: [
-      SearchPopoverComponent,
-      PoiPopoverComponent
-  ],
+  entryComponents: [SearchPopoverComponent, PoiPopoverComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

@@ -7,10 +7,7 @@ export class GeolocationServices {
   private latitude: number;
   private longitude: number;
 
-  constructor(
-    private geolocation: Geolocation,
-    private events: Events
-  ) {}
+  constructor(private geolocation: Geolocation, private events: Events) {}
 
   async getCurrentPosition() {
     await this.geolocation
