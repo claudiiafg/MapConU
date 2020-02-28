@@ -2,7 +2,8 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   --inner-padding-bottom: 0px;
-  padding-left: 4em;
+  float: right;
+  padding-right: 2em;
   color: white;
 }
 
@@ -31,4 +32,24 @@
 
 .settings-button {
   --color: white;
+}
+
+.navigation-buttons-div {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--ConcordiaRed);
+}
+
+.navigation-buttons {
+  color: white;
+  text-transform: none;
+  max-width: fit-content;
+  --border-color: white;
+}
+
+.back-button {
+  --color: white;
+  --shape: round;
+  --size: large;
+  padding-right: 0.5em;
 }

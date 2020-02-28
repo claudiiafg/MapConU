@@ -1,5 +1,15 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ng-container *ngIf="isDirectionSet">
+      <ion-button
+        class="back-button"
+        fill="outline"
+        slot="start"
+        (click)="goBack()"
+      >
+        <ion-icon name="arrow-dropleft" size="large"></ion-icon>
+      </ion-button>
+    </ng-container>
     <ion-button
       class="settings-button"
       slot="end"
@@ -22,6 +32,38 @@
       </ion-select>
     </ion-item>
   </ion-toolbar>
+  <ng-container *ngIf="isDirectionSet">
+    <div class="navigation-buttons-div">
+      <ion-button
+        class="navigation-buttons"
+        [style.color]="walkColor"
+        shape="round"
+        fill="outline"
+        (click)="changeTravelMode('walk')"
+      >
+        <ion-icon name="walk"></ion-icon>
+      </ion-button>
+      <ion-button
+        class="navigation-buttons ion-float-end"
+        [style.color]="transitColor"
+        shape="round"
+        fill="outline"
+        (click)="changeTravelMode('transit')"
+      >
+        <ion-icon name="train"></ion-icon>
+      </ion-button>
+      <ion-button
+        class="navigation-buttons ion-float-end"
+        [style.color]="carColor"
+        shape="round"
+        fill="outline"
+        (click)="changeTravelMode('car')"
+      >
+        <ion-icon name="car"></ion-icon>
+      </ion-button>
+    </div>
+  </ng-container>
+
   <ion-searchbar
     class="search-location"
     placeholder="Search for a location.."

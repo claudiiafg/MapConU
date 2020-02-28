@@ -1,0 +1,8 @@
+<ng-container *ngIf="isDirectionSet">
+  <div class="navigation-buttons-div" (click)="presentModal()">
+    <p>
+      {{ timeLeft }} <br />
+      {{ distance }} | {{ fare }}
+    </p>
+  </div>
+</ng-container>

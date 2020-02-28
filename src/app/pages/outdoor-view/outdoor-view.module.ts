@@ -12,6 +12,7 @@ import { OutdoorNavigationSideButtonsComponent } from '../../components/outdoor-
 import { GoogleMapComponent } from '../../components/google-map/google-map.component';
 import { SearchPopoverComponent } from '../../components/search-popover/search-popover.component';
 import { PoiPopoverComponent } from '../../components/poi-popover/poi-popover.component';
+import { TimeFooterComponent } from 'src/app/components/time-footer/time-footer.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { PoiPopoverComponent } from '../../components/poi-popover/poi-popover.co
     OutdoorNavigationSideButtonsComponent,
     GoogleMapComponent,
     SearchPopoverComponent,
-    PoiPopoverComponent
+    PoiPopoverComponent,
+    TimeFooterComponent
   ]
 })
 export class OutdoorViewPageModule {}
