@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { PopoverController, Events } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { Events, PopoverController } from '@ionic/angular';
 import { PoiServices } from 'src/services/poiServices';
 
 @Component({

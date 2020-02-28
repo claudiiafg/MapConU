@@ -1,7 +1,6 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../services/data-sharing.service';
-import { OutdoorViewPage } from '../../pages/outdoor-view/outdoor-view.page';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',

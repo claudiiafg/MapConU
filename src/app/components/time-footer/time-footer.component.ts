@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DirectionService } from 'src/services/direction.service';
 import { ModalController } from '@ionic/angular';
+import { DirectionService } from 'src/services/direction.service';
 import { ModalDirectionsComponent } from '../modal-directions/modal-directions.component';
 
 @Component({

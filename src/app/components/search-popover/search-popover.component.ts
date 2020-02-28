@@ -7,9 +7,9 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { PopoverController, Platform } from '@ionic/angular';
-import { DirectionService } from 'src/services/direction.service';
+import { Platform, PopoverController } from '@ionic/angular';
 import { DataSharingService } from 'src/services/data-sharing.service';
+import { DirectionService } from 'src/services/direction.service';
 
 @Component({
   selector: 'app-search-popover',

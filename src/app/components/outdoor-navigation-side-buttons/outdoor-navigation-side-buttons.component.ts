@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController, Events } from '@ionic/angular';
-import { SearchPopoverComponent } from '../search-popover/search-popover.component';
+import { Events, PopoverController } from '@ionic/angular';
 import { PoiPopoverComponent } from '../poi-popover/poi-popover.component';
+import { SearchPopoverComponent } from '../search-popover/search-popover.component';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',
@@ -26,7 +26,8 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
         translucent: false
       });
 
-      popover.style.cssText = '--width: calc(100% - 10px); top: -230px; left: 5px';
+      popover.style.cssText =
+        '--width: calc(100% - 10px); top: -230px; left: 5px';
       return await popover.present();
     } else if (mode === 'poi') {
       this.poiClicked = !this.poiClicked;

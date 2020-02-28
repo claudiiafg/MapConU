@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Events } from '@ionic/angular';
-import { DataSharingService } from '../../../services/data-sharing.service';
 import { DirectionService } from 'src/services/direction.service';
+import { DataSharingService } from '../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',
