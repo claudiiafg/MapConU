@@ -14,7 +14,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
   public isDirectionSet: boolean = false;
   public transitColor: string = 'white';
   public carColor: string = 'white';
-  public walkColor: string = 'blue';
+  public walkColor: string = 'yellow';
 
   //Array for lat, long of specific locations
   public locations = [
@@ -53,17 +53,17 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
 
   public setSelectedColor(travelMode: string) {
     if (travelMode === 'car') {
-      this.carColor = 'blue';
+      this.carColor = 'yellow';
       this.transitColor = 'white';
       this.walkColor = 'white';
     } else if (travelMode === 'transit') {
       this.carColor = 'white';
-      this.transitColor = 'blue';
+      this.transitColor = 'yellow';
       this.walkColor = 'white';
     } else {
       this.carColor = 'white';
       this.transitColor = 'white';
-      this.walkColor = 'blue';
+      this.walkColor = 'yellow';
     }
   }
 }
