@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DirectionService } from 'src/services/direction.service';
+import { ModalController } from '@ionic/angular';
+import { ModalDirectionsComponent } from '../modal-directions/modal-directions.component';
 
 @Component({
   selector: 'app-time-footer',
@@ -11,11 +13,21 @@ export class TimeFooterComponent implements OnInit {
   public timeLeft: number;
   public distance: number;
   public arrival: string;
-  constructor(private directionService: DirectionService) {
+  constructor(
+    public modalController: ModalController,
+    private directionService: DirectionService
+  ) {
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
       this.isDirectionSet = isDirectionSet;
     });
   }
 
   ngOnInit() {}
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalDirectionsComponent
+    });
+    return await modal.present();
+  }
 }
