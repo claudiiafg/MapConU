@@ -12,7 +12,7 @@ describe('new App', () => {
     let x = element(by.id('campus-change')).getText();
     expect(browser.getTitle()).toContain('MapConU');
   });
-  it('Current Campus should toggle when selected at top of the UI', () => {
+  it('Should toggle Campuses when selected at top of the UI', () => {
     browser.get('/');
     //set location to sgw
     element(by.xpath("/html/body/app-root/ion-app/header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item/ion-select")).click();
@@ -34,6 +34,11 @@ describe('new App', () => {
     expect(element(by.css('ng-reflect-longitude="-73.640452"'))).toBeDefined();
     expect(element(by.css('ng-reflect-latitude="45.45824"'))).toBeDefined();
 
+  });
+  it("Shows Current Position Marker", () => {
+    browser.get('/');
+    let ele = element(by.xpath("/html/body/app-root/ion-app/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
+    expect(ele).toBeTruthy();
   });
 
 });
