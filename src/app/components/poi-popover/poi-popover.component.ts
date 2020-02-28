@@ -1,11 +1,6 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PopoverController, Events } from '@ionic/angular';
 import { PoiServices } from 'src/services/poiServices';
-
 
 @Component({
   selector: 'app-poi-popover',
@@ -21,15 +16,13 @@ export class PoiPopoverComponent {
   private grocery: boolean = false;
   private isFirstOpen: boolean;
 
-
   constructor(
     private popoverController: PopoverController,
     private events: Events,
-    private poiServices : PoiServices,
-
+    private poiServices: PoiServices
   ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     let currentToggles = this.poiServices.getCurrentToggles();
     this.restaurants = currentToggles.restaurants;
     this.coffee = currentToggles.coffee;
@@ -39,28 +32,37 @@ export class PoiPopoverComponent {
     this.grocery = currentToggles.grocery;
   }
 
-
-  update(toggle : string){
+  update(toggle: string) {
     let value;
-    switch(toggle){
-      case 'restaurant':   value = this.restaurants; break;
-      case 'coffee shop':        value = this.coffee; break;
-      case 'gas station':           value = this.gas; break;
-      case 'drugstore':     value = this.drugstore; break;
-      case 'hotel':        value = this.hotels; break;
-      case 'groceries':       value = this.grocery; break;
+    switch (toggle) {
+      case 'restaurant':
+        value = this.restaurants;
+        break;
+      case 'coffee shop':
+        value = this.coffee;
+        break;
+      case 'gas station':
+        value = this.gas;
+        break;
+      case 'drugstore':
+        value = this.drugstore;
+        break;
+      case 'hotel':
+        value = this.hotels;
+        break;
+      case 'groceries':
+        value = this.grocery;
+        break;
     }
 
     const data = {
-      toggle : toggle,
-      value : value
-    }
+      toggle: toggle,
+      value: value
+    };
     this.events.publish('poi-toggle-changed', data, Date.now());
-
   }
 
   closePopover() {
     this.popoverController.dismiss();
   }
-
 }

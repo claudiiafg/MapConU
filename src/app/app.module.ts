@@ -38,14 +38,15 @@ import { IndoorMapComponent } from './components/indoor-map/indoor-map.component
 import { IndoorNavigationToolbarComponent } from './components/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
 import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { PoiPopoverComponent } from './components/poi-popover/poi-popover.component';
+import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
+import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
+import { SearchPopoverComponent } from './components/search-popover/search-popover.component';
 import { UserServices } from 'src/services/userServices';
-import { PoiServices } from 'src/services/poiServices';
+import { PoiServices } from '../services/poiServices';
 
-//floorplans
-import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
 
 @NgModule({
   declarations: [
@@ -59,12 +60,11 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     PoiPopoverComponent,
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent,
-    MB1FloorPlan
+    MB1FloorPlan,
+    OutdoorViewPage,
+    IndoorViewPage
   ],
-  entryComponents: [
-    SearchPopoverComponent,
-    PoiPopoverComponent
-  ],
+  entryComponents: [SearchPopoverComponent, PoiPopoverComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -92,7 +92,7 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
   bootstrap: [AppComponent],
-  exports: [SearchPopoverComponent],
+  exports: [SearchPopoverComponent, IndoorNavigationToolbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

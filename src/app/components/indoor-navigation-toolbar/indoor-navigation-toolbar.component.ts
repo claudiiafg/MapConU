@@ -1,15 +1,12 @@
 import { Component, NgModule, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataSharingService } from '../../../services/data-sharing.service';
-import { AppComponent } from '../../app.component';
+import { OutdoorViewPage } from '../../pages/outdoor-view/outdoor-view.page';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
   templateUrl: './indoor-navigation-toolbar.component.html',
   styleUrls: ['./indoor-navigation-toolbar.component.scss']
-})
-@NgModule({
-  declarations: [AppComponent],
-  bootstrap: [AppComponent]
 })
 export class IndoorNavigationToolbarComponent implements OnInit {
   building: string;
@@ -22,6 +19,9 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   //number of floors in the building
   //TODO: add all buildings and the floors with floor plans
 
+  /*
+  Array with building information to dynamically create a toolbar with the proper building name and floors
+   */
   buildingInfo = [
     { buildingName: 'Hall Building', topFloorIndex: 12, bottomFloorIndex: 2 },
     {
@@ -47,7 +47,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
 
   floors = ['s2', 's1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
-  constructor(private data: DataSharingService) {
+  constructor(private data: DataSharingService, private router: Router) {
     //TODO: when user selects building to enter the name of that building needs to be sent to initialize the indoor view
     this.data.currentMessage.subscribe(
       incomingMessage => (this.building = incomingMessage)
@@ -73,6 +73,9 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     this.currentFloorIndex = 2;
   }
 
+  /*
+  method to update the floor when the user selects a floor from the dropdown menu
+   */
   changeFloor() {
     this.currentFloor = this.updateFloor;
     let i;
@@ -86,6 +89,9 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     }
   }
 
+  /*
+  Method to move one floor up
+   */
   moveUpFloor() {
     if (this.currentFloorIndex < this.maxFloorIndex) {
       this.currentFloorIndex++;
@@ -93,10 +99,20 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     }
   }
 
+  /*
+  Method to move one floor down
+   */
   moveDownFloor() {
     if (this.currentFloorIndex > this.minFloorIndex) {
       this.currentFloorIndex--;
       this.currentFloor = this.floors[this.currentFloorIndex];
     }
+  }
+
+  /*
+  Takes the user back to the outdoor view
+   */
+  goBackOutside() {
+    this.router.navigateByUrl('/outdoor');
   }
 }
