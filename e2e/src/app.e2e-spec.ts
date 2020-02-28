@@ -40,6 +40,17 @@ describe('new App', () => {
     let ele = element(by.xpath("/html/body/app-root/ion-app/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
     expect(ele).toBeTruthy();
   });
-
+  it("Shows Directions between point A and point B", () => {
+    browser.get('/');
+    element(by.xpath("/html/body/app-root/ion-app/app-outdoor-navigation-side-buttons/ion-fab[2]/ion-fab-button")).click();
+    browser.driver.sleep(500);
+    element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[1]/input")).click()
+    element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[1]/input")).sendKeys("1400 de maison");
+    element(by.xpath("/html/body/div[2]/div[1]")).click();
+    element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[2]/input")).click()
+    element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[2]/input")).sendKeys("1450 guy");
+    element(by.xpath("/html/body/div[2]/div[1]")).click();
+    expect(true).toBeTruthy;
+  });
 });
 

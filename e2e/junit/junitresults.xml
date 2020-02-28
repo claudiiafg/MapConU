@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="1" tests="3" time="5.936">
- <testsuite name="new App" timestamp="2020-02-28T12:29:56" hostname="localhost" time="5.936" errors="0" tests="3" skipped="0" disabled="0" failures="1">
-  <testcase classname="new App" name="Has MapConU as the Title " time="2.041" />
-  <testcase classname="new App" name="Should toggle Campuses when selected at top of the UI" time="3.137">
-   <failure type="exception" message="Failed: invalid selector: An invalid or illegal selector was specified
+<testsuites disabled="0" errors="0" failures="1" tests="4" time="19.597">
+ <testsuite name="new App" timestamp="2020-02-28T13:44:41" hostname="localhost" time="19.597" errors="0" tests="4" skipped="0" disabled="0" failures="1">
+  <testcase classname="new App" name="Has MapConU as the Title " time="2.942" />
+  <testcase classname="new App" name="Should toggle Campuses when selected at top of the UI" time="2.771" />
+  <testcase classname="new App" name="Shows Current Position Marker" time="1.039" />
+  <testcase classname="new App" name="Shows Directions between point A and point B" time="12.842">
+   <failure type="exception" message="Failed: script timeout
   (Session info: headless chrome=80.0.3987.0)
-  (Driver info: chromedriver=80.0.3987.16 (320f6526c1632ad4f205ebce69b99a062ed78647-refs/branch-heads/3987@{#185}),platform=Mac OS X 10.15.3 x86_64)"><![CDATA[InvalidSelectorError: invalid selector: An invalid or illegal selector was specified
+  (Driver info: chromedriver=80.0.3987.16 (320f6526c1632ad4f205ebce69b99a062ed78647-refs/branch-heads/3987@{#185}),platform=Mac OS X 10.15.3 x86_64)"><![CDATA[ScriptTimeoutError: script timeout
   (Session info: headless chrome=80.0.3987.0)
   (Driver info: chromedriver=80.0.3987.16 (320f6526c1632ad4f205ebce69b99a062ed78647-refs/branch-heads/3987@{#185}),platform=Mac OS X 10.15.3 x86_64)
     at Object.checkLegacyResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/error.js:546:15)
     at parseHttpResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:509:13)
     at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:441:30
     at processTicksAndRejections (internal/process/task_queues.js:93:5)
-From: Task: WebDriver.findElements(By(css selector, ng-reflect-longitude="-73.640452"))
+From: Task: Protractor.waitForAngular() - Locator: By(xpath, /html/body/div[2]/div[1])
     at Driver.schedule (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:807:17)
-    at Driver.findElements (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:1048:19)
-    at /usr/local/lib/node_modules/protractor/built/element.js:159:44
+    at ProtractorBrowser.executeAsyncScript_ (/usr/local/lib/node_modules/protractor/built/browser.js:425:28)
+    at /usr/local/lib/node_modules/protractor/built/browser.js:456:33
     at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
     at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
     at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
     at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27
     at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)
-From: Task: Run it("Should toggle Campuses when selected at top of the UI") in control flow
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)Error: 
+    at ElementArrayFinder.applyAction_ (/usr/local/lib/node_modules/protractor/built/element.js:459:27)
+    at ElementArrayFinder.<computed> [as click] (/usr/local/lib/node_modules/protractor/built/element.js:91:29)
+    at ElementFinder.<computed> [as click] (/usr/local/lib/node_modules/protractor/built/element.js:831:22)
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:49:51)
+    at /usr/local/lib/node_modules/protractor/node_modules/jasminewd2/index.js:112:25
+    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)
+    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)
+    at schedulerExecute (/usr/local/lib/node_modules/protractor/node_modules/jasminewd2/index.js:95:18)
+    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+From: Task: Run it("Shows Directions between point A and point B") in control flow
     at UserContext.<anonymous> (/usr/local/lib/node_modules/protractor/node_modules/jasminewd2/index.js:94:19)
     at attempt (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4297:26)
     at QueueRunner.run (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4217:20)
@@ -35,7 +47,7 @@ From: Task: Run it("Should toggle Campuses when selected at top of the UI") in c
     at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2599:53
 From asynchronous test: 
 Error: 
-    at Suite.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:15:3)
+    at Suite.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:43:3)
     at addSpecsToSuite (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1107:25)
     at Env.describe (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1074:7)
     at describe (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4399:18)
@@ -46,6 +58,5 @@ Error:
     at Object.require.extensions.<computed> [as .ts] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:442:12)]]>
    </failure>
   </testcase>
-  <testcase classname="new App" name="Shows Current Position Marker" time="0.756" />
  </testsuite>
 </testsuites>
