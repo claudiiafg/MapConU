@@ -11,6 +11,7 @@ import {OutdoorNavigationToolbarComponent} from "../../components/outdoor-naviga
 import {OutdoorNavigationSideButtonsComponent} from "../../components/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component";
 import {GoogleMapComponent} from "../../components/google-map/google-map.component";
 import {SearchPopoverComponent} from "../../components/search-popover/search-popover.component";
+import {PoiPopoverComponent} from "../../components/poi-popover/poi-popover.component";
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {SearchPopoverComponent} from "../../components/search-popover/search-pop
     OutdoorNavigationToolbarComponent,
     OutdoorNavigationSideButtonsComponent,
     GoogleMapComponent,
-    SearchPopoverComponent
+    SearchPopoverComponent,
+    PoiPopoverComponent
   ]
 })
 export class OutdoorViewPageModule {

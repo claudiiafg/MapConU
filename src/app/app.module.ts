@@ -65,7 +65,10 @@ PoiServices;
     OutdoorViewPage,
     IndoorViewPage
   ],
-  entryComponents: [SearchPopoverComponent],
+  entryComponents: [
+      SearchPopoverComponent,
+      PoiPopoverComponent
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
