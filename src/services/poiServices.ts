@@ -31,7 +31,6 @@ export class PoiServices {
         (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             if (!self.hasType(type)) {
-              console.log(results);
               for (let place of results) {
                 let tempPlace = {
                   latitude: place.geometry.location.lat().toString(),

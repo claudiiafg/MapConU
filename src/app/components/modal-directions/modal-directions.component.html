@@ -1,0 +1,21 @@
+<ion-button (click)="dismiss()">
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+<ion-content>
+  <ng-container *ngFor="let step of steps">
+    <div>
+      <ng-container *ngIf="step.maneuver_icon">
+        <ion-icon name="{{ step.maneuver_icon }}"></ion-icon>
+      </ng-container>
+      <ion-icon name="{{ step.travel_icon }}"></ion-icon>
+      | Distance: {{ step.distance.text }}, Time: {{ step.duration.text }}
+      <br />
+
+      <p>
+        <b>{{ step.position }}.</b>
+        {{ step.instructions | stripTags }}
+      </p>
+    </div>
+    <hr />
+  </ng-container>
+</ion-content>

@@ -1,23 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
-  Component,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  Input
-} from '@angular/core';
-import {
-  Platform,
-  Events,
   AlertController,
-  NavController
+  Events,
+  NavController,
+  Platform
 } from '@ionic/angular';
-
+import { DirectionService } from 'src/services/direction.service';
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
-import { SearchService } from 'src/services/search.service';
-import { DataSharingService } from '../../../services/data-sharing.service';
-import { Router } from '@angular/router';
 import { PoiServices } from 'src/services/poiServices';
+import { DataSharingService } from '../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-google-map',
@@ -25,16 +18,17 @@ import { PoiServices } from 'src/services/poiServices';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-  private height: number = 0;
-  private loading: any;
-  private latitude: number = 45.4946; // to be change with geolocalisation
-  private longitude: number = -73.5774;
-  private destination: any;
-  private origin: any;
-  private concordiaRed = '#800000';
-  private positionMarkers: any[] = [];
-  private poiMarkers: any[] = [];
-  private currentToggles: any = {
+  public height: number = 0;
+  public latitude: number = 45.495729;
+  public longitude: number = -73.578041;
+  public destination: any;
+  public origin: any;
+  public concordiaRed = '#800000';
+  public positionMarkers: any[] = [];
+  public poiMarkers: any[] = [];
+  public travelMode = 'walk';
+  public previous: any;
+  public currentToggles: any = {
     restaurants: false,
     coffee: false,
     gas: false,
@@ -42,36 +36,22 @@ export class GoogleMapComponent implements OnInit {
     hotels: false,
     grocery: false
   };
-  private overlayCoords: any[] = [];
   private buildingToNavigateTo: string;
 
-  //Options to be change dynamically when user click
-  walkingOptions = {
+  public provideRouteAlternatives: boolean = true;
+
+  // Options to be change dynamically when user click
+  polylineOptions = {
     renderOptions: {
       polylineOptions: {
-        strokeColor: '#9F33FF',
+        strokeColor: '#339fff',
         strokeOpacity: 0.6,
         strokeWeight: 5
       }
     }
   };
 
-  transitOptions = {
-    renderOptions: {
-      polylineOptions: {
-        strokeColor: '#4CFF33',
-        strokeOpacity: 0.6,
-        strokeWeight: 5
-      }
-    }
-  };
-
-  //To add default locations
-  locations = [
-    { latitude: 45.495729, longitude: -73.578041 },
-    { latitude: 45.45824, longitude: -73.640452 }
-  ];
-
+  // Marker
   positionMarkerIcon = {
     url: 'assets/icon/position-marker.png',
     scaledSize: {
@@ -80,10 +60,7 @@ export class GoogleMapComponent implements OnInit {
     }
   };
 
-  /*
-        These arrays store the latitude, longitude points used to draw the polygons
-        that highlight the Concordia buildings
-      */
+  // TODO: Move coordinates to json file, import json object and set coordinates here.
 
   hallCoords = [
     { lat: 45.496836, lng: -73.578858 },
@@ -287,6 +264,108 @@ export class GoogleMapComponent implements OnInit {
     { lat: 45.458743, lng: -73.639479 },
     { lat: 45.458536, lng: -73.638923 }
   ];
+
+  public overlayCoords = [
+    {
+      name: 'Hall Building',
+      address: '1455 De Maisonneeuve Blvd. W.',
+      coords: this.hallCoords
+    },
+    {
+      name: 'John Molson Building',
+      address: '1450 Guy St.',
+      coords: this.jmsbCoords
+    },
+    {
+      name: 'JW McConnell Building',
+      address: '1400 De Maisonneeuve Blvd. W.',
+      coords: this.lbCoords
+    },
+    {
+      name: 'Faubourg Building',
+      address: '1250 Guy St.',
+      coords: this.fbCoords
+    },
+    { name: 'Faubourg Ste Catherine Building', coords: this.fgCoords },
+    {
+      name: 'EV Building',
+      address: '1515 St. Catherine W.',
+      coords: this.evCoords
+    },
+    {
+      name: 'Guy-De Maisonneuve Building',
+      address: '1550 De Maisonneeuve Blvd. W.',
+      coords: this.gmCoords
+    },
+    { name: 'Grey Nuns', address: '1190 Guy St.', coords: this.gnCoords },
+    {
+      name: 'Concordia Annexes',
+      address: '2010-2110 Mackay St.',
+      coords: this.annexCoords
+    },
+    { name: 'TD Building', address: '1410 Guy St.', coords: this.tdCoords },
+    {
+      name: 'Visual Arts Building',
+      address: '1395 Rene Levsque Blvd. W.',
+      coords: this.vaCoords
+    },
+    {
+      name: 'Administration Building',
+      address: '7141 Sherbrooke W.',
+      coords: this.adCoords
+    },
+    {
+      name: 'Central Building',
+      address: '7141 Sherbrooke W.',
+      coords: this.ccCoords
+    },
+    {
+      name: 'Richard J. Renaud Science Complex',
+      address: '7141 Sherbrooke W.',
+      coords: this.spCoords
+    },
+    {
+      name: 'Communication Studies and Journalism Building',
+      address: '7141 Sherbrooke W.',
+      coords: this.cjCoords
+    },
+    {
+      name: 'Vanier Library',
+      address: '7141 Sherbrooke W.',
+      coords: this.vlCoords
+    },
+    {
+      name: 'Oscar Peterson Concert Hall',
+      address: '7141 Sherbrooke W.',
+      coords: this.ptCoords
+    },
+    {
+      name: 'Student Center',
+      address: '7141 Sherbrooke W.',
+      coords: this.scCoords
+    },
+    {
+      name: 'Psychology Building',
+      address: '7141 Sherbrooke W.',
+      coords: this.pyCoords
+    },
+    {
+      name: 'Recreation and Athletics Complex',
+      address: '7200 Sherbrooke W.',
+      coords: this.raCoords
+    },
+    {
+      name: 'Hingston Hall',
+      address: '7141 Sherbrooke W.',
+      coords: this.haCoords
+    },
+    {
+      name: 'FC Smith Building',
+      address: '7141 Sherbrooke W.',
+      coords: this.fcCoords
+    }
+  ];
+
   poiMarkerIcon = {
     url: 'assets/icon/poi-marker.png',
     scaledSize: {
@@ -294,46 +373,35 @@ export class GoogleMapComponent implements OnInit {
       height: 20
     }
   };
-  previous;
 
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
     private events: Events,
     private data: DataSharingService,
-    private searchService: SearchService,
+    private directionService: DirectionService,
     private poiServices: PoiServices,
     private alertController: AlertController,
     private navController: NavController,
-    private router: Router
-  ) {
-    this.height = platform.height() - 106;
-  }
+    private router: Router,
+    private dataSharingService: DataSharingService
+  ) {}
 
   async ngOnInit() {
     await this.platform.ready();
     await this.geolocationServices.getCurrentPosition();
 
-    //subscribe to changes in current position
-    this.events.subscribe('coordinatesChanged', coordinates => {
-      let tempMarker = {
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude
-      };
-      this.positionMarkers = [];
-      this.positionMarkers.push(tempMarker);
-    });
+    this.subscribeToMapSize();
+    this.subscribeToTravelMode();
+    this.subscribeToChangeInCurrentPOS();
+    this.subscribeToChangeInPOI();
+  }
 
-    this.data.currentMessage.subscribe(incomingMessage => {
-      this.latitude = incomingMessage.latitude;
-      this.longitude = incomingMessage.longitude;
-    });
-    this.subscribeToUserInput();
+  public subscribeToChangeInPOI() {
     //subscribe to changes in POI toggles
     this.events.subscribe('poi-toggle-changed', async res => {
       const toggleName = res.toggle;
       const toggleValue = res.value;
-      console.log(toggleName + ': ' + toggleValue);
       switch (toggleName) {
         case 'restaurant':
           this.currentToggles.restaurants = toggleValue;
@@ -393,8 +461,26 @@ export class GoogleMapComponent implements OnInit {
     });
   }
 
+  public subscribeToChangeInCurrentPOS() {
+    //subscribe to changes in current position
+    this.events.subscribe('coordinatesChanged', coordinates => {
+      let tempMarker = {
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude
+      };
+      this.positionMarkers = [];
+      this.positionMarkers.push(tempMarker);
+    });
+
+    this.data.currentMessage.subscribe(incomingMessage => {
+      this.latitude = incomingMessage.latitude;
+      this.longitude = incomingMessage.longitude;
+    });
+    this.subscribeToUserInput();
+  }
+
   //show name of POI when clicked on a marker
-  clickedMarker(infowindow) {
+  public clickedMarker(infowindow: any) {
     if (this.previous) {
       this.previous.close();
     }
@@ -402,122 +488,20 @@ export class GoogleMapComponent implements OnInit {
   }
 
   public subscribeToUserInput() {
-    this.searchService.origin.subscribe(resp => {
+    this.directionService.origin.subscribe(resp => {
       if (Array.isArray(resp) && resp.length) {
         this.origin = { lat: resp[0], lng: resp[1] };
+      } else {
+        this.origin = null;
       }
     });
-    this.searchService.destination.subscribe(resp => {
+    this.directionService.destination.subscribe(resp => {
       if (Array.isArray(resp) && resp.length) {
         this.destination = { lat: resp[0], lng: resp[1] };
+      } else {
+        this.destination = null;
       }
     });
-
-    /*
-          Array containing all Concordia building data in one place, used to dynamically create highlighting polygons and
-          get information building name, address and coordinates for the building information alerts that appeat when a
-          building is clicked
-           */
-    this.overlayCoords = [
-      {
-        name: 'Hall Building',
-        address: '1455 De Maisonneeuve Blvd. W.',
-        coords: this.hallCoords
-      },
-      {
-        name: 'John Molson Building',
-        address: '1450 Guy St.',
-        coords: this.jmsbCoords
-      },
-      {
-        name: 'JW McConnell Building',
-        address: '1400 De Maisonneeuve Blvd. W.',
-        coords: this.lbCoords
-      },
-      {
-        name: 'Faubourg Building',
-        address: '1250 Guy St.',
-        coords: this.fbCoords
-      },
-      { name: 'Faubourg Ste Catherine Building', coords: this.fgCoords },
-      {
-        name: 'EV Building',
-        address: '1515 St. Catherine W.',
-        coords: this.evCoords
-      },
-      {
-        name: 'Guy-De Maisonneuve Building',
-        address: '1550 De Maisonneeuve Blvd. W.',
-        coords: this.gmCoords
-      },
-      { name: 'Grey Nuns', address: '1190 Guy St.', coords: this.gnCoords },
-      {
-        name: 'Concordia Annexes',
-        address: '2010-2110 Mackay St.',
-        coords: this.annexCoords
-      },
-      { name: 'TD Building', address: '1410 Guy St.', coords: this.tdCoords },
-      {
-        name: 'Visual Arts Building',
-        address: '1395 Rene Levsque Blvd. W.',
-        coords: this.vaCoords
-      },
-      {
-        name: 'Administration Building',
-        address: '7141 Sherbrooke W.',
-        coords: this.adCoords
-      },
-      {
-        name: 'Central Building',
-        address: '7141 Sherbrooke W.',
-        coords: this.ccCoords
-      },
-      {
-        name: 'Richard J. Renaud Science Complex',
-        address: '7141 Sherbrooke W.',
-        coords: this.spCoords
-      },
-      {
-        name: 'Communication Studies and Journalism Building',
-        address: '7141 Sherbrooke W.',
-        coords: this.cjCoords
-      },
-      {
-        name: 'Vanier Library',
-        address: '7141 Sherbrooke W.',
-        coords: this.vlCoords
-      },
-      {
-        name: 'Oscar Peterson Concert Hall',
-        address: '7141 Sherbrooke W.',
-        coords: this.ptCoords
-      },
-      {
-        name: 'Student Center',
-        address: '7141 Sherbrooke W.',
-        coords: this.scCoords
-      },
-      {
-        name: 'Psychology Building',
-        address: '7141 Sherbrooke W.',
-        coords: this.pyCoords
-      },
-      {
-        name: 'Recreation and Athletics Complex',
-        address: '7200 Sherbrooke W.',
-        coords: this.raCoords
-      },
-      {
-        name: 'Hingston Hall',
-        address: '7141 Sherbrooke W.',
-        coords: this.haCoords
-      },
-      {
-        name: 'FC Smith Building',
-        address: '7141 Sherbrooke W.',
-        coords: this.fcCoords
-      }
-    ];
   }
 
   /*
@@ -576,12 +560,50 @@ export class GoogleMapComponent implements OnInit {
         buildingLng = this.overlayCoords[i].coords[0].lng;
       }
     }
-    this.searchService.origin.next([
+    this.directionService.isDirectionSet.next(true);
+    this.dataSharingService.updateMapSize(-210);
+
+    this.directionService.origin.next([
       this.geolocationServices.getLatitude(),
       this.geolocationServices.getLongitude()
     ]);
-    this.searchService.destination.next([buildingLat, buildingLng]);
+    this.directionService.destination.next([buildingLat, buildingLng]);
 
     this.buildingToNavigateTo = null;
+  }
+  //use to send data to other components
+  sendMessage(updatedMessage: any) {
+    this.data.updateMessage(updatedMessage);
+  }
+
+  public subscribeToMapSize() {
+    this.dataSharingService.mapSize.subscribe(size => {
+      this.height = size;
+    });
+  }
+
+  public subscribeToTravelMode() {
+    this.directionService.changeTravelMode.subscribe(travelMode => {
+      this.travelMode = travelMode;
+    });
+  }
+
+  public onResponse($event: any) {
+    this.sendDirectionInfo($event);
+    this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
+  }
+
+  public sendDirectionInfo(directionInfo: any) {
+    let fare: string;
+    if (directionInfo.routes[0].fare) {
+      fare = directionInfo.routes[0].fare.text;
+    } else {
+      fare = 'CA$0.00';
+    }
+    this.directionService.directionInfo.next({
+      time: directionInfo.routes[0].legs[0].duration.text,
+      distance: directionInfo.routes[0].legs[0].distance.text,
+      fare
+    });
   }
 }
