@@ -80,6 +80,7 @@ import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/
     RoomSelectorPopoverComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
