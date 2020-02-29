@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataSharingService } from '../../../services/data-sharing.service';
+import { DataSharingService } from '../../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
@@ -8,6 +8,8 @@ import { DataSharingService } from '../../../services/data-sharing.service';
   styleUrls: ['./indoor-navigation-toolbar.component.scss']
 })
 export class IndoorNavigationToolbarComponent implements OnInit {
+  @Input() inputBuilding: string = '';
+
   building: string;
   maxFloorIndex: number;
   minFloorIndex: number;
@@ -37,7 +39,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     { buildingName: 'Central Building', topFloorIndex: 3, bottomFloorIndex: 2 },
     { buildingName: 'Higston Hall', topFloorIndex: 2, bottomFloorIndex: 2 },
     {
-      buildingName: 'Communication Studies and Journalism Building ',
+      buildingName: 'Communication Studies and Journalism Building',
       topFloorIndex: 5,
       bottomFloorIndex: 2
     },
@@ -56,7 +58,17 @@ export class IndoorNavigationToolbarComponent implements OnInit {
 
   ngOnInit() {
     //placeholder because logic to come from outdoor-nav is not implemented yet can be deleted when it is
-    this.building = 'Hall Building';
+    switch(this.inputBuilding){
+      case 'hall': this.building = 'Hall Building'; break;
+      case 'jmsb': this.building = 'John Molson Building'; break;
+      case 'fg': this.building = 'Faubourg'; break;
+      case 'richard': this.building = 'Richard Grey Renaud Science Complex'; break;
+      case 'center': this.building = 'Central Building'; break;
+      case 'hh': this.building = 'Higston Hall'; break;
+      case 'comm': this.building = 'Communication Studies and Journalism Building'; break;
+      case 'varnier': this.building = 'Vanier Extension'; break;
+      
+    }
 
     //sets max and min number of allowed floors for the selected building
     let i;

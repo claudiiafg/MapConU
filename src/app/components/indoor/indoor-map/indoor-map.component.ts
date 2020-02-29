@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./indoor-map.component.scss']
 })
 export class IndoorMapComponent implements OnInit {
-  @Input() building: string = '';
+  @Input() inputBuilding: string = '';
 
   constructor() {}
 

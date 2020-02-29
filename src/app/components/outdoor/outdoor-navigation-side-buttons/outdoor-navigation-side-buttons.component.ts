@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Events, PopoverController } from '@ionic/angular';
-import { PoiPopoverComponent } from '../poi-popover/poi-popover.component';
-import { SearchPopoverComponent } from '../search-popover/search-popover.component';
+import { PoiPopoverComponent } from '../../popovers/poi-popover/poi-popover.component';
+import { SearchPopoverComponent } from '../../popovers/search-popover/search-popover.component';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',

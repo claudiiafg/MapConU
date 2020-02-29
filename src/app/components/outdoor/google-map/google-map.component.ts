@@ -10,7 +10,7 @@ import { DirectionService } from 'src/services/direction.service';
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { PoiServices } from 'src/services/poiServices';
-import { DataSharingService } from '../../../services/data-sharing.service';
+import { DataSharingService } from '../../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-google-map',
@@ -389,6 +389,7 @@ export class GoogleMapComponent implements OnInit {
 
   async ngOnInit() {
     await this.platform.ready();
+    this.height = this.platform.height();
     await this.geolocationServices.getCurrentPosition();
 
     this.subscribeToMapSize();

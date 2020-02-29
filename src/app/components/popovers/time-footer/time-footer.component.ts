@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
-import { ModalDirectionsComponent } from '../modal-directions/modal-directions.component';
+import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
 
 @Component({
   selector: 'app-time-footer',
