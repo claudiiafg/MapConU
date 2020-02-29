@@ -25,16 +25,10 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
-/*.alert-buttons {
-  color: #222428 !important;
-  background-color: #989aa2 !important;
-  max-width: 60px !important;
-}
 
-.alert-buttons-cancel {
-  max-width: 1px !important;
-  background-color: #989aa2 !important;
-}*/
+.alert-wrapper {
+  display: block;
+}
 
 .alert-title {
   text-align: center;
@@ -45,10 +39,9 @@
 }
 
 .alert-button-group {
+  display: contents;
   position: relative !important;
   flex-direction: row !important;
-  max-width: fit-content;
-  display: inline;
   padding: 5%;
   align-self: center;
 }
@@ -56,13 +49,12 @@
 .alert-button-map,
 .alert-button-go {
   color: #000000 !important;
+  width: 50%;
+  display: inline-flex;
 }
 
 .alert-button-cancel {
   opacity: 0 !important;
-}
-
-.alert-css {
 }
 
 ion-backdrop {

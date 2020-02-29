@@ -10,7 +10,9 @@ export class DataSharingService {
   public mapSize = new BehaviorSubject(this.platform.height() - 106); // original map size
   currentMessage = this.messageSrc.asObservable();
 
-  constructor(public platform: Platform) {}
+  constructor(public platform: Platform) {
+    this.mapSize = new BehaviorSubject(this.platform.height() - 106); // original map size
+  }
 
   updateMessage(message: any) {
     this.messageSrc.next(message);

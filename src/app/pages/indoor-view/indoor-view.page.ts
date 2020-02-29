@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-indoor-view',
@@ -6,7 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./indoor-view.page.scss']
 })
 export class IndoorViewPage implements OnInit {
-  constructor() {}
+  private sub;
+  private building : string;
+
+  constructor(
+    private route: ActivatedRoute,
+
+  ) {
+    this.sub = this.route.params.subscribe(params => {
+      if(params['id']){
+        this.building = params['id'];
+      }
+    });
+  }
 
   ngOnInit() {}
 }

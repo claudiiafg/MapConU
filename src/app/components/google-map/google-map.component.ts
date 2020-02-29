@@ -508,6 +508,32 @@ export class GoogleMapComponent implements OnInit {
       Creates popup containing Concordia building descriptions.
        */
   async showAlert(building: string, address: string) {
+
+    let urlSubString;
+    switch(building){
+      case 'Hall Building': urlSubString = 'hall'; break;
+      case 'John Molson Building': urlSubString = 'jmsb'; break;
+      case 'JW McConnell Building': urlSubString = 'jw'; break;
+      case 'Faubourg Building': urlSubString = 'fg'; break;
+      case 'Faubourg Ste Catherine Building': urlSubString = 'fg-stcath'; break;
+      case 'EV Building': urlSubString = 'ev'; break;
+      case 'Guy-De Maisonneuve Building': urlSubString = 'gd'; break;
+      case 'Grey Nuns': urlSubString = 'gn'; break;
+      case 'Concordia Annexes': urlSubString = 'annexes'; break;
+      case 'TD Building': urlSubString = 'td'; break;
+      case 'Visual Arts Building': urlSubString = 'visual'; break;
+      case 'Administration Building': urlSubString = 'admin'; break;
+      case 'Central Building': urlSubString = 'central'; break;
+      case 'Richard J. Renaud Science Complex': urlSubString = 'richard'; break;
+      case 'Communication Studies and Journalism Building': urlSubString = 'comm'; break;
+      case 'Vanier Library': urlSubString = 'vanier'; break;
+      case 'Oscar Peterson Concert Hall': urlSubString = 'oscar'; break;
+      case 'Student Center': urlSubString = 'student-center'; break;
+      case 'Psychology Building': urlSubString = 'psyc'; break;
+      case 'Recreation and Athletics Complex': urlSubString = 'recr'; break;
+      case 'Hingston Hall': urlSubString = 'hh'; break;
+      case 'FC Smith Building': urlSubString = 'fc'; break;
+    }
     this.buildingToNavigateTo = building;
     const alert = await this.alertController.create({
       header: building,
@@ -518,17 +544,14 @@ export class GoogleMapComponent implements OnInit {
           text: 'Enter',
           cssClass: 'alert-button-map',
           handler: goIndoors => {
-            this.router.navigateByUrl('/indoor');
-            return true;
-          }
-        },
-
-        {
-          text: 'X',
-          role: 'cancel',
-          cssClass: 'alert-button-cancel',
-          handler: () => {
-            console.log('Cancel clicked');
+            if(urlSubString === 'jmsb'){
+              let url = '/indoor' + '/jmsb';
+              this.router.navigateByUrl(url);
+              return true;
+            } else {
+              console.error('no floor plans for this building');
+              return false;
+            }
           }
         },
         {
