@@ -50,9 +50,9 @@ export class MB1FloorPlan {
     let tempInterestPoints: Point[] = [];
 
     for(let i in docElementLines){
-      // if(docElementLines[i].style){
-      //   docElementLines[i].style.stroke = 'transparent';
-      // }
+      if(docElementLines[i].style){
+        docElementLines[i].style.stroke = 'transparent';
+      }
 
       //set temporaty lines with right structure
       if(docElementLines[i].x1){
@@ -255,39 +255,22 @@ export class MB1FloorPlan {
 
   private logSomething(){
     this.sourceLine = this.getInterestLineById(this.sourceID);
-    // this.sourceLine._wasVisited = true;
     this.destLine = this.getInterestLineById(this.destID);
     this.path.push(this.sourceLine.id);
-    // console.log(this.pathLines);
-    //
-    // this.setAsVisited('line1');
-    // this.setAsVisited('line2');
-    // this.setAsVisited('line3');
-    // this.setAsVisited('line4');
-    // this.setAsVisited('line5');
-    // this.setAsVisited('line6');
-    // this.setAsVisited('line7');
-    // this.setAsVisited('line8');
-    // this.setAsVisited('line9');
-    // this.setAsVisited('line10');
-    // this.setAsVisited('line11');
-    // this.setAsVisited('line12');
-    //
-    // // this.path = ['line1', 'line2', 'line3', 'line4'];
-    // this.path = ['line1', 'line5', 'line10', 'line12', 'line13'];
-    console.log(this.path);
 
     this.computePath();
+
+    for(let line of this.path){
+      let docElement = document.getElementById(line);
+      docElement.style.stroke = 'blue';
+    }
   }
 
 
 
   computePath(){
-
-    console.log('calling fn');
     let line = this.getLineById(this.path[this.path.length-1]);
     this.setAsVisited(line.id);
-    console.log(line);
 
     if(this.foundPath){
       return;
@@ -295,36 +278,27 @@ export class MB1FloorPlan {
 
     //leaf line
     if(this.isLeaf(line.id) && (line.id !== this.sourceLine.id)){
-      console.error('1 connected -> is leaf');
 
       // if line if equal to the line we're looking for
       if(line.id === this.destLine.id){
         console.log('FOUND ROOM');
         this.foundPath = true;
-        console.log(this.path);
         return;
 
       //found leaf line but not the destination
       } else {
-        console.error('found leaf line but not the destination');
         //mark as visited and pop the path's array until found intersection with a line not visited
         let top: Line;
         let i = 1;
         do {
-          console.log('rolling back: ' + ++i);
           let arrayTop = this.path.pop();
           top = this.getLineById(arrayTop);
-          console.log("top: " + top.id);
-          console.log(this.path);
         } while (!(top._isIntersection && this.hasUnvisitedLine(top) && !(this.sharesLastLineWithPrevious(top))));
 
-        console.error('outside rolling');
         //push top back in
         //push next line to visit
         //compute path from new line
         this.path.push(top.id);
-        console.log(this.path);
-        console.log(this.getNextUnvisitedLine(top).id);
         this.path.push(this.getNextUnvisitedLine(top).id);
         this.computePath();
         return;
@@ -332,35 +306,23 @@ export class MB1FloorPlan {
 
   //previous line and next line only
 } else if (!this.isIntersection(line.id) && (!this.isLeaf(line.id) || line.id !== this.sourceLine.id)){
-    console.error('2 connected -> prev and next');
-    console.log(this.isIntersection(line.id));
-    console.log(this.isLeaf(line.id));
-
       let tempLine : Line = line;
       let nextLine : string;
 
       do{
-        console.error('rolling forward');
         nextLine = tempLine.connectedLines.filter(line => !this.getLineById(line)._wasVisited)[0];
         if(nextLine){
-          console.log('theres next');
-          console.log(nextLine);
           this.path.push(nextLine);
           tempLine = this.getLineById(nextLine);
         }
 
       } while (nextLine)
 
-      console.error('outside rolling forward');
-      console.log(this.path);
       this.computePath();
       return;
 
     //multiple lines (is intersectiong)
   } else if(this.isIntersection(line.id)){
-      console.error('is intersections');
-      console.error('get next');
-      console.log(this.getNextUnvisitedLine(line));
       this.path.push(this.getNextUnvisitedLine(line).id);
       this.computePath();
       return;
