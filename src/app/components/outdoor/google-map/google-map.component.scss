@@ -1,4 +1,7 @@
 #google-map-component {
+  position: absolute;
+  display: contents;
+
   #campus-change {
     --background: var(--ConcordiaRed);
     --background-activated: var(--ConcordiaRed);

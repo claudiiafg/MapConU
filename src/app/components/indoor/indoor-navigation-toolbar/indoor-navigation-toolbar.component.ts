@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../services/data-sharing.service';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
@@ -9,6 +10,7 @@ import { DataSharingService } from '../../../../services/data-sharing.service';
 })
 export class IndoorNavigationToolbarComponent implements OnInit {
   @Input() inputBuilding: string = '';
+  @Input() floor: string = '1';
 
   building: string;
   maxFloorIndex: number;
@@ -48,7 +50,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
 
   floors = ['s2', 's1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
-  constructor(private data: DataSharingService, private router: Router) {
+  constructor(private data: DataSharingService, private router: Router, private events: Events) {
     //TODO: when user selects building to enter the name of that building needs to be sent to initialize the indoor view
     this.data.currentMessage.subscribe(
       incomingMessage => (this.building = incomingMessage)
@@ -67,7 +69,6 @@ export class IndoorNavigationToolbarComponent implements OnInit {
       case 'hh': this.building = 'Higston Hall'; break;
       case 'comm': this.building = 'Communication Studies and Journalism Building'; break;
       case 'varnier': this.building = 'Vanier Extension'; break;
-      
     }
 
     //sets max and min number of allowed floors for the selected building
@@ -80,7 +81,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
         break;
       }
     }
-    this.currentFloor = '1';
+    this.currentFloor = this.floor;
     this.currentFloorIndex = 2;
   }
 
@@ -89,6 +90,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
    */
   changeFloor() {
     this.currentFloor = this.updateFloor;
+    this.events.publish('floor-changes', this.currentFloor, Date.now());
     let i;
     length = this.floors.length;
 
@@ -107,6 +109,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     if (this.currentFloorIndex < this.maxFloorIndex) {
       this.currentFloorIndex++;
       this.currentFloor = this.floors[this.currentFloorIndex];
+      this.events.publish('floor-changes', this.currentFloor, Date.now());
     }
   }
 
@@ -117,6 +120,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     if (this.currentFloorIndex > this.minFloorIndex) {
       this.currentFloorIndex--;
       this.currentFloor = this.floors[this.currentFloorIndex];
+      this.events.publish('floor-changes', this.currentFloor, Date.now());
     }
   }
 

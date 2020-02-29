@@ -1,5 +1,6 @@
 <ion-header class="indoorToolbar">
   <ion-toolbar color="primary">
+    <!-- back button -->
     <ion-button
       class="back-button"
       fill="outline"
@@ -9,11 +10,15 @@
       <ion-icon name="arrow-dropleft" size="large"></ion-icon>
     </ion-button>
 
+    <!-- settings button -->
     <ion-button class="settings-button" fill="outline" slot="end">
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
+
+    <!-- name of floor selected-->
     <ion-item slot="start" class="building">{{ building }}</ion-item>
 
+    <!-- select floor button -->
     <ion-item id="floor-change">
       <ion-select
         (ionChange)="changeFloor()"
@@ -31,7 +36,10 @@
         >
       </ion-select>
     </ion-item>
+
   </ion-toolbar>
+
+
   <div class="move-floor">
     <ion-button
       (click)="moveUpFloor()"

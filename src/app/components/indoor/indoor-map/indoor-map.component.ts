@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-indoor-map',
@@ -7,8 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class IndoorMapComponent implements OnInit {
   @Input() inputBuilding: string = '';
+  @Input() floor: any;
 
-  constructor() {}
+  constructor(private events: Events) {
+    this.events.subscribe('floor-changes', (res) => {
+      if(res){
+        this.floor = res;
+      }
+    });
+  }
 
   ngOnInit() {}
 }

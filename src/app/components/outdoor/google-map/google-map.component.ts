@@ -389,7 +389,7 @@ export class GoogleMapComponent implements OnInit {
 
   async ngOnInit() {
     await this.platform.ready();
-    this.height = this.platform.height();
+    this.height = this.platform.height() - 106;
     await this.geolocationServices.getCurrentPosition();
 
     this.subscribeToMapSize();
