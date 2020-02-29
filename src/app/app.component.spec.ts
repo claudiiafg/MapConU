@@ -1,11 +1,17 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 
-import { Platform } from '@ionic/angular';
+import {IonicModule, IonicRouteStrategy, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {GeolocationServices} from '../services/geolocationServices';
+import {UserServices} from '../services/userServices';
+import {PoiServices} from '../services/poiServices';
+import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import {FirestoreSettingsToken} from '@angular/fire/firestore';
 
 describe('AppComponent', () => {
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
@@ -17,9 +23,19 @@ describe('AppComponent', () => {
     platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
 
     TestBed.configureTestingModule({
+      imports: [RouterModule.forRoot([]),
+          IonicModule.forRoot()],
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
+        StatusBar,
+        SplashScreen,
+        Geolocation,
+        GeolocationServices,
+        UserServices,
+        PoiServices,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: FirestoreSettingsToken, useValue: {}},
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy }
