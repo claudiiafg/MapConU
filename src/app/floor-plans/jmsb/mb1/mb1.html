@@ -23,62 +23,45 @@
      <path fill="#cccccc" stroke="#000000" stroke-width="2" stroke-miterlimit="4" d="m769.211536,764.71875l0,45.375l0,22.47462l24.25,0l0,-22.47462l56.5625,0l0,-45.375l-80.8125,0z" id="path3958"/>
 
      <!-- NODE POINT-->
-     <circle cx="510" cy="931" r="5" fill="blue"/>  <!-- entrance (main reference)-->
-     <circle cx="560" cy="931" r="5" fill="blue"/>  <!-- (E)-->
-     <circle cx="700" cy="931" r="5" fill="blue"/>  <!-- (E - N)-->
-     <circle cx="700" cy="843" r="5" fill="blue"/>  <!-- (EN) to turn to bathroom on right-->
-     <circle cx="824" cy="843" r="5" fill="red"/>   <!-- (ENW) bathroom -->
+     <circle cx="510" cy="931" r="5" fill="red" id='entrance'/>  <!-- entrance (main reference)-->
+     <circle cx="824" cy="843" r="5" fill="red" id='wc'/>   <!-- (ENW) bathroom -->
+     <circle cx="674" cy="603" r="5" fill="red" id='elevator'/>   <!-- (WN) elevator-->
+     <circle cx="485" cy="780" r="5" fill="red" id='escalators-down'/>   <!-- (WN - N) Escalators -->
+     <circle cx="455" cy="780" r="5" fill="red" id='stairs-down'/>   <!-- (WN - N) Stairs down-->
+     <circle cx="560" cy="500" r="5" fill="red" id='mb1-210'/>   <!-- (N) node to classroom -->
+     <circle cx="530" cy="500" r="5" fill="red" id='stairs-up'/>   <!-- (N) Stairs up-->
+     <circle cx="480" cy="200" r="5" fill="red" id='out'/>  <!-- (WN - N) get out-->
 
-     <circle cx="560" cy="931" r="5" fill="blue"/>  <!-- (N)-->
-     <circle cx="560" cy="820" r="5" fill="blue"/>  <!-- (WN) to turn to escalators down-->
-     <circle cx="485" cy="820" r="5" fill="blue"/>  <!-- (WN) front of escalators-->
-     <circle cx="455" cy="820" r="5" fill="blue"/>  <!-- (WN) front of stairs down-->
-     <circle cx="674" cy="603" r="5" fill="red"/>   <!-- (WN) elevator-->
-     <circle cx="485" cy="780" r="5" fill="red"/>   <!-- (WN - N) Escalators -->
-     <circle cx="455" cy="780" r="5" fill="red"/>   <!-- (WN - N) Stairs down-->
-     <circle cx="560" cy="603" r="5" fill="blue"/>  <!-- (N) to turn to elevators up-->
-     <circle cx="560" cy="542" r="5" fill="blue"/>  <!-- (N) to go to class or turn left-->
-     <circle cx="560" cy="500" r="5" fill="red"/>   <!-- (N) node to classroom -->
-     <circle cx="530" cy="542" r="5" fill="blue"/>  <!-- (N) to go to stairs or turn left-->
-     <circle cx="530" cy="500" r="5" fill="red"/>   <!-- (N) Stairs up-->
-     <circle cx="480" cy="542" r="5" fill="blue"/>  <!-- (WN) left of stairs-->
-     <circle cx="480" cy="200" r="5" fill="blue"/>  <!-- (WN - N) get out-->
 
      <!-- LINES BETWEEN POINTS-->
      <!--bathroom-->
-     <line x1="510" y1="931" x2="560" y2="931" style="stroke:blue; stroke-width:2" />
-     <line x1="560" y1="931" x2="700" y2="931" style="stroke:blue; stroke-width:2" />
-     <line x1="700" y1="931" x2="700" y2="843" style="stroke:blue; stroke-width:2" />
-     <line x1="700" y1="843" x2="824" y2="843" style="stroke:blue; stroke-width:2" />
+     <line x1="510" y1="931" x2="560" y2="931" style="stroke:blue; stroke-width:2" id='line1'/>
+     <line x1="560" y1="931" x2="700" y2="931" style="stroke:blue; stroke-width:2" id='line2'/>
+     <line x1="700" y1="931" x2="700" y2="843" style="stroke:blue; stroke-width:2" id='line3'/>
+     <line x1="700" y1="843" x2="824" y2="843" style="stroke:blue; stroke-width:2" id='line4'/>
 
      <!--escalator-->
-     <line x1="560" y1="931" x2="560" y2="820" style="stroke:blue; stroke-width:2" />
-     <line x1="560" y1="820" x2="485" y2="820" style="stroke:blue; stroke-width:2" />
-     <line x1="485" y1="820" x2="485" y2="780" style="stroke:blue; stroke-width:2" />
-     <line x1="485" y1="820" x2="455" y2="820" style="stroke:blue; stroke-width:2" />
-     <line x1="455" y1="820" x2="455" y2="780" style="stroke:blue; stroke-width:2" />
+     <line x1="560" y1="931" x2="560" y2="820" style="stroke:blue; stroke-width:2" id='line5'/>
+     <line x1="560" y1="820" x2="485" y2="820" style="stroke:blue; stroke-width:2" id='line6'/>
+     <line x1="485" y1="820" x2="485" y2="780" style="stroke:blue; stroke-width:2" id='line7'/>
+     <line x1="485" y1="820" x2="455" y2="820" style="stroke:blue; stroke-width:2" id='line8'/>
+     <line x1="455" y1="820" x2="455" y2="780" style="stroke:blue; stroke-width:2" id='line9'/>
 
      <!--elevator-->
-     <line x1="560" y1="820" x2="560" y2="603" style="stroke:blue; stroke-width:2" />
-     <line x1="560" y1="603" x2="674" y2="603" style="stroke:blue; stroke-width:2" />
+     <line x1="560" y1="820" x2="560" y2="603" style="stroke:blue; stroke-width:2" id='line10'/>
+     <line x1="560" y1="603" x2="674" y2="603" style="stroke:blue; stroke-width:2" id='line11'/>
 
      <!--classroom-->
-     <line x1="560" y1="603" x2="560" y2="542" style="stroke:blue; stroke-width:2" />
-     <line x1="560" y1="542" x2="560" y2="500" style="stroke:blue; stroke-width:2" />
+     <line x1="560" y1="603" x2="560" y2="542" style="stroke:blue; stroke-width:2" id='line12'/>
+     <line x1="560" y1="542" x2="560" y2="500" style="stroke:blue; stroke-width:2" id='line13'/>
 
      <!--stairs-->
-     <line x1="560" y1="542" x2="530" y2="542" style="stroke:blue; stroke-width:2" />
-     <line x1="530" y1="542" x2="530" y2="500" style="stroke:blue; stroke-width:2" />
+     <line x1="560" y1="542" x2="530" y2="542" style="stroke:blue; stroke-width:2" id='line14'/>
+     <line x1="530" y1="542" x2="530" y2="500" style="stroke:blue; stroke-width:2" id='line15'/>
 
      <!--out-->
-     <line x1="530" y1="542" x2="480" y2="542" style="stroke:blue; stroke-width:2" />
-     <line x1="480" y1="542" x2="480" y2="200" style="stroke:blue; stroke-width:2" />
-
-
-
-
-
-
+     <line x1="530" y1="542" x2="480" y2="542" style="stroke:blue; stroke-width:2" id='line16'/>
+     <line x1="480" y1="542" x2="480" y2="200" style="stroke:blue; stroke-width:2" id='line17'/>
 
 
 
