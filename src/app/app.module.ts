@@ -45,6 +45,8 @@ import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { GeolocationServices } from 'src/services/geolocationServices';
 import { UserServices } from 'src/services/userServices';
 import { PoiServices } from '../services/poiServices';
+import { IndoorDirectionsService } from 'src/services/indoorDirectionsService';
+
 
 //floor plans
 import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
@@ -90,6 +92,7 @@ import { MB1FloorPlan } from './floor-plans/jmsb/mb1/mb1';
     GeolocationServices,
     UserServices,
     PoiServices,
+    IndoorDirectionsService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
