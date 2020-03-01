@@ -8,8 +8,8 @@ import {
 } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 //services
-import { GeolocationServices } from 'src/services/geolocationServices';
-import { PoiServices } from 'src/services/poiServices';
+import { GeolocationServices } from 'src/services/geolocation.services';
+import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 
 @Component({

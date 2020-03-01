@@ -3,7 +3,7 @@ import {
   IndoorDirectionsService,
   Line,
   Point
-} from 'src/services/indoorDirectionsService';
+} from 'src/services/indoorDirections.service';
 import { Events, AlertController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { Events, AlertController } from '@ionic/angular';
   templateUrl: 'mb1.component.html',
   styleUrls: ['./mb1.component.scss']
 })
-export class MB1FloorPlan {
+export class MB1FloorPlanComponent {
   private pathLines: Line[] = [];
   private interestPoints: Point[] = [];
   private sourceID: string = 'entrance';

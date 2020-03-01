@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Events, PopoverController } from '@ionic/angular';
-import { PoiServices } from 'src/services/poiServices';
+import { PoiServices } from 'src/services/poi.services';
 
 @Component({
   selector: 'app-poi-popover',

@@ -3,7 +3,7 @@ import { NavParams, Events, PopoverController } from '@ionic/angular';
 import {
   Point,
   IndoorDirectionsService
-} from 'src/services/indoorDirectionsService';
+} from 'src/services/indoorDirections.service';
 
 @Component({
   selector: 'room-selector-popover',

@@ -45,10 +45,10 @@ import { TimeFooterComponent } from './components/popovers/time-footer/time-foot
 import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover';
 
 //services
-import { GeolocationServices } from 'src/services/geolocationServices';
-import { UserServices } from 'src/services/userServices';
-import { PoiServices } from '../services/poiServices';
-import { IndoorDirectionsService } from 'src/services/indoorDirectionsService';
+import { GeolocationServices } from 'src/services/geolocation.services';
+import { UserServices } from 'src/services/user.services';
+import { PoiServices } from '../services/poi.services';
+import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 
 //floor plans
 import { MB1FloorPlan } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
@@ -65,7 +65,7 @@ import { MB1FloorPlan } from './components/indoor/floor-plans/jmsb/mb1/mb1.compo
     PoiPopoverComponent,
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent,
-    MB1FloorPlan,
+    MB1FloorPlanComponent,
     OutdoorViewPage,
     IndoorViewPage,
     TimeFooterComponent,

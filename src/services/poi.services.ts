@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GeolocationServices } from './geolocationServices';
+import { GeolocationServices } from './geolocation.services';
 
 @Injectable()
 export class PoiServices {
