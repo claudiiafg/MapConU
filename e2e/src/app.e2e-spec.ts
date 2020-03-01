@@ -15,7 +15,7 @@ describe('new App', () => {
   it('Should toggle Campuses when selected at top of the UI', () => {
     browser.get('/');
     //set location to sgw
-    element(by.xpath("/html/body/app-root/ion-app/header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item/ion-select")).click();
+    element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
     browser.driver.sleep(500);
     element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[1]")).click();
 
@@ -25,7 +25,7 @@ describe('new App', () => {
     expect(element(by.css('ng-reflect-latitude="45.495729"'))).toBeDefined();
 
     //set location to Loyola
-    element(by.xpath("/html/body/app-root/ion-app/header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item/ion-select")).click();
+    element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
     browser.driver.sleep(500);
     element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[2]")).click();
 
@@ -37,7 +37,8 @@ describe('new App', () => {
   });
   it("Shows Current Position Marker", () => {
     browser.get('/');
-    let ele = element(by.xpath("/html/body/app-root/ion-app/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
+    //let ele = element(by.xpath("/html/body/app-root/ion-app/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
+    let ele = element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
     expect(ele).toBeTruthy();
   });
   //This test will be added in the future
