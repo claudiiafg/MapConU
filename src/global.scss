@@ -41,19 +41,20 @@
   display: contents;
   position: relative !important;
   flex-direction: row !important;
-  padding: 5%;
-  align-self: center;
+  align-content: center !important;
+  padding-right: 3em !important;
 }
 
 .alert-button-map,
 .alert-button-go {
   color: #000000 !important;
-  width: 50%;
+  width: 5em;
   display: inline-flex;
 }
 
 .alert-button-cancel {
   opacity: 0 !important;
+  width: 0.1em;
 }
 
 ion-backdrop {
