@@ -80,6 +80,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
     this.directionService.origin.next([]);
     this.directionService.destination.next([]);
     this.directionService.isDirectionSet.next(false);
+    this.directionService.closeInfoWindows();
     this.dataSharingService.updateMapSize(-106);
 
     if (this.directionService.alternateDirection) {

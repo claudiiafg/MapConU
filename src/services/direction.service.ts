@@ -12,6 +12,8 @@ export class DirectionService {
   public directionInfo = new BehaviorSubject<any>({});
   public alternateDirection: any;
   public alternateDirectionSet: boolean = false;
+  private mainInfoWindow: any;
+  private alternateInfoWindow: any;
   private directionSteps: any;
 
   constructor() {}
@@ -55,5 +57,31 @@ export class DirectionService {
     }
 
     return stepsWithIcons;
+  }
+
+  public addInfoWindow(infoWindow: any, type: string) {
+    if (type === 'main') {
+      this.mainInfoWindow = infoWindow;
+    }
+    if (type === 'alternate') {
+      this.alternateInfoWindow = infoWindow;
+    }
+  }
+
+  public closeInfoWindows() {
+    this.closeMainWindow();
+    this.closeAlternateWindow();
+  }
+
+  public closeMainWindow() {
+    if (this.mainInfoWindow) {
+      this.mainInfoWindow.close();
+    }
+  }
+
+  public closeAlternateWindow() {
+    if (this.alternateInfoWindow) {
+      this.alternateInfoWindow.close();
+    }
   }
 }

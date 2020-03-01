@@ -104,6 +104,8 @@ export class GoogleMapComponent implements OnInit {
   };
 
   private buildingToNavigateTo: string;
+  private infoWindowMain: any;
+  private infowWindowAlternate: any;
 
   // TODO: Move coordinates to json file, import json object and set coordinates here.
 
@@ -707,9 +709,11 @@ export class GoogleMapComponent implements OnInit {
 
   // This function is triggered when the API send back a response
   public onResponse($event: any) {
+    this.directionService.closeMainWindow();
     this.setRenderOptions($event);
     this.sendDirectionInfo($event.routes[0]);
     this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
+    this.setInfoWindow($event.routes[0], 'main');
     this.setAlternativeRoute($event);
   }
 
@@ -742,6 +746,8 @@ export class GoogleMapComponent implements OnInit {
       directionInfo.routes[1] &&
       this.directionService.alternateDirectionSet === false
     ) {
+      this.directionService.closeAlternateWindow();
+
       const polyLine: any =
         directionInfo.request.travelMode === 'WALKING'
           ? this.walkingNotSelectedRenderOptions
@@ -755,7 +761,26 @@ export class GoogleMapComponent implements OnInit {
           polylineOptions: polyLine.polylineOptions
         }
       );
+
+      this.setInfoWindow(directionInfo.routes[1], 'alternate');
       this.directionService.alternateDirectionSet = true;
     }
+  }
+
+  private setInfoWindow(route: any, type: string) {
+    let infoWindow = new google.maps.InfoWindow();
+
+    infoWindow.setContent(
+      route.legs[0].distance.text + '<br>' + route.legs[0].duration.text + ' '
+    );
+
+    let stepsLength = route.legs[0].steps.length;
+
+    infoWindow.setPosition(
+      route.legs[0].steps[Math.floor(stepsLength / 2)].end_location
+    );
+
+    infoWindow.open(this.map);
+    this.directionService.addInfoWindow(infoWindow, type);
   }
 }
