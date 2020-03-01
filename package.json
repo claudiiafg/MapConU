@@ -49,6 +49,7 @@
     "cordova-plugin-whitelist": "1.3.3",
     "core-js": "^2.5.4",
     "firebase": "^7.8.1",
+    "ngx-ionic-image-viewer": "^0.7.0",
     "ngx-pipes": "^2.7.3",
     "process": "^0.11.10",
     "rxjs": "~6.5.1",

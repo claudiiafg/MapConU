@@ -14,8 +14,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
-import { File } from '@ionic-native/file/ngx';
+import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { AgmDirectionModule } from 'agm-direction';
 import { AgmOverlays } from 'agm-overlays';
 //env variables
@@ -81,6 +80,7 @@ import { NgPipesModule } from 'ngx-pipes';
     AngularFirestoreModule,
     AngularFireAuthModule,
     FormsModule,
+    NgxIonicImageViewerModule,
     AgmDirectionModule,
     NgPipesModule
   ],
@@ -90,8 +90,7 @@ import { NgPipesModule } from 'ngx-pipes';
     Geolocation,
     GeolocationServices,
     UserServices,
-    PhotoViewer,
-    File,
+    NgxIonicImageViewerModule,
     PoiServices,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }

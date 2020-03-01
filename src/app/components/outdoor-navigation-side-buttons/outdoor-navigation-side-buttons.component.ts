@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
-import { File } from '@ionic-native/file/ngx';
+import { ModalController } from '@ionic/angular';
+import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
 import { PoiPopoverComponent } from '../poi-popover/poi-popover.component';
 import { SearchPopoverComponent } from '../search-popover/search-popover.component';
@@ -16,11 +16,24 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   constructor(
     public popoverController: PopoverController,
     private events: Events,
-    private photoViewer: PhotoViewer,
-    private file: File
+    public modalController: ModalController
   ) {}
 
   ngOnInit() {}
+
+  async openViewer() {
+    const modal = await this.modalController.create({
+      component: ViewerModalComponent,
+      componentProps: {
+        src: "./assets/schedule/schedule.png"
+      },
+      cssClass: 'ion-img-viewer',
+      keyboardClose: true,
+      showBackdrop: true
+    });
+
+    return await modal.present();
+  }
 
   async presentPopover(ev: any, mode: string) {
     if (mode === 'search') {
@@ -50,17 +63,5 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
         '--width: 200px; top: 30%; left: calc(50% - 100px);';
       return await popover.present();
     }
-  }
-  async displayPic(ev: any)
-  {
-    console.log(this.file.listDir(this.file.applicationDirectory, 'www/assets'));
-    console.log(this.file.listDir(this.file.applicationDirectory, 'www/assets/floor-plans'));
-    console.log(this.file.checkFile(this.file.applicationDirectory + 'www/assets/floor-plans/', 'Hall-8.svg'));
-    // var options = {
-    //   share: true, // default is false
-    //   closeButton: false, // iOS only: default is true
-    //   copyToReference: true // iOS only: default is false
-    //   };
-    this.photoViewer.show(this.file.applicationDirectory + 'www/assets/floor-plans/Hall-8.svg', 'Hall-8');
   }
 }
