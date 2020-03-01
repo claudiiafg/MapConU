@@ -131,9 +131,6 @@ export class IndoorDirectionsService {
 
   //public helper to make sure all necessary information is available to compute path
   public computePathHelper(source: string, destination: string) {
-    console.log(source)
-    console.log(destination)
-
     if(source !== destination){
       try {
         this.setSource(source);
