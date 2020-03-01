@@ -55,8 +55,9 @@
   </ng-container>
 
   <ion-searchbar
+    #search
     class="search-location"
     placeholder="Search for a location.."
-    autocomplete="on"
+    (ionClear)="closeAutocomplete($event)"
   ></ion-searchbar>
 </ion-header>
