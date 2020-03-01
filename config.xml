@@ -105,4 +105,5 @@
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="4.0.2" />
+    <allow-navigation href="http://localhost:8100" sessionid="88b74caf" />
 </widget>
