@@ -7,11 +7,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {GeolocationServices} from '../services/geolocationServices';
-import {UserServices} from '../services/userServices';
-import {PoiServices} from '../services/poiServices';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import {FirestoreSettingsToken} from '@angular/fire/firestore';
+import {UserServices} from '../services/user.services';
+import {PoiServices} from '../services/poi.services';
+import {GeolocationServices} from '../services/geolocation.services';
 
 describe('AppComponent', () => {
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
