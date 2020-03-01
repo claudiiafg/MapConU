@@ -8,6 +8,7 @@
     [longitude]="longitude"
     [gestureHandling]="'greedy'"
     id="map"
+    (mapReady)="mapReady($event)"
   >
     <agm-polygon
       *ngFor="let oc of overlayCoords"
@@ -42,35 +43,15 @@
     </agm-marker>
 
     <ng-container *ngIf="origin && destination">
-      <ng-container *ngIf="travelMode === 'walk'">
-        <agm-direction
-          [origin]="origin"
-          [destination]="destination"
-          [travelMode]="'WALKING'"
-          (onResponse)="onResponse($event)"
-          [provideRouteAlternatives]="provideRouteAlternatives"
-        >
-        </agm-direction>
-      </ng-container>
-      <ng-container *ngIf="travelMode === 'transit'">
-        <agm-direction
-          [origin]="origin"
-          [destination]="destination"
-          [travelMode]="'TRANSIT'"
-          (onResponse)="onResponse($event)"
-          [provideRouteAlternatives]="provideRouteAlternatives"
-        >
-        </agm-direction>
-      </ng-container>
-
-      <ng-container *ngIf="travelMode === 'car'">
-        <agm-direction
-          [origin]="origin"
-          [destination]="destination"
-          (onResponse)="onResponse($event)"
-          [provideRouteAlternatives]="provideRouteAlternatives"
-        ></agm-direction>
-      </ng-container>
+      <agm-direction
+        [origin]="origin"
+        [destination]="destination"
+        [travelMode]="travelMode"
+        (onResponse)="onResponse($event)"
+        [provideRouteAlternatives]="provideRouteAlternatives"
+        [renderOptions]="renderOptions"
+      >
+      </agm-direction>
     </ng-container>
   </agm-map>
 </div>

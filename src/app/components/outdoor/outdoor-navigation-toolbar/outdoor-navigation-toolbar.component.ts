@@ -51,15 +51,21 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
 
   public changeTravelMode(travelMode: string) {
     this.setSelectedColor(travelMode);
+
+    if (this.directionService.alternateDirection) {
+      this.directionService.alternateDirection.set('directions', null);
+      this.directionService.alternateDirectionSet = false;
+    }
+
     this.directionService.changeTravelMode.next(travelMode);
   }
 
   public setSelectedColor(travelMode: string) {
-    if (travelMode === 'car') {
+    if (travelMode === 'DRIVING') {
       this.carColor = 'yellow';
       this.transitColor = 'white';
       this.walkColor = 'white';
-    } else if (travelMode === 'transit') {
+    } else if (travelMode === 'TRANSIT') {
       this.carColor = 'white';
       this.transitColor = 'yellow';
       this.walkColor = 'white';
@@ -74,6 +80,12 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
     this.directionService.origin.next([]);
     this.directionService.destination.next([]);
     this.directionService.isDirectionSet.next(false);
+    this.directionService.closeInfoWindows();
     this.dataSharingService.updateMapSize(-106);
+
+    if (this.directionService.alternateDirection) {
+      this.directionService.alternateDirection.set('directions', null);
+      this.directionService.alternateDirectionSet = false;
+    }
   }
 }

@@ -11,7 +11,7 @@ import { DirectionService } from 'src/services/direction.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
-
+import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
@@ -26,7 +26,7 @@ export class GoogleMapComponent implements OnInit {
   public concordiaRed = '#800000';
   public positionMarkers: any[] = [];
   public poiMarkers: any[] = [];
-  public travelMode = 'walk';
+  public travelMode = 'WALKING';
   public previous: any;
   public currentToggles: any = {
     restaurants: false,
@@ -36,29 +36,74 @@ export class GoogleMapComponent implements OnInit {
     hotels: false,
     grocery: false
   };
-  private buildingToNavigateTo: string;
-
   public provideRouteAlternatives: boolean = true;
+  public map: any;
 
-  // Options to be change dynamically when user click
-  polylineOptions = {
-    renderOptions: {
-      polylineOptions: {
-        strokeColor: '#339fff',
-        strokeOpacity: 0.6,
-        strokeWeight: 5
-      }
+  // Directions rendering options
+  public walkingNotSelectedRenderOptions = {
+    polylineOptions: {
+      strokeOpacity: 0,
+      icons: [
+        {
+          icon: {
+            path: 'M 1, 1 m -1, 0 a 1,1 0 1,0 2,0 a 1,1 0 1,0 -2,0', // SVG path for circle
+            fillColor: '#808080',
+            fillOpacity: 1,
+            scale: 2,
+            strokeColor: '#808080',
+            strokeOpacity: 1
+          },
+          offset: '0',
+          repeat: '10px'
+        }
+      ]
     }
   };
 
+  public walkingSelectedRenderOptions = {
+    polylineOptions: {
+      strokeOpacity: 0,
+      icons: [
+        {
+          icon: {
+            path: 'M 1, 1 m -1, 0 a 1,1 0 1,0 2,0 a 1,1 0 1,0 -2,0', // SVG path for circle
+            fillColor: '#339fff',
+            fillOpacity: 1,
+            scale: 2,
+            strokeColor: '#339fff',
+            strokeOpacity: 1
+          },
+          offset: '0',
+          repeat: '10px'
+        }
+      ]
+    }
+  };
+
+  public notSelectedRenderOptions = {
+    polylineOptions: {
+      strokeColor: '#808080'
+    }
+  };
+
+  public selectedRenderOptions = {
+    polylineOptions: {
+      strokeColor: '#339fff'
+    }
+  };
+
+  public renderOptions: any = this.walkingSelectedRenderOptions;
+
   // Marker
-  positionMarkerIcon = {
+  public positionMarkerIcon = {
     url: 'assets/icon/position-marker.png',
     scaledSize: {
       width: 15,
       height: 15
     }
   };
+
+  private buildingToNavigateTo: string;
 
   // TODO: Move coordinates to json file, import json object and set coordinates here.
 
@@ -398,6 +443,10 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToChangeInPOI();
   }
 
+  public mapReady($event: any) {
+    this.map = $event;
+  }
+
   public subscribeToChangeInPOI() {
     //subscribe to changes in POI toggles
     this.events.subscribe('poi-toggle-changed', async res => {
@@ -638,6 +687,7 @@ export class GoogleMapComponent implements OnInit {
 
     this.buildingToNavigateTo = null;
   }
+
   //use to send data to other components
   sendMessage(updatedMessage: any) {
     this.data.updateMessage(updatedMessage);
@@ -655,22 +705,96 @@ export class GoogleMapComponent implements OnInit {
     });
   }
 
+  // This function is triggered when the API send back a response
   public onResponse($event: any) {
-    this.sendDirectionInfo($event);
+    this.directionService.closeMainWindow();
+    this.setRenderOptions($event);
+    this.sendDirectionInfo($event.routes[0]);
     this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
+    this.setInfoWindow($event.routes[0], 'Main');
+    this.setAlternativeRoute($event);
   }
 
-  public sendDirectionInfo(directionInfo: any) {
+  private setRenderOptions(directionInfo: any) {
+    this.renderOptions =
+      directionInfo.request.travelMode === 'WALKING'
+        ? this.walkingSelectedRenderOptions
+        : this.selectedRenderOptions;
+  }
+
+  private sendDirectionInfo(route: any, presentModal?: boolean) {
     let fare: string;
-    if (directionInfo.routes[0].fare) {
-      fare = directionInfo.routes[0].fare.text;
+    // fare
+    if (route.fare) {
+      fare = route.fare.text;
     } else {
       fare = 'CA$0.00';
     }
+    // Alert subscribers that time, distance, and fare for direction info is updated.
     this.directionService.directionInfo.next({
-      time: directionInfo.routes[0].legs[0].duration.text,
-      distance: directionInfo.routes[0].legs[0].distance.text,
-      fare
+      time: route.legs[0].duration.text,
+      distance: route.legs[0].distance.text,
+      fare,
+      presentModal
     });
+  }
+
+  private setAlternativeRoute(directionInfo: any) {
+    // if there is an alternative route and it isn't set
+    if (
+      directionInfo.routes[1] &&
+      this.directionService.alternateDirectionSet === false
+    ) {
+      this.directionService.closeAlternateWindow();
+
+      const polyLine: any =
+        directionInfo.request.travelMode === 'WALKING'
+          ? this.walkingNotSelectedRenderOptions
+          : this.notSelectedRenderOptions;
+
+      this.directionService.alternateDirection = new google.maps.DirectionsRenderer(
+        {
+          map: this.map,
+          directions: directionInfo,
+          routeIndex: 1,
+          polylineOptions: polyLine.polylineOptions
+        }
+      );
+
+      this.setInfoWindow(directionInfo.routes[1], 'Alternative');
+      this.directionService.alternateDirectionSet = true;
+    }
+  }
+
+  private setInfoWindow(route: any, type: string) {
+    let infoWindow = new google.maps.InfoWindow();
+
+    if (isPlatformBrowser) {
+      let div = document.createElement('div');
+      div.innerHTML =
+        route.legs[0].distance.text +
+        ' - ' +
+        type +
+        '<br>' +
+        route.legs[0].duration.text +
+        '<br>' +
+        ' ';
+      div.onclick = () => {
+        this.infoWindowClicked(route);
+      };
+      infoWindow.setContent(div);
+      let stepsLength = route.legs[0].steps.length;
+      infoWindow.setPosition(
+        route.legs[0].steps[Math.floor(stepsLength / 2)].end_location
+      );
+      infoWindow.open(this.map);
+
+      this.directionService.addInfoWindow(infoWindow, type);
+    }
+  }
+
+  private infoWindowClicked(route: any) {
+    this.sendDirectionInfo(route, true);
+    this.directionService.setDirectionsSteps(route.legs[0].steps);
   }
 }
