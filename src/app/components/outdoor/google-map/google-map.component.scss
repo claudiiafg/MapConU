@@ -1,0 +1,20 @@
+#google-map-component {
+  position: absolute;
+  display: contents;
+
+  #campus-change {
+    --background: var(--ConcordiaRed);
+    --background-activated: var(--ConcordiaRed);
+    --inner-padding-bottom: 0px;
+    color: white;
+
+    .select-campus {
+      position: absolute;
+    }
+  }
+
+  #map-canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

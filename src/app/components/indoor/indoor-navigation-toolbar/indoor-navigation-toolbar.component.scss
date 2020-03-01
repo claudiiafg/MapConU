@@ -1,0 +1,81 @@
+#floor-change {
+  --background: var(--ConcordiaRed);
+  --background-activated: var(--ConcordiaRed);
+  --inner-padding-bottom: 0px;
+  --padding-start: 0;
+  --padding-end: 0;
+  padding-left: 5em;
+  color: white;
+  display: contents;
+  width: 10%;
+}
+
+.select-floor {
+  position: relative;
+  max-width: fit-content;
+}
+
+.building {
+  --background: var(--ConcordiaRed);
+  --background-activated: var(--ConcordiaRed);
+  color: white;
+  width: 50%;
+}
+
+.up-button,
+.down-button {
+  color: white;
+  text-transform: none;
+  max-width: fit-content;
+  --border-color: white;
+}
+.search-location {
+  position: relative;
+  padding: 0;
+}
+
+.sc-ion-searchbar-ios-h {
+  padding: 0;
+  display: contents;
+}
+
+.searchbar-input-container .sc-ion-searchbar-ios {
+  height: 40px;
+}
+
+.popover-content {
+  --display: content;
+}
+
+.indoorToolbar {
+  background-color: var(--ConcordiaRed);
+}
+
+.settings-button {
+  --color: white;
+  --shape: round;
+  --size: large;
+  --padding-start: 0;
+  --padding-end: 0;
+  float: right;
+  width: 15%;
+}
+
+.back-button {
+  --color: white;
+  --shape: round;
+  --size: large;
+  --padding-start: 0;
+  --padding-end: 0;
+  float: left;
+  width: 15%;
+}
+
+.move-floor {
+  justify-content: center;
+  display: flex;
+}
+
+.up-button .down-button {
+  padding: 0 20px;
+}
