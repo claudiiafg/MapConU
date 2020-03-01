@@ -8,6 +8,7 @@
     [longitude]="longitude"
     [gestureHandling]="'greedy'"
     id="map"
+    (mapReady)="mapReady($event)"
   >
     <agm-polygon
       *ngFor="let oc of overlayCoords"
@@ -48,6 +49,7 @@
         [travelMode]="travelMode"
         (onResponse)="onResponse($event)"
         [provideRouteAlternatives]="provideRouteAlternatives"
+        [renderOptions]="renderOptions"
       >
       </agm-direction>
     </ng-container>

@@ -10,6 +10,8 @@ export class DirectionService {
   public isDirectionSet = new BehaviorSubject(false);
   public changeTravelMode = new BehaviorSubject('WALKING');
   public directionInfo = new BehaviorSubject<any>({});
+  public alternateDirection: any;
+  public alternateDirectionSet: boolean = false;
   private directionSteps: any;
 
   constructor() {}

@@ -51,6 +51,12 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
 
   public changeTravelMode(travelMode: string) {
     this.setSelectedColor(travelMode);
+
+    if (this.directionService.alternateDirection) {
+      this.directionService.alternateDirection.set('directions', null);
+      this.directionService.alternateDirectionSet = false;
+    }
+
     this.directionService.changeTravelMode.next(travelMode);
   }
 
@@ -75,5 +81,10 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
     this.directionService.destination.next([]);
     this.directionService.isDirectionSet.next(false);
     this.dataSharingService.updateMapSize(-106);
+
+    if (this.directionService.alternateDirection) {
+      this.directionService.alternateDirection.set('directions', null);
+      this.directionService.alternateDirectionSet = false;
+    }
   }
 }

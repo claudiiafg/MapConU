@@ -36,29 +36,74 @@ export class GoogleMapComponent implements OnInit {
     hotels: false,
     grocery: false
   };
-  private buildingToNavigateTo: string;
-
   public provideRouteAlternatives: boolean = true;
+  public map: any;
 
-  // Options to be change dynamically when user click
-  polylineOptions = {
-    renderOptions: {
-      polylineOptions: {
-        strokeColor: '#339fff',
-        strokeOpacity: 0.6,
-        strokeWeight: 5
-      }
+  // Directions rendering options
+  public walkingNotSelectedRenderOptions = {
+    polylineOptions: {
+      strokeOpacity: 0,
+      icons: [
+        {
+          icon: {
+            path: 'M 1, 1 m -1, 0 a 1,1 0 1,0 2,0 a 1,1 0 1,0 -2,0', // SVG path for circle
+            fillColor: '#808080',
+            fillOpacity: 1,
+            scale: 2,
+            strokeColor: '#808080',
+            strokeOpacity: 1
+          },
+          offset: '0',
+          repeat: '10px'
+        }
+      ]
     }
   };
 
+  public walkingSelectedRenderOptions = {
+    polylineOptions: {
+      strokeOpacity: 0,
+      icons: [
+        {
+          icon: {
+            path: 'M 1, 1 m -1, 0 a 1,1 0 1,0 2,0 a 1,1 0 1,0 -2,0', // SVG path for circle
+            fillColor: '#339fff',
+            fillOpacity: 1,
+            scale: 2,
+            strokeColor: '#339fff',
+            strokeOpacity: 1
+          },
+          offset: '0',
+          repeat: '10px'
+        }
+      ]
+    }
+  };
+
+  public notSelectedRenderOptions = {
+    polylineOptions: {
+      strokeColor: '#808080'
+    }
+  };
+
+  public selectedRenderOptions = {
+    polylineOptions: {
+      strokeColor: '#339fff'
+    }
+  };
+
+  public renderOptions: any = this.walkingSelectedRenderOptions;
+
   // Marker
-  positionMarkerIcon = {
+  public positionMarkerIcon = {
     url: 'assets/icon/position-marker.png',
     scaledSize: {
       width: 15,
       height: 15
     }
   };
+
+  private buildingToNavigateTo: string;
 
   // TODO: Move coordinates to json file, import json object and set coordinates here.
 
@@ -398,6 +443,10 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToChangeInPOI();
   }
 
+  public mapReady($event: any) {
+    this.map = $event;
+  }
+
   public subscribeToChangeInPOI() {
     //subscribe to changes in POI toggles
     this.events.subscribe('poi-toggle-changed', async res => {
@@ -656,22 +705,57 @@ export class GoogleMapComponent implements OnInit {
     });
   }
 
+  // This function is triggered when the API send back a response
   public onResponse($event: any) {
-    this.sendDirectionInfo($event);
+    this.setRenderOptions($event);
+    this.sendDirectionInfo($event.routes[0]);
     this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
+    this.setAlternativeRoute($event);
   }
 
-  public sendDirectionInfo(directionInfo: any) {
+  private setRenderOptions(directionInfo: any) {
+    this.renderOptions =
+      directionInfo.request.travelMode === 'WALKING'
+        ? this.walkingSelectedRenderOptions
+        : this.selectedRenderOptions;
+  }
+
+  private sendDirectionInfo(route: any) {
     let fare: string;
-    if (directionInfo.routes[0].fare) {
-      fare = directionInfo.routes[0].fare.text;
+    // fare
+    if (route.fare) {
+      fare = route.fare.text;
     } else {
       fare = 'CA$0.00';
     }
+    // Alert subscribers that time, distance, and fare for direction info is updated.
     this.directionService.directionInfo.next({
-      time: directionInfo.routes[0].legs[0].duration.text,
-      distance: directionInfo.routes[0].legs[0].distance.text,
+      time: route.legs[0].duration.text,
+      distance: route.legs[0].distance.text,
       fare
     });
+  }
+
+  private setAlternativeRoute(directionInfo: any) {
+    // if there is an alternative route and it isn't set
+    if (
+      directionInfo.routes[1] &&
+      this.directionService.alternateDirectionSet === false
+    ) {
+      const polyLine: any =
+        directionInfo.request.travelMode === 'WALKING'
+          ? this.walkingNotSelectedRenderOptions
+          : this.notSelectedRenderOptions;
+
+      this.directionService.alternateDirection = new google.maps.DirectionsRenderer(
+        {
+          map: this.map,
+          directions: directionInfo,
+          routeIndex: 1,
+          polylineOptions: polyLine.polylineOptions
+        }
+      );
+      this.directionService.alternateDirectionSet = true;
+    }
   }
 }
