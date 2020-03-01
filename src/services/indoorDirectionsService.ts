@@ -115,6 +115,36 @@ export class IndoorDirectionsService {
       }
     }
     this.pathLines = tempPathLines;
+    this.reset();
+  }
+
+  //reset all variables when initiating a new map
+  private reset(){
+    this.foundPath = false;
+    this.path = [];
+    this.sourceLine = null;
+    this.destLine = null;
+    this.sourceID = '';
+    this.destID = '';
+  }
+
+  //public helper to make sure all necessary information is available to compute path
+  public computePathHelper(source: string, destination: string){
+    try{
+      this.setSource(source);
+      this.setDest(destination);
+      this.computePath();
+    } catch(e){
+      console.error(e);
+    }
+  }
+
+  public resetNav(){
+    this.path = [];
+    this.foundPath = false;
+    for(let line of this.pathLines){
+      line._wasVisited = false;
+    }
   }
 
   public getLines(): Line[]{
@@ -131,7 +161,9 @@ export class IndoorDirectionsService {
   public setSource(pointID: string) {
     if(this.getPointInfoById(pointID)){
       this.sourceID = pointID;
-      this.sourceLine = this.getInterestLineById(pointID)
+      this.sourceLine = this.getInterestLineById(pointID);
+      this.path = [];
+      this.path.push(this.sourceLine.id);
     } else {
       throw new Error(pointID + ': Point does not exist');
     }
@@ -290,7 +322,7 @@ export class IndoorDirectionsService {
 
 
 //********************** MAIN ALGORITHM **********************
-  public computePath(){
+  private computePath(){
     let line = this.getLineById(this.path[this.path.length-1]);
     this.setAsVisited(line.id);
 

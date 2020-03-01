@@ -5,7 +5,7 @@ import {
   AngularFirestoreModule,
   FirestoreSettingsToken
 } from '@angular/fire/firestore';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -38,6 +38,7 @@ import { IndoorMapComponent } from './components/indoor/indoor-map/indoor-map.co
 import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
 import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { TimeFooterComponent } from './components/popovers/time-footer/time-footer.component';
+import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover';
 
 //services
 import { GeolocationServices } from 'src/services/geolocationServices';
@@ -64,12 +65,14 @@ import { MB1FloorPlan } from './components/indoor/floor-plans/jmsb/mb1/mb1';
     OutdoorViewPage,
     IndoorViewPage,
     TimeFooterComponent,
-    ModalDirectionsComponent
+    ModalDirectionsComponent,
+    RoomSelectorPopoverComponent
   ],
   entryComponents: [
     SearchPopoverComponent,
     PoiPopoverComponent,
-    ModalDirectionsComponent
+    ModalDirectionsComponent,
+    RoomSelectorPopoverComponent
   ],
   imports: [
     BrowserModule,
@@ -105,6 +108,6 @@ import { MB1FloorPlan } from './components/indoor/floor-plans/jmsb/mb1/mb1';
     IndoorNavigationToolbarComponent,
     ModalDirectionsComponent
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule {}
