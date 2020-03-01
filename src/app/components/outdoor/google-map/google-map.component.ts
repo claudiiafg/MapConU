@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import {
   AlertController,
   Events,
   NavController,
   Platform
-} from '@ionic/angular';
-import { DirectionService } from 'src/services/direction.service';
+} from "@ionic/angular";
+import { DirectionService } from "src/services/direction.service";
 //services
-import { GeolocationServices } from 'src/services/geolocationServices';
-import { PoiServices } from 'src/services/poiServices';
-import { DataSharingService } from '../../../../services/data-sharing.service';
+import { GeolocationServices } from "src/services/geolocationServices";
+import { PoiServices } from "src/services/poiServices";
+import { DataSharingService } from "../../../../services/data-sharing.service";
 
 @Component({
-  selector: 'app-google-map',
-  templateUrl: './google-map.component.html',
-  styleUrls: ['./google-map.component.scss']
+  selector: "app-google-map",
+  templateUrl: "./google-map.component.html",
+  styleUrls: ["./google-map.component.scss"]
 })
 export class GoogleMapComponent implements OnInit {
   public height: number = 0;
@@ -23,10 +23,10 @@ export class GoogleMapComponent implements OnInit {
   public longitude: number = -73.578041;
   public destination: any;
   public origin: any;
-  public concordiaRed = '#800000';
+  public concordiaRed = "#800000";
   public positionMarkers: any[] = [];
   public poiMarkers: any[] = [];
-  public travelMode = 'walk';
+  public travelMode = "walk";
   public previous: any;
   public currentToggles: any = {
     restaurants: false,
@@ -44,7 +44,7 @@ export class GoogleMapComponent implements OnInit {
   polylineOptions = {
     renderOptions: {
       polylineOptions: {
-        strokeColor: '#339fff',
+        strokeColor: "#339fff",
         strokeOpacity: 0.6,
         strokeWeight: 5
       }
@@ -53,7 +53,7 @@ export class GoogleMapComponent implements OnInit {
 
   // Marker
   positionMarkerIcon = {
-    url: 'assets/icon/position-marker.png',
+    url: "assets/icon/position-marker.png",
     scaledSize: {
       width: 15,
       height: 15
@@ -267,107 +267,107 @@ export class GoogleMapComponent implements OnInit {
 
   public overlayCoords = [
     {
-      name: 'Hall Building',
-      address: '1455 De Maisonneeuve Blvd. W.',
+      name: "Hall Building",
+      address: "1455 De Maisonneeuve Blvd. W.",
       coords: this.hallCoords
     },
     {
-      name: 'John Molson Building',
-      address: '1450 Guy St.',
+      name: "John Molson Building",
+      address: "1450 Guy St.",
       coords: this.jmsbCoords
     },
     {
-      name: 'JW McConnell Building',
-      address: '1400 De Maisonneeuve Blvd. W.',
+      name: "JW McConnell Building",
+      address: "1400 De Maisonneeuve Blvd. W.",
       coords: this.lbCoords
     },
     {
-      name: 'Faubourg Building',
-      address: '1250 Guy St.',
+      name: "Faubourg Building",
+      address: "1250 Guy St.",
       coords: this.fbCoords
     },
-    { name: 'Faubourg Ste Catherine Building', coords: this.fgCoords },
+    { name: "Faubourg Ste Catherine Building", coords: this.fgCoords },
     {
-      name: 'EV Building',
-      address: '1515 St. Catherine W.',
+      name: "EV Building",
+      address: "1515 St. Catherine W.",
       coords: this.evCoords
     },
     {
-      name: 'Guy-De Maisonneuve Building',
-      address: '1550 De Maisonneeuve Blvd. W.',
+      name: "Guy-De Maisonneuve Building",
+      address: "1550 De Maisonneeuve Blvd. W.",
       coords: this.gmCoords
     },
-    { name: 'Grey Nuns', address: '1190 Guy St.', coords: this.gnCoords },
+    { name: "Grey Nuns", address: "1190 Guy St.", coords: this.gnCoords },
     {
-      name: 'Concordia Annexes',
-      address: '2010-2110 Mackay St.',
+      name: "Concordia Annexes",
+      address: "2010-2110 Mackay St.",
       coords: this.annexCoords
     },
-    { name: 'TD Building', address: '1410 Guy St.', coords: this.tdCoords },
+    { name: "TD Building", address: "1410 Guy St.", coords: this.tdCoords },
     {
-      name: 'Visual Arts Building',
-      address: '1395 Rene Levsque Blvd. W.',
+      name: "Visual Arts Building",
+      address: "1395 Rene Levsque Blvd. W.",
       coords: this.vaCoords
     },
     {
-      name: 'Administration Building',
-      address: '7141 Sherbrooke W.',
+      name: "Administration Building",
+      address: "7141 Sherbrooke W.",
       coords: this.adCoords
     },
     {
-      name: 'Central Building',
-      address: '7141 Sherbrooke W.',
+      name: "Central Building",
+      address: "7141 Sherbrooke W.",
       coords: this.ccCoords
     },
     {
-      name: 'Richard J. Renaud Science Complex',
-      address: '7141 Sherbrooke W.',
+      name: "Richard J. Renaud Science Complex",
+      address: "7141 Sherbrooke W.",
       coords: this.spCoords
     },
     {
-      name: 'Communication Studies and Journalism Building',
-      address: '7141 Sherbrooke W.',
+      name: "Communication Studies and Journalism Building",
+      address: "7141 Sherbrooke W.",
       coords: this.cjCoords
     },
     {
-      name: 'Vanier Library',
-      address: '7141 Sherbrooke W.',
+      name: "Vanier Library",
+      address: "7141 Sherbrooke W.",
       coords: this.vlCoords
     },
     {
-      name: 'Oscar Peterson Concert Hall',
-      address: '7141 Sherbrooke W.',
+      name: "Oscar Peterson Concert Hall",
+      address: "7141 Sherbrooke W.",
       coords: this.ptCoords
     },
     {
-      name: 'Student Center',
-      address: '7141 Sherbrooke W.',
+      name: "Student Center",
+      address: "7141 Sherbrooke W.",
       coords: this.scCoords
     },
     {
-      name: 'Psychology Building',
-      address: '7141 Sherbrooke W.',
+      name: "Psychology Building",
+      address: "7141 Sherbrooke W.",
       coords: this.pyCoords
     },
     {
-      name: 'Recreation and Athletics Complex',
-      address: '7200 Sherbrooke W.',
+      name: "Recreation and Athletics Complex",
+      address: "7200 Sherbrooke W.",
       coords: this.raCoords
     },
     {
-      name: 'Hingston Hall',
-      address: '7141 Sherbrooke W.',
+      name: "Hingston Hall",
+      address: "7141 Sherbrooke W.",
       coords: this.haCoords
     },
     {
-      name: 'FC Smith Building',
-      address: '7141 Sherbrooke W.',
+      name: "FC Smith Building",
+      address: "7141 Sherbrooke W.",
       coords: this.fcCoords
     }
   ];
 
   poiMarkerIcon = {
-    url: 'assets/icon/poi-marker.png',
+    url: "assets/icon/poi-marker.png",
     scaledSize: {
       width: 20,
       height: 20
@@ -400,26 +400,26 @@ export class GoogleMapComponent implements OnInit {
 
   public subscribeToChangeInPOI() {
     //subscribe to changes in POI toggles
-    this.events.subscribe('poi-toggle-changed', async res => {
+    this.events.subscribe("poi-toggle-changed", async res => {
       const toggleName = res.toggle;
       const toggleValue = res.value;
       switch (toggleName) {
-        case 'restaurant':
+        case "restaurant":
           this.currentToggles.restaurants = toggleValue;
           break;
-        case 'coffee shop':
+        case "coffee shop":
           this.currentToggles.coffee = toggleValue;
           break;
-        case 'gas station':
+        case "gas station":
           this.currentToggles.gas = toggleValue;
           break;
-        case 'drugstore':
+        case "drugstore":
           this.currentToggles.drugstore = toggleValue;
           break;
-        case 'hotel':
+        case "hotel":
           this.currentToggles.hotels = toggleValue;
           break;
-        case 'groceries':
+        case "groceries":
           this.currentToggles.grocery = toggleValue;
           break;
       }
@@ -453,10 +453,10 @@ export class GoogleMapComponent implements OnInit {
     });
 
     //as a toggle is clicke, update the current toggles
-    this.events.subscribe('poi-clicked', () => {
-      this.events.publish('set-poi-toggles', this.currentToggles, Date.now());
+    this.events.subscribe("poi-clicked", () => {
+      this.events.publish("set-poi-toggles", this.currentToggles, Date.now());
     });
-    this.events.subscribe('campusChanged', () => {
+    this.events.subscribe("campusChanged", () => {
       this.poiMarkers = [];
       this.currentToggles = this.poiServices.resetPOIMarkers();
     });
@@ -464,7 +464,7 @@ export class GoogleMapComponent implements OnInit {
 
   public subscribeToChangeInCurrentPOS() {
     //subscribe to changes in current position
-    this.events.subscribe('coordinatesChanged', coordinates => {
+    this.events.subscribe("coordinatesChanged", coordinates => {
       let tempMarker = {
         latitude: coordinates.latitude,
         longitude: coordinates.longitude
@@ -509,55 +509,98 @@ export class GoogleMapComponent implements OnInit {
       Creates popup containing Concordia building descriptions.
        */
   async showAlert(building: string, address: string) {
-
     let urlSubString;
-    switch(building){
-      case 'Hall Building': urlSubString = 'hall'; break;
-      case 'John Molson Building': urlSubString = 'jmsb'; break;
-      case 'JW McConnell Building': urlSubString = 'jw'; break;
-      case 'Faubourg Building': urlSubString = 'fg'; break;
-      case 'Faubourg Ste Catherine Building': urlSubString = 'fg-stcath'; break;
-      case 'EV Building': urlSubString = 'ev'; break;
-      case 'Guy-De Maisonneuve Building': urlSubString = 'gd'; break;
-      case 'Grey Nuns': urlSubString = 'gn'; break;
-      case 'Concordia Annexes': urlSubString = 'annexes'; break;
-      case 'TD Building': urlSubString = 'td'; break;
-      case 'Visual Arts Building': urlSubString = 'visual'; break;
-      case 'Administration Building': urlSubString = 'admin'; break;
-      case 'Central Building': urlSubString = 'central'; break;
-      case 'Richard J. Renaud Science Complex': urlSubString = 'richard'; break;
-      case 'Communication Studies and Journalism Building': urlSubString = 'comm'; break;
-      case 'Vanier Library': urlSubString = 'vanier'; break;
-      case 'Oscar Peterson Concert Hall': urlSubString = 'oscar'; break;
-      case 'Student Center': urlSubString = 'student-center'; break;
-      case 'Psychology Building': urlSubString = 'psyc'; break;
-      case 'Recreation and Athletics Complex': urlSubString = 'recr'; break;
-      case 'Hingston Hall': urlSubString = 'hh'; break;
-      case 'FC Smith Building': urlSubString = 'fc'; break;
+    switch (building) {
+      case "Hall Building":
+        urlSubString = "hall";
+        break;
+      case "John Molson Building":
+        urlSubString = "jmsb";
+        break;
+      case "JW McConnell Building":
+        urlSubString = "jw";
+        break;
+      case "Faubourg Building":
+        urlSubString = "fg";
+        break;
+      case "Faubourg Ste Catherine Building":
+        urlSubString = "fg-stcath";
+        break;
+      case "EV Building":
+        urlSubString = "ev";
+        break;
+      case "Guy-De Maisonneuve Building":
+        urlSubString = "gd";
+        break;
+      case "Grey Nuns":
+        urlSubString = "gn";
+        break;
+      case "Concordia Annexes":
+        urlSubString = "annexes";
+        break;
+      case "TD Building":
+        urlSubString = "td";
+        break;
+      case "Visual Arts Building":
+        urlSubString = "visual";
+        break;
+      case "Administration Building":
+        urlSubString = "admin";
+        break;
+      case "Central Building":
+        urlSubString = "central";
+        break;
+      case "Richard J. Renaud Science Complex":
+        urlSubString = "richard";
+        break;
+      case "Communication Studies and Journalism Building":
+        urlSubString = "comm";
+        break;
+      case "Vanier Library":
+        urlSubString = "vanier";
+        break;
+      case "Oscar Peterson Concert Hall":
+        urlSubString = "oscar";
+        break;
+      case "Student Center":
+        urlSubString = "student-center";
+        break;
+      case "Psychology Building":
+        urlSubString = "psyc";
+        break;
+      case "Recreation and Athletics Complex":
+        urlSubString = "recr";
+        break;
+      case "Hingston Hall":
+        urlSubString = "hh";
+        break;
+      case "FC Smith Building":
+        urlSubString = "fc";
+        break;
     }
     this.buildingToNavigateTo = building;
     const alert = await this.alertController.create({
       header: building,
       subHeader: address,
-      cssClass: 'alert-css',
+      cssClass: "alert-css",
       buttons: [
         {
-          text: 'Enter',
-          cssClass: 'alert-button-map',
+          text: "Enter",
+          cssClass: "alert-button-map",
           handler: goIndoors => {
-            if(urlSubString === 'jmsb'){
-              let url = '/indoor' + '/jmsb';
+            if (urlSubString === "jmsb") {
+              let url = "/indoor" + "/jmsb";
               this.router.navigateByUrl(url);
               return true;
             } else {
-              console.error('no floor plans for this building');
+              console.error("no floor plans for this building");
               return false;
             }
           }
         },
         {
-          text: 'Go',
-          cssClass: 'alert-button-go',
+          text: "Go",
+          cssClass: "alert-button-go",
           handler: () => {
             this.goHere();
             return true;
@@ -622,7 +665,7 @@ export class GoogleMapComponent implements OnInit {
     if (directionInfo.routes[0].fare) {
       fare = directionInfo.routes[0].fare.text;
     } else {
-      fare = 'CA$0.00';
+      fare = "CA$0.00";
     }
     this.directionService.directionInfo.next({
       time: directionInfo.routes[0].legs[0].duration.text,

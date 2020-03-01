@@ -2,7 +2,7 @@
   <input
     id="source"
     list="interestPoints"
-    [(ngModel)]='prettySource'
+    [(ngModel)]="prettySource"
     value="{{prettySource}}"
     type="text"
     (keydown.enter)="$event.preventDefault()"
@@ -16,7 +16,7 @@
   <input
     id="destination"
     list="interestPoints"
-    [(ngModel)]='prettyDestination'
+    [(ngModel)]="prettyDestination"
     value="{{prettyDestination}}"
     type="text"
     (keydown.enter)="$event.preventDefault()"
@@ -29,7 +29,7 @@
 <ion-button id="goButton" (click)="lookForPath()" shape="square">GO</ion-button>
 
 <datalist id="interestPoints">
-  <div *ngFor='let point of prettyPoints'>
-    <option value="{{point.name}}">
+  <div *ngFor="let point of prettyPoints">
+    <option value="{{point.name}}"> </option>
   </div>
 </datalist>

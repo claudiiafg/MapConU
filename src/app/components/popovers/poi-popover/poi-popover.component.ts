@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { Events, PopoverController } from '@ionic/angular';
-import { PoiServices } from 'src/services/poiServices';
+import { Component } from "@angular/core";
+import { Events, PopoverController } from "@ionic/angular";
+import { PoiServices } from "src/services/poiServices";
 
 @Component({
-  selector: 'app-poi-popover',
-  templateUrl: './poi-popover.component.html',
-  styleUrls: ['./poi-popover.component.scss']
+  selector: "app-poi-popover",
+  templateUrl: "./poi-popover.component.html",
+  styleUrls: ["./poi-popover.component.scss"]
 })
 export class PoiPopoverComponent {
   private restaurants: boolean = false;
@@ -35,22 +35,22 @@ export class PoiPopoverComponent {
   update(toggle: string) {
     let value;
     switch (toggle) {
-      case 'restaurant':
+      case "restaurant":
         value = this.restaurants;
         break;
-      case 'coffee shop':
+      case "coffee shop":
         value = this.coffee;
         break;
-      case 'gas station':
+      case "gas station":
         value = this.gas;
         break;
-      case 'drugstore':
+      case "drugstore":
         value = this.drugstore;
         break;
-      case 'hotel':
+      case "hotel":
         value = this.hotels;
         break;
-      case 'groceries':
+      case "groceries":
         value = this.grocery;
         break;
     }
@@ -59,7 +59,7 @@ export class PoiPopoverComponent {
       toggle: toggle,
       value: value
     };
-    this.events.publish('poi-toggle-changed', data, Date.now());
+    this.events.publish("poi-toggle-changed", data, Date.now());
   }
 
   closePopover() {

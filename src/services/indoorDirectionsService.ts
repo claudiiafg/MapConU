@@ -115,7 +115,7 @@ export class IndoorDirectionsService {
       }
     }
     this.pathLines = tempPathLines;
-    this.reset();
+    // this.reset();
   }
 
   //reset all variables when initiating a new map
