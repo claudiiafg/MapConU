@@ -1,6 +1,10 @@
 <ion-header>
-  <app-indoor-navigation-toolbar></app-indoor-navigation-toolbar>
+  <app-indoor-navigation-toolbar
+    [inputBuilding]="building"
+    [floor]="1"
+  ></app-indoor-navigation-toolbar>
 </ion-header>
-
-<app-indoor-navigation-side-buttons></app-indoor-navigation-side-buttons>
-<app-indoor-map></app-indoor-map>
+<ion-content>
+  <app-indoor-navigation-side-buttons></app-indoor-navigation-side-buttons>
+  <app-indoor-map [inputBuilding]="building" [floor]="1"></app-indoor-map>
+</ion-content>

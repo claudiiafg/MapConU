@@ -6,6 +6,10 @@ import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
 const routes: Routes = [
   { path: 'outdoor', component: OutdoorViewPage },
   { path: 'indoor', component: IndoorViewPage },
+  {
+    path: 'indoor/:id',
+    component: IndoorViewPage
+  },
   //redirect to outdoor if path is not recognized
   { path: '**', redirectTo: 'outdoor' }
 ];

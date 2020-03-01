@@ -1,0 +1,57 @@
+<agm-map id="tempMap" [latitude]="latitude" [longitude]="longitude"> </agm-map>
+
+<div id="google-map-component">
+  <agm-map
+    [style.height.px]="height"
+    [zoom]="17"
+    [latitude]="latitude"
+    [longitude]="longitude"
+    [gestureHandling]="'greedy'"
+    id="map"
+    (mapReady)="mapReady($event)"
+  >
+    <agm-polygon
+      *ngFor="let oc of overlayCoords"
+      [paths]="oc.coords"
+      [fillColor]="concordiaRed"
+      [fillOpacity]="0.3"
+      [strokeColor]="concordiaRed"
+      [strokeWeight]="2"
+      (polyClick)="showAlert(oc.name, oc.address)"
+    >
+    </agm-polygon>
+
+    <agm-marker
+      *ngFor="let m of positionMarkers"
+      [iconUrl]="positionMarkerIcon"
+      [latitude]="m.latitude"
+      [longitude]="m.longitude"
+    >
+    </agm-marker>
+
+    <agm-marker
+      *ngFor="let m of poiMarkers; let i = index"
+      [iconUrl]="poiMarkerIcon"
+      [latitude]="m.latitude"
+      [longitude]="m.longitude"
+      (markerClick)="clickedMarker(infoWindow)"
+    >
+      <agm-info-window #infoWindow>
+        <strong>{{ m.data.name }}</strong
+        ><br />
+      </agm-info-window>
+    </agm-marker>
+
+    <ng-container *ngIf="origin && destination">
+      <agm-direction
+        [origin]="origin"
+        [destination]="destination"
+        [travelMode]="travelMode"
+        (onResponse)="onResponse($event)"
+        [provideRouteAlternatives]="provideRouteAlternatives"
+        [renderOptions]="renderOptions"
+      >
+      </agm-direction>
+    </ng-container>
+  </agm-map>
+</div>

@@ -8,8 +8,13 @@ export class DirectionService {
   public origin = new BehaviorSubject([]);
   public destination = new BehaviorSubject([]);
   public isDirectionSet = new BehaviorSubject(false);
-  public changeTravelMode = new BehaviorSubject('walk');
+  public changeTravelMode = new BehaviorSubject('WALKING');
   public directionInfo = new BehaviorSubject<any>({});
+  public alternateDirection: any;
+  public alternateDirectionSet: boolean = false;
+  public polylines = [];
+  private mainInfoWindow: any;
+  private alternateInfoWindow: any;
   private directionSteps: any;
 
   constructor() {}
@@ -26,6 +31,7 @@ export class DirectionService {
   public setStepsIcons(steps: any) {
     let stepsWithIcons = steps;
     let counter = 1;
+
     for (var key in stepsWithIcons) {
       // Travel icons
       if (stepsWithIcons[key].travel_mode === 'WALKING') {
@@ -52,5 +58,31 @@ export class DirectionService {
     }
 
     return stepsWithIcons;
+  }
+
+  public addInfoWindow(infoWindow: any, type: string) {
+    if (type === 'Main') {
+      this.mainInfoWindow = infoWindow;
+    }
+    if (type === 'Alternative') {
+      this.alternateInfoWindow = infoWindow;
+    }
+  }
+
+  public closeInfoWindows() {
+    this.closeMainWindow();
+    this.closeAlternateWindow();
+  }
+
+  public closeMainWindow() {
+    if (this.mainInfoWindow) {
+      this.mainInfoWindow.close();
+    }
+  }
+
+  public closeAlternateWindow() {
+    if (this.alternateInfoWindow) {
+      this.alternateInfoWindow.close();
+    }
   }
 }

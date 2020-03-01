@@ -1,0 +1,35 @@
+<div class="input-group">
+  <input
+    id="source"
+    list="interestPoints"
+    [(ngModel)]="prettySource"
+    value="{{prettySource}}"
+    type="text"
+    (keydown.enter)="$event.preventDefault()"
+  />
+  <span class="highlight"></span>
+  <span class="bar"></span>
+  <label>Starting Point</label>
+</div>
+
+<div class="input-group">
+  <input
+    id="destination"
+    list="interestPoints"
+    [(ngModel)]="prettyDestination"
+    value="{{prettyDestination}}"
+    type="text"
+    (keydown.enter)="$event.preventDefault()"
+  />
+  <span class="highlight"></span>
+  <span class="bar"></span>
+  <label>Destination</label>
+</div>
+
+<ion-button id="goButton" (click)="lookForPath()" shape="square">GO</ion-button>
+
+<datalist id="interestPoints">
+  <div *ngFor="let point of prettyPoints">
+    <option value="{{point.name}}"> </option>
+  </div>
+</datalist>
