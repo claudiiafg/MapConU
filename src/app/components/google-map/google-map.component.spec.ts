@@ -14,32 +14,36 @@ import {IonicModule} from '@ionic/angular';
 import { Events } from '@ionic/angular';
 
 
-class MockData {
-
-  private latitude: number;
-  private longitude: number;
-
-  getCurrentPosition() {
-    this.setLongitude();
-    this.setLongitude();
-  }
-
-  getLatitude() {
-    return this.latitude;
-  }
-
-  getLongitude() {
-    return this.longitude;
-  }
-
-  setLatitude() {
-    return Math.random();
-  }
-
-  setLongitude() {
-    return Math.random();
-  }
-}
+// class MockData {
+//
+//   private latitude: number;
+//   private longitude: number;
+//   private coordinates = {
+//     latitude: Math.random(),
+//     longitude: Math.random()
+//   };
+//
+//   getCurrentPosition() {
+//     this.setLongitude();
+//     this.setLongitude();
+//   }
+//
+//   getLatitude() {
+//     return this.latitude;
+//   }
+//
+//   getLongitude() {
+//     return this.longitude;
+//   }
+//
+//   setLatitude() {
+//     return Math.random();
+//   }
+//
+//   setLongitude() {
+//     return Math.random();
+//   }
+// }
 
 describe('GoogleMapComponent ', () => {
   let component: GoogleMapComponent;
@@ -58,8 +62,8 @@ describe('GoogleMapComponent ', () => {
         UserServices,
         PoiServices,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: FirestoreSettingsToken, useValue: {} },
-        { provide: GeolocationServices, useClass: MockData }
+        { provide: FirestoreSettingsToken, useValue: {} }
+        // { provide: GeolocationServices, useClass: MockData }
       ]
     }).compileComponents();
   }));
@@ -74,10 +78,15 @@ describe('GoogleMapComponent ', () => {
 
   // New Test for currentLocation
   it('should Mock currentLocation', () => {
-    service.latitude = Math.random();
-    service.longitude = Math.random();
+    let tempMarker = {
+      latitude: Math.random(),
+      longitude: Math.random()
+    };
     // service.getCurrentPosition();
-    expect(service.getLatitude()).toEqual(jasmine.any(Number));
-    expect(service.getLongitude()).toEqual(jasmine.any(Number));
+    component.subscribeToChangeInCurrentPOS();
+    expect(component.positionMarkers).toBeDefined();
+    expect(component.positionMarkers.length).toBeLessThan(2);
+    // expect(service.getLatitude()).toEqual(jasmine.any(Number));
+    // expect(service.getLongitude()).toEqual(jasmine.any(Number));
   });
 });
