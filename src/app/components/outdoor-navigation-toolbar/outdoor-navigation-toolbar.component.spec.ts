@@ -50,8 +50,8 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(component).toBeTruthy();
   });
 
-  // not really working
-  it('changedCampus() triggered', () => {
+  // send message function
+  it('sendMessage() changes message', () => {
     fixture.detectChanges();
     component.ngOnInit();
 
