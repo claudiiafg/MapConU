@@ -2,10 +2,12 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Injectable } from '@angular/core';
 import { Events } from '@ionic/angular';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GeolocationServices {
-  private latitude: number;
-  private longitude: number;
+  latitude: number;
+  longitude: number;
 
   constructor(private geolocation: Geolocation, private events: Events) {}
 

@@ -10,13 +10,45 @@ import {UserServices} from '../../../services/userServices';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import {IonicRouteStrategy} from '@ionic/angular';
 import {FirestoreSettingsToken} from '@angular/fire/firestore';
+import {IonicModule} from '@ionic/angular';
+import { Events } from '@ionic/angular';
+
+
+class MockData {
+
+  private latitude: number;
+  private longitude: number;
+
+  getCurrentPosition() {
+    this.setLongitude();
+    this.setLongitude();
+  }
+
+  getLatitude() {
+    return this.latitude;
+  }
+
+  getLongitude() {
+    return this.longitude;
+  }
+
+  setLatitude() {
+    return Math.random();
+  }
+
+  setLongitude() {
+    return Math.random();
+  }
+}
 
 describe('GoogleMapComponent ', () => {
   let component: GoogleMapComponent;
   let fixture: ComponentFixture<GoogleMapComponent>;
+  let service: GeolocationServices = new GeolocationServices( new Geolocation, new Events);
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([])],
+      imports: [RouterModule.forRoot([]),
+        IonicModule.forRoot()],
       declarations: [ GoogleMapComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [ StatusBar,
@@ -26,7 +58,8 @@ describe('GoogleMapComponent ', () => {
         UserServices,
         PoiServices,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: FirestoreSettingsToken, useValue: {} }
+        { provide: FirestoreSettingsToken, useValue: {} },
+        { provide: GeolocationServices, useClass: MockData }
       ]
     }).compileComponents();
   }));
@@ -38,5 +71,13 @@ describe('GoogleMapComponent ', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
 
+  // New Test for currentLocation
+  it('should Mock currentLocation', () => {
+    service.latitude = Math.random();
+    service.longitude = Math.random();
+    // service.getCurrentPosition();
+    expect(service.getLatitude()).toEqual(jasmine.any(Number));
+    expect(service.getLongitude()).toEqual(jasmine.any(Number));
+  });
+});

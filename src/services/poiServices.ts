@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { GeolocationServices } from './geolocationServices';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PoiServices {
   private poiMarkers: any[] = [];
   private currentToggles: any = {
@@ -11,7 +13,7 @@ export class PoiServices {
     drugstore: false,
     hotels: false,
     grocery: false
-  };
+  }
 
   constructor(private geolocationServices: GeolocationServices) {}
 
