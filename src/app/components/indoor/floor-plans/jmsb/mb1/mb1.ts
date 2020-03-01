@@ -83,6 +83,7 @@ export class MB1FloorPlan {
       point = this.interestPoints.filter(point => point.id === 'out')[0];
     }
     this.destID = point.id;
+    this.setMarker(point);
     this.showPopover();
   }
 
