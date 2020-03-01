@@ -8,10 +8,11 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {UserServices} from '../../../services/userServices';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
-import {IonicRouteStrategy} from '@ionic/angular';
+import {AlertController, IonicRouteStrategy} from '@ionic/angular';
 import {FirestoreSettingsToken} from '@angular/fire/firestore';
 import {IonicModule} from '@ionic/angular';
 import { Events } from '@ionic/angular';
+
 
 
 // class MockData {
@@ -61,6 +62,7 @@ describe('GoogleMapComponent ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        AlertController,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
         // { provide: GeolocationServices, useClass: MockData }
@@ -88,5 +90,20 @@ describe('GoogleMapComponent ', () => {
     expect(component.positionMarkers.length).toBeLessThan(2);
     // expect(service.getLatitude()).toEqual(jasmine.any(Number));
     // expect(service.getLongitude()).toEqual(jasmine.any(Number));
+  });
+
+  it('should mock building info', () => {
+    // ev building
+    let service: AlertController = new AlertController();
+    let clickBuilding = {
+      lat:  45.496057,
+      lng: -73.577718
+    };
+    expect(component.evCoords).toContain(clickBuilding);
+    const ev = component.overlayCoords[5];
+    const alertSpy = spyOn(component, 'showAlert');
+    service.create({header: ev[0], subHeader: ev[0]});
+    component.showAlert(ev[0],ev[1]);
+    expect(alertSpy.calls.count()).toEqual(1);
   });
 });

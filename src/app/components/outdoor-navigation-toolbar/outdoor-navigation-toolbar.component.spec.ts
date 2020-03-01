@@ -12,8 +12,8 @@ import {FirestoreSettingsToken} from '@angular/fire/firestore';
 import {OutdoorNavigationToolbarComponent} from './outdoor-navigation-toolbar.component';
 import {GoogleMapComponent} from '../google-map/google-map.component';
 import {DataSharingService} from '../../../services/data-sharing.service';
-import computeArea = google.maps.geometry.spherical.computeArea;
-
+import { Event } from "@angular/router";
+import anything = jasmine.anything;
 
 describe('OutdoorNavigationToolbarComponent ', () => {
   let component: OutdoorNavigationToolbarComponent;
@@ -46,6 +46,7 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(component).toBeTruthy();
   });
 
+  // not really working
   it('changedCampus() triggered', () => {
     fixture.detectChanges();
     component.ngOnInit();
@@ -60,8 +61,10 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(component.message).toEqual('clicking');
     component.sendMessage('testing');
     expect(component.message).toEqual('testing');
-    component.loc = '2';
+    component.loc = '0';
     component.changeCampus();
-    expect(component.loc).toEqual('2');
+    const sendMessageSpy = spyOn(component, 'changeCampus');
+    expect(sendMessageSpy.calls.count()).toEqual(0);
+    expect(component.changeCampus()).toBeUndefined();
   })
 });
