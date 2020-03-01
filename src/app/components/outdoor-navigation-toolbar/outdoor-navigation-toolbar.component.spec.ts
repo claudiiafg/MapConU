@@ -1,15 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {GeolocationServices} from '../../../services/geolocationServices';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {PoiServices} from '../../../services/poiServices';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {UserServices} from '../../../services/userServices';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {IonicModule, IonicRouteStrategy, Platform} from '@ionic/angular';
 import {FirestoreSettingsToken} from '@angular/fire/firestore';
 import {OutdoorNavigationToolbarComponent} from './outdoor-navigation-toolbar.component';
+import {GoogleMapComponent} from '../google-map/google-map.component';
+import {DataSharingService} from '../../../services/data-sharing.service';
+import computeArea = google.maps.geometry.spherical.computeArea;
 
 
 describe('OutdoorNavigationToolbarComponent ', () => {
@@ -25,7 +28,9 @@ describe('OutdoorNavigationToolbarComponent ', () => {
         SplashScreen,
         Geolocation,
         GeolocationServices,
+        GoogleMapComponent,
         UserServices,
+        DataSharingService,
         PoiServices,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
@@ -40,4 +45,23 @@ describe('OutdoorNavigationToolbarComponent ', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('changedCampus() triggered', () => {
+    fixture.detectChanges();
+    component.ngOnInit();
+
+    component.loc = '1';
+    component.locations = [
+      { latitude: 45.495729, longitude: -73.578041 },
+      { latitude: 45.45824, longitude: -73.640452 }
+    ];
+    expect(component.loc).toEqual('1');
+    component.message = 'clicking';
+    expect(component.message).toEqual('clicking');
+    component.sendMessage('testing');
+    expect(component.message).toEqual('testing');
+    component.loc = '2';
+    component.changeCampus();
+    expect(component.loc).toEqual('2');
+  })
 });
