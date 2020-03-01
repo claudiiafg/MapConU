@@ -1,18 +1,18 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { Platform } from "@ionic/angular";
-import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { DataSharingService } from "../services/data-sharing.service";
-import { UserServices } from "src/services/userServices";
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { DataSharingService } from '../services/data-sharing.service';
+import { UserServices } from 'src/services/userServices';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "app.component.html",
-  styleUrls: ["app.component.scss"]
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  private concordiaRed: string = "#800000";
+  private concordiaRed: string = '#800000';
   message: any;
   private isOutdoor: boolean = false;
 

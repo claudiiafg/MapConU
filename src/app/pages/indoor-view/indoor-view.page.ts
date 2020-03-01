@@ -8,14 +8,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class IndoorViewPage implements OnInit {
   private sub;
-  private building : string;
+  private building: string;
 
-  constructor(
-    private route: ActivatedRoute,
-
-  ) {
+  constructor(private route: ActivatedRoute) {
     this.sub = this.route.params.subscribe(params => {
-      if(params['id']){
+      if (params['id']) {
         this.building = params['id'];
       }
     });

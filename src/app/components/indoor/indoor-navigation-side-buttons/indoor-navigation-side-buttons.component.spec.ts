@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { IonicModule } from "@ionic/angular";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-import { IndoorNavigationSideButtonsComponent } from "./indoor-navigation-side-buttons.component";
+import { IndoorNavigationSideButtonsComponent } from './indoor-navigation-side-buttons.component';
 
-describe("IndoorNavigationSideButtonsComponent", () => {
+describe('IndoorNavigationSideButtonsComponent', () => {
   let component: IndoorNavigationSideButtonsComponent;
   let fixture: ComponentFixture<IndoorNavigationSideButtonsComponent>;
 
@@ -18,7 +18,7 @@ describe("IndoorNavigationSideButtonsComponent", () => {
     fixture.detectChanges();
   }));
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

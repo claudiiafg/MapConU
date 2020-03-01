@@ -1,14 +1,14 @@
-import { Component } from "@angular/core";
-import { NavParams, Events, PopoverController } from "@ionic/angular";
+import { Component } from '@angular/core';
+import { NavParams, Events, PopoverController } from '@ionic/angular';
 import {
   Point,
   IndoorDirectionsService
-} from "src/services/indoorDirectionsService";
+} from 'src/services/indoorDirectionsService';
 
 @Component({
-  selector: "room-selector-popover",
-  templateUrl: "./room-selector-popover.html",
-  styleUrls: ["./room-selector-popover.scss"]
+  selector: 'room-selector-popover',
+  templateUrl: './room-selector-popover.html',
+  styleUrls: ['./room-selector-popover.scss']
 })
 export class RoomSelectorPopoverComponent {
   private source: string;
@@ -24,8 +24,8 @@ export class RoomSelectorPopoverComponent {
     private events: Events,
     public popoverController: PopoverController
   ) {
-    if (this.navParams.get("data")) {
-      let data = this.navParams.get("data");
+    if (this.navParams.get('data')) {
+      let data = this.navParams.get('data');
       this.destination = data.destination;
       this.points = data.points;
       this.prettifyTitles();
@@ -38,28 +38,28 @@ export class RoomSelectorPopoverComponent {
   prettifyTitles() {
     this.prettyPoints = [];
     for (let point of this.points) {
-      let prettyName: string = "";
+      let prettyName: string = '';
 
-      if (point.id.includes("wc")) {
-        prettyName = "Bathrooms";
-      } else if (point.id.includes("entrance")) {
-        prettyName = "Entrance";
-      } else if (point.id.includes("down") && point.id.includes("stairs")) {
-        prettyName = "Stairs going down";
-      } else if (point.id.includes("down") && point.id.includes("escalator")) {
-        prettyName = "Escalator going down";
-      } else if (point.id.includes("up") && point.id.includes("escalator")) {
-        prettyName = "Escalator going up";
-      } else if (point.id.includes("up") && point.id.includes("stairs")) {
-        prettyName = "Stairs going up";
-      } else if (point.id.includes("down") && point.id.includes("stairs")) {
-        prettyName = "Stairs going down";
-      } else if (point.id === "stairs") {
-        prettyName = "Stairs";
-      } else if (point.id.includes("elevator")) {
-        prettyName = "Elevators";
-      } else if (point.id.includes("out")) {
-        prettyName = "Exit";
+      if (point.id.includes('wc')) {
+        prettyName = 'Bathrooms';
+      } else if (point.id.includes('entrance')) {
+        prettyName = 'Entrance';
+      } else if (point.id.includes('down') && point.id.includes('stairs')) {
+        prettyName = 'Stairs going down';
+      } else if (point.id.includes('down') && point.id.includes('escalator')) {
+        prettyName = 'Escalator going down';
+      } else if (point.id.includes('up') && point.id.includes('escalator')) {
+        prettyName = 'Escalator going up';
+      } else if (point.id.includes('up') && point.id.includes('stairs')) {
+        prettyName = 'Stairs going up';
+      } else if (point.id.includes('down') && point.id.includes('stairs')) {
+        prettyName = 'Stairs going down';
+      } else if (point.id === 'stairs') {
+        prettyName = 'Stairs';
+      } else if (point.id.includes('elevator')) {
+        prettyName = 'Elevators';
+      } else if (point.id.includes('out')) {
+        prettyName = 'Exit';
       } else {
         prettyName = point.id;
       }
@@ -79,7 +79,6 @@ export class RoomSelectorPopoverComponent {
   }
 
   lookForPath() {
-
     this.source = this.prettyPoints.filter(
       pretty => pretty.name === this.prettySource
     )[0].id;
@@ -91,7 +90,7 @@ export class RoomSelectorPopoverComponent {
         source: this.source,
         destination: this.destination
       };
-      this.events.publish("init-new-path", data, Date.now());
+      this.events.publish('init-new-path', data, Date.now());
       this.closePopover();
     }
   }
