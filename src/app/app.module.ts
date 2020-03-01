@@ -18,6 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AgmCoreModule } from '@agm/core';
+import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { AgmDirectionModule } from 'agm-direction';
 import { AgmOverlays } from 'agm-overlays';
 import { NgPipesModule } from 'ngx-pipes';
@@ -92,6 +93,7 @@ import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/
     AngularFirestoreModule,
     AngularFireAuthModule,
     FormsModule,
+    NgxIonicImageViewerModule,
     AgmDirectionModule,
     NgPipesModule
   ],
@@ -101,6 +103,7 @@ import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/
     Geolocation,
     GeolocationServices,
     UserServices,
+    NgxIonicImageViewerModule,
     PoiServices,
     IndoorDirectionsService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

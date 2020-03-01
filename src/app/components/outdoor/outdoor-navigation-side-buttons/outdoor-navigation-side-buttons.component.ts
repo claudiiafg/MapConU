@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
 import { PoiPopoverComponent } from '../../popovers/poi-popover/poi-popover.component';
 import { SearchPopoverComponent } from '../../popovers/search-popover/search-popover.component';
@@ -13,10 +15,25 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
 
   constructor(
     public popoverController: PopoverController,
-    private events: Events
+    private events: Events,
+    public modalController: ModalController
   ) {}
 
   ngOnInit() {}
+
+  async openViewer() {
+    const modal = await this.modalController.create({
+      component: ViewerModalComponent,
+      componentProps: {
+        src: "./assets/schedule/schedule.png"
+      },
+      cssClass: 'ion-img-viewer',
+      keyboardClose: true,
+      showBackdrop: true
+    });
+
+    return await modal.present();
+  }
 
   async presentPopover(ev: any, mode: string) {
     if (mode === 'search') {
