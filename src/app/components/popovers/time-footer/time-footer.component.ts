@@ -24,6 +24,9 @@ export class TimeFooterComponent implements OnInit {
       this.timeLeft = directionInfo.time;
       this.distance = directionInfo.distance;
       this.fare = directionInfo.fare;
+      if (directionInfo.presentModal) {
+        this.presentModal();
+      }
     });
   }
 

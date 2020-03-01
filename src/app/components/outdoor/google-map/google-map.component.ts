@@ -11,7 +11,7 @@ import { DirectionService } from 'src/services/direction.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
-
+import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
@@ -104,8 +104,6 @@ export class GoogleMapComponent implements OnInit {
   };
 
   private buildingToNavigateTo: string;
-  private infoWindowMain: any;
-  private infowWindowAlternate: any;
 
   // TODO: Move coordinates to json file, import json object and set coordinates here.
 
@@ -713,7 +711,7 @@ export class GoogleMapComponent implements OnInit {
     this.setRenderOptions($event);
     this.sendDirectionInfo($event.routes[0]);
     this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
-    this.setInfoWindow($event.routes[0], 'main');
+    this.setInfoWindow($event.routes[0], 'Main');
     this.setAlternativeRoute($event);
   }
 
@@ -724,7 +722,7 @@ export class GoogleMapComponent implements OnInit {
         : this.selectedRenderOptions;
   }
 
-  private sendDirectionInfo(route: any) {
+  private sendDirectionInfo(route: any, presentModal?: boolean) {
     let fare: string;
     // fare
     if (route.fare) {
@@ -736,7 +734,8 @@ export class GoogleMapComponent implements OnInit {
     this.directionService.directionInfo.next({
       time: route.legs[0].duration.text,
       distance: route.legs[0].distance.text,
-      fare
+      fare,
+      presentModal
     });
   }
 
@@ -762,7 +761,7 @@ export class GoogleMapComponent implements OnInit {
         }
       );
 
-      this.setInfoWindow(directionInfo.routes[1], 'alternate');
+      this.setInfoWindow(directionInfo.routes[1], 'Alternative');
       this.directionService.alternateDirectionSet = true;
     }
   }
@@ -770,17 +769,32 @@ export class GoogleMapComponent implements OnInit {
   private setInfoWindow(route: any, type: string) {
     let infoWindow = new google.maps.InfoWindow();
 
-    infoWindow.setContent(
-      route.legs[0].distance.text + '<br>' + route.legs[0].duration.text + ' '
-    );
+    if (isPlatformBrowser) {
+      let div = document.createElement('div');
+      div.innerHTML =
+        route.legs[0].distance.text +
+        ' - ' +
+        type +
+        '<br>' +
+        route.legs[0].duration.text +
+        '<br>' +
+        ' ';
+      div.onclick = () => {
+        this.infoWindowClicked(route);
+      };
+      infoWindow.setContent(div);
+      let stepsLength = route.legs[0].steps.length;
+      infoWindow.setPosition(
+        route.legs[0].steps[Math.floor(stepsLength / 2)].end_location
+      );
+      infoWindow.open(this.map);
 
-    let stepsLength = route.legs[0].steps.length;
+      this.directionService.addInfoWindow(infoWindow, type);
+    }
+  }
 
-    infoWindow.setPosition(
-      route.legs[0].steps[Math.floor(stepsLength / 2)].end_location
-    );
-
-    infoWindow.open(this.map);
-    this.directionService.addInfoWindow(infoWindow, type);
+  private infoWindowClicked(route: any) {
+    this.sendDirectionInfo(route, true);
+    this.directionService.setDirectionsSteps(route.legs[0].steps);
   }
 }

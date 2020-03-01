@@ -12,6 +12,7 @@ export class DirectionService {
   public directionInfo = new BehaviorSubject<any>({});
   public alternateDirection: any;
   public alternateDirectionSet: boolean = false;
+  public polylines = [];
   private mainInfoWindow: any;
   private alternateInfoWindow: any;
   private directionSteps: any;
@@ -60,10 +61,10 @@ export class DirectionService {
   }
 
   public addInfoWindow(infoWindow: any, type: string) {
-    if (type === 'main') {
+    if (type === 'Main') {
       this.mainInfoWindow = infoWindow;
     }
-    if (type === 'alternate') {
+    if (type === 'Alternative') {
       this.alternateInfoWindow = infoWindow;
     }
   }
