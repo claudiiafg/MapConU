@@ -106,4 +106,7 @@ describe('GoogleMapComponent ', () => {
     component.showAlert(ev[0],ev[1]);
     expect(alertSpy.calls.count()).toEqual(1);
   });
+  afterAll(() => {
+    TestBed.resetTestingModule();
+  });
 });
