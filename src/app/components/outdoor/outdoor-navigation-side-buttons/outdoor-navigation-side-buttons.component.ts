@@ -4,6 +4,8 @@ import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
 import { PoiPopoverComponent } from '../../popovers/poi-popover/poi-popover.component';
 import { SearchPopoverComponent } from '../../popovers/search-popover/search-popover.component';
+import { DirectionService } from 'src/services/direction.service';
+import { DataSharingService } from 'src/services/data-sharing.service';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',
@@ -12,12 +14,23 @@ import { SearchPopoverComponent } from '../../popovers/search-popover/search-pop
 })
 export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
+  public isDirectionSet: boolean = false;
+  public bottomStyle: number = 0;
 
   constructor(
     public popoverController: PopoverController,
     private events: Events,
-    public modalController: ModalController
-  ) {}
+    public modalController: ModalController,
+    public directionService: DirectionService,
+    private dataSharingService: DataSharingService
+  ) {
+    this.directionService.isDirectionSet.subscribe(
+      (isDirectionSet: boolean) => {
+        this.isDirectionSet = isDirectionSet;
+        this.bottomStyle = isDirectionSet ? -7 : 0;
+      }
+    );
+  }
 
   ngOnInit() {}
 
@@ -25,7 +38,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     const modal = await this.modalController.create({
       component: ViewerModalComponent,
       componentProps: {
-        src: "./assets/schedule/schedule.png"
+        src: './assets/schedule/schedule.png'
       },
       cssClass: 'ion-img-viewer',
       keyboardClose: true,
@@ -62,6 +75,19 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       popover.style.cssText =
         '--width: 200px; top: 30%; left: calc(50% - 100px);';
       return await popover.present();
+    }
+  }
+
+  public close() {
+    this.directionService.origin.next([]);
+    this.directionService.destination.next([]);
+    this.directionService.isDirectionSet.next(false);
+    this.directionService.closeInfoWindows();
+    this.dataSharingService.updateMapSize(-106);
+
+    if (this.directionService.alternateDirection) {
+      this.directionService.alternateDirection.set('directions', null);
+      this.directionService.alternateDirectionSet = false;
     }
   }
 }

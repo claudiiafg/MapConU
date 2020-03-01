@@ -1,9 +1,14 @@
 .navigation-buttons-div {
   display: flex;
   justify-content: space-around;
-  background-color: white;
+  background-color: #f5f5f5;
 }
 
-.p {
+p {
+  margin-top: 7px;
   text-align: center;
+}
+
+.green {
+  color: green;
 }

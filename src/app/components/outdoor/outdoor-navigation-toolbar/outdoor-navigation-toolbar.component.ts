@@ -26,7 +26,6 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
     private data: DataSharingService,
     private events: Events,
     public directionService: DirectionService,
-    private dataSharingService: DataSharingService
   ) {
     this.data.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
@@ -73,19 +72,6 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
       this.carColor = 'white';
       this.transitColor = 'white';
       this.walkColor = 'yellow';
-    }
-  }
-
-  public goBack() {
-    this.directionService.origin.next([]);
-    this.directionService.destination.next([]);
-    this.directionService.isDirectionSet.next(false);
-    this.directionService.closeInfoWindows();
-    this.dataSharingService.updateMapSize(-106);
-
-    if (this.directionService.alternateDirection) {
-      this.directionService.alternateDirection.set('directions', null);
-      this.directionService.alternateDirectionSet = false;
     }
   }
 }
