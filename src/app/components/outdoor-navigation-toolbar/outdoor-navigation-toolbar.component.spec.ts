@@ -18,11 +18,15 @@ import anything = jasmine.anything;
 describe('OutdoorNavigationToolbarComponent ', () => {
   let component: OutdoorNavigationToolbarComponent;
   let fixture: ComponentFixture<OutdoorNavigationToolbarComponent>;
+
+  let googleMapcomponent: GoogleMapComponent;
+  let googleFixture: ComponentFixture<GoogleMapComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
       ],
-      declarations: [ OutdoorNavigationToolbarComponent ],
+      declarations: [ OutdoorNavigationToolbarComponent,
+        GoogleMapComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [ StatusBar,
         SplashScreen,
@@ -67,4 +71,20 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(sendMessageSpy.calls.count()).toEqual(0);
     expect(component.changeCampus()).toBeUndefined();
   })
+
+  it('test campus toggle functions', () => {
+
+    googleFixture = TestBed.createComponent(GoogleMapComponent);
+    googleMapcomponent = googleFixture.componentInstance;
+    googleFixture.detectChanges();
+
+    expect(googleMapcomponent).toBeTruthy();
+    expect(googleMapcomponent.latitude).toBe(45.495729);
+    expect(googleMapcomponent.longitude).toBe(-73.578041);
+    component.loc = "1";
+    component.changeCampus();
+    googleMapcomponent.subscribeToChangeInCurrentPOS();
+    expect(googleMapcomponent.latitude).toBe(45.45824);
+    expect(googleMapcomponent.longitude).toBe(-73.640452);
+    });
 });
