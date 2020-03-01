@@ -51,7 +51,7 @@ import { PoiServices } from '../services/poiServices';
 import { IndoorDirectionsService } from 'src/services/indoorDirectionsService';
 
 //floor plans
-import { MB1FloorPlan } from './components/indoor/floor-plans/jmsb/mb1/mb1';
+import { MB1FloorPlan } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 
 @NgModule({
   declarations: [

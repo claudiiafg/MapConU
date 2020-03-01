@@ -8,8 +8,8 @@ import { Events, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'mb1-floor-plan',
-  templateUrl: 'mb1.html',
-  styleUrls: ['./mb1.scss']
+  templateUrl: 'mb1.component.html',
+  styleUrls: ['./mb1.component.scss']
 })
 export class MB1FloorPlan {
   private pathLines: Line[] = [];
