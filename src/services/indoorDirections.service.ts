@@ -116,7 +116,7 @@ export class IndoorDirectionsService {
       }
     }
     this.pathLines = tempPathLines;
-    // this.reset();
+    this.reset();
   }
 
   //reset all variables when initiating a new map
@@ -131,12 +131,17 @@ export class IndoorDirectionsService {
 
   //public helper to make sure all necessary information is available to compute path
   public computePathHelper(source: string, destination: string) {
-    try {
-      this.setSource(source);
-      this.setDest(destination);
-      this.computePath();
-    } catch (e) {
-      console.error(e);
+    console.log(source)
+    console.log(destination)
+
+    if(source !== destination){
+      try {
+        this.setSource(source);
+        this.setDest(destination);
+        this.computePath();
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -330,12 +335,10 @@ export class IndoorDirectionsService {
     let line = this.getLineById(this.path[this.path.length - 1]);
     this.setAsVisited(line.id);
 
-    if (this.foundPath) {
-      return;
-    }
-
     //leaf line
     if (this.isLeaf(line.id) && line.id !== this.sourceLine.id) {
+      console.error('leaf found');
+
       // if line if equal to the line we're looking for
       if (line.id === this.destLine.id) {
         console.log('FOUND ROOM');
@@ -345,6 +348,7 @@ export class IndoorDirectionsService {
 
         //found leaf line but not the destination
       } else {
+        console.error('one way backward');
         //mark as visited and pop the path's array until found intersection with a line not visited
         let top: Line;
         let i = 1;
@@ -373,6 +377,8 @@ export class IndoorDirectionsService {
       !this.isIntersection(line.id) &&
       (!this.isLeaf(line.id) || line.id !== this.sourceLine.id)
     ) {
+      console.error('one way forward');
+
       let tempLine: Line = line;
       let nextLine: string;
 
@@ -391,6 +397,8 @@ export class IndoorDirectionsService {
 
       //multiple lines (is intersectiong)
     } else if (this.isIntersection(line.id)) {
+      console.error('intersection');
+
       this.path.push(this.getNextUnvisitedLine(line).id);
       this.computePath();
       return;

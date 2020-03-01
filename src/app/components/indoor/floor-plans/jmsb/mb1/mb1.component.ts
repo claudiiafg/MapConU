@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   IndoorDirectionsService,
   Line,
@@ -11,7 +11,7 @@ import { Events, AlertController } from '@ionic/angular';
   templateUrl: 'mb1.component.html',
   styleUrls: ['./mb1.component.scss']
 })
-export class MB1FloorPlanComponent {
+export class MB1FloorPlanComponent implements OnInit {
   private pathLines: Line[] = [];
   private interestPoints: Point[] = [];
   private sourceID: string = 'entrance';
