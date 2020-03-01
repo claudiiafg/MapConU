@@ -26,7 +26,7 @@ export class IndoorNavigationSideButtonsComponent {
       translucent: false
     });
 
-    popover.style.cssText = '--width: 100%; top: -150px; right: 5px;';
+    popover.style.cssText = '--width: calc(100% - 10px); top: 0px; right: 5px;';
     return await popover.present();
   }
 }
