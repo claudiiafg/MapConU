@@ -40,4 +40,7 @@ describe('OutdoorNavigationSideButtonsComponent ', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  afterAll(() => {
+    TestBed.resetTestingModule();
+  });
 });

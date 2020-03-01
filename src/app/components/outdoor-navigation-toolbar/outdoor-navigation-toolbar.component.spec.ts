@@ -87,4 +87,7 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(googleMapcomponent.latitude).toBe(45.45824);
     expect(googleMapcomponent.longitude).toBe(-73.640452);
     });
+  afterAll(() => {
+    TestBed.resetTestingModule();
+  });
 });
