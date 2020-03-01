@@ -55,11 +55,11 @@ export class OutdoorNavigationToolbarComponent implements OnInit {
   }
 
   public setSelectedColor(travelMode: string) {
-    if (travelMode === 'car') {
+    if (travelMode === 'DRIVING') {
       this.carColor = 'yellow';
       this.transitColor = 'white';
       this.walkColor = 'white';
-    } else if (travelMode === 'transit') {
+    } else if (travelMode === 'TRANSIT') {
       this.carColor = 'white';
       this.transitColor = 'yellow';
       this.walkColor = 'white';

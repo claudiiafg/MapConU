@@ -26,7 +26,7 @@ export class GoogleMapComponent implements OnInit {
   public concordiaRed = '#800000';
   public positionMarkers: any[] = [];
   public poiMarkers: any[] = [];
-  public travelMode = 'walk';
+  public travelMode = 'WALKING';
   public previous: any;
   public currentToggles: any = {
     restaurants: false,
@@ -638,6 +638,7 @@ export class GoogleMapComponent implements OnInit {
 
     this.buildingToNavigateTo = null;
   }
+
   //use to send data to other components
   sendMessage(updatedMessage: any) {
     this.data.updateMessage(updatedMessage);

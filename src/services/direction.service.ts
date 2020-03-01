@@ -8,7 +8,7 @@ export class DirectionService {
   public origin = new BehaviorSubject([]);
   public destination = new BehaviorSubject([]);
   public isDirectionSet = new BehaviorSubject(false);
-  public changeTravelMode = new BehaviorSubject('walk');
+  public changeTravelMode = new BehaviorSubject('WALKING');
   public directionInfo = new BehaviorSubject<any>({});
   private directionSteps: any;
 
@@ -26,6 +26,7 @@ export class DirectionService {
   public setStepsIcons(steps: any) {
     let stepsWithIcons = steps;
     let counter = 1;
+
     for (var key in stepsWithIcons) {
       // Travel icons
       if (stepsWithIcons[key].travel_mode === 'WALKING') {
