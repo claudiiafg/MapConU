@@ -332,26 +332,24 @@ export class IndoorDirectionsService {
 
   //********************** MAIN ALGORITHM **********************
   private computePath() {
+    //find last line in path and set it as visited
     let line = this.getLineById(this.path[this.path.length - 1]);
     this.setAsVisited(line.id);
 
-    //leaf line
+    //line if leaf -> aka if connected to a interest point
     if (this.isLeaf(line.id) && line.id !== this.sourceLine.id) {
-      console.error('leaf found');
 
-      // if line if equal to the line we're looking for
+      //line is equal to the line we're looking for
       if (line.id === this.destLine.id) {
         console.log('FOUND ROOM');
         this.foundPath = true;
         this.events.publish('path-found', true, Date.now());
         return;
 
-        //found leaf line but not the destination
+      //found leaf line but not the destination -> must ROLL BACK
       } else {
-        console.error('one way backward');
         //mark as visited and pop the path's array until found intersection with a line not visited
         let top: Line;
-        let i = 1;
         do {
           let arrayTop = this.path.pop();
           top = this.getLineById(arrayTop);
@@ -372,12 +370,11 @@ export class IndoorDirectionsService {
         return;
       }
 
-      //previous line and next line only
+    //connected lines are previous and next (no intersection) -> ROLL FORWARD
     } else if (
       !this.isIntersection(line.id) &&
       (!this.isLeaf(line.id) || line.id !== this.sourceLine.id)
     ) {
-      console.error('one way forward');
 
       let tempLine: Line = line;
       let nextLine: string;
@@ -387,6 +384,7 @@ export class IndoorDirectionsService {
           line => !this.getLineById(line)._wasVisited
         )[0];
         if (nextLine) {
+          this.setAsVisited(nextLine);
           this.path.push(nextLine);
           tempLine = this.getLineById(nextLine);
         }
@@ -395,10 +393,28 @@ export class IndoorDirectionsService {
       this.computePath();
       return;
 
-      //multiple lines (is intersectiong)
-    } else if (this.isIntersection(line.id)) {
-      console.error('intersection');
+    //first line has an initial straight path -> ROLL FORWARD
+    } else if(line.id === this.sourceLine.id && line.id !== this.destLine.id && this.hasUnvisitedLine(line) && !this.isIntersection(line.id)) {
 
+      let tempLine: Line = line;
+      let nextLine: string;
+
+      do{
+        nextLine = tempLine.connectedLines.filter(line => !this.getLineById(line)._wasVisited)[0];
+        if(nextLine){
+          this.setAsVisited(nextLine);
+          this.path.push(nextLine);
+          tempLine = this.getLineById(nextLine);
+        } else {
+          break;
+        }
+      } while(nextLine && !(this.isLeaf(nextLine) && (nextLine !== this.destLine.id)))
+
+      this.computePath();
+      return;
+
+    //multiple lines connected to it (is intersection)
+    } else if (this.isIntersection(line.id)) {
       this.path.push(this.getNextUnvisitedLine(line).id);
       this.computePath();
       return;
