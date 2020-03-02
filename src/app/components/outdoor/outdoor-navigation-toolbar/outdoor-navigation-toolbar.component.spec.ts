@@ -55,6 +55,10 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     fixture = TestBed.createComponent(OutdoorNavigationToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    googleFixture = TestBed.createComponent(GoogleMapComponent);
+    googleMapcomponent = googleFixture.componentInstance;
+    googleFixture.detectChanges();
   });
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -83,10 +87,6 @@ describe('OutdoorNavigationToolbarComponent ', () => {
   });
 
   it('test campus toggle functions', () => {
-
-    googleFixture = TestBed.createComponent(GoogleMapComponent);
-    googleMapcomponent = googleFixture.componentInstance;
-    googleFixture.detectChanges();
 
     expect(googleMapcomponent).toBeTruthy();
     expect(googleMapcomponent.latitude).toBe(45.495729);

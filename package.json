@@ -9,7 +9,7 @@
     "build": "ng build",
     "test": "ng test --code-coverage --watch=false --browsers=ChromeHeadless --reporters=progress,junit",
     "lint": "ng lint",
-    "e2e": "npm run install-puppeteer && ng e2e",
+    "e2e": "cd e2e && npm run install-puppeteer && ng e2e && cd ..",
     "install-puppeteer": "cd node_modules/puppeteer && npm run install",
     "testHeadless": "npm run install-puppeteer && ng test --code-coverage --watch=false --browsers=ChromeHeadless"
   },
