@@ -93,18 +93,21 @@ describe('GoogleMapComponent ', () => {
   });
 
   it('should mock building info', () => {
-    // ev building
-    let service: AlertController = new AlertController();
-    let clickBuilding = {
-      lat:  45.496057,
-      lng: -73.577718
-    };
-    expect(component.evCoords).toContain(clickBuilding);
-    const ev = component.overlayCoords[5];
-    const alertSpy = spyOn(component, 'showAlert');
-    service.create({header: ev[0], subHeader: ev[0]});
-    component.showAlert(ev[0],ev[1]);
-    expect(alertSpy.calls.count()).toEqual(1);
+    // Get all buildings info
+    let buildingsInfo: any = component.overlayCoords;
+
+    // Calling alert
+    component.showAlert(buildingsInfo[0].name, buildingsInfo[0].address);
+
+    // Checking if the alert is created
+    let alert = document.getElementsByClassName("alert-css");
+    expect(alert).not.toBeNull();
+
+    // Checking contents of alert are added
+    let alertTitle = document.getElementsByClassName("alert-title");
+    expect(alertTitle).not.toBeNull();
+    let alertSubtitle = document.getElementsByClassName("alert-sub-title");
+    expect(alertSubtitle).not.toBeNull();
   });
   afterAll(() => {
     TestBed.resetTestingModule();
