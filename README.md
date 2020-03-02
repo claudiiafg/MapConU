@@ -25,7 +25,7 @@ build android app (open android platform directory in androidStudio):
 to run unit test (need to be at root level of the project):
 `npm test`
 
-to run e2e/protractor test:
+to run e2e/protractor test (need to be at root level of the project):
 `npm run e2e`
 
 ## API Key:
