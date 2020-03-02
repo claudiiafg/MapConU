@@ -22,6 +22,12 @@ build ios app (open ios platform directory in xCode):
 build android app (open android platform directory in androidStudio):
 `ionic cordova build android`
 
+to run unit test (need to be at root level of the project):
+`npm test`
+
+to run e2e/protractor test:
+`npm run e2e`
+
 ## API Key:
 
 To make sure you can work on the project, you will need a valid Google API Key.
