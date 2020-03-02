@@ -15,13 +15,13 @@ describe('new App', () => {
   it('Should toggle Campuses when selected at top of the UI', () => {
     browser.get('/');
     //set location to sgw
-    element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
-    browser.driver.sleep(500);
-    element(
-      by.xpath(
-        '/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[1]'
-      )
-    ).click();
+    // element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
+    // browser.driver.sleep(500);
+    // element(
+    //   by.xpath(
+    //     '/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[1]'
+    //   )
+    // ).click();
 
     //check location is set to SGW
     expect(element(by.id('campus-change')).getText()).toContain('SGW Campus');
@@ -47,7 +47,7 @@ describe('new App', () => {
   it('Shows Current Position Marker', () => {
     browser.get('/');
     //let ele = element(by.xpath("/html/body/app-root/ion-app/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
-    let ele = element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
+    let ele = element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-content/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
     expect(ele).toBeTruthy();
   });
   //This test will be added in the future
