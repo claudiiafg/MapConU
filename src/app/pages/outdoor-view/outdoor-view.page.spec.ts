@@ -1,24 +1,46 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {FirestoreSettingsToken} from '@angular/fire/firestore';
+import {OutdoorViewPage} from './outdoor-view.page';
+import {UserServices} from '../../../services/user.services';
+import {PoiServices} from '../../../services/poi.services';
+import {GeolocationServices} from '../../../services/geolocation.services';
 
-import { OutdoorViewPage } from './outdoor-view.page';
 
-describe('OutdoorViewPage', () => {
+describe('OutdoorViewPage ', () => {
   let component: OutdoorViewPage;
   let fixture: ComponentFixture<OutdoorViewPage>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OutdoorViewPage],
-      imports: [IonicModule.forRoot()]
+      imports: [RouterModule.forRoot([]),
+        IonicModule.forRoot()],
+      declarations: [ OutdoorViewPage ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      providers: [ StatusBar,
+        SplashScreen,
+        Geolocation,
+        GeolocationServices,
+        UserServices,
+        PoiServices,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: FirestoreSettingsToken, useValue: {} }
+      ]
     }).compileComponents();
-
+  }));
+  beforeEach(() => {
     fixture = TestBed.createComponent(OutdoorViewPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }));
-
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  afterAll(() => {
+    TestBed.resetTestingModule();
   });
 });
