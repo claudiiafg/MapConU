@@ -677,6 +677,12 @@ export class GoogleMapComponent implements OnInit {
       }
     }
     this.directionService.isDirectionSet.next(true);
+
+    if (this.directionService.alternateDirection) {
+      this.directionService.alternateDirection.set('directions', null);
+      this.directionService.alternateDirectionSet = false;
+    }
+
     this.dataSharingService.updateMapSize(-210);
 
     this.directionService.origin.next([
