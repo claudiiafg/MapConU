@@ -12,7 +12,6 @@ export class DirectionService {
   public directionInfo = new BehaviorSubject<any>({});
   public alternateDirection: any;
   public alternateDirectionSet: boolean = false;
-  public polylines = [];
   private mainInfoWindow: any;
   private alternateInfoWindow: any;
   private directionSteps: any;
