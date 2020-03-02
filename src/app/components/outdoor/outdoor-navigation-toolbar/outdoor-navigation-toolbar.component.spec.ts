@@ -8,12 +8,14 @@ import {IonicModule, IonicRouteStrategy, Platform} from '@ionic/angular';
 import {FirestoreSettingsToken} from '@angular/fire/firestore';
 import {OutdoorNavigationToolbarComponent} from './outdoor-navigation-toolbar.component';
 import {GoogleMapComponent} from '../google-map/google-map.component';
-import { Event } from "@angular/router";
-import anything = jasmine.anything;
 import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {DataSharingService} from '../../../../services/data-sharing.service';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {AgmDirectionModule} from 'agm-direction';
+import {AgmOverlays} from 'agm-overlays';
+import {AgmCoreModule} from '@agm/core';
+import {APIKey} from '../../../../environments/env';
 
 describe('OutdoorNavigationToolbarComponent ', () => {
   let component: OutdoorNavigationToolbarComponent;
@@ -24,6 +26,14 @@ describe('OutdoorNavigationToolbarComponent ', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
+        IonicModule.forRoot(),
+        AgmOverlays,
+        AgmCoreModule.forRoot({
+          apiKey: APIKey,
+          libraries: ['places'],
+          apiVersion: '3.31'
+        }),
+        AgmDirectionModule,
       ],
       declarations: [ OutdoorNavigationToolbarComponent,
         GoogleMapComponent ],
@@ -45,6 +55,10 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     fixture = TestBed.createComponent(OutdoorNavigationToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    googleFixture = TestBed.createComponent(GoogleMapComponent);
+    googleMapcomponent = googleFixture.componentInstance;
+    googleFixture.detectChanges();
   });
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -70,13 +84,9 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     const sendMessageSpy = spyOn(component, 'changeCampus');
     expect(sendMessageSpy.calls.count()).toEqual(0);
     expect(component.changeCampus()).toBeUndefined();
-  })
+  });
 
   it('test campus toggle functions', () => {
-
-    googleFixture = TestBed.createComponent(GoogleMapComponent);
-    googleMapcomponent = googleFixture.componentInstance;
-    googleFixture.detectChanges();
 
     expect(googleMapcomponent).toBeTruthy();
     expect(googleMapcomponent.latitude).toBe(45.495729);
