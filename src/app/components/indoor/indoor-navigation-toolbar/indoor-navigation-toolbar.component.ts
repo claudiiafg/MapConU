@@ -150,4 +150,10 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   goBackOutside() {
     this.router.navigateByUrl('/outdoor');
   }
+  /*
+  Takes the user to the settings page
+  */
+  public adjustSettings(){
+    this.router.navigateByUrl('/appSettings');
+  }
 }

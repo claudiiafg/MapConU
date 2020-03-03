@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<testsuite name="HeadlessChrome 80.0.3987 (Windows 10.0.0)" package="" timestamp="2020-03-02T01:31:49" id="0" hostname="DESKTOP-A447U8T" tests="19" errors="0" failures="3" time="1.547">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/80.0.3987.0 Safari/537.36"/>
+  </properties>
+  <testcase name="IndoorNavigationSideButtonsComponent  should create" time="0.204" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationSideButtonsComponent "/>
+  <testcase name="IndoorMapComponent  should create" time="0.027" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorMapComponent "/>
+  <testcase name="ModalDirectionsComponent  should create" time="0.133" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).ModalDirectionsComponent "/>
+  <testcase name="GoogleMapComponent  should Mock currentLocation" time="0.123" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="GoogleMapComponent  should create" time="0.175" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="GoogleMapComponent  should mock building info" time="0.1" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="DataSharingService should be created" time="0.006" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DataSharingService"/>
+  <testcase name="IndoorNavigationToolbarComponent  should create" time="0.031" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationToolbarComponent "/>
+  <testcase name="DirectionService should be created" time="0.005" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DirectionService"/>
+  <testcase name="IndoorViewPage  should create" time="0.095" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorViewPage "/>
+  <testcase name="PoiPopoverComponent  should create" time="0.098" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).PoiPopoverComponent "/>
+  <testcase name="OutdoorViewPage  should create" time="0.102" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorViewPage "/>
+  <testcase name="OutdoorNavigationToolbarComponent  test campus toggle functions" time="0.035" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent ">
+    <failure type="">NullInjectorError: StaticInjectorError(DynamicTestModule)[OutdoorNavigationToolbarComponent -&gt; MapsAPILoader]: 
+  StaticInjectorError(Platform: core)[OutdoorNavigationToolbarComponent -&gt; MapsAPILoader]: 
+    NullInjectorError: No provider for MapsAPILoader!
+error properties: Object({ ngTempTokenPath: null, ngTokenPath: [ 'OutdoorNavigationToolbarComponent', Function ], ngDebugContext: DebugContext_({ view: Object({ def: Object({ factory: Function, nodeFlags: 37863425, rootNodeFlags: 33554433, nodeMatchedQueries: 0, flags: 0, nodes: [ Object({ nodeIndex: 0, parent: null, renderParent: null, bindingIndex: 0, outputIndex: 0, checkIndex: 0, flags: 33554433, childFlags: 4308992, directChildFlags: 4308992, childMatchedQueries: 0, matchedQueries: Object({  }), matchedQueryIds: 0, references: Object({  }), ngContentIndex: null, childCount: 1, bindings: [  ], bindingFlags: 0, outputs: [  ], element: Object({ ns: '', name: 'app-outdoor-navigation-toolbar', attrs: [  ], template: null, componentProvider: Object({ nodeIndex: 1, parent: &lt;circular reference: Object&gt;, renderParent: &lt;circular reference: Object&gt;, bindingIndex: 0, outputIndex: 0, checkIndex: 1, flags: 4308992, childFlags: 0, directChildFlags: 0, childMatchedQueries: 0, matchedQueries: Object, matchedQue ...
+    at &lt;Jasmine&gt;
+    at NullInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:778:1)
+    at resolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2564:1)
+    at tryResolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2490:1)
+    at StaticInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2353:1)
+    at resolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2564:1)
+    at tryResolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2490:1)
+    at StaticInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2353:1)
+    at resolveNgModuleDep (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:26403:1)
+    at NgModuleRef_.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:27491:1)
+    at resolveDep (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:28021:1)
+</failure>
+    <failure type="">TypeError: Cannot set property 'loc' of undefined
+    at &lt;Jasmine&gt;
+    at UserContext.&lt;anonymous&gt; (http://localhost:9876/_karma_webpack_/src/app/components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component.spec.ts:84:18)
+    at ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:359:1)
+    at ProxyZoneSpec.push../node_modules/zone.js/dist/zone-testing.js.ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:308:1)
+    at ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:358:1)
+    at Zone.run (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:124:1)
+    at runInTestZone (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:561:1)
+    at UserContext.&lt;anonymous&gt; (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:576:1)
+    at &lt;Jasmine&gt;
+</failure>
+  </testcase>
+  <testcase name="OutdoorNavigationToolbarComponent  sendMessage() changes message" time="0.026" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent ">
+    <failure type="">NullInjectorError: StaticInjectorError(DynamicTestModule)[OutdoorNavigationToolbarComponent -&gt; MapsAPILoader]: 
+  StaticInjectorError(Platform: core)[OutdoorNavigationToolbarComponent -&gt; MapsAPILoader]: 
+    NullInjectorError: No provider for MapsAPILoader!
+error properties: Object({ ngTempTokenPath: null, ngTokenPath: [ 'OutdoorNavigationToolbarComponent', Function ], ngDebugContext: DebugContext_({ view: Object({ def: Object({ factory: Function, nodeFlags: 37863425, rootNodeFlags: 33554433, nodeMatchedQueries: 0, flags: 0, nodes: [ Object({ nodeIndex: 0, parent: null, renderParent: null, bindingIndex: 0, outputIndex: 0, checkIndex: 0, flags: 33554433, childFlags: 4308992, directChildFlags: 4308992, childMatchedQueries: 0, matchedQueries: Object({  }), matchedQueryIds: 0, references: Object({  }), ngContentIndex: null, childCount: 1, bindings: [  ], bindingFlags: 0, outputs: [  ], element: Object({ ns: '', name: 'app-outdoor-navigation-toolbar', attrs: [  ], template: null, componentProvider: Object({ nodeIndex: 1, parent: &lt;circular reference: Object&gt;, renderParent: &lt;circular reference: Object&gt;, bindingIndex: 0, outputIndex: 0, checkIndex: 1, flags: 4308992, childFlags: 0, directChildFlags: 0, childMatchedQueries: 0, matchedQueries: Object, matchedQue ...
+    at &lt;Jasmine&gt;
+    at NullInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:778:1)
+    at resolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2564:1)
+    at tryResolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2490:1)
+    at StaticInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2353:1)
+    at resolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2564:1)
+    at tryResolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2490:1)
+    at StaticInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2353:1)
+    at resolveNgModuleDep (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:26403:1)
+    at NgModuleRef_.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:27491:1)
+    at resolveDep (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:28021:1)
+</failure>
+    <failure type="">TypeError: Cannot read property 'detectChanges' of undefined
+    at &lt;Jasmine&gt;
+    at UserContext.&lt;anonymous&gt; (http://localhost:9876/_karma_webpack_/src/app/components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component.spec.ts:55:13)
+    at ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:359:1)
+    at ProxyZoneSpec.push../node_modules/zone.js/dist/zone-testing.js.ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:308:1)
+    at ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:358:1)
+    at Zone.run (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:124:1)
+    at runInTestZone (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:561:1)
+    at UserContext.&lt;anonymous&gt; (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:576:1)
+    at &lt;Jasmine&gt;
+</failure>
+  </testcase>
+  <testcase name="OutdoorNavigationToolbarComponent  should create" time="0.031" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent ">
+    <failure type="">NullInjectorError: StaticInjectorError(DynamicTestModule)[OutdoorNavigationToolbarComponent -&gt; MapsAPILoader]: 
+  StaticInjectorError(Platform: core)[OutdoorNavigationToolbarComponent -&gt; MapsAPILoader]: 
+    NullInjectorError: No provider for MapsAPILoader!
+error properties: Object({ ngTempTokenPath: null, ngTokenPath: [ 'OutdoorNavigationToolbarComponent', Function ], ngDebugContext: DebugContext_({ view: Object({ def: Object({ factory: Function, nodeFlags: 37863425, rootNodeFlags: 33554433, nodeMatchedQueries: 0, flags: 0, nodes: [ Object({ nodeIndex: 0, parent: null, renderParent: null, bindingIndex: 0, outputIndex: 0, checkIndex: 0, flags: 33554433, childFlags: 4308992, directChildFlags: 4308992, childMatchedQueries: 0, matchedQueries: Object({  }), matchedQueryIds: 0, references: Object({  }), ngContentIndex: null, childCount: 1, bindings: [  ], bindingFlags: 0, outputs: [  ], element: Object({ ns: '', name: 'app-outdoor-navigation-toolbar', attrs: [  ], template: null, componentProvider: Object({ nodeIndex: 1, parent: &lt;circular reference: Object&gt;, renderParent: &lt;circular reference: Object&gt;, bindingIndex: 0, outputIndex: 0, checkIndex: 1, flags: 4308992, childFlags: 0, directChildFlags: 0, childMatchedQueries: 0, matchedQueries: Object, matchedQue ...
+    at &lt;Jasmine&gt;
+    at NullInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:778:1)
+    at resolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2564:1)
+    at tryResolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2490:1)
+    at StaticInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2353:1)
+    at resolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2564:1)
+    at tryResolveToken (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2490:1)
+    at StaticInjector.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:2353:1)
+    at resolveNgModuleDep (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:26403:1)
+    at NgModuleRef_.get (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:27491:1)
+    at resolveDep (http://localhost:9876/_karma_webpack_/node_modules/@angular/core/fesm2015/core.js:28021:1)
+</failure>
+    <failure type="">Error: Expected undefined to be truthy.
+    at &lt;Jasmine&gt;
+    at UserContext.&lt;anonymous&gt; (http://localhost:9876/_karma_webpack_/src/app/components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component.spec.ts:50:23)
+    at ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:359:1)
+    at ProxyZoneSpec.push../node_modules/zone.js/dist/zone-testing.js.ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:308:1)
+</failure>
+  </testcase>
+  <testcase name="TimeFooterComponent  should create" time="0.087" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).TimeFooterComponent "/>
+  <testcase name="OutdoorNavigationSideButtonsComponent  should create" time="0.1" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationSideButtonsComponent "/>
+  <testcase name="SettingsToolbarComponent  should create" time="0.077" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsToolbarComponent "/>
+  <testcase name="SearchPopoverComponent  should create" time="0.092" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SearchPopoverComponent "/>
+  <system-out>
+    <![CDATA[HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

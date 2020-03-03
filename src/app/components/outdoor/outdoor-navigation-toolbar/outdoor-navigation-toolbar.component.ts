@@ -11,6 +11,7 @@ import {
 import { Events, IonSearchbar } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from '../../../../services/data-sharing.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',
@@ -40,6 +41,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
     public directionService: DirectionService,
+    private router: Router
   ) {
     this.data.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
@@ -131,5 +133,11 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
       this.transitColor = 'white';
       this.walkColor = 'yellow';
     }
+  }
+  /*
+  Takes the user to the settings page
+   */
+  public adjustSettings(){
+    this.router.navigateByUrl('/appSettings');
   }
 }
