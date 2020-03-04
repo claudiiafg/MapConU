@@ -15,6 +15,7 @@ import {GeolocationServices} from '../../../services/geolocation.services';
 describe('OutdoorViewPage ', () => {
   let component: OutdoorViewPage;
   let fixture: ComponentFixture<OutdoorViewPage>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),

@@ -14,11 +14,6 @@ const routes: Routes = [
   },
   //redirect to outdoor if path is not recognized
   { path: '**', redirectTo: 'outdoor' },
-  {
-    path: 'settings',
-    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
-  }
-
 ];
 
 @NgModule({
