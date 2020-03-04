@@ -1,0 +1,26 @@
+.lang-icon{
+  width: 40px;
+  height: 40px;
+}
+
+ion-label{
+  padding: 1em;
+}
+
+#language-selection {
+  --inner-padding-bottom: 0px;
+  float: right;
+  padding-right: 1em;
+  max-width: fit-content;
+  color: black;
+}
+
+.select-language {
+  position: initial;
+  max-width: fit-content;
+}
+
+ion-button{
+  padding-right: 1em;
+  width: 6em;
+}
