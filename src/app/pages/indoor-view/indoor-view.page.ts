@@ -9,11 +9,15 @@ import { ActivatedRoute } from '@angular/router';
 export class IndoorViewPage implements OnInit {
   private sub;
   private building: string;
+  private floor = 1;
 
   constructor(private route: ActivatedRoute) {
     this.sub = this.route.params.subscribe(params => {
       if (params['id']) {
         this.building = params['id'];
+        if(this.building === 'hall'){
+          this.floor = 8;
+        }
       }
     });
   }

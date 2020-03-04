@@ -23,19 +23,20 @@ import { AgmDirectionModule } from 'agm-direction';
 import { AgmOverlays } from 'agm-overlays';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { NgPipesModule } from 'ngx-pipes';
+
 //env variables
 import { APIKey } from 'src/environments/env';
+import { environment } from '../environments/environment';
+
 //services
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 import { UserServices } from 'src/services/user.services';
-import { environment } from '../environments/environment';
 import { PoiServices } from '../services/poi.services';
+
 //pages
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-//floor plans
-import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { IndoorMapComponent } from './components/indoor/indoor-map/indoor-map.component';
 import { IndoorNavigationSideButtonsComponent } from './components/indoor/indoor-navigation-side-buttons/indoor-navigation-side-buttons.component';
 import { IndoorNavigationToolbarComponent } from './components/indoor/indoor-navigation-toolbar/indoor-navigation-toolbar.component';
@@ -51,6 +52,10 @@ import { SettingsToolbarComponent } from './components/settings-toolbar/settings
 import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
 
+//floor plans
+import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
+import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +69,7 @@ import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
     SettingsToolbarComponent,
     IndoorNavigationToolbarComponent,
     MB1FloorPlanComponent,
+    H8FloorPlanComponent,
     OutdoorViewPage,
     IndoorViewPage,
     TimeFooterComponent,
