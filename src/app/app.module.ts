@@ -50,6 +50,8 @@ import { TimeFooterComponent } from './components/popovers/time-footer/time-foot
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
 import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
+import { SettingsPage } from "./pages/settings/settings.page";
+import { SettingsOptionsComponent } from "./components/settings-options/settings-options.component";
 
 @NgModule({
   declarations: [
@@ -66,9 +68,11 @@ import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
     MB1FloorPlanComponent,
     OutdoorViewPage,
     IndoorViewPage,
+    SettingsPage,
     TimeFooterComponent,
     ModalDirectionsComponent,
-    RoomSelectorPopoverComponent
+    RoomSelectorPopoverComponent,
+    SettingsOptionsComponent
   ],
   entryComponents: [
     SearchPopoverComponent,

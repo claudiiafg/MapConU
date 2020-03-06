@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<testsuite name="HeadlessChrome 80.0.3987 (Windows 10.0.0)" package="" timestamp="2020-03-04T22:35:51" id="0" hostname="DESKTOP-A447U8T" tests="21" errors="0" failures="2" time="3.223">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/80.0.3987.0 Safari/537.36"/>
+  </properties>
+  <testcase name="IndoorViewPage  should create" time="0.339" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorViewPage "/>
+  <testcase name="DataSharingService should be created" time="0.031" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DataSharingService"/>
+  <testcase name="PoiPopoverComponent  should create" time="0.159" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).PoiPopoverComponent "/>
+  <testcase name="IndoorNavigationSideButtonsComponent  should create" time="0.291" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationSideButtonsComponent "/>
+  <testcase name="OutdoorNavigationToolbarComponent  test campus toggle functions" time="0.383" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
+  <testcase name="OutdoorNavigationToolbarComponent  should create" time="0.451" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
+  <testcase name="OutdoorNavigationToolbarComponent  sendMessage() changes message" time="0.171" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
+  <testcase name="OutdoorNavigationSideButtonsComponent  should create" time="0.118" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationSideButtonsComponent "/>
+  <testcase name="OutdoorViewPage  should create" time="0.096" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorViewPage "/>
+  <testcase name="SettingsPage should create" time="0.081" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsPage">
+    <failure type="">1. If 'app-settings-toolbar' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-toolbar' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. ("&lt;ion-header&gt;
+  [ERROR -&gt;]&lt;app-settings-toolbar&gt;&lt;/app-settings-toolbar&gt;
+&lt;/ion-header&gt;
+1. If 'app-settings-options' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-options' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. ("
+&lt;ion-content&gt;
+  [ERROR -&gt;]&lt;app-settings-options&gt;&lt;/app-settings-options&gt;
+&lt;/ion-content&gt;
+error properties: Object({ ngSyntaxError: true, ngParseErrors: [ 'app-settings-toolbar' is not a known element:
+"): ng:///DynamicTestModule/SettingsPage.html@1:2, 'app-settings-options' is not a known element:
+"): ng:///DynamicTestModule/SettingsPage.html@5:2 ] })
+    at &lt;Jasmine&gt;
+    at syntaxError (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:2175:1)
+    at TemplateParser.parse (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:11188:1)
+    at JitCompiler._parseTemplate (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25721:1)
+    at JitCompiler._compileTemplate (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25709:61)
+    at http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25653:1
+    at &lt;Jasmine&gt;
+    at JitCompiler._compileComponents (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25653:1)
+    at http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25573:1
+    at Object.then (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:2166:27)
+    at JitCompiler._compileModuleAndAllComponents (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25571:1)
+</failure>
+    <failure type="">Error: Expected undefined to be truthy.
+    at &lt;Jasmine&gt;
+    at UserContext.&lt;anonymous&gt; (http://localhost:9876/_karma_webpack_/src/app/pages/settings/settings.page.spec.ts:22:23)
+    at ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:359:1)
+    at ProxyZoneSpec.push../node_modules/zone.js/dist/zone-testing.js.ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:308:1)
+</failure>
+  </testcase>
+  <testcase name="ModalDirectionsComponent  should create" time="0.232" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).ModalDirectionsComponent "/>
+  <testcase name="SettingsOptionsComponent should create" time="0.109" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsOptionsComponent">
+    <failure type="">1. If 'ion-select' is an Angular component and it has 'ngModel' input, then verify that it is part of this module.
+2. If 'ion-select' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component. ("
+    &lt;ion-item id="language-selection"&gt;
+      &lt;ion-select
+              [ERROR -&gt;][(ngModel)]="appLanguage"
+              class="select-language"
+              interface="popover"
+Can't bind to 'ngModel' since it isn't a known property of 'ion-select'.
+1. If 'ion-select' is an Angular component and it has 'ngModel' input, then verify that it is part of this module.
+2. If 'ion-select' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component. ("
+    &lt;ion-item id="language-selection"&gt;
+      &lt;ion-select
+              [ERROR -&gt;][(ngModel)]="appLanguage"
+              class="select-language"
+              interface="popover"
+"): ng:///DynamicTestModule/SettingsOptionsComponent.html@6:14
+error properties: Object({ ngSyntaxError: true, ngParseErrors: [ Can't bind to 'ngModel' since it isn't a known property of 'ion-select'.
+"): ng:///DynamicTestModule/SettingsOptionsComponent.html@6:14 ] })
+Error: Template parse errors:
+    at syntaxError (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:2175:1)
+    at TemplateParser.parse (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:11188:1)
+    at JitCompiler._parseTemplate (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25721:1)
+    at JitCompiler._compileTemplate (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25709:61)
+    at http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25653:1
+    at &lt;Jasmine&gt;
+    at JitCompiler._compileComponents (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25653:1)
+    at http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25573:1
+    at Object.then (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:2166:27)
+    at JitCompiler._compileModuleAndAllComponents (http://localhost:9876/_karma_webpack_/node_modules/@angular/compiler/fesm2015/compiler.js:25571:1)
+</failure>
+    <failure type="">Error: Expected undefined to be truthy.
+    at &lt;Jasmine&gt;
+    at UserContext.&lt;anonymous&gt; (http://localhost:9876/_karma_webpack_/src/app/components/settings-options/settings-options.component.spec.ts:22:23)
+    at ZoneDelegate.invoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-evergreen.js:359:1)
+    at ProxyZoneSpec.push../node_modules/zone.js/dist/zone-testing.js.ProxyZoneSpec.onInvoke (http://localhost:9876/_karma_webpack_/node_modules/zone.js/dist/zone-testing.js:308:1)
+</failure>
+  </testcase>
+  <testcase name="IndoorNavigationToolbarComponent  should create" time="0.046" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationToolbarComponent "/>
+  <testcase name="SettingsToolbarComponent  should create" time="0.09" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsToolbarComponent "/>
+  <testcase name="SearchPopoverComponent  should create" time="0.108" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SearchPopoverComponent "/>
+  <testcase name="IndoorMapComponent  should create" time="0.019" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorMapComponent "/>
+  <testcase name="TimeFooterComponent  should create" time="0.095" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).TimeFooterComponent "/>
+  <testcase name="GoogleMapComponent  should create" time="0.155" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="GoogleMapComponent  should mock building info" time="0.086" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="GoogleMapComponent  should Mock currentLocation" time="0.152" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="DirectionService should be created" time="0.011" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DirectionService"/>
+  <system-out>
+    <![CDATA[HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>
