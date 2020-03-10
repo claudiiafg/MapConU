@@ -27,54 +27,56 @@ export class H8FloorPlanComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // let docElementLines = document.getElementsByTagName('line');
-    // let docInterestPoints = document.getElementsByTagName('circle');
-    // this.marker = document.getElementById('marker');
-    // this.marker.style.visibility = 'hidden';
-    //
-    // this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
-    // this.pathLines = this.indoorDirectionsService.getLines();
-    // this.interestPoints = this.indoorDirectionsService.getPoints();
-    //
-    // document.addEventListener('click', (res: any) => {
-    //   let ele: string = res.toElement.id;
-    //   if (
-    //     ele.includes('wc') ||
-    //     ele.includes('h8') ||
-    //     ele.includes('down') ||
-    //     ele.includes('up') ||
-    //     ele.includes('elevator') ||
-    //     ele.includes('out')
-    //   ) {
-    //     this.resetNav();
-    //     this.initNav(ele);
-    //   }
-    // });
-    //
-    // this.events.subscribe('path-found', () => {
-    //   this.path = this.indoorDirectionsService.getPath();
-    //   this.foundPath = true;
-    //   for (let line of this.path) {
-    //     let docElement = document.getElementById(line);
-    //     docElement.style.stroke = 'blue';
-    //   }
-    // });
-    //
-    // this.events.subscribe('init-new-path', data => {
-    //   if (data) {
-    //     this.resetNav();
-    //     this.sourceID = data.source;
-    //     this.destID = data.destination;
-    //     let p = this.interestPoints.filter(
-    //       point => point.id === this.destID
-    //     )[0];
-    //     this.setMarker(p);
-    //     this.indoorDirectionsService.computePathHelper(
-    //       this.sourceID,
-    //       this.destID
-    //     );
-    //   }
-    // });
+    let docElementLines = document.getElementsByTagName('line');
+    let docInterestPoints = document.getElementsByTagName('circle');
+    this.marker = document.getElementById('marker');
+    this.marker.style.visibility = 'hidden';
+
+    this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
+    this.pathLines = this.indoorDirectionsService.getLines();
+    this.interestPoints = this.indoorDirectionsService.getPoints();
+
+    console.log(this.pathLines);
+    console.log(this.interestPoints);
+
+    document.addEventListener('click', (res: any) => {
+      let ele: string = res.toElement.id;
+      if (
+        ele.includes('wc') ||
+        ele.includes('h8') ||
+        ele.includes('elevator') ||
+        ele.includes('escalator') ||
+        ele.includes('stairs')
+      ) {
+        this.resetNav();
+        this.initNav(ele);
+      }
+    });
+
+    this.events.subscribe('path-found', () => {
+      this.path = this.indoorDirectionsService.getPath();
+      this.foundPath = true;
+      for (let line of this.path) {
+        let docElement = document.getElementById(line);
+        docElement.style.stroke = 'blue';
+      }
+    });
+
+    this.events.subscribe('init-new-path', data => {
+      if (data) {
+        this.resetNav();
+        this.sourceID = data.source;
+        this.destID = data.destination;
+        let p = this.interestPoints.filter(
+          point => point.id === this.destID
+        )[0];
+        this.setMarker(p);
+        this.indoorDirectionsService.computePathHelper(
+          this.sourceID,
+          this.destID
+        );
+      }
+    });
   }
 
   public initNav(name: string) {
@@ -84,17 +86,24 @@ export class H8FloorPlanComponent implements OnInit {
       point = this.interestPoints.filter(point => point.id === name)[0];
     } else if (name.includes('elevator')) {
       point = this.interestPoints.filter(point => point.id === 'elevator')[0];
-    } else if (name.includes('wc')) {
-      point = this.interestPoints.filter(point => point.id === 'wc')[0];
-    } else if (name.includes('up')) {
-      point = this.interestPoints.filter(point => point.id === 'stairs-up')[0];
-    } else if (name.includes('down')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'escalators-down'
-      )[0];
-    } else if (name.includes('out')) {
-      point = this.interestPoints.filter(point => point.id === 'out')[0];
+    } else if (name.includes('female')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-wc-female')[0];
+    } else if (name.includes('male')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-wc-male')[0];
+    } else if (name.includes('ne')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-stairs-ne')[0];
+    } else if (name.includes('nw')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-stairs-nw')[0];
+    } else if (name.includes('sw')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-stairs-sw')[0];
+    } else if (name.includes('se')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-stairs-se')[0];
+    } else if (name.includes('escalator-down')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-escalator-down')[0];
+    } else if (name.includes('escalator-up')) {
+      point = this.interestPoints.filter(point => point.id === 'h8-escalator-up')[0];
     }
+
     this.destID = point.id;
     this.setMarker(point);
     this.showPopover();
@@ -121,8 +130,8 @@ export class H8FloorPlanComponent implements OnInit {
       cssClass: 'alert-css',
       buttons: [
         {
-          text: 'From entrance',
-          role: 'entrance'
+          text: 'From escalators',
+          role: 'escalator-up'
         },
         {
           text: 'Choose source',
@@ -133,8 +142,8 @@ export class H8FloorPlanComponent implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
-    if (result.role === 'entrance') {
-      this.sourceID = 'entrance';
+    if (result.role === 'escalator-up') {
+      this.sourceID = 'h8-escalator-up';
       this.indoorDirectionsService.computePathHelper(
         this.sourceID,
         this.destID

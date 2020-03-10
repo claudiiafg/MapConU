@@ -42,6 +42,10 @@ export class RoomSelectorPopoverComponent {
 
       if (point.id.includes('wc')) {
         prettyName = 'Bathrooms';
+      } else if (point.id.includes('wc-female')) {
+        prettyName = 'Female bathrooms';
+      } else if (point.id.includes('wc-male')) {
+        prettyName = 'Male bathrooms';
       } else if (point.id.includes('entrance')) {
         prettyName = 'Entrance';
       } else if (point.id.includes('down') && point.id.includes('stairs')) {
@@ -54,6 +58,14 @@ export class RoomSelectorPopoverComponent {
         prettyName = 'Stairs going up';
       } else if (point.id.includes('down') && point.id.includes('stairs')) {
         prettyName = 'Stairs going down';
+      } else if (point.id.includes('ne')) {
+        prettyName = 'North East stairs';
+      } else if (point.id.includes('nw')) {
+        prettyName = 'North West stairs';
+      } else if (point.id.includes('sw')) {
+        prettyName = 'South West stairs';
+      } else if (point.id.includes('se')) {
+        prettyName = 'South East stairs';
       } else if (point.id === 'stairs') {
         prettyName = 'Stairs';
       } else if (point.id.includes('elevator')) {
