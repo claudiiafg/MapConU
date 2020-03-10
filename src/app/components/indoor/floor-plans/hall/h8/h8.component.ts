@@ -36,8 +36,8 @@ export class H8FloorPlanComponent implements OnInit {
     this.pathLines = this.indoorDirectionsService.getLines();
     this.interestPoints = this.indoorDirectionsService.getPoints();
 
-    console.log(this.pathLines);
-    console.log(this.interestPoints);
+    // console.log(this.pathLines);
+    // console.log(this.interestPoints);
 
     document.addEventListener('click', (res: any) => {
       let ele: string = res.toElement.id;
