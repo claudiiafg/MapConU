@@ -31,7 +31,7 @@
 
     <agm-marker
       *ngFor="let m of poiMarkers; let i = index"
-      [iconUrl]="poiMarkerIcon"
+      [iconUrl]="getIcon(m)"
       [latitude]="m.latitude"
       [longitude]="m.longitude"
       (markerClick)="clickedMarker(infoWindow)"
