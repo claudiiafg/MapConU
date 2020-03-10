@@ -1,5 +1,5 @@
 <div class="input-group">
-  <input
+  <!-- <input
     id="source"
     list="interestPoints"
     [(ngModel)]="prettySource"
@@ -9,11 +9,17 @@
   />
   <span class="highlight"></span>
   <span class="bar"></span>
-  <label>Starting Point</label>
+  <label>Starting Point</label> -->
+  <ion-item >
+    <ion-label>Starting Point</ion-label>
+    <ion-select [(ngModel)]="prettySource" value="{{prettySource}}">
+      <ion-select-option *ngFor="let point of prettyPoints" value="{{point.name}}">{{point.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
 </div>
 
 <div class="input-group">
-  <input
+  <!-- <input
     id="destination"
     list="interestPoints"
     [(ngModel)]="prettyDestination"
@@ -23,13 +29,19 @@
   />
   <span class="highlight"></span>
   <span class="bar"></span>
-  <label>Destination</label>
+  <label>Destination</label> -->
+  <ion-item >
+    <ion-label>Destination</ion-label>
+    <ion-select [(ngModel)]="prettyDestination" value="{{prettyDestination}}">
+      <ion-select-option *ngFor="let point of prettyPoints" value="{{point.name}}">{{point.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
 </div>
 
 <ion-button id="goButton" (click)="lookForPath()" shape="square">GO</ion-button>
 
-<datalist id="interestPoints">
+<datalist id="interestPoints" autocomplete="on">
   <div *ngFor="let point of prettyPoints">
-    <option value="{{point.name}}"> </option>
+    <option value="{{point.name}}" (click)="onClickOption(point.name)"> </option>
   </div>
 </datalist>
