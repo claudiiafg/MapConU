@@ -641,6 +641,12 @@ export class GoogleMapComponent implements OnInit {
               let url = '/indoor' + '/jmsb';
               this.router.navigateByUrl(url);
               return true;
+
+            } else if(urlSubString === 'hall') {
+              let url = '/indoor' + '/hall';
+              this.router.navigateByUrl(url);
+              return true;
+
             } else {
               console.error('no floor plans for this building');
               return false;

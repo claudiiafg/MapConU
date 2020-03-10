@@ -4,4 +4,9 @@
       <mb1-floor-plan></mb1-floor-plan>
     </div>
   </div>
+  <div *ngIf="inputBuilding === 'hall'">
+    <div *ngIf="floor === 8 || floor === '8'">
+      <h8-floor-plan></h8-floor-plan>
+    </div>
+  </div>
 </div>

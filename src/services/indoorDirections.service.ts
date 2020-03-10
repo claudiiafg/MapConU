@@ -315,14 +315,13 @@ export class IndoorDirectionsService {
     }
   }
 
-  //if one left line to visit and previous line also has that line as connection, visit it form previous line
+//POSSIBLE CHANGE HERE
+  //if one left line to visit and previous line also has that line as connection, visit it from previous line
   private sharesLastLineWithPrevious(top: Line): boolean {
     let previous = this.getLineById(this.path[this.path.length - 1]);
-    if (this.countUnvisitedLines(top) === 1) {
-      let nextLine = this.getNextUnvisitedLine(top);
-      if (previous && previous.connectedLines.includes(nextLine.id)) {
-        return true;
-      }
+    let nextLine = this.getNextUnvisitedLine(top); //perhaps check all unvisited lines, if any is contained in previous, return true
+    if (previous && previous.connectedLines.includes(nextLine.id)) {
+      return true;
     }
     return false;
   }
