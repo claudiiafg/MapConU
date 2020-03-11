@@ -653,6 +653,18 @@ export class GoogleMapComponent implements OnInit {
             }
           }
         },
+          /*This button has it's opacity set to 0 and does not show up on the building info box but it needs to be
+          here so that the alert dismisses properly when the user clicks outside the box to close it.  DO NOT REMOVE!!
+           */
+        {
+          text: 'x',
+          cssClass: 'alert-button-cancel',
+          role: 'cancel',
+          handler: ()=> {
+            console.log('building-popup closed');
+          }
+
+        },
         {
           text: 'Go',
           cssClass: 'alert-button-go',
