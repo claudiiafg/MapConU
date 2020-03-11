@@ -43,11 +43,18 @@
   flex-direction: row !important;
   align-content: center !important;
 }
+.alert-button-go{
+ padding-right: 15% !important;
+}
+
+.alert-button-enter{
+  padding-left: 10% !important;
+}
 
 .alert-button-map,
 .alert-button-go {
   color: #000000 !important;
-  width: 5em;
+  width: 40%;
   display: inline-flex;
 }
 
