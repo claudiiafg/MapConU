@@ -1,33 +1,53 @@
 <?xml version="1.0"?>
-<testsuite name="HeadlessChrome 80.0.3987 (Windows 10.0.0)" package="" timestamp="2020-03-07T17:22:39" id="0" hostname="DESKTOP-A447U8T" tests="21" errors="0" failures="0" time="1.938">
+<testsuite name="HeadlessChrome 80.0.3987 (Windows 10.0.0)" package="" timestamp="2020-03-11T17:46:34" id="0" hostname="DESKTOP-A447U8T" tests="21" errors="0" failures="0" time="5.713">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/80.0.3987.0 Safari/537.36"/>
   </properties>
-  <testcase name="OutdoorNavigationSideButtonsComponent  should create" time="0.2" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationSideButtonsComponent "/>
-  <testcase name="OutdoorNavigationToolbarComponent  should create" time="0.183" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
-  <testcase name="OutdoorNavigationToolbarComponent  test campus toggle functions" time="0.316" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
-  <testcase name="OutdoorNavigationToolbarComponent  sendMessage() changes message" time="0.134" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
-  <testcase name="PoiPopoverComponent  should create" time="0.1" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).PoiPopoverComponent "/>
-  <testcase name="IndoorMapComponent  should create" time="0.017" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorMapComponent "/>
-  <testcase name="IndoorNavigationSideButtonsComponent  should create" time="0.094" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationSideButtonsComponent "/>
-  <testcase name="IndoorNavigationToolbarComponent  should create" time="0.023" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationToolbarComponent "/>
-  <testcase name="GoogleMapComponent  should create" time="0.099" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
-  <testcase name="GoogleMapComponent  should Mock currentLocation" time="0.099" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
-  <testcase name="GoogleMapComponent  should mock building info" time="0.091" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
-  <testcase name="TimeFooterComponent  should create" time="0.113" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).TimeFooterComponent "/>
-  <testcase name="IndoorViewPage  should create" time="0.075" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorViewPage "/>
-  <testcase name="SearchPopoverComponent  should create" time="0.088" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SearchPopoverComponent "/>
-  <testcase name="SettingsOptionsComponent should create" time="0.037" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsOptionsComponent"/>
-  <testcase name="DirectionService should be created" time="0.007" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DirectionService"/>
-  <testcase name="DataSharingService should be created" time="0.007" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DataSharingService"/>
-  <testcase name="ModalDirectionsComponent  should create" time="0.095" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).ModalDirectionsComponent "/>
-  <testcase name="SettingsToolbarComponent  should create" time="0.076" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsToolbarComponent "/>
-  <testcase name="SettingsPage should create" time="0.018" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsPage"/>
-  <testcase name="OutdoorViewPage  should create" time="0.066" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorViewPage "/>
+  <testcase name="DirectionService should be created" time="0.137" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DirectionService"/>
+  <testcase name="SettingsToolbarComponent  should create" time="0.403" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsToolbarComponent "/>
+  <testcase name="OutdoorNavigationToolbarComponent  test campus toggle functions" time="0.742" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
+  <testcase name="OutdoorNavigationToolbarComponent  should create" time="0.905" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
+  <testcase name="OutdoorNavigationToolbarComponent  sendMessage() changes message" time="0.326" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationToolbarComponent "/>
+  <testcase name="PoiPopoverComponent  should create" time="0.272" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).PoiPopoverComponent "/>
+  <testcase name="OutdoorNavigationSideButtonsComponent  should create" time="0.842" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorNavigationSideButtonsComponent "/>
+  <testcase name="DataSharingService should be created" time="0.127" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).DataSharingService"/>
+  <testcase name="GoogleMapComponent  should mock building info" time="0.307" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="GoogleMapComponent  should Mock currentLocation" time="0.288" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="GoogleMapComponent  should create" time="0.268" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).GoogleMapComponent "/>
+  <testcase name="TimeFooterComponent  should create" time="0.136" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).TimeFooterComponent "/>
+  <testcase name="SettingsOptionsComponent should create" time="0.087" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsOptionsComponent"/>
+  <testcase name="IndoorNavigationToolbarComponent  should create" time="0.036" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationToolbarComponent "/>
+  <testcase name="SettingsPage should create" time="0.04" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SettingsPage"/>
+  <testcase name="ModalDirectionsComponent  should create" time="0.158" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).ModalDirectionsComponent "/>
+  <testcase name="SearchPopoverComponent  should create" time="0.136" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).SearchPopoverComponent "/>
+  <testcase name="IndoorViewPage  should create" time="0.14" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorViewPage "/>
+  <testcase name="IndoorMapComponent  should create" time="0.023" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorMapComponent "/>
+  <testcase name="IndoorNavigationSideButtonsComponent  should create" time="0.163" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).IndoorNavigationSideButtonsComponent "/>
+  <testcase name="OutdoorViewPage  should create" time="0.177" classname="HeadlessChrome_80_0_3987_(Windows_10_0_0).OutdoorViewPage "/>
   <system-out>
     <![CDATA[HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
   - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
   - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
+  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
+  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
 ,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
   - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
   - Use "Redux" for advanced state management: https://ngrx.io'
@@ -50,13 +70,9 @@
 ,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
   - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
   - Use "Redux" for advanced state management: https://ngrx.io'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
-  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
-  - Use "Redux" for advanced state management: https://ngrx.io'
 ,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
-  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
-  - Use "Redux" for advanced state management: https://ngrx.io'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
+,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
 ,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
   - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
   - Use "Redux" for advanced state management: https://ngrx.io'
@@ -64,26 +80,6 @@
 ,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
   - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
   - Use "Redux" for advanced state management: https://ngrx.io'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
-  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
-  - Use "Redux" for advanced state management: https://ngrx.io'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
-  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
-  - Use "Redux" for advanced state management: https://ngrx.io'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: '[DEPRECATION][Events]: The Events provider is deprecated and it will be removed in the next major release.
-  - Use "Observables" for a similar pub/sub architecture: https://angular.io/guide/observables
-  - Use "Redux" for advanced state management: https://ngrx.io'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) LOG: 'Error getting location', GeolocationPositionError{}
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
-,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
 ,HeadlessChrome 80.0.3987 (Windows 10.0.0) WARN: 'Ionic Angular was already initialized. Make sure IonicModule.forRoot() is just called once.'
 
 ]]>
