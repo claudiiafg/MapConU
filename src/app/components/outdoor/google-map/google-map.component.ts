@@ -412,10 +412,47 @@ export class GoogleMapComponent implements OnInit {
   ];
 
   poiMarkerIcon = {
-    url: 'assets/icon/poi-marker.png',
-    scaledSize: {
-      width: 20,
-      height: 20
+    resto: {
+      url: 'assets/icon/Marker_Restaurant.png',
+      scaledSize: {
+        width: 20,
+        height: 20
+      }
+    },
+    coffee: {
+      url: 'assets/icon/Marker_Coffee.png',
+      scaledSize: {
+        width: 20,
+        height: 20
+      }
+    },
+    gas: {
+      url: 'assets/icon/Marker_Gas_Station.png',
+      scaledSize: {
+        width: 20,
+        height: 20
+      }
+    },
+    hotel: {
+      url: 'assets/icon/Marker_Hotel.png',
+      scaledSize: {
+        width: 20,
+        height: 20
+      }
+    },
+    drug: {
+      url: 'assets/icon/Marker_Drugstore.png',
+      scaledSize: {
+        width: 20,
+        height: 20
+      }
+    },
+    groceries: {
+      url: 'assets/icon/Marker_Groceries.png',
+      scaledSize: {
+        width: 20,
+        height: 20
+      }
     }
   };
 
@@ -552,6 +589,28 @@ export class GoogleMapComponent implements OnInit {
         this.destination = null;
       }
     });
+  }
+
+  getIcon(poiMarker: any){
+    if(poiMarker.type === 'restaurant'){
+      return this.poiMarkerIcon.resto;
+
+    } else if(poiMarker.type === 'coffee shop') {
+      return this.poiMarkerIcon.coffee;
+
+    } else if(poiMarker.type === 'gas station') {
+      return this.poiMarkerIcon.gas;
+
+    } else if(poiMarker.type === 'drugstore') {
+      return this.poiMarkerIcon.drug;
+
+    } else if(poiMarker.type === 'hotel') {
+      return this.poiMarkerIcon.hotel;
+
+    } else if(poiMarker.type === 'groceries') {
+      return this.poiMarkerIcon.groceries;
+
+    }
   }
 
   /*
