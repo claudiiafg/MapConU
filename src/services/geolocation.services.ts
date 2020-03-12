@@ -1,6 +1,6 @@
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Injectable } from '@angular/core';
-import { Events } from '@ionic/angular';
+import {AlertController, Events} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,11 @@ export class GeolocationServices {
   latitude: number;
   longitude: number;
 
-  constructor(private geolocation: Geolocation, private events: Events) {}
+  constructor(
+      private geolocation: Geolocation,
+      private events: Events,
+      private alertController: AlertController
+  ) {}
 
   async getCurrentPosition() {
     await this.geolocation
@@ -20,9 +24,26 @@ export class GeolocationServices {
       })
       .catch(error => {
         console.log('Error getting location', error);
+        this.locationOffAlert()
       });
 
     this.subscribeToPosition();
+  }
+
+  async locationOffAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: 'Location not found.  Please enable location on your device',
+      buttons: [{
+        text: 'Close',
+        role: 'cancel',
+        handler: () => {
+          console.log('alert cancelled');
+        }
+        }]
+    });
+
+    await alert.present();
   }
 
   subscribeToPosition() {

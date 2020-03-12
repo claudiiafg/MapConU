@@ -538,7 +538,7 @@ export class GoogleMapComponent implements OnInit {
       }
     });
 
-    //as a toggle is clicke, update the current toggles
+    //as a toggle is clicked, update the current toggles
     this.events.subscribe('poi-clicked', () => {
       this.events.publish('set-poi-toggles', this.currentToggles, Date.now());
     });

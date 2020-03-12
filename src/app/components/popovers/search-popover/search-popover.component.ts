@@ -10,6 +10,7 @@ import {
 import { Platform, PopoverController } from '@ionic/angular';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionService } from 'src/services/direction.service';
+import { GeolocationServices} from "../../../../services/geolocation.services";
 
 @Component({
   selector: 'app-search-popover',
@@ -29,10 +30,15 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
     public ngZone: NgZone,
     public directionService: DirectionService,
     private platform: Platform,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private geolocationServices: GeolocationServices
   ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    await this.geolocationServices.getCurrentPosition();
+    this.latitudeFrom = this.geolocationServices.getLatitude();
+    this.longitudeFrom = this.geolocationServices.getLongitude();
+  }
 
   ngAfterViewInit() {
     this.findAdress();
@@ -92,6 +98,10 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
 
   public updateMap() {
     this.closePopover();
+    if(!this.latitudeFrom){
+      this.latitudeFrom = this.geolocationServices.getLatitude();
+      this.longitudeFrom = this.geolocationServices.getLongitude();
+    }
     if (this.latitudeTo && this.latitudeFrom) {
       // set alternate direction to false if present
       if (this.directionService.alternateDirectionSet) {
