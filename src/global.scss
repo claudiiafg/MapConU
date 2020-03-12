@@ -38,22 +38,30 @@
 }
 
 .alert-button-group {
-  display: contents;
   position: relative !important;
   flex-direction: row !important;
   align-content: center !important;
+  justify-content: flex-start !important;
+}
+.alert-button-go{
+
+}
+
+.alert-button-enter{
+  padding-left: 10% !important;
 }
 
 .alert-button-map,
 .alert-button-go {
   color: #000000 !important;
-  width: 5em;
+  width: 40%;
   display: inline-flex;
 }
 
 .alert-button-cancel {
   opacity: 0 !important;
   width: 0.1em;
+  display: none !important;
 }
 
 ion-backdrop {
