@@ -38,13 +38,13 @@
 }
 
 .alert-button-group {
-  display: contents;
   position: relative !important;
   flex-direction: row !important;
   align-content: center !important;
+  justify-content: flex-start !important;
 }
 .alert-button-go{
- padding-right: 15% !important;
+
 }
 
 .alert-button-enter{
