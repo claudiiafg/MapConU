@@ -35,17 +35,22 @@ export class RoomSelectorPopoverComponent {
     }
   }
 
+  onClickOption(name){
+    console.log(name);
+  }
+
+
   prettifyTitles() {
     this.prettyPoints = [];
     for (let point of this.points) {
       let prettyName: string = '';
 
-      if (point.id.includes('wc')) {
-        prettyName = 'Bathrooms';
-      } else if (point.id.includes('wc-female')) {
+      if (point.id.includes('wc-female')) {
         prettyName = 'Female bathrooms';
       } else if (point.id.includes('wc-male')) {
         prettyName = 'Male bathrooms';
+      } else if (point.id.includes('wc')) {
+        prettyName = 'Bathrooms';
       } else if (point.id.includes('entrance')) {
         prettyName = 'Entrance';
       } else if (point.id.includes('down') && point.id.includes('stairs')) {
