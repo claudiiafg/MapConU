@@ -35,6 +35,7 @@ export class IndoorDirectionsService {
   private destLine: Line;
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
+  private pathLength: number = 0;
 
   constructor(private events: Events) {}
 
@@ -127,12 +128,16 @@ export class IndoorDirectionsService {
     this.destLine = null;
     this.sourceID = '';
     this.destID = '';
+    for(let each of this.pathLines){
+      each._wasVisited = false;
+    }
   }
 
   //public helper to make sure all necessary information is available to compute path
   public computePathHelper(source: string, destination: string) {
     if(source !== destination){
       try {
+        this.reset();
         this.setSource(source);
         this.setDest(destination);
         this.computePath();
@@ -159,6 +164,14 @@ export class IndoorDirectionsService {
 
   public getPath(): string[] {
     return this.path;
+  }
+
+  public getPathLength() : number{
+    if(this.foundPath){
+      return this.pathLength;
+    } else {
+      throw new Error('No found path to calculate length on');
+    }
   }
 
   public setSource(pointID: string) {
@@ -325,7 +338,6 @@ export class IndoorDirectionsService {
     }
   }
 
-//POSSIBLE CHANGE HERE
   //if current line's 'lines to visit' are also in previous line as connection, visit it from previous line
   private sharesLastLineWithPrevious(top: Line): boolean {
     let previous = this.getLineById(this.path[this.path.length - 1]);
@@ -342,18 +354,18 @@ export class IndoorDirectionsService {
     do {
       let arrayTop = this.path.pop();
       top = this.getLineById(arrayTop);
-    } while (
-      !(top._isIntersection && this.hasUnvisitedLine(top) && !this.sharesLastLineWithPrevious(top))
-    );
-
+    } while ((this.path.length !== 0) && !(top._isIntersection && this.hasUnvisitedLine(top) && !this.sharesLastLineWithPrevious(top)));
     //push top back in
     //push next line to visit
     //compute path from new line
-    this.path.push(top.id);
-    this.path.push(this.getNextUnvisitedLine(top).id);
-    this.computePath();
+    if(top){
+      this.path.push(top.id);
+      this.path.push(this.getNextUnvisitedLine(top).id);
+      this.computePath();
+    }
   }
 
+  //while there's a next line that hasn't been visited, keep pushing it
   private rollPathForward(line : Line){
     let tempLine: Line = line;
     let nextLine: string;
@@ -370,6 +382,7 @@ export class IndoorDirectionsService {
     this.computePath();
   }
 
+  //roll first line until leaf or destination line
   private rollFirstLineForward(line : Line){
     let tempLine: Line = line;
     let nextLine: string;
@@ -388,6 +401,47 @@ export class IndoorDirectionsService {
     this.computePath();
   }
 
+  //calculate the length of the path found
+  private calculateLength(){
+    let totalLength: number = 0;
+    for(let lineID of this.path){
+      let line = this.getLineById(lineID);
+      totalLength += line.length;
+    }
+    this.pathLength = totalLength;
+  }
+
+  //after path is found look for shortest path within it
+  private getShortestWithin(){
+    console.log('FOUND ROOM');
+    this.foundPath = true;
+    let tempPath = [];
+    let i = 0;
+    do{
+      //push index and get line it
+      tempPath.push(this.path[i]);
+      let line = this.getLineById(this.path[i]);
+
+      //look for lines in original path connected to current line that are not the next line but are ahead of it
+      let linesInPath = line.connectedLines.filter(l => this.path.includes(l) && this.path.indexOf(l) > i);
+      if(linesInPath){
+        let notNextLine = linesInPath.filter(li => this.path.indexOf(li) !== i+1)[0];
+        let newIndex = this.path.indexOf(notNextLine);
+
+        //if found increase index to that line -1, since index will be increased at the end
+        if(newIndex !== -1){
+          i = newIndex - 1;
+        }
+      }
+      //increase line by default so next line in path is analyzed next
+      i++;
+    } while(i < this.path.length);
+
+    //shortest path, whithin orinal path:
+    this.path = tempPath;
+    this.events.publish('path-found', true, Date.now());
+    this.calculateLength();
+  }
 
   //********************** MAIN ALGORITHM **********************
   private computePath() {
@@ -399,10 +453,7 @@ export class IndoorDirectionsService {
     if (this.isLeaf(line.id) && line.id !== this.sourceLine.id) {
       //line is equal to the line we're looking for
       if (line.id === this.destLine.id) {
-        console.log('FOUND ROOM');
-        this.foundPath = true;
-        this.events.publish('path-found', true, Date.now());
-        return;
+        this.getShortestWithin();
 
       //found leaf line but not the destination -> must ROLL BACK
       } else {
