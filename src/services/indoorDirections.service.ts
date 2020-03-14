@@ -42,6 +42,7 @@ export class IndoorDirectionsService {
   //**********************PUBLC HELPERS**********************
 
   public setMap(docElementLines, docInterestPoints) {
+    this.reset();
     let tempPathLines: Line[] = [];
     let tempInterestPoints: Point[] = [];
 

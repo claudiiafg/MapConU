@@ -27,6 +27,7 @@ export class MB1FloorPlanComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('INIT');
     let docElementLines = document.getElementsByTagName('line');
     let docInterestPoints = document.getElementsByTagName('circle');
     this.marker = document.getElementById('marker');
@@ -37,6 +38,7 @@ export class MB1FloorPlanComponent implements OnInit {
     this.interestPoints = this.indoorDirectionsService.getPoints();
 
     document.addEventListener('click', (res: any) => {
+      res.stopImmediatePropagation();
       let ele: string = res.toElement.id;
       if (
         ele.includes('wc') ||
