@@ -49,7 +49,7 @@ import {GeolocationServices} from '../../../../services/geolocation.services';
 describe('GoogleMapComponent ', () => {
   let component: GoogleMapComponent;
   let fixture: ComponentFixture<GoogleMapComponent>;
-  let service: GeolocationServices = new GeolocationServices( new Geolocation, new Events);
+  let service: GeolocationServices = new GeolocationServices( new Geolocation(), new Events(), new AlertController());
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
