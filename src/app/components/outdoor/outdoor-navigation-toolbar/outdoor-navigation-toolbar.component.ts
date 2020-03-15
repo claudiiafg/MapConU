@@ -12,7 +12,8 @@ import { Events, IonSearchbar } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
-import {Router} from "@angular/router";
+import { Router} from "@angular/router";
+import {TranslationService} from "../../../../services/translation.service";
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',
@@ -29,6 +30,8 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   public transitColor: string = 'white';
   public carColor: string = 'white';
   public walkColor: string = 'yellow';
+  public campus1: string;
+  public campus2: string;
   readonly mapRadius: number = 0.3
   currentLat: number = 45.495729;
   currentLng: number = -73.578041;
@@ -46,6 +49,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     public ngZone: NgZone,
     public directionService: DirectionService,
     private router: Router,
+    private translate: TranslationService
     private geolocationServices: GeolocationServices,
   ) {
     this.data.currentMessage.subscribe(
@@ -112,7 +116,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     this.events.publish('campusChanged', Date.now());
   }
 
-  public closeAutocomplete() {
+  public closeAutocomplete($event: CustomEvent) {
     this.searchRef.getInputElement().then( input => {
       input.blur();
     });

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslationService} from "../../../services/translation.service";
 
 @Component({
   selector: 'app-settings-options',
@@ -8,10 +9,20 @@ import { Component, OnInit } from '@angular/core';
 export class SettingsOptionsComponent implements OnInit {
   public appLanguage: string;
 
-  constructor() { }
+  constructor(
+      private translate: TranslationService
+  ) { }
 
-  ngOnInit() {
-    this.appLanguage = "english";
+  ngOnInit() {}
+
+  //changes app language
+  languageChange(){
+    if (this.appLanguage == "french"){
+      this.translate.setLanguage('fr');
+    }
+    else{
+      this.translate.setLanguage('en');
+    }
   }
 
 }
