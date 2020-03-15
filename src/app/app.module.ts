@@ -60,6 +60,7 @@ import { SettingsOptionsComponent } from "./components/settings-options/settings
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
+import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -80,6 +81,7 @@ export function LanguageLoader(http: HttpClient) {
     IndoorNavigationToolbarComponent,
     MB1FloorPlanComponent,
     H8FloorPlanComponent,
+    H9FloorPlanComponent,
     OutdoorViewPage,
     IndoorViewPage,
     SettingsPage,
