@@ -59,9 +59,6 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
       this.isDirectionSet = isDirectionSet;
     });
-
-    //notifies component of language change to the App
-   translate.subscribeToAppLanguage(this.language);
   }
 
   async ngOnInit() {

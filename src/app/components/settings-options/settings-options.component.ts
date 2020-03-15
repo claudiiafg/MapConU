@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslationService} from "../../../services/translation.service";
-import { DataSharingService} from "../../../services/data-sharing.service";
 
 @Component({
   selector: 'app-settings-options',
@@ -11,30 +10,18 @@ export class SettingsOptionsComponent implements OnInit {
   public appLanguage: string;
 
   constructor(
-      private translate: TranslationService,
-      private dataSharing: DataSharingService
+      private translate: TranslationService
   ) { }
 
-  ngOnInit() {
-
-      if (this.translate.getCurrentLanguage() == "fr") {
-        this.appLanguage = 'french';
-      }
-      else {
-        this.appLanguage = 'english';
-      }
-
-  }
+  ngOnInit() {}
 
   //changes app language
   languageChange(){
     if (this.appLanguage == "french"){
       this.translate.setLanguage('fr');
-      this.dataSharing.updateMessage('fr');
     }
     else{
       this.translate.setLanguage('en');
-      this.dataSharing.updateMessage('en');
     }
   }
 
