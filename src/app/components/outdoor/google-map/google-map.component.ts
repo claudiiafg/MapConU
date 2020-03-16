@@ -783,8 +783,11 @@ export class GoogleMapComponent implements OnInit {
   // This function is triggered when the API send back a response
   public onResponse($event: any) {
     this.directionService.closeMainWindow();
-    this.sendDirectionInfo($event.routes[0]);
-    this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
+    let routeIndex = this.currentRouteSelected === 'Main' ? 0 : 1;
+    this.sendDirectionInfo($event.routes[routeIndex]);
+    this.directionService.setDirectionsSteps(
+      $event.routes[routeIndex].legs[0].steps
+    );
     this.setInfoWindow($event.routes[0], 'Main', $event.request.travelMode);
     this.setAlternativeRoute($event);
     this.setRenderOptions($event);
@@ -875,34 +878,50 @@ export class GoogleMapComponent implements OnInit {
   private infoWindowClicked(route: any, type: string, travelMode: string) {
     this.currentRouteSelected = type;
     this.changeRouteColors(type, travelMode);
-    this.sendDirectionInfo(route, true);
     this.directionService.setDirectionsSteps(route.legs[0].steps);
+    this.sendDirectionInfo(route, true);
   }
 
   private changeRouteColors(type: string, travelMode: string) {
     if (type === 'Alternative') {
       if (travelMode === 'WALKING') {
+        // Walk + Alternative options
         this.renderOptions = this.walkingNotSelectedRenderOptions;
-        this.directionService.alternateDirection.setOptions(
-          this.walkingSelectedRenderOptions
-        );
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.walkingSelectedRenderOptions
+          );
+        }
       } else {
+        // car or transit + Alternative options
         this.renderOptions = this.notSelectedRenderOptions;
-        this.directionService.alternateDirection.setOptions(
-          this.selectedRenderOptions
-        );
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.selectedRenderOptions
+          );
+        }
       }
     } else {
       if (travelMode === 'WALKING') {
+        // Walk + Main options
         this.renderOptions = this.walkingSelectedRenderOptions;
-        this.directionService.alternateDirection.setOptions(
-          this.walkingNotSelectedRenderOptions
-        );
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.walkingNotSelectedRenderOptions
+          );
+        }
       } else {
+        // car or transit + Main options
         this.renderOptions = this.selectedRenderOptions;
-        this.directionService.alternateDirection.setOptions(
-          this.notSelectedRenderOptions
-        );
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.notSelectedRenderOptions
+          );
+        }
       }
     }
     this.directionService.alternateDirection.setMap(this.map);
