@@ -44,7 +44,7 @@ export class TranslationService {
     this.dataSharing.currentMessage.subscribe(updatedLanguage => {
       console.log('msg recieved');
       if (currentLanguage != updatedLanguage && currentLanguage != null) {
-        location.reload();
+        window.location.reload();
       }
       currentLanguage = updatedLanguage;
     });
