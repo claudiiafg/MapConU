@@ -14,13 +14,12 @@ import { TranslationService} from "../services/translation.service";
 })
 export class AppComponent {
   private concordiaRed: string = '#800000';
-  message: any;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private data: DataSharingService,
+    private dataSharing: DataSharingService,
     private userServices: UserServices,
     private translationService: TranslationService
   ) {
@@ -31,8 +30,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.setStatusBarParameters(true, false, this.concordiaRed);
       this.splashScreen.hide();
-      this.data.currentMessage.subscribe(message => (this.message = message));
-
       this.userServices.AFauth.auth.onAuthStateChanged(user => {
         if (user) {
           // Start by initiating the services once the user has logged in

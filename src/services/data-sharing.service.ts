@@ -8,6 +8,7 @@ import { Platform } from '@ionic/angular';
 export class DataSharingService {
   private messageSrc = new BehaviorSubject<any>('msg');
   public mapSize = new BehaviorSubject(this.platform.height() - 106); // original map size
+  public language = new BehaviorSubject<string>('lang'); //current language of the app ['fr', 'en']
   currentMessage = this.messageSrc.asObservable();
 
   constructor(public platform: Platform) {
@@ -20,5 +21,9 @@ export class DataSharingService {
 
   public updateMapSize(size: number) {
     this.mapSize.next(this.platform.height() + size);
+  }
+
+  public updateAppLanguage(languageUpdate: string){
+    this.language.next(languageUpdate);
   }
 }
