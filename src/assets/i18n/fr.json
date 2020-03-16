@@ -1,4 +1,10 @@
 {
 	"CAMPUS1": "campus SGW",
-	"CAMPUS2": "campus Loyola"
+	"CAMPUS2": "campus Loyola",
+	"settings-header": "Paramètres + Plus",
+	"language-select": "Langue",
+	"english": "Anglais",
+	"french": "Français",
+	"google": "Compte Google",
+	"source-code": "Code Source"
 }
