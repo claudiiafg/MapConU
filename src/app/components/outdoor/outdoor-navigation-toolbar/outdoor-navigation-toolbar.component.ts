@@ -31,6 +31,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   public walkColor: string = 'yellow';
   public campus1: string;
   public campus2: string;
+  public language: string; //current App language
 
   //Array for lat, long of specific locations
   public locations = [
@@ -39,7 +40,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   ];
 
   constructor(
-    private data: DataSharingService,
+    private dataSharing: DataSharingService,
     private events: Events,
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
@@ -47,12 +48,15 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     private router: Router,
     private translate: TranslationService
   ) {
-    this.data.currentMessage.subscribe(
+    this.dataSharing.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
     );
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
       this.isDirectionSet = isDirectionSet;
     });
+
+    //notifies component of language change to the App
+   translate.subscribeToAppLanguage(this.language);
   }
 
   ngOnInit() {
@@ -92,17 +96,13 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     });
   }
 
-  sendMessage(updatedMessage) {
-    this.data.updateMessage(updatedMessage);
-  }
-
   public changeCampus() {
-    this.sendMessage(this.locations[this.loc]);
+    this.dataSharing.updateMessage(this.locations[this.loc]);
     this.events.publish('campusChanged', Date.now());
   }
 
   public moveToFoundLocation(lat: number, lng: number) {
-    this.sendMessage({ latitude: lat, longitude: lng });
+    this.dataSharing.updateMessage({ latitude: lat, longitude: lng });
     this.events.publish('campusChanged', Date.now());
   }
 
