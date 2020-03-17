@@ -12,7 +12,7 @@ export class IndoorNavigationSideButtonsComponent {
     public popoverController: PopoverController,
     private events: Events
   ) {
-    this.events.subscribe('manually-enter-destination', data => {
+    this.events.subscribe('open-indoor-popup', data => {
       this.presentPopover(data);
     });
   }

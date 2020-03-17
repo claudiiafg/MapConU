@@ -12,7 +12,7 @@
   <label>Starting Point</label> -->
   <ion-item >
     <ion-label>Starting Point</ion-label>
-    <ion-select [(ngModel)]="prettySource" value="{{prettySource}}">
+    <ion-select [(ngModel)]="prettySource" value="{{prettySource}}" class="select-option">
       <ion-select-option *ngFor="let point of prettyPoints" value="{{point.name}}">{{point.name}}</ion-select-option>
     </ion-select>
   </ion-item>
@@ -32,7 +32,7 @@
   <label>Destination</label> -->
   <ion-item >
     <ion-label>Destination</ion-label>
-    <ion-select [(ngModel)]="prettyDestination" value="{{prettyDestination}}">
+    <ion-select [(ngModel)]="prettyDestination" value="{{prettyDestination}}" class="select-option">
       <ion-select-option *ngFor="let point of prettyPoints" value="{{point.name}}">{{point.name}}</ion-select-option>
     </ion-select>
   </ion-item>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { Events } from '@ionic/angular';
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
@@ -12,12 +13,13 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   @Input() inputBuilding: string = '';
   @Input() floor: string = '1';
 
-  building: string;
-  maxFloorIndex: number;
-  minFloorIndex: number;
-  currentFloor: string;
-  currentFloorIndex: number;
-  updateFloor: string;
+  private building: string;
+  private maxFloorIndex: number;
+  private minFloorIndex: number;
+  private currentFloor: string;
+  private currentFloorIndex: number;
+  private updateFloor: string;
+  private isSelectMode : boolean = false;
 
   //number of floors in the building
   //TODO: add all buildings and the floors with floor plans
@@ -25,8 +27,8 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   /*
   Array with building information to dynamically create a toolbar with the proper building name and floors
    */
-  buildingInfo = [
-    { buildingName: 'Hall Building', topFloorIndex: 12, bottomFloorIndex: 2 },
+  private buildingInfo = [
+    { buildingName: 'Hall Building', topFloorIndex: 11, bottomFloorIndex: 2 },
     {
       buildingName: 'John Molson Building',
       topFloorIndex: 6,
@@ -48,12 +50,13 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     { buildingName: 'Vanier Extension', topFloorIndex: 5, bottomFloorIndex: 2 }
   ];
 
-  floors = ['s2', 's1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  private floors = ['s2', 's1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
   constructor(
     private data: DataSharingService,
     private router: Router,
-    private events: Events
+    private events: Events,
+    private directionsManager : DirectionsManagerService,
   ) {
     //TODO: when user selects building to enter the name of that building needs to be sent to initialize the indoor view
     this.data.currentMessage.subscribe(
@@ -63,6 +66,12 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.events.subscribe('isSelectMode', (res) => {
+      this.isSelectMode = res;
+      this.updateFloor = this.floor;
+      this.changeFloor();
+    })
     //placeholder because logic to come from outdoor-nav is not implemented yet can be deleted when it is
     switch (this.inputBuilding) {
       case 'hall':
@@ -94,21 +103,19 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     //sets max and min number of allowed floors for the selected building
     let i;
     let length = this.buildingInfo.length;
-    for (i = 0; i < length; i++) {
-      if (this.buildingInfo[i].buildingName === this.building) {
-        this.maxFloorIndex = this.buildingInfo[i].topFloorIndex;
-        this.minFloorIndex = this.buildingInfo[i].bottomFloorIndex;
-        break;
-      }
+    let building = this.buildingInfo.filter(building => building.buildingName === this.building)[0];
+    if (building){
+      this.maxFloorIndex = building.topFloorIndex;
+      this.minFloorIndex = building.bottomFloorIndex;
     }
     this.currentFloor = this.floor;
-    this.currentFloorIndex = 2;
+    this.currentFloorIndex = parseInt(this.floor);
   }
 
   /*
   method to update the floor when the user selects a floor from the dropdown menu
    */
-  changeFloor() {
+  private changeFloor() {
     this.currentFloor = this.updateFloor;
     this.events.publish('floor-changes', this.currentFloor, Date.now());
     let i;
@@ -125,7 +132,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   /*
   Method to move one floor up
    */
-  moveUpFloor() {
+  private moveUpFloor() {
     if (this.currentFloorIndex < this.maxFloorIndex) {
       this.currentFloorIndex++;
       this.currentFloor = this.floors[this.currentFloorIndex];
@@ -136,7 +143,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   /*
   Method to move one floor down
    */
-  moveDownFloor() {
+  private moveDownFloor() {
     if (this.currentFloorIndex > this.minFloorIndex) {
       this.currentFloorIndex--;
       this.currentFloor = this.floors[this.currentFloorIndex];
@@ -147,13 +154,18 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   /*
   Takes the user back to the outdoor view
    */
-  goBackOutside() {
-    this.router.navigateByUrl('/outdoor');
+  private goBackOutside() {
+    if(this.isSelectMode){
+      this.events.publish('isSelectMode', false, Date.now());
+      this.directionsManager.resetPathSteps();
+    } else {
+      this.router.navigateByUrl('/outdoor');
+    }
   }
   /*
   Takes the user to the settings page
   */
-  public adjustSettings(){
+  private adjustSettings(){
     this.router.navigateByUrl('/appSettings');
   }
 }

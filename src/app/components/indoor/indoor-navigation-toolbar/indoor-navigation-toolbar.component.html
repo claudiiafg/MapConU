@@ -1,4 +1,5 @@
 <ion-header class="indoorToolbar">
+
   <ion-toolbar color="primary">
     <!-- back button -->
     <ion-button
@@ -20,38 +21,41 @@
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
 
-    <!-- name of floor selected-->
-    <ion-item slot="start" class="building">{{ building }}</ion-item>
+    <!-- If isSelectMode -> ask user to select where is coming from, in order to initiate floor to floor path -->
+    <div *ngIf="isSelectMode">
+      <div class="instrunctions-wrapper">
+        <span class="instructions-text">Please select which room you wish to know the directions from</span>
+      </div>
+    </div>
 
-    <!-- select floor button -->
-    <ion-item id="floor-change">
-      <ion-select
-        (ionChange)="changeFloor()"
-        [(ngModel)]="updateFloor"
-        [selectedText]="currentFloor.valueOf()"
-        class="select-floor"
-        id="floor-item"
-        interface="popover"
-        placeholder="1"
-      >
-        <ion-select-option
-          [value]="floor"
-          *ngFor="let floor of floors | slice: minFloorIndex:maxFloorIndex"
-          >{{ floor }}</ion-select-option
+    <div *ngIf="!isSelectMode" class="building-info-wrapper">
+      <!-- name of floor selected-->
+      <ion-item slot="start" class="building">{{ building }}</ion-item>
+
+      <!-- select floor button -->
+      <ion-item id="floor-change">
+        <ion-select
+          (ionChange)="changeFloor()"
+          [(ngModel)]="updateFloor"
+          [selectedText]="currentFloor.valueOf()"
+          class="select-floor"
+          id="floor-item"
+          interface="popover"
+          placeholder="1"
         >
-      </ion-select>
-    </ion-item>
+          <ion-select-option
+            [value]="floor"
+            *ngFor="let floor of floors | slice: minFloorIndex:maxFloorIndex"
+            >{{floor}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </div>
+
+
   </ion-toolbar>
 
-  <div class="move-floor">
-    <ion-button
-      (click)="moveUpFloor()"
-      class="up-button"
-      shape="round"
-      fill="outline"
-    >
-      <ion-icon name="arrow-up"></ion-icon>
-    </ion-button>
+  <div class="move-floor" *ngIf="!isSelectMode">
     <ion-button
       class="down-button ion-float-end"
       (click)="moveDownFloor()"
@@ -60,10 +64,15 @@
     >
       <ion-icon name="arrow-down"></ion-icon>
     </ion-button>
+
+    <ion-button
+      (click)="moveUpFloor()"
+      class="up-button"
+      shape="round"
+      fill="outline"
+    >
+      <ion-icon name="arrow-up"></ion-icon>
+    </ion-button>
   </div>
-  <!-- <ion-searchbar
-    class="search-location"
-    placeholder="Search for a location.."
-    autocomplete="on"
-  ></ion-searchbar> -->
+
 </ion-header>

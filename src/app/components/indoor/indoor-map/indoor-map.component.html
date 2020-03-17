@@ -1,4 +1,5 @@
 <div class="indoor-map-wrapper">
+
   <div *ngIf="inputBuilding === 'jmsb'">
     <div *ngIf="floor === 1 || floor === '1'">
       <mb1-floor-plan></mb1-floor-plan>
@@ -6,10 +7,10 @@
   </div>
   <div *ngIf="inputBuilding === 'hall'">
     <div *ngIf="floor === 8 || floor === '8'">
-      <h8-floor-plan></h8-floor-plan>
+      <h8-floor-plan>{{onLoad()}}</h8-floor-plan>
     </div>
-    <div *ngIf="floor === 9 || floor === '9'">
-      <h9-floor-plan></h9-floor-plan>
+    <div *ngIf="floor === 9 || floor === '9'" (onload)="doSomething()">
+      <h9-floor-plan>{{onLoad()}}</h9-floor-plan>
     </div>
   </div>
 </div>

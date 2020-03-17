@@ -5,6 +5,7 @@ import {
   Point
 } from 'src/services/indoorDirections.service';
 import { Events, AlertController } from '@ionic/angular';
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'mb1-floor-plan',
@@ -19,15 +20,20 @@ export class MB1FloorPlanComponent implements OnInit {
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
   private marker: any;
+  private isSelectMode: boolean = false;
+
 
   constructor(
     private indoorDirectionsService: IndoorDirectionsService,
+    private directionManager: DirectionsManagerService,
     private events: Events,
     private alertController: AlertController
   ) {}
 
   ngOnInit() {
-    console.log('INIT');
+    if(this.directionManager.getIsSelectMode()){
+      this.isSelectMode = true;
+    }
     let docElementLines = document.getElementsByTagName('line');
     let docInterestPoints = document.getElementsByTagName('circle');
     this.marker = document.getElementById('marker');
@@ -99,7 +105,12 @@ export class MB1FloorPlanComponent implements OnInit {
     }
     this.destID = point.id;
     this.setMarker(point);
-    this.showPopover();
+    const data = {
+      building: 'mb1',
+      destination: this.destID,
+      points: this.interestPoints
+    }
+    this.directionManager.initDifferentFloorDir(this.isSelectMode, 'h8', this.destID, this.interestPoints)
   }
 
   setMarker(point: Point) {
@@ -115,39 +126,6 @@ export class MB1FloorPlanComponent implements OnInit {
     }
     this.foundPath = false;
     this.indoorDirectionsService.resetNav();
-  }
-
-  async showPopover() {
-    const alert = await this.alertController.create({
-      header: 'Where do you wish to know directions from?',
-      cssClass: 'alert-css',
-      buttons: [
-        {
-          text: 'From entrance',
-          role: 'entrance'
-        },
-        {
-          text: 'Choose source',
-          role: 'choose'
-        }
-      ]
-    });
-
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    if (result.role === 'entrance') {
-      this.sourceID = 'entrance';
-      this.indoorDirectionsService.computePathHelper(
-        this.sourceID,
-        this.destID
-      );
-    } else if (result.role === 'choose') {
-      const data = {
-        destination: this.destID,
-        points: this.interestPoints
-      };
-      this.events.publish('manually-enter-destination', data, Date.now());
-    }
   }
 
   public setSource(pointName: string) {

@@ -11,6 +11,7 @@ import {
   styleUrls: ['./room-selector-popover.scss']
 })
 export class RoomSelectorPopoverComponent {
+  private type: string;
   private source: string;
   private destination: string;
   private prettySource: string;
@@ -26,9 +27,11 @@ export class RoomSelectorPopoverComponent {
   ) {
     if (this.navParams.get('data')) {
       let data = this.navParams.get('data');
+      this.source = data.source;
       this.destination = data.destination;
       this.points = data.points;
       this.prettifyTitles();
+
     } else {
       this.points = this.indoorDirectionsService.getPoints();
       this.prettifyTitles();
