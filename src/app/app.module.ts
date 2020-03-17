@@ -57,6 +57,7 @@ import { SettingsOptionsComponent } from "./components/settings-options/settings
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
+import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8
     IndoorNavigationToolbarComponent,
     MB1FloorPlanComponent,
     H8FloorPlanComponent,
+    H9FloorPlanComponent,
     OutdoorViewPage,
     IndoorViewPage,
     SettingsPage,
