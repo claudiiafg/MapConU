@@ -10,6 +10,7 @@ export class DataSharingService {
   public mapSize = new BehaviorSubject(this.platform.height() - 106); // original map size
   public language = new BehaviorSubject<string>('lang'); //current language of the app ['fr', 'en']
   currentMessage = this.messageSrc.asObservable();
+  currentLanguage = this.language.asObservable();
 
   constructor(public platform: Platform) {
     this.mapSize = new BehaviorSubject(this.platform.height() - 106); // original map size

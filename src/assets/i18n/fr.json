@@ -1,4 +1,21 @@
 {
-	"CAMPUS1": "campus SGW",
-	"CAMPUS2": "campus Loyola"
+	"campus1": "campus SGW",
+	"campus2": "campus Loyola",
+	"settings-header": "Paramètres + Plus",
+	"language-select": "Langue",
+	"english": "Anglais",
+	"french": "Français",
+	"google": "compte Google",
+	"source-code": "code cource",
+	"start-location": "[localisation actuelle]",
+	"end-location": "destination",
+	"go": "Allez",
+	"restaurant-poi": "les restaurants",
+	"coffee-poi": "les cafés",
+	"gas-poi": "stations-service",
+	"drugstore-poi": "les pharmacies",
+	"hotel-poi": "les hôtels",
+	"grocery-poi": "les épiceries",
+	"location-searchbar": "Cherchez un lieu..."
+
 }
