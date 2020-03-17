@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { Events } from '@ionic/angular';
+import { TranslationService} from "../../../../services/translation.service";
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
@@ -10,7 +11,7 @@ import { Events } from '@ionic/angular';
 })
 export class IndoorNavigationToolbarComponent implements OnInit {
   @Input() inputBuilding: string = '';
-  @Input() floor: string = '1';
+  @Input() floor: string = '8';
 
   building: string;
   maxFloorIndex: number;
@@ -53,7 +54,8 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   constructor(
     private data: DataSharingService,
     private router: Router,
-    private events: Events
+    private events: Events,
+    private translate: TranslationService
   ) {
     //TODO: when user selects building to enter the name of that building needs to be sent to initialize the indoor view
     this.data.currentMessage.subscribe(
@@ -63,31 +65,30 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    //placeholder because logic to come from outdoor-nav is not implemented yet can be deleted when it is
     switch (this.inputBuilding) {
       case 'hall':
-        this.building = 'Hall Building';
+        this.building = this.translate.getTranslation('Hall Building');
         break;
       case 'jmsb':
-        this.building = 'John Molson Building';
+        this.building = this.translate.getTranslation('John Molson Building');
         break;
       case 'fg':
-        this.building = 'Faubourg';
+        this.building = this.translate.getTranslation('Faubourg');
         break;
       case 'richard':
-        this.building = 'Richard Grey Renaud Science Complex';
+        this.building = this.translate.getTranslation('Richard Grey Renaud Science Complex');
         break;
       case 'center':
-        this.building = 'Central Building';
+        this.building = this.translate.getTranslation('Central Building');
         break;
       case 'hh':
-        this.building = 'Higston Hall';
+        this.building = this.translate.getTranslation('Higston Hall');
         break;
       case 'comm':
-        this.building = 'Communication Studies and Journalism Building';
+        this.building = this.translate.getTranslation('Communication Studies and Journalism Building');
         break;
       case 'varnier':
-        this.building = 'Vanier Extension';
+        this.building = this.translate.getTranslation('Vanier Extension');
         break;
     }
 
