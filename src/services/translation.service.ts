@@ -49,4 +49,9 @@ export class TranslationService {
       currentLanguage = updatedLanguage;
     });
   }
+
+  //translate
+  getTranslation(toTranslate: string){
+    return this.translate.instant(toTranslate)
+  }
 }
