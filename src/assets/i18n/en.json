@@ -1,4 +1,20 @@
 {
-	"CAMPUS1": "SGW campus",
-	"CAMPUS2": "Loyola campus"
+	"campus1": "SGW campus",
+	"campus2": "Loyola campus",
+	"settings-header": "Settings + More",
+	"language-select": "Language",
+	"english": "English",
+	"french": "French",
+	"google": "Google Account",
+	"source-code": "Source Code",
+	"start-location": "[Current Location]",
+	"end-location": "Destination",
+	"go": "Go",
+	"restaurant-poi": "Restaurants",
+	"coffee-poi": "Coffee Shops",
+	"gas-poi": "Gas Stations",
+	"drugstore-poi": "Drugstores",
+	"hotel-poi": "Hotels",
+	"grocery-poi": "Grocery Stores",
+	"location-searchbar": "Search for a location..."
 }

@@ -12,14 +12,13 @@
     </ion-button>
     <ion-item id="campus-change">
       <ion-select
-        placeholder="Select Campus"
         interface="popover"
         [(ngModel)]="loc"
         (ionChange)="changeCampus()"
         class="select-campus"
       >
-        <ion-select-option value="0">{{'CAMPUS1' | translate}}</ion-select-option>
-        <ion-select-option value="1">{{'CAMPUS2'| translate}}</ion-select-option>
+        <ion-select-option value="0">{{'campus1' | translate}}</ion-select-option>
+        <ion-select-option value="1">{{'campus2'| translate}}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-toolbar>
@@ -58,7 +57,7 @@
   <ion-searchbar
     #search
     class="search-location"
-    placeholder="Search for a location.."
+    [placeholder]="'location-searchbar' | translate"
     (ionClear)="closeAutocomplete($event)"
   ></ion-searchbar>
 </ion-header>
