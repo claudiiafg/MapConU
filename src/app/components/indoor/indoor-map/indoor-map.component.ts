@@ -26,6 +26,8 @@ export class IndoorMapComponent implements OnInit{
     private indoorDirectionsService: IndoorDirectionsService,
     private directionManager: DirectionsManagerService,
   ) {
+
+    //when floor changes -> change view
     this.events.subscribe('floor-changes', res => {
       if (res) {
         this.foundPath = false;
@@ -33,11 +35,12 @@ export class IndoorMapComponent implements OnInit{
       }
     });
 
+    //when floor component is loaded -> setup map
     this.events.subscribe('floor-loaded', () => {
       this.setMap();
     });
 
-
+    //when path is found -> display lines of path on map
     this.events.subscribe('path-found', () => {
       this.path = this.indoorDirectionsService.getPath();
       this.foundPath = true;
@@ -47,6 +50,12 @@ export class IndoorMapComponent implements OnInit{
       }
     });
 
+    //when user ends route -> reset navidation
+    this.events.subscribe('path-completed', (res) => {
+      this.resetNav();
+    });
+
+    //when user wants to start a new path -> get data necessary and compute path
     this.events.subscribe('init-new-path', data => {
       if (data) {
         this.resetNav();
@@ -63,6 +72,7 @@ export class IndoorMapComponent implements OnInit{
       }
     });
 
+    //add event listener to all 'points of interest' elements of map
     document.addEventListener('click', (res: any) => {
       let ele: string = res.toElement.id;
       if (
@@ -81,10 +91,12 @@ export class IndoorMapComponent implements OnInit{
 
   ngOnInit(){}
 
+  //when indoor component is first initiated
   ngAfterViewInit(){
     this.setMap();
   }
 
+  //get all element from floor plan and setup indoorDirections map
   setMap(){
     if(this.directionManager.getIsSelectMode()){
       this.isSelectMode = true;
@@ -98,8 +110,10 @@ export class IndoorMapComponent implements OnInit{
     this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
     this.pathLines = this.indoorDirectionsService.getLines();
     this.interestPoints = this.indoorDirectionsService.getPoints();
+    this.events.publish('map-set', true, Date.now());
   }
 
+  //initiate the process of navigation (when user click on a element)
   public initNav(name: string) {
     let point: Point;
 
@@ -130,6 +144,8 @@ export class IndoorMapComponent implements OnInit{
     this.destID = point.id;
     this.setMarker(point);
     this.isSelectMode = this.directionManager.getIsSelectMode();
+
+    //user wants floor to floor directions -> the room he just selected is to be concated to the already existing steps of navigation
     if(this.isSelectMode){
       if(this.inputBuilding === 'hall' && this.floor === 8) {
         this.directionManager.initDifferentFloorDir(false, 'h8', this.destID, this.interestPoints)
@@ -138,6 +154,8 @@ export class IndoorMapComponent implements OnInit{
         this.directionManager.initDifferentFloorDir(false, 'h9', this.destID, this.interestPoints)
 
       }
+
+    //initiating first step
     } else {
       if(this.inputBuilding === 'hall' && this.floor === 8) {
         this.directionManager.initiateIndoorDirections('h8', this.destID, this.interestPoints)
@@ -149,12 +167,14 @@ export class IndoorMapComponent implements OnInit{
     }
   }
 
+  //set marker on the map
   setMarker(point: Point) {
     this.marker.setAttribute('x', point.x - 26);
     this.marker.setAttribute('y', point.y - 26);
     this.marker.style.visibility = 'visible';
   }
 
+  //reset all navigations instance variables in component and indoor directions service
   public resetNav() {
     for (let line of this.path) {
       let docElement = document.getElementById(line);

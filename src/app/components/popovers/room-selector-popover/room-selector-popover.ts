@@ -58,9 +58,9 @@ export class RoomSelectorPopoverComponent {
         prettyName = 'Entrance';
       } else if (point.id.includes('down') && point.id.includes('stairs')) {
         prettyName = 'Stairs going down';
-      } else if (point.id.includes('down') && point.id.includes('escalator')) {
+      } else if (point.id.includes('down') && point.id.includes('escalators')) {
         prettyName = 'Escalator going down';
-      } else if (point.id.includes('up') && point.id.includes('escalator')) {
+      } else if (point.id.includes('up') && point.id.includes('escalators')) {
         prettyName = 'Escalator going up';
       } else if (point.id.includes('up') && point.id.includes('stairs')) {
         prettyName = 'Stairs going up';

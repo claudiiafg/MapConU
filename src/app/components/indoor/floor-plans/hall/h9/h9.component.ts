@@ -10,7 +10,6 @@ export class H9FloorPlanComponent {
 
   constructor(
     private events: Events,
-
   ) {}
 
   ngAfterViewInit(){

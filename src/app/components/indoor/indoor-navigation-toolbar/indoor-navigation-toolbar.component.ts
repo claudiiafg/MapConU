@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { Events } from '@ionic/angular';
-import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
@@ -56,7 +55,6 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     private data: DataSharingService,
     private router: Router,
     private events: Events,
-    private directionsManager : DirectionsManagerService,
   ) {
     //TODO: when user selects building to enter the name of that building needs to be sent to initialize the indoor view
     this.data.currentMessage.subscribe(
@@ -67,11 +65,13 @@ export class IndoorNavigationToolbarComponent implements OnInit {
 
   ngOnInit() {
 
+    //if isSelectMode user will see instructions of what to do
     this.events.subscribe('isSelectMode', (res) => {
       this.isSelectMode = res;
       this.updateFloor = this.floor;
       this.changeFloor();
     })
+
     //placeholder because logic to come from outdoor-nav is not implemented yet can be deleted when it is
     switch (this.inputBuilding) {
       case 'hall':
@@ -157,7 +157,6 @@ export class IndoorNavigationToolbarComponent implements OnInit {
   private goBackOutside() {
     if(this.isSelectMode){
       this.events.publish('isSelectMode', false, Date.now());
-      this.directionsManager.resetPathSteps();
     } else {
       this.router.navigateByUrl('/outdoor');
     }

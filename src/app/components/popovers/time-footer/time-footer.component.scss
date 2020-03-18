@@ -18,20 +18,24 @@ p {
   height: 60px;
   width: 100%;
   padding: 10px;
-}
 
-.from-wrapper{
-  width: 35%;
-}
+  .footer-elements-wrapper{
+    display: contents;
+  }
 
-.arrow-wrapper{
-  width: 10%;
-}
+  .from-wrapper{
+    width: 35%;
+  }
 
-.to-wrapper{
-  width: 35%;
-}
+  .arrow-wrapper{
+    width: 10%;
+  }
 
-.button-wrapper{
-  width: 20%;
+  .to-wrapper{
+    width: 35%;
+  }
+
+  .button-wrapper{
+    width: 20%;
+  }
 }

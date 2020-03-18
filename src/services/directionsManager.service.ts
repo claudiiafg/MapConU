@@ -34,6 +34,7 @@ export class DirectionsManagerService {
   private steps : any[] = [];
   private isSelectMode: boolean = false;
   public isInRoute = new BehaviorSubject(false);
+  private currentStep: any;
 
   constructor(
     private events: Events,
@@ -42,31 +43,35 @@ export class DirectionsManagerService {
     private alertController: AlertController,
 
   ) {
-
+    //subscribe to user starting, ending or canceling floor to floor routes
     this.events.subscribe('isSelectMode', (res) => {
       this.isSelectMode = res;
     });
+
+    //when all components of map have been set, route can begging
+    this.events.subscribe('map-set', (res) => {
+      if(this.isInRoute.getValue() === true){
+        const data = {
+          source: this.currentStep.source,
+          destination: this.currentStep.dest
+        };
+        this.events.publish('init-new-path', data, Date.now());
+      }
+    });
+
+    //user has pressed end route
+    this.events.subscribe('path-completed', (res) => {
+      this.isInRoute.next(false);
+      this.steps = [];
+    });
+
   }
 
-
-  public setSameFloor(){
-
-  }
-
-  public setOutdoor(){
-
-  }
-
-  public setMixed(type : MixedDirectionsType){
-
-  }
-
+  //open popup to input type of directions wanted
   public async initiateIndoorDirections(building: string, destination: string, points : any[]) {
     let defaultStartingPoint: string;
-    if(building === 'h8'){
-      defaultStartingPoint = 'h8-escalator-up';
-    } else if(building === 'h9'){
-      defaultStartingPoint = 'h9-escalator-up';
+    if(building === 'h8' || building === 'h9'){
+      defaultStartingPoint = 'escalators-up';
     } else if(building === 'mb1'){
       defaultStartingPoint = 'entrance';
     }
@@ -111,13 +116,7 @@ export class DirectionsManagerService {
         this.isSelectMode = true;
         this.events.publish('isSelectMode', true, Date.now());
         //since only building with different floors available, okay to hardcode behavior for now
-        if(building === 'h8'){
-          this.events.publish('floor-changes', 9, Date.now());
-
-        } else {
-          this.events.publish('floor-changes', 8, Date.now());
-
-        }
+        this.changeFloor(building);
 
       } else {
         console.error('NO OTHER FLOORS AVAILABLE'); //make popup (or button disabled)
@@ -133,15 +132,17 @@ export class DirectionsManagerService {
     }
   }
 
+  //helper
   public getIsSelectMode() : boolean {
     return this.isSelectMode;
   }
 
-
+  //setup steps of route
   initDifferentFloorDir(isInit: boolean, floor: string, interest: string, points: any[]){
     //if initiating floor to floor, store information and navigate user to the other floor (to choose source)
     if(isInit){
-      let dest: string = (floor === 'h8') ? 'h8-escalators-up' : 'h9-escalators-down';
+      this.steps = [];
+      let dest: string = (floor === 'h8') ? 'escalators-up' : 'escalators-down';
       const tempPath = {
         floor: floor,
         source: interest,
@@ -152,7 +153,7 @@ export class DirectionsManagerService {
 
     //ask user to choose source and initiate the path steps
     } else {
-      let source: string = (floor === 'h8') ? 'h8-escalators-down' : 'h9-escalators-up';
+      let source: string = (floor === 'h8') ? 'escalators-down' : 'escalators-up';
       const tempPath = {
         floor: floor,
         source: source,
@@ -165,16 +166,45 @@ export class DirectionsManagerService {
     }
   }
 
-  initiatePathSteps(){
-    console.log(this.steps);
+  private initiatePathSteps(){
     this.isInRoute.next(true);
-
   }
 
-  resetPathSteps(){
-    this.steps = [];
+  //get next step to perform, perform it and set it as done
+  public getNextStep(){
+    let i = 0;
+    for(i = 0; i < this.steps.length; i++){
+      if(!this.steps[i].wasDone){
+        this.steps[i].wasDone = true;
+        break;
+      }
+    }
+    console.log(this.steps[i].floor);
+    this.changeFloor(this.steps[i].floor);
+    this.currentStep = this.steps[i];
+    console.log(this.steps);
+    return this.currentStep;
   }
 
+  private changeFloor(building : any){
+    //if isInRoute -> change floor to the input value of bulding
+    if(this.isInRoute.getValue() === true){
+      if(building === 'h8'){
+        this.events.publish('floor-changes', 8, Date.now());
+      } else {
+        this.events.publish('floor-changes', 9, Date.now());
+      }
+
+    //if NOT isInRoute -> change floor to the other possiblr floor
+    } else {
+      if(building === 'h8'){
+        this.events.publish('floor-changes', 9, Date.now());
+      } else {
+        this.events.publish('floor-changes', 8, Date.now());
+      }
+    }
+
+  }
 
 
 }
