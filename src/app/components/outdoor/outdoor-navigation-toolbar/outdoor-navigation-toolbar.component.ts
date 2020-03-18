@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { Events, IonSearchbar } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
+import { GeolocationServices } from 'src/services/geolocation.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import {Router} from "@angular/router";
 
@@ -28,6 +29,9 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   public transitColor: string = 'white';
   public carColor: string = 'white';
   public walkColor: string = 'yellow';
+  readonly mapRadius: number = 0.3
+  currentLat: number = 45.495729;
+  currentLng: number = -73.578041;
 
   //Array for lat, long of specific locations
   public locations = [
@@ -41,7 +45,8 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
     public directionService: DirectionService,
-    private router: Router
+    private router: Router,
+    private geolocationServices: GeolocationServices,
   ) {
     this.data.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
@@ -51,28 +56,33 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loc = '0';
+    await this.geolocationServices.getCurrentPosition();
+    this.currentLat = this.geolocationServices.getLatitude();
+    this.currentLng = this.geolocationServices.getLongitude();
   }
 
   ngAfterViewInit() {
-    this.findAdress();
+    this.findAddress();
   }
 
-  findAdress() {
+  findAddress() {
     this.searchRef.getInputElement().then( input => {
       this.mapsAPILoader.load().then(() => {
-        let toAutocomplete = new google.maps.places.Autocomplete(
+        const nwBounds = new google.maps.LatLng({lat: this.currentLat - this.mapRadius, lng: this.currentLng - this.mapRadius});
+        const seBounds = new google.maps.LatLng({lat: this.currentLat + this.mapRadius, lng: this.currentLng + this.mapRadius});
+        let searchAutocomplete = new google.maps.places.Autocomplete(
           input,
           {
-            types: ['address']
+            bounds: new google.maps.LatLngBounds(nwBounds, seBounds)
           }
         );
 
-        toAutocomplete.addListener('place_changed', () => {
+        searchAutocomplete.addListener('place_changed', () => {
           this.ngZone.run(() => {
             //get the place result
-            let place: google.maps.places.PlaceResult = toAutocomplete.getPlace();
+            let place: google.maps.places.PlaceResult = searchAutocomplete.getPlace();
 
             //verify result
             if (place.geometry === undefined || place.geometry === null) {
