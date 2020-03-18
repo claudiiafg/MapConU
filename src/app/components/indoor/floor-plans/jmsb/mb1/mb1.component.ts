@@ -59,14 +59,14 @@ export class MB1FloorPlanComponent implements OnInit {
       }
     });
 
-    this.events.subscribe('path-found', () => {
-      this.path = this.indoorDirectionsService.getPath();
-      this.foundPath = true;
-      for (let line of this.path) {
-        let docElement = document.getElementById(line);
-        docElement.style.stroke = 'blue';
-      }
-    });
+    // this.events.subscribe('path-found', () => {
+    //   this.path = this.indoorDirectionsService.getPath();
+    //   this.foundPath = true;
+    //   for (let line of this.path) {
+    //     let docElement = document.getElementById(line);
+    //     docElement.style.stroke = 'blue';
+    //   }
+    // });
 
     this.events.subscribe('init-new-path', data => {
       if (data) {

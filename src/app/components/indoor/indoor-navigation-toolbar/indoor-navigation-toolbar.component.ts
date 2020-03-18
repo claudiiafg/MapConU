@@ -109,7 +109,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
       this.minFloorIndex = building.bottomFloorIndex;
     }
     this.currentFloor = this.floor;
-    this.currentFloorIndex = parseInt(this.floor);
+    this.currentFloorIndex = parseInt(this.floor) + 1;
   }
 
   /*

@@ -28,16 +28,22 @@ export class IndoorMapComponent implements OnInit{
   ) {
     this.events.subscribe('floor-changes', res => {
       if (res) {
-        this.floor = res;
+        this.foundPath = false;
+        this.floor = parseInt(res);
       }
     });
+
+    this.events.subscribe('floor-loaded', () => {
+      this.setMap();
+    });
+
 
     this.events.subscribe('path-found', () => {
       this.path = this.indoorDirectionsService.getPath();
       this.foundPath = true;
       for (let line of this.path) {
         let docElement = document.getElementById(line);
-        docElement.style.stroke = 'blue';
+        docElement.style.stroke = "blue";
       }
     });
 
@@ -75,8 +81,7 @@ export class IndoorMapComponent implements OnInit{
 
   ngOnInit(){}
 
-  onLoad(){
-    this.resetNav();
+  ngAfterViewInit(){
     this.setMap();
   }
 
@@ -124,6 +129,7 @@ export class IndoorMapComponent implements OnInit{
 
     this.destID = point.id;
     this.setMarker(point);
+    this.isSelectMode = this.directionManager.getIsSelectMode();
     if(this.isSelectMode){
       if(this.inputBuilding === 'hall' && this.floor === 8) {
         this.directionManager.initDifferentFloorDir(false, 'h8', this.destID, this.interestPoints)

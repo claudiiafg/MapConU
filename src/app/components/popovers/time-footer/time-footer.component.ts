@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-time-footer',
@@ -13,9 +14,13 @@ export class TimeFooterComponent implements OnInit {
   public timeLeft: number;
   public distance: number;
   public fare: string;
+  private isIndoorDirectionsSet: boolean = false;
+
   constructor(
     public modalController: ModalController,
-    private directionService: DirectionService
+    private directionService: DirectionService,
+    private directionsManagerService : DirectionsManagerService
+
   ) {
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
       this.isDirectionSet = isDirectionSet;
@@ -26,6 +31,11 @@ export class TimeFooterComponent implements OnInit {
       this.fare = directionInfo.fare;
       if (directionInfo.presentModal) {
         this.presentModal();
+      }
+    });
+    this.directionsManagerService.isInRoute.subscribe(res => {
+      if(res){
+        this.isIndoorDirectionsSet = true;
       }
     });
   }

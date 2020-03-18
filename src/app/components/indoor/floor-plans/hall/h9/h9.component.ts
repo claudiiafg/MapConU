@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'h9-floor-plan',
@@ -7,5 +8,13 @@ import { Component } from '@angular/core';
 })
 export class H9FloorPlanComponent {
 
-  constructor() {}
+  constructor(
+    private events: Events,
+
+  ) {}
+
+  ngAfterViewInit(){
+    this.events.publish('floor-loaded', Date.now());
+
+  }
 }

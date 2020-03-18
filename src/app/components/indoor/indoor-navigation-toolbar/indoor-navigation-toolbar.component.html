@@ -20,14 +20,6 @@
     >
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
-
-    <!-- If isSelectMode -> ask user to select where is coming from, in order to initiate floor to floor path -->
-    <div *ngIf="isSelectMode">
-      <div class="instrunctions-wrapper">
-        <span class="instructions-text">Please select which room you wish to know the directions from</span>
-      </div>
-    </div>
-
     <div *ngIf="!isSelectMode" class="building-info-wrapper">
       <!-- name of floor selected-->
       <ion-item slot="start" class="building">{{ building }}</ion-item>
@@ -51,9 +43,14 @@
         </ion-select>
       </ion-item>
     </div>
-
-
   </ion-toolbar>
+
+  <!-- If isSelectMode -> ask user to select where is coming from, in order to initiate floor to floor path -->
+  <div class="move-floor" *ngIf="isSelectMode">
+    <div class="instrunctions-wrapper">
+      <span class="instructions-text">Please select which room you wish to know the directions from</span>
+    </div>
+  </div>
 
   <div class="move-floor" *ngIf="!isSelectMode">
     <ion-button
@@ -64,7 +61,6 @@
     >
       <ion-icon name="arrow-down"></ion-icon>
     </ion-button>
-
     <ion-button
       (click)="moveUpFloor()"
       class="up-button"

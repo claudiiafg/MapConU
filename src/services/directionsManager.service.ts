@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Events, AlertController } from '@ionic/angular';
 import { IndoorDirectionsService } from './indoorDirections.service';
 import { DirectionService } from './direction.service';
+import { BehaviorSubject } from 'rxjs';
 
 enum Mode {
   indoor,
@@ -32,7 +33,7 @@ export class DirectionsManagerService {
   private mixedType : MixedDirectionsType;
   private steps : any[] = [];
   private isSelectMode: boolean = false;
-
+  public isInRoute = new BehaviorSubject(false);
 
   constructor(
     private events: Events,
@@ -40,7 +41,12 @@ export class DirectionsManagerService {
     private outdoorDirections: DirectionService,
     private alertController: AlertController,
 
-  ) {}
+  ) {
+
+    this.events.subscribe('isSelectMode', (res) => {
+      this.isSelectMode = res;
+    });
+  }
 
 
   public setSameFloor(){
@@ -59,6 +65,8 @@ export class DirectionsManagerService {
     let defaultStartingPoint: string;
     if(building === 'h8'){
       defaultStartingPoint = 'h8-escalator-up';
+    } else if(building === 'h9'){
+      defaultStartingPoint = 'h9-escalator-up';
     } else if(building === 'mb1'){
       defaultStartingPoint = 'entrance';
     }
@@ -137,7 +145,8 @@ export class DirectionsManagerService {
       const tempPath = {
         floor: floor,
         source: interest,
-        dest: dest
+        dest: dest,
+        wasDone: false
       }
       this.steps.push(tempPath);
 
@@ -147,7 +156,9 @@ export class DirectionsManagerService {
       const tempPath = {
         floor: floor,
         source: source,
-        dest: interest
+        dest: interest,
+        wasDone: false,
+        isLast: true
       }
       this.steps.push(tempPath);
       this.initiatePathSteps();
@@ -156,6 +167,7 @@ export class DirectionsManagerService {
 
   initiatePathSteps(){
     console.log(this.steps);
+    this.isInRoute.next(true);
 
   }
 

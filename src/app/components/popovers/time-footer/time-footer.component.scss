@@ -12,3 +12,26 @@ p {
 .green {
   color: green;
 }
+
+.indoor-timefooter-wrapper {
+  display: flex;
+  height: 60px;
+  width: 100%;
+  padding: 10px;
+}
+
+.from-wrapper{
+  width: 35%;
+}
+
+.arrow-wrapper{
+  width: 10%;
+}
+
+.to-wrapper{
+  width: 35%;
+}
+
+.button-wrapper{
+  width: 20%;
+}
