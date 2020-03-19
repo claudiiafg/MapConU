@@ -9,6 +9,8 @@ import {FirestoreSettingsToken} from '@angular/fire/firestore';
 import {UserServices} from '../../../services/user.services';
 import {PoiServices} from '../../../services/poi.services';
 import {GeolocationServices} from '../../../services/geolocation.services';
+import {DirectionService} from '../../../services/direction.service';
+import {IndoorDirectionsService} from '../../../services/indoorDirections.service';
 
 import { SettingsOptionsComponent } from './settings-options.component';
 
@@ -27,6 +29,8 @@ describe('SettingsOptionsComponent', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionService,
+        IndoorDirectionsService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         {provide: FirestoreSettingsToken, useValue: {}}
       ]

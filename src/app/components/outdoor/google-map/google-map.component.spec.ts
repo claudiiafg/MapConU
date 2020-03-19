@@ -12,6 +12,8 @@ import { Events } from '@ionic/angular';
 import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {DirectionService} from '../../../../services/direction.service';
+import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
 
 
 
@@ -62,6 +64,8 @@ describe('GoogleMapComponent ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionService,
+        IndoorDirectionsService,
         AlertController,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
