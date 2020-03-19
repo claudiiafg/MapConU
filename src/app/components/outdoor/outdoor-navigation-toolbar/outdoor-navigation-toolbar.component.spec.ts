@@ -25,7 +25,7 @@ describe('OutdoorNavigationToolbarComponent ', () => {
 
   let googleMapcomponent: GoogleMapComponent;
   let googleFixture: ComponentFixture<GoogleMapComponent>;
-  beforeEach((() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
         IonicModule.forRoot(),
@@ -54,7 +54,8 @@ describe('OutdoorNavigationToolbarComponent ', () => {
         { provide: FirestoreSettingsToken, useValue: {} }
       ]
     }).compileComponents();
-
+  }));
+  beforeEach(() => {
     fixture = TestBed.createComponent(OutdoorNavigationToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -62,41 +63,44 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     googleFixture = TestBed.createComponent(GoogleMapComponent);
     googleMapcomponent = googleFixture.componentInstance;
     googleFixture.detectChanges();
-  }));
+  });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+    expect(googleMapcomponent).toBeTruthy();
+  });
 
-  // // send message function
-  // it('sendMessage() changes message', () => {
-  //   fixture.detectChanges();
-  //   component.ngOnInit();
-  //
-  //   component.loc = '1';
-  //   component.locations = [
-  //     { latitude: 45.495729, longitude: -73.578041 },
-  //     { latitude: 45.45824, longitude: -73.640452 }
-  //   ];
-  //   expect(component.loc).toEqual('1');
-  //   component.message = 'clicking';
-  //   expect(component.message).toEqual('clicking');
-  //   component.sendMessage('testing');
-  //   expect(component.message).toEqual('testing');
-  //   component.loc = '0';
-  //   component.changeCampus();
-  //   const sendMessageSpy = spyOn(component, 'changeCampus');
-  //   expect(sendMessageSpy.calls.count()).toEqual(0);
-  //   expect(component.changeCampus()).toBeUndefined();
-  // });
-  //
-  // it('test campus toggle functions', () => {
-  //   expect(googleMapcomponent).toBeTruthy();
-  //   expect(googleMapcomponent.latitude).toBe(45.495729);
-  //   expect(googleMapcomponent.longitude).toBe(-73.578041);
-  //   component.loc = "1";
-  //   component.changeCampus();
-  //   googleMapcomponent.subscribeToChangeInCurrentPOS();
-  //   expect(googleMapcomponent.latitude).toBe(45.45824);
-  //   expect(googleMapcomponent.longitude).toBe(-73.640452);
-  //   });
-  afterAll(() => {
+  // send message function
+  it('sendMessage() changes message', () => {
+    // fixture.detectChanges();
+    // component.ngOnInit();
+
+    component.loc = '1';
+    component.locations = [
+      { latitude: 45.495729, longitude: -73.578041 },
+      { latitude: 45.45824, longitude: -73.640452 }
+    ];
+    expect(component.loc).toEqual('1');
+    component.message = 'clicking';
+    expect(component.message).toEqual('clicking');
+    component.sendMessage('testing');
+    expect(component.message).toEqual('testing');
+    component.loc = '0';
+    component.changeCampus();
+    const sendMessageSpy = spyOn(component, 'changeCampus');
+    expect(sendMessageSpy.calls.count()).toEqual(0);
+    expect(component.changeCampus()).toBeUndefined();
+  });
+
+  it('test campus toggle functions', () => {
+    expect(googleMapcomponent.latitude).toBe(45.495729);
+    expect(googleMapcomponent.longitude).toBe(-73.578041);
+    component.loc = "1";
+    component.changeCampus();
+    googleMapcomponent.subscribeToChangeInCurrentPOS();
+    expect(googleMapcomponent.latitude).toBe(45.45824);
+    expect(googleMapcomponent.longitude).toBe(-73.640452);
+    });
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

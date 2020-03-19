@@ -16,7 +16,7 @@ describe('PoiServices', () => {
     const service: PoiServices = TestBed.get(PoiServices);
     expect(service).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

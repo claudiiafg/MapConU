@@ -9,7 +9,7 @@ describe('DataSharingService', () => {
     const service: DataSharingService = TestBed.get(DataSharingService);
     expect(service).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

@@ -113,7 +113,7 @@ describe('GoogleMapComponent ', () => {
     let alertSubtitle = document.getElementsByClassName("alert-sub-title");
     expect(alertSubtitle).not.toBeNull();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

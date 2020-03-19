@@ -23,7 +23,7 @@ describe('UserServices', () => {
     const service: UserServices = TestBed.get(UserServices);
     expect(service).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

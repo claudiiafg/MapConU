@@ -18,7 +18,7 @@ describe('GeolocationServices', () => {
     const service: GeolocationServices = TestBed.get(GeolocationServices);
     expect(service).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

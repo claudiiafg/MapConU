@@ -41,7 +41,7 @@ describe('OutdoorViewPage ', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

@@ -9,7 +9,7 @@ describe('IndoorDirectionsService', () => {
     const service: IndoorDirectionsService = TestBed.get(IndoorDirectionsService);
     expect(service).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });
