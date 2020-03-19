@@ -114,6 +114,12 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   }
 
   public changeCampus() {
+    /* Added as a workaround to get the select menu for campuses to reload when the language changes.
+    A variable change is required to trigger an automatic reload but campus should not be changed
+     */
+    if(this.loc == '2'){
+      this.loc = '0';
+    }
     this.dataSharing.updateMessage(this.locations[this.loc]);
     this.events.publish('campusChanged', Date.now());
   }

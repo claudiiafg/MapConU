@@ -21,6 +21,6 @@ export class OutdoorViewPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.toolbar.ngOnInit();
+    this.toolbar.loc = '2';
   }
 }
