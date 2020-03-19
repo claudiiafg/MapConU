@@ -8,6 +8,7 @@
 	"google": "compte Google",
 	"source-code": "code cource",
 	"start-location": "[localisation actuelle]",
+	"start-point": "Point de départ",
 	"end-location": "destination",
 	"go": "Allez",
 	"restaurant-poi": "les restaurants",
@@ -40,6 +41,21 @@
 	"Recreation and Athletics Complex": "Complexe Récréatif et Sportif",
 	"Hingston Hall": "Hingston Hall",
 	"FC Smith Building": "Èdifice FC Smith",
-	"Vanier Extension": "Extension Vanier"
-
+	"Vanier Extension": "Extension Vanier",
+	"bathroom-w": "Toilettes femmes",
+	"bathroom-m": "Toilettes hommes",
+	"bathroom": "Toilettes",
+	"entrance": "Entrée",
+	"stairs-down": "Escaliers descendant",
+	"escalator-down": "Escaliers mécaniques descendant",
+	"escalator-up": "Escaliers mécaniques montant",
+	"stairs-up": "Escaliers à monter",
+	"stairs-ne": "Escalliers nord-est",
+	"stairs-nw": "Escalliers nord-ouest",
+	"stairs-sw": "Escalliers sud-ouest",
+	"stairs-se": "Escalliers sud-est",
+	"stairs": " Escaliers",
+	"escalators": "Escaliers mécaniques",
+	"elevators": "Ascenseurs",
+	"exit": "Sortie"
 }
