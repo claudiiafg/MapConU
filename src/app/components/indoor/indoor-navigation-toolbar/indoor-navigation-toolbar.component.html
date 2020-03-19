@@ -16,11 +16,10 @@
             class="settings-button"
             fill="outline"
             slot="end"
-            (click)="adjustSettings()"
-    >
+            (click)="adjustSettings()">
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
-    <div *ngIf="!isSelectMode" class="building-info-wrapper">
+    <div class="building-info-wrapper">
       <!-- name of floor selected-->
       <ion-item slot="start" class="building">{{ building }}</ion-item>
 
@@ -28,36 +27,30 @@
       <ion-item id="floor-change">
         <ion-select
           (ionChange)="changeFloor()"
-          [(ngModel)]="updateFloor"
-          [selectedText]="currentFloor.valueOf()"
+          [(ngModel)]="floor"
+          [selectedText]="floor.valueOf()"
           class="select-floor"
           id="floor-item"
           interface="popover"
           placeholder="1"
+          disabled ="{{isSelectMode}}"
         >
           <ion-select-option
             [value]="floor"
-            *ngFor="let floor of floors | slice: minFloorIndex:maxFloorIndex"
+            *ngFor="let floor of floors | slice: minFloorIndex:maxFloorIndex+1"
             >{{floor}}</ion-select-option
           >
         </ion-select>
       </ion-item>
     </div>
   </ion-toolbar>
-
-  <!-- If isSelectMode -> ask user to select where is coming from, in order to initiate floor to floor path -->
-  <div class="move-floor" *ngIf="isSelectMode">
-    <div class="instrunctions-wrapper">
-      <span class="instructions-text">Please select which room you wish to know the directions from</span>
-    </div>
-  </div>
-
-  <div class="move-floor" *ngIf="!isSelectMode">
+  <div class="move-floor">
     <ion-button
       class="down-button ion-float-end"
       (click)="moveDownFloor()"
       shape="round"
       fill="outline"
+      disabled ="{{isSelectMode || floor === floors[minFloorIndex]}}"
     >
       <ion-icon name="arrow-down"></ion-icon>
     </ion-button>
@@ -66,6 +59,7 @@
       class="up-button"
       shape="round"
       fill="outline"
+      disabled ="{{isSelectMode || floor === floors[maxFloorIndex]}}"
     >
       <ion-icon name="arrow-up"></ion-icon>
     </ion-button>

@@ -4,6 +4,7 @@ import {
   Point,
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
+import { StringHelperService } from 'src/services/stringHelper.service';
 
 @Component({
   selector: 'room-selector-popover',
@@ -23,7 +24,9 @@ export class RoomSelectorPopoverComponent {
     private navParams: NavParams,
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    private stringHelper: StringHelperService,
+
   ) {
     if (this.navParams.get('data')) {
       let data = this.navParams.get('data');
@@ -38,58 +41,15 @@ export class RoomSelectorPopoverComponent {
     }
   }
 
-  onClickOption(name){
-    console.log(name);
-  }
-
-
   prettifyTitles() {
     this.prettyPoints = [];
     for (let point of this.points) {
-      let prettyName: string = '';
-
-      if (point.id.includes('wc-female')) {
-        prettyName = 'Female bathrooms';
-      } else if (point.id.includes('wc-male')) {
-        prettyName = 'Male bathrooms';
-      } else if (point.id.includes('wc')) {
-        prettyName = 'Bathrooms';
-      } else if (point.id.includes('entrance')) {
-        prettyName = 'Entrance';
-      } else if (point.id.includes('down') && point.id.includes('stairs')) {
-        prettyName = 'Stairs going down';
-      } else if (point.id.includes('down') && point.id.includes('escalators')) {
-        prettyName = 'Escalator going down';
-      } else if (point.id.includes('up') && point.id.includes('escalators')) {
-        prettyName = 'Escalator going up';
-      } else if (point.id.includes('up') && point.id.includes('stairs')) {
-        prettyName = 'Stairs going up';
-      } else if (point.id.includes('down') && point.id.includes('stairs')) {
-        prettyName = 'Stairs going down';
-      } else if (point.id.includes('ne')) {
-        prettyName = 'North East stairs';
-      } else if (point.id.includes('nw')) {
-        prettyName = 'North West stairs';
-      } else if (point.id.includes('sw')) {
-        prettyName = 'South West stairs';
-      } else if (point.id.includes('se')) {
-        prettyName = 'South East stairs';
-      } else if (point.id === 'stairs') {
-        prettyName = 'Stairs';
-      } else if (point.id.includes('elevator')) {
-        prettyName = 'Elevators';
-      } else if (point.id.includes('out')) {
-        prettyName = 'Exit';
-      } else {
-        prettyName = point.id;
-      }
-
+      let prettyName: string = this.stringHelper.prettifyTitles(point.id);
       let tempPoint = {
         id: point.id,
         name: prettyName
       };
       this.prettyPoints.push(tempPoint);
-
       if (point.id === this.source) {
         this.prettySource = prettyName;
       } else if (point.id === this.destination) {

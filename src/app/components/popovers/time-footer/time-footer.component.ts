@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, Events } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { StringHelperService } from 'src/services/stringHelper.service';
 
 @Component({
   selector: 'app-time-footer',
@@ -23,6 +24,7 @@ export class TimeFooterComponent implements OnInit {
     private directionService: DirectionService,
     private directionsManagerService : DirectionsManagerService,
     private events: Events,
+    private stringHelper: StringHelperService,
 
   ) {
     //outdoor directions subscription
@@ -58,6 +60,8 @@ export class TimeFooterComponent implements OnInit {
   //get next step to compute in indoor directions
   private getNextStep(){
     this.currentStep = this.directionsManagerService.getNextStep();
+    this.currentStep._prettySource = this.stringHelper.prettifyTitles(this.currentStep.source);
+    this.currentStep._prettyDest = this.stringHelper.prettifyTitles(this.currentStep.dest);
   }
 
   //user has arrived at destination and pressed end

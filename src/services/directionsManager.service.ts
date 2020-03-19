@@ -43,11 +43,10 @@ export class DirectionsManagerService {
     private alertController: AlertController,
 
   ) {
-    //subscribe to user starting, ending or canceling floor to floor routes
-    this.events.subscribe('isSelectMode', (res) => {
-      this.isSelectMode = res;
-    });
+    this.subscribeToEvents();
+  }
 
+  private subscribeToEvents(){
     //when all components of map have been set, route can begging
     this.events.subscribe('map-set', (res) => {
       if(this.isInRoute.getValue() === true){
@@ -58,13 +57,11 @@ export class DirectionsManagerService {
         this.events.publish('init-new-path', data, Date.now());
       }
     });
+  }
 
-    //user has pressed end route
-    this.events.subscribe('path-completed', (res) => {
-      this.isInRoute.next(false);
-      this.steps = [];
-    });
-
+  public resetSteps(){
+    this.isInRoute.next(false);
+    this.steps = [];
   }
 
   //open popup to input type of directions wanted
@@ -137,6 +134,10 @@ export class DirectionsManagerService {
     return this.isSelectMode;
   }
 
+  public setSelectMode(value: boolean){
+    this.isSelectMode = value;
+  }
+
   //setup steps of route
   initDifferentFloorDir(isInit: boolean, floor: string, interest: string, points: any[]){
     //if initiating floor to floor, store information and navigate user to the other floor (to choose source)
@@ -179,10 +180,8 @@ export class DirectionsManagerService {
         break;
       }
     }
-    console.log(this.steps[i].floor);
     this.changeFloor(this.steps[i].floor);
     this.currentStep = this.steps[i];
-    console.log(this.steps);
     return this.currentStep;
   }
 

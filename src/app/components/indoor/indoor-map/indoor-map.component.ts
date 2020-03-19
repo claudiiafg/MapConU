@@ -11,6 +11,7 @@ import { DirectionsManagerService } from 'src/services/directionsManager.service
 export class IndoorMapComponent implements OnInit{
   @Input() inputBuilding: string = '';
   @Input() floor: any;
+  @Input() isSelectMode: boolean;
 
   private pathLines: Line[] = [];
   private interestPoints: Point[] = [];
@@ -19,21 +20,12 @@ export class IndoorMapComponent implements OnInit{
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
   private marker: any;
-  private isSelectMode: boolean = false;
 
   constructor(
     private events: Events,
     private indoorDirectionsService: IndoorDirectionsService,
     private directionManager: DirectionsManagerService,
   ) {
-
-    //when floor changes -> change view
-    this.events.subscribe('floor-changes', res => {
-      if (res) {
-        this.foundPath = false;
-        this.floor = parseInt(res);
-      }
-    });
 
     //when floor component is loaded -> setup map
     this.events.subscribe('floor-loaded', () => {
@@ -53,6 +45,7 @@ export class IndoorMapComponent implements OnInit{
     //when user ends route -> reset navidation
     this.events.subscribe('path-completed', (res) => {
       this.resetNav();
+      this.directionManager.resetSteps();
     });
 
     //when user wants to start a new path -> get data necessary and compute path

@@ -9,24 +9,26 @@
 
 <div *ngIf="isIndoorDirectionsSet" class="indoor-timefooter-wrapper ">
   <div *ngIf="!isInRoute" class="footer-elements-wrapper">
-    <button type="button" name="button" (click)="initRoute()">START</button>
+    <div class="start-container">
+      <button class="start-button" type="button" name="button" (click)="initRoute()">START</button>
+    </div>
   </div>
 
   <div *ngIf="currentStep && isInRoute" class="footer-elements-wrapper">
-    <div class="from-wrapper">
-      <span>{{currentStep.source}}</span>
+    <div class="room-wrapper">
+      <span *ngIf="currentStep._prettySource">{{currentStep._prettySource}}</span>
     </div>
     <div class="arrow-wrapper">
       <div class="">
-        ->
+        <ion-icon class="arrow-icon" name="md-arrow-round-forward"></ion-icon>
       </div>
     </div>
-    <div class="to-wrapper">
-      <span>{{currentStep.dest}}</span>
+    <div class="room-wrapper">
+      <span *ngIf="currentStep._prettyDest" >{{currentStep._prettyDest}}</span>
     </div>
     <div class="button-wrapper">
-      <button type="button" name="button" (click)="getNextStep()" *ngIf="!currentStep.isLast">NEXT</button>
-      <button type="button" name="button" (click)="endRoute()" *ngIf="currentStep.isLast">END</button>
+      <button class="start-button" type="button" name="button" (click)="getNextStep()" *ngIf="!currentStep.isLast">NEXT</button>
+      <button class="start-button" type="button" name="button" (click)="endRoute()" *ngIf="currentStep.isLast">END</button>
     </div>
   </div>
 </div>

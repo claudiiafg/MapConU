@@ -34,6 +34,7 @@ import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { UserServices } from 'src/services/user.services';
 import { PoiServices } from 'src/services/poi.services';
+import { StringHelperService } from 'src/services/stringHelper.service';
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -54,6 +55,8 @@ import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
 import { SettingsPage } from "./pages/settings/settings.page";
 import { SettingsOptionsComponent } from "./components/settings-options/settings-options.component";
+import { InfoPopoverComponent } from './components/popovers/info-popover/info-popover.component';
+
 
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
@@ -81,13 +84,15 @@ import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9
     TimeFooterComponent,
     ModalDirectionsComponent,
     RoomSelectorPopoverComponent,
-    SettingsOptionsComponent
+    SettingsOptionsComponent,
+    InfoPopoverComponent
   ],
   entryComponents: [
     SearchPopoverComponent,
     PoiPopoverComponent,
     ModalDirectionsComponent,
-    RoomSelectorPopoverComponent
+    RoomSelectorPopoverComponent,
+    InfoPopoverComponent
   ],
   imports: [
     CommonModule,
@@ -118,6 +123,7 @@ import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9
     PoiServices,
     IndoorDirectionsService,
     DirectionsManagerService,
+    StringHelperService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
