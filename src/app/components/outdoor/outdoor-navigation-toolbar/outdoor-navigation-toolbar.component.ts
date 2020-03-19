@@ -31,9 +31,6 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   public transitColor: string = 'white';
   public carColor: string = 'white';
   public walkColor: string = 'yellow';
-  public campus1: string;
-  public campus2: string;
-  @Input() private language: string; //current App language
   readonly mapRadius: number = 0.3
   currentLat: number = 45.495729;
   currentLng: number = -73.578041;
@@ -61,14 +58,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
       this.isDirectionSet = isDirectionSet;
     });
 
-    //TODO: fix refresh issues with subscription method in translation services
-    //notifies component of language change to the App
-   //translate.subscribeToAppLanguage(this.language);
-    this.dataSharing.currentLanguage.subscribe(updatedLanguage => {
-      console.log('language set in toolbar: ' , {updatedLanguage});
-      this.language = updatedLanguage;
-      console.log('msg recieved language is ', this.language);
-    });
+
   }
 
   async ngOnInit() {
