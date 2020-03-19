@@ -23,8 +23,8 @@ export class IndoorNavigationToolbarComponent {
     { buildingName: 'Hall Building', topFloorIndex: 10, bottomFloorIndex: 9 },
     {
       buildingName: 'John Molson Building',
-      topFloorIndex: 3,
-      bottomFloorIndex: 0
+      topFloorIndex: 2,
+      bottomFloorIndex: 2
     },
     { buildingName: 'Faubourg', topFloorIndex: 2, bottomFloorIndex: 0 },
     {
@@ -92,7 +92,7 @@ export class IndoorNavigationToolbarComponent {
   // Method to update the floor when the user selects a floor from the dropdown menu
   private changeFloor() {
     this.events.publish('floor-changes', this.floor, Date.now());
-    this.currentFloorIndex = this.floors.indexOf(this.floor);
+    this.currentFloorIndex = this.floors.indexOf(JSON.stringify(this.floor));
   }
 
   // Method to move one floor up

@@ -92,7 +92,14 @@ export class DirectionsManagerService {
       ]
     });
 
-    await alert.present();
+    await alert.present().then( ()=> {
+      /** disable the different floor is mb1 */
+      if(building === 'mb1'){
+        document.querySelector('ion-alert div.alert-button-group button:nth-of-type(2)').setAttribute('disabled', 'true');
+        return;
+      }
+    })
+
     let result = await alert.onDidDismiss();
 
     //if want to find path within the same (current) floor
@@ -165,6 +172,7 @@ export class DirectionsManagerService {
       this.steps.push(tempPath);
       this.initiatePathSteps();
     }
+    console.log(this.steps);
   }
 
   private initiatePathSteps(){

@@ -41,7 +41,7 @@ export class IndoorViewPage implements OnInit {
     //when floor changes -> change view
     this.events.subscribe('floor-changes', res => {
       if (res) {
-        this.floor = res;
+        this.floor = parseInt(res);
       }
     });
   }

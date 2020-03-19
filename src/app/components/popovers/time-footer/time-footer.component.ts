@@ -66,6 +66,7 @@ export class TimeFooterComponent implements OnInit {
 
   //user has arrived at destination and pressed end
   private endRoute() {
+    this.isInRoute = false;
     this.events.publish('path-completed', true, Date.now());
   }
 
