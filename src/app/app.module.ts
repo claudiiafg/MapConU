@@ -32,7 +32,10 @@ import { environment } from '../environments/environment';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 import { UserServices } from 'src/services/user.services';
-import { PoiServices } from '../services/poi.services';
+import { PoiServices } from 'src/services/poi.services';
+import { DataSharingService } from 'src/services/data-sharing.service';
+import { DirectionService } from 'src/services/direction.service';
+
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -115,6 +118,8 @@ import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9
     UserServices,
     NgxIonicImageViewerModule,
     PoiServices,
+    DataSharingService,
+    DirectionService,
     IndoorDirectionsService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }

@@ -84,10 +84,10 @@ describe('GoogleMapComponent ', () => {
 
   // New Test for currentLocation
   it('should Mock currentLocation', () => {
-    let tempMarker = {
-      latitude: Math.random(),
-      longitude: Math.random()
-    };
+    // let tempMarker = {
+    //   latitude: Math.random(),
+    //   longitude: Math.random()
+    // };
     // service.getCurrentPosition();
     component.subscribeToChangeInCurrentPOS();
     expect(component.positionMarkers).toBeDefined();

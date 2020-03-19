@@ -25,7 +25,9 @@ export interface Point {
   y: number;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class IndoorDirectionsService {
   private pathLines: Line[] = [];
   private interestPoints: Point[] = [];
