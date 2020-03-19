@@ -12,6 +12,8 @@ import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {DataSharingService} from '../../../../services/data-sharing.service';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {DirectionService} from '../../../../services/direction.service';
+import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
 import {AgmDirectionModule} from 'agm-direction';
 import {AgmOverlays} from 'agm-overlays';
 import {AgmCoreModule} from '@agm/core';
@@ -46,6 +48,8 @@ describe('OutdoorNavigationToolbarComponent ', () => {
         UserServices,
         DataSharingService,
         PoiServices,
+        DirectionService,
+        IndoorDirectionsService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]
