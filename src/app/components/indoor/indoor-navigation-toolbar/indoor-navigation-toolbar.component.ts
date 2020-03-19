@@ -11,7 +11,7 @@ import { TranslationService} from "../../../../services/translation.service";
 })
 export class IndoorNavigationToolbarComponent implements OnInit {
   @Input() inputBuilding: string = '';
-  @Input() floor: string = '1';
+  @Input() floor: string = '8';
 
   building: string;
   maxFloorIndex: number;

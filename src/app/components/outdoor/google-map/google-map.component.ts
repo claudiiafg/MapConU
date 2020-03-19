@@ -608,7 +608,6 @@ export class GoogleMapComponent implements OnInit {
       return this.poiMarkerIcon.hotel;
     } else if (poiMarker.type === 'groceries') {
       return this.poiMarkerIcon.groceries;
-
     }
   }
 
