@@ -5,6 +5,7 @@ import {
   Point
 } from 'src/services/indoorDirections.service';
 import { Events, AlertController } from '@ionic/angular';
+import { TranslationService} from "../../../../../../services/translation.service";
 
 @Component({
   selector: 'mb1-floor-plan',
@@ -23,7 +24,8 @@ export class MB1FloorPlanComponent implements OnInit {
   constructor(
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private translate: TranslationService
   ) {}
 
   ngOnInit() {
@@ -119,15 +121,15 @@ export class MB1FloorPlanComponent implements OnInit {
 
   async showPopover() {
     const alert = await this.alertController.create({
-      header: 'Where do you wish to know directions from?',
+      header: this.translate.getTranslation('find-way'),
       cssClass: 'alert-css',
       buttons: [
         {
-          text: 'From entrance',
+          text: this.translate.getTranslation('fm-entrance'),
           role: 'entrance'
         },
         {
-          text: 'Choose source',
+          text: this.translate.getTranslation('chose-src'),
           role: 'choose'
         }
       ]

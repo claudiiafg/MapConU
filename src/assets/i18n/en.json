@@ -57,5 +57,9 @@
 	"stairs": "Stairs",
 	"escalator": "Escalator",
 	"elevators": "Elevators",
-	"exit": "Exit"
+	"exit": "Exit",
+	"find-way": "Where do you wish to know directions from?",
+	"fm-escalator": "From escalators",
+	"chose-src": "Choose source",
+	"fm-entrance": "From entrance"
 }

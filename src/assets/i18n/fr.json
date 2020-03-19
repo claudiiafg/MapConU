@@ -57,5 +57,9 @@
 	"stairs": " Escaliers",
 	"escalators": "Escaliers mécaniques",
 	"elevators": "Ascenseurs",
-	"exit": "Sortie"
+	"exit": "Sortie",
+	"find-way": "d'où voulez-vous d'avoir des indications?",
+	"fm-escalator": "à partir des escaliers mécaniques",
+	"chose-src": "choisir une source",
+	"fm-entrance": "à partir de l'entrée"
 }

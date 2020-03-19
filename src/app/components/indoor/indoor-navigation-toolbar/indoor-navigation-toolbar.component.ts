@@ -57,10 +57,7 @@ export class IndoorNavigationToolbarComponent implements OnInit {
     private events: Events,
     private translate: TranslationService
   ) {
-    //TODO: when user selects building to enter the name of that building needs to be sent to initialize the indoor view
-    this.data.currentMessage.subscribe(
-      incomingMessage => (this.building = incomingMessage)
-    );
+
     this.ngOnInit();
   }
 
