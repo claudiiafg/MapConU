@@ -10,6 +10,8 @@ import {PoiPopoverComponent} from './poi-popover.component';
 import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {DirectionService} from '../../../../services/direction.service';
+import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
 
 
 describe('PoiPopoverComponent ', () => {
@@ -28,6 +30,8 @@ describe('PoiPopoverComponent ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionService,
+        IndoorDirectionsService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]
@@ -41,7 +45,7 @@ describe('PoiPopoverComponent ', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

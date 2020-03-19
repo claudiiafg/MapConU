@@ -12,6 +12,8 @@ import { Events } from '@ionic/angular';
 import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {DirectionService} from '../../../../services/direction.service';
+import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
 
 
 
@@ -62,6 +64,8 @@ describe('GoogleMapComponent ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionService,
+        IndoorDirectionsService,
         AlertController,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
@@ -80,10 +84,10 @@ describe('GoogleMapComponent ', () => {
 
   // New Test for currentLocation
   it('should Mock currentLocation', () => {
-    let tempMarker = {
-      latitude: Math.random(),
-      longitude: Math.random()
-    };
+    // let tempMarker = {
+    //   latitude: Math.random(),
+    //   longitude: Math.random()
+    // };
     // service.getCurrentPosition();
     component.subscribeToChangeInCurrentPOS();
     expect(component.positionMarkers).toBeDefined();
@@ -109,7 +113,7 @@ describe('GoogleMapComponent ', () => {
     let alertSubtitle = document.getElementsByClassName("alert-sub-title");
     expect(alertSubtitle).not.toBeNull();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });
