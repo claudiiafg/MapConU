@@ -3,6 +3,7 @@ import { Events, AlertController } from '@ionic/angular';
 import { IndoorDirectionsService } from './indoorDirections.service';
 import { DirectionService } from './direction.service';
 import { BehaviorSubject } from 'rxjs';
+import { TranslationService } from './translation.service';
 
 enum Mode {
   indoor,
@@ -41,6 +42,7 @@ export class DirectionsManagerService {
     private indoorDirections: IndoorDirectionsService,
     private outdoorDirections: DirectionService,
     private alertController: AlertController,
+    private translate: TranslationService
 
   ) {
     this.subscribeToEvents();
@@ -74,19 +76,19 @@ export class DirectionsManagerService {
     }
 
     const alert = await this.alertController.create({
-      header: 'Where do you wish to know directions from?',
+      header: this.translate.getTranslation('find-way'),
       cssClass: 'alert-css',
       buttons: [
         {
-          text: 'This floor',
+          text: this.translate.getTranslation('this-floor'),
           role: 'sameFloor'
         },
         {
-          text: 'Another floor',
+          text: this.translate.getTranslation('another-floor'),
           role: 'diffFloor'
         },
         {
-          text: 'Another building',
+          text: this.translate.getTranslation('another-building'),
           role: 'diffBuilding'
         }
       ]

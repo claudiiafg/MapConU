@@ -4,6 +4,7 @@ import { DirectionService } from 'src/services/direction.service';
 import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { StringHelperService } from 'src/services/stringHelper.service';
+import { TranslationService } from 'src/services/translation.service';
 
 @Component({
   selector: 'app-time-footer',
@@ -25,6 +26,7 @@ export class TimeFooterComponent implements OnInit {
     private directionsManagerService : DirectionsManagerService,
     private events: Events,
     private stringHelper: StringHelperService,
+    private translate: TranslationService,
 
   ) {
     //outdoor directions subscription

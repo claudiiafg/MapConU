@@ -36,10 +36,10 @@ import { GeolocationServices } from 'src/services/geolocation.services';
 import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { UserServices } from 'src/services/user.services';
+import { PoiServices } from 'src/services/poi.services';
 import { StringHelperService } from 'src/services/stringHelper.service';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
-
 
 //pages
 import { AppRoutingModule } from './app-routing.module';

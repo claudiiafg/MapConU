@@ -3,6 +3,7 @@ import { PopoverController, Events } from '@ionic/angular';
 import { RoomSelectorPopoverComponent } from '../../popovers/room-selector-popover/room-selector-popover';
 import { InfoPopoverComponent } from '../../popovers/info-popover/info-popover.component';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { TranslationService } from 'src/services/translation.service';
 
 @Component({
   selector: 'app-indoor-navigation-side-buttons',
@@ -16,6 +17,7 @@ export class IndoorNavigationSideButtonsComponent {
     public popoverController: PopoverController,
     private events: Events,
     private directionsManagerService : DirectionsManagerService,
+    private translate: TranslationService,
 
   ) {
     this.events.subscribe('open-indoor-popup', data => {
@@ -52,14 +54,14 @@ export class IndoorNavigationSideButtonsComponent {
   //return instructions to user
   private getData(){
     if(this.isSelectMode === true){
-      return "Please select where you're comming from.";
+      return this.translate.getTranslation('select-source-instruction');
 
     } else if(this.isSelectMode === false){
       if(this.directionsManagerService.isInRoute.getValue() === true){
-        return "Follow the path to arrive at your destination.";
+        return this.translate.getTranslation('follow-path-instructions');
 
       } else {
-        return "Press on any room to start navigation to it.";
+        return this.translate.getTranslation('press-on-room-instruction');
       }
     }
   }

@@ -10,7 +10,7 @@
 <div *ngIf="isIndoorDirectionsSet" class="indoor-timefooter-wrapper ">
   <div *ngIf="!isInRoute" class="footer-elements-wrapper">
     <div class="start-container">
-      <button class="start-button" type="button" name="button" (click)="initRoute()">START</button>
+      <button class="start-button" type="button" name="button" (click)="initRoute()">{{'start'| translate}}</button>
     </div>
   </div>
 
@@ -24,11 +24,11 @@
       </div>
     </div>
     <div class="room-wrapper">
-      <span *ngIf="currentStep._prettyDest" >{{currentStep._prettyDest}}</span>
+      <span *ngIf="currentStep._prettyDest">{{currentStep._prettyDest}}</span>
     </div>
     <div class="button-wrapper">
-      <button class="start-button" type="button" name="button" (click)="getNextStep()" *ngIf="!currentStep.isLast">NEXT</button>
-      <button class="start-button" type="button" name="button" (click)="endRoute()" *ngIf="currentStep.isLast">END</button>
+      <button class="start-button" type="button" name="button" (click)="getNextStep()" *ngIf="!currentStep.isLast">{{'next'| translate}}</button>
+      <button class="start-button" type="button" name="button" (click)="endRoute()" *ngIf="currentStep.isLast">{{'end'| translate}}</button>
     </div>
   </div>
 </div>
