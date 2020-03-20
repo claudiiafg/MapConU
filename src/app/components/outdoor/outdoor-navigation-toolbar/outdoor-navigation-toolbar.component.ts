@@ -13,15 +13,16 @@ import { Events, IonSearchbar } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
-import { Router} from "@angular/router";
-import { TranslationService } from "../../../../services/translation.service";
+import { Router } from '@angular/router';
+import { TranslationService } from '../../../../services/translation.service';
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',
   templateUrl: './outdoor-navigation-toolbar.component.html',
   styleUrls: ['./outdoor-navigation-toolbar.component.scss']
 })
-export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit {
+export class OutdoorNavigationToolbarComponent
+  implements OnInit, AfterViewInit {
   @ViewChild('search', { static: false }) public searchRef: IonSearchbar;
   public loc: string;
   public latitudeFound: number;
@@ -31,7 +32,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   public transitColor: string = 'white';
   public carColor: string = 'white';
   public walkColor: string = 'yellow';
-  readonly mapRadius: number = 0.3
+  readonly mapRadius: number = 0.3;
   currentLat: number = 45.495729;
   currentLng: number = -73.578041;
 
@@ -49,7 +50,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     public directionService: DirectionService,
     private router: Router,
     private translate: TranslationService,
-    private geolocationServices: GeolocationServices,
+    private geolocationServices: GeolocationServices
   ) {
     this.dataSharing.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
@@ -57,8 +58,6 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
       this.isDirectionSet = isDirectionSet;
     });
-
-
   }
 
   async ngOnInit() {
@@ -73,16 +72,19 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   }
 
   findAddress() {
-    this.searchRef.getInputElement().then( input => {
+    this.searchRef.getInputElement().then(input => {
       this.mapsAPILoader.load().then(() => {
-        const nwBounds = new google.maps.LatLng({lat: this.currentLat - this.mapRadius, lng: this.currentLng - this.mapRadius});
-        const seBounds = new google.maps.LatLng({lat: this.currentLat + this.mapRadius, lng: this.currentLng + this.mapRadius});
-        let searchAutocomplete = new google.maps.places.Autocomplete(
-          input,
-          {
-            bounds: new google.maps.LatLngBounds(nwBounds, seBounds)
-          }
-        );
+        const nwBounds = new google.maps.LatLng({
+          lat: this.currentLat - this.mapRadius,
+          lng: this.currentLng - this.mapRadius
+        });
+        const seBounds = new google.maps.LatLng({
+          lat: this.currentLat + this.mapRadius,
+          lng: this.currentLng + this.mapRadius
+        });
+        let searchAutocomplete = new google.maps.places.Autocomplete(input, {
+          bounds: new google.maps.LatLngBounds(nwBounds, seBounds)
+        });
 
         searchAutocomplete.addListener('place_changed', () => {
           this.ngZone.run(() => {
@@ -96,7 +98,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
 
             this.latitudeFound = place.geometry.location.lat();
             this.longitudeFound = place.geometry.location.lng();
-            this.moveToFoundLocation(this.latitudeFound, this.longitudeFound)
+            this.moveToFoundLocation(this.latitudeFound, this.longitudeFound);
           });
         });
       });
@@ -107,7 +109,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     /* Added as a workaround to get the select menu for campuses to reload when the language changes.
     A variable change is required to trigger an automatic reload but campus should not be changed
      */
-    if(this.loc == '2'){
+    if (this.loc == '2') {
       this.loc = '0';
     }
     this.dataSharing.updateMessage(this.locations[this.loc]);
@@ -120,7 +122,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   }
 
   public closeAutocomplete($event: CustomEvent) {
-    this.searchRef.getInputElement().then( input => {
+    this.searchRef.getInputElement().then(input => {
       input.blur();
     });
   }
@@ -154,7 +156,7 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   /*
   Takes the user to the settings page
    */
-  public adjustSettings(){
+  public adjustSettings() {
     this.router.navigateByUrl('/appSettings');
   }
 }

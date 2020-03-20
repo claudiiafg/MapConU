@@ -23,11 +23,10 @@ export class TimeFooterComponent implements OnInit {
   constructor(
     public modalController: ModalController,
     private directionService: DirectionService,
-    private directionsManagerService : DirectionsManagerService,
+    private directionsManagerService: DirectionsManagerService,
     private events: Events,
     private stringHelper: StringHelperService,
-    private translate: TranslationService,
-
+    private translate: TranslationService
   ) {
     //outdoor directions subscription
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
@@ -44,7 +43,7 @@ export class TimeFooterComponent implements OnInit {
 
     //indoor directions subscription
     this.directionsManagerService.isInRoute.subscribe(res => {
-      if(res === true){
+      if (res === true) {
         this.isIndoorDirectionsSet = true;
       } else {
         this.isIndoorDirectionsSet = false;
@@ -53,17 +52,21 @@ export class TimeFooterComponent implements OnInit {
   }
 
   //initiate indoor direction
-  private initRoute(){
+  private initRoute() {
     this.events.publish('isSelectMode', false, Date.now());
     this.isInRoute = true;
     this.getNextStep();
   }
 
   //get next step to compute in indoor directions
-  private getNextStep(){
+  private getNextStep() {
     this.currentStep = this.directionsManagerService.getNextStep();
-    this.currentStep._prettySource = this.stringHelper.prettifyTitles(this.currentStep.source);
-    this.currentStep._prettyDest = this.stringHelper.prettifyTitles(this.currentStep.dest);
+    this.currentStep._prettySource = this.stringHelper.prettifyTitles(
+      this.currentStep.source
+    );
+    this.currentStep._prettyDest = this.stringHelper.prettifyTitles(
+      this.currentStep.dest
+    );
   }
 
   //user has arrived at destination and pressed end

@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {FirestoreSettingsToken} from '@angular/fire/firestore';
-import {IndoorNavigationSideButtonsComponent} from './indoor-navigation-side-buttons.component';
-import {UserServices} from '../../../../services/user.services';
-import {PoiServices} from '../../../../services/poi.services';
-import {GeolocationServices} from '../../../../services/geolocation.services';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { FirestoreSettingsToken } from '@angular/fire/firestore';
+import { IndoorNavigationSideButtonsComponent } from './indoor-navigation-side-buttons.component';
+import { UserServices } from '../../../../services/user.services';
+import { PoiServices } from '../../../../services/poi.services';
+import { GeolocationServices } from '../../../../services/geolocation.services';
 import {DirectionsManagerService} from "../../../../services/directionsManager.service";
 import {TranslationService} from "../../../../services/translation.service";
 import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from "@ngx-translate/core";
@@ -25,8 +25,7 @@ describe('IndoorNavigationSideButtonsComponent ', () => {
   let fixture: ComponentFixture<IndoorNavigationSideButtonsComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]),
-        IonicModule.forRoot(),HttpClientModule,
+      imports: [RouterModule.forRoot([]), IonicModule.forRoot(),HttpClientModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -34,9 +33,10 @@ describe('IndoorNavigationSideButtonsComponent ', () => {
             deps: [HttpClient]
           }
         })],
-      declarations: [ IndoorNavigationSideButtonsComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      providers: [StatusBar,
+      declarations: [IndoorNavigationSideButtonsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        StatusBar,
         SplashScreen,
         Geolocation,
         GeolocationServices,
@@ -46,8 +46,8 @@ describe('IndoorNavigationSideButtonsComponent ', () => {
         TranslationService,
         TranslateService,
         TranslateStore,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-        {provide: FirestoreSettingsToken, useValue: {}}
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: FirestoreSettingsToken, useValue: {} }
       ]
     }).compileComponents();
   }));

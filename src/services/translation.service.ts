@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TranslateService} from "@ngx-translate/core";
-import { DataSharingService} from "./data-sharing.service";
+import { TranslateService } from '@ngx-translate/core';
+import { DataSharingService } from './data-sharing.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +9,17 @@ export class TranslationService {
   private currentLanguage;
 
   constructor(
-      private translate: TranslateService,
-      private dataSharing: DataSharingService
-  ) { }
+    private translate: TranslateService,
+    private dataSharing: DataSharingService
+  ) {}
 
   //automatically sets the app to french is the users phone is french and english otherwise
-  getDefaultLanguage(){
+  getDefaultLanguage() {
     let language = this.translate.getBrowserLang();
     console.log('default language is: ', language);
     if (language == 'fr') {
       this.translate.setDefaultLang(language);
-    }
-    else{
+    } else {
       this.translate.setDefaultLang('en');
     }
     //notify subscribers of default language
@@ -35,23 +34,23 @@ export class TranslationService {
     console.log('language is set to: ', newLang);
   }
 
-  getCurrentLanguage(){
+  getCurrentLanguage() {
     return this.currentLanguage;
   }
 
   //encapsulate subscription to language changes (method for all components that have text)
-  subscribeToAppLanguage(currentLanguage: string, ){
+  subscribeToAppLanguage(currentLanguage: string) {
     this.dataSharing.currentMessage.subscribe(updatedLanguage => {
       console.log('msg recieved');
       if (currentLanguage != updatedLanguage && currentLanguage != null) {
-       // window.location.reload();
+        // window.location.reload();
       }
       currentLanguage = updatedLanguage;
     });
   }
 
   //translate
-  getTranslation(toTranslate: string){
-    return this.translate.instant(toTranslate)
+  getTranslation(toTranslate: string) {
+    return this.translate.instant(toTranslate);
   }
 }
