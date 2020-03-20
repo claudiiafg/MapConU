@@ -12,6 +12,7 @@ import { PoiServices } from '../../../../services/poi.services';
 import { GeolocationServices } from '../../../../services/geolocation.services';
 import { DirectionService } from '../../../../services/direction.service';
 import { IndoorDirectionsService } from '../../../../services/indoorDirections.service';
+import {TranslationService} from "../../../../services/translation.service";
 
 describe('OutdoorNavigationSideButtonsComponent ', () => {
   let component: OutdoorNavigationSideButtonsComponent;
@@ -30,6 +31,7 @@ describe('OutdoorNavigationSideButtonsComponent ', () => {
         PoiServices,
         DirectionService,
         IndoorDirectionsService,
+        TranslationService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]

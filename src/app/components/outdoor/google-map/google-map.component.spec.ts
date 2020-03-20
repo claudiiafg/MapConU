@@ -9,42 +9,20 @@ import { AlertController, IonicRouteStrategy } from '@ionic/angular';
 import { FirestoreSettingsToken } from '@angular/fire/firestore';
 import { IonicModule } from '@ionic/angular';
 import { Events } from '@ionic/angular';
-import { UserServices } from '../../../../services/user.services';
-import { PoiServices } from '../../../../services/poi.services';
-import { GeolocationServices } from '../../../../services/geolocation.services';
-import { DirectionService } from '../../../../services/direction.service';
-import { IndoorDirectionsService } from '../../../../services/indoorDirections.service';
+import {UserServices} from '../../../../services/user.services';
+import {PoiServices} from '../../../../services/poi.services';
+import {GeolocationServices} from '../../../../services/geolocation.services';
+import {DirectionService} from '../../../../services/direction.service';
+import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
+import {TranslationService} from "../../../../services/translation.service";
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
-// class MockData {
-//
-//   private latitude: number;
-//   private longitude: number;
-//   private coordinates = {
-//     latitude: Math.random(),
-//     longitude: Math.random()
-//   };
-//
-//   getCurrentPosition() {
-//     this.setLongitude();
-//     this.setLongitude();
-//   }
-//
-//   getLatitude() {
-//     return this.latitude;
-//   }
-//
-//   getLongitude() {
-//     return this.longitude;
-//   }
-//
-//   setLatitude() {
-//     return Math.random();
-//   }
-//
-//   setLongitude() {
-//     return Math.random();
-//   }
-// }
+//function that loads the external JSON files to the app using http-loader.
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 describe('GoogleMapComponent ', () => {
   let component: GoogleMapComponent;
@@ -56,7 +34,16 @@ describe('GoogleMapComponent ', () => {
   );
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), IonicModule.forRoot()],
+      imports: [RouterModule.forRoot([]), IonicModule.forRoot(),
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (LanguageLoader),
+            deps: [HttpClient]
+          }
+        })
+      ],
       declarations: [GoogleMapComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
@@ -69,6 +56,7 @@ describe('GoogleMapComponent ', () => {
         DirectionService,
         IndoorDirectionsService,
         AlertController,
+        TranslationService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
         // { provide: GeolocationServices, useClass: MockData }

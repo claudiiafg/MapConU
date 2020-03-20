@@ -10,13 +10,29 @@ import { IndoorNavigationSideButtonsComponent } from './indoor-navigation-side-b
 import { UserServices } from '../../../../services/user.services';
 import { PoiServices } from '../../../../services/poi.services';
 import { GeolocationServices } from '../../../../services/geolocation.services';
+import {DirectionsManagerService} from "../../../../services/directionsManager.service";
+import {TranslationService} from "../../../../services/translation.service";
+import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from "@ngx-translate/core";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 describe('IndoorNavigationSideButtonsComponent ', () => {
   let component: IndoorNavigationSideButtonsComponent;
   let fixture: ComponentFixture<IndoorNavigationSideButtonsComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), IonicModule.forRoot()],
+      imports: [RouterModule.forRoot([]), IonicModule.forRoot(),HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (LanguageLoader),
+            deps: [HttpClient]
+          }
+        })],
       declarations: [IndoorNavigationSideButtonsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
@@ -26,6 +42,10 @@ describe('IndoorNavigationSideButtonsComponent ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionsManagerService,
+        TranslationService,
+        TranslateService,
+        TranslateStore,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]

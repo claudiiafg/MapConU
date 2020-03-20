@@ -20,9 +20,8 @@ export class RoomSelectorPopoverComponent {
   private prettyDestination: string;
   private points: Point[] = [];
   private prettyPoints: any[] = [];
-
+  public navParams = new NavParams;
   constructor(
-    private navParams: NavParams,
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
     public popoverController: PopoverController,

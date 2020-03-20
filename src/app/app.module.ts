@@ -39,6 +39,7 @@ import { UserServices } from 'src/services/user.services';
 import { PoiServices } from 'src/services/poi.services';
 import { StringHelperService } from 'src/services/stringHelper.service';
 import { DirectionService } from 'src/services/direction.service';
+import {TranslationService} from 'src/services/translation.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
 
 //pages
@@ -141,6 +142,7 @@ export function LanguageLoader(http: HttpClient) {
     DataSharingService,
     DirectionService,
     IndoorDirectionsService,
+    TranslationService,
     DirectionsManagerService,
     StringHelperService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
