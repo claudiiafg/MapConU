@@ -10,6 +10,8 @@ import {IndoorNavigationToolbarComponent} from './indoor-navigation-toolbar.comp
 import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import { TranslationService} from "../../../../services/translation.service";
+
 
 describe('IndoorNavigationToolbarComponent ', () => {
   let component: IndoorNavigationToolbarComponent;
@@ -25,6 +27,7 @@ describe('IndoorNavigationToolbarComponent ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        TranslationService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]

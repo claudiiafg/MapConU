@@ -13,6 +13,7 @@ import {DirectionService} from '../../../services/direction.service';
 import {IndoorDirectionsService} from '../../../services/indoorDirections.service';
 
 import { SettingsOptionsComponent } from './settings-options.component';
+import {TranslationService} from "../../../services/translation.service";
 
 describe('SettingsOptionsComponent', () => {
   let component: SettingsOptionsComponent;
@@ -31,6 +32,7 @@ describe('SettingsOptionsComponent', () => {
         PoiServices,
         DirectionService,
         IndoorDirectionsService,
+        TranslationService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         {provide: FirestoreSettingsToken, useValue: {}}
       ]

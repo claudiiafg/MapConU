@@ -18,6 +18,7 @@ import {AgmDirectionModule} from 'agm-direction';
 import {AgmOverlays} from 'agm-overlays';
 import {AgmCoreModule} from '@agm/core';
 import {APIKey} from '../../../../environments/env';
+import {TranslationService} from "../../../../services/translation.service";
 
 describe('OutdoorNavigationToolbarComponent ', () => {
   let component: OutdoorNavigationToolbarComponent;
@@ -50,6 +51,7 @@ describe('OutdoorNavigationToolbarComponent ', () => {
         PoiServices,
         DirectionService,
         IndoorDirectionsService,
+        TranslationService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]

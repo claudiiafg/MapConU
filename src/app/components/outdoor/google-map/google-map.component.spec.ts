@@ -14,7 +14,7 @@ import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
 import {DirectionService} from '../../../../services/direction.service';
 import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
-
+import {TranslationService} from "../../../../services/translation.service";
 
 
 // class MockData {
@@ -67,6 +67,7 @@ describe('GoogleMapComponent ', () => {
         DirectionService,
         IndoorDirectionsService,
         AlertController,
+        TranslationService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
         // { provide: GeolocationServices, useClass: MockData }
