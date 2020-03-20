@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 @Component({
@@ -7,12 +7,9 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./h8.component.scss']
 })
 export class H8FloorPlanComponent {
+  constructor(private events: Events) {}
 
-  constructor(
-    private events: Events,
-  ) {}
-
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.events.publish('floor-loaded', Date.now());
   }
 }

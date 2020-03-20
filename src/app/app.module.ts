@@ -58,10 +58,9 @@ import { TimeFooterComponent } from './components/popovers/time-footer/time-foot
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
 import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
-import { SettingsPage } from "./pages/settings/settings.page";
-import { SettingsOptionsComponent } from "./components/settings-options/settings-options.component";
+import { SettingsPage } from './pages/settings/settings.page';
+import { SettingsOptionsComponent } from './components/settings-options/settings-options.component';
 import { InfoPopoverComponent } from './components/popovers/info-popover/info-popover.component';
-
 
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
@@ -126,7 +125,7 @@ export function LanguageLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (LanguageLoader),
+        useFactory: LanguageLoader,
         deps: [HttpClient]
       }
     })

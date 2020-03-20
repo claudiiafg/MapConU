@@ -1,36 +1,38 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {FirestoreSettingsToken} from '@angular/fire/firestore';
-import {RoomSelectorPopoverComponent} from './room-selector-popover.component';
-import {AgmCoreModule} from '@agm/core';
-import {APIKey} from '../../../../environments/env';
-import {UserServices} from '../../../../services/user.services';
-import {PoiServices} from '../../../../services/poi.services';
-import {GeolocationServices} from '../../../../services/geolocation.services';
-import {DirectionService} from '../../../../services/direction.service';
-import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
-
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { FirestoreSettingsToken } from '@angular/fire/firestore';
+import { RoomSelectorPopoverComponent } from './room-selector-popover.component';
+import { AgmCoreModule } from '@agm/core';
+import { APIKey } from '../../../../environments/env';
+import { UserServices } from '../../../../services/user.services';
+import { PoiServices } from '../../../../services/poi.services';
+import { GeolocationServices } from '../../../../services/geolocation.services';
+import { DirectionService } from '../../../../services/direction.service';
+import { IndoorDirectionsService } from '../../../../services/indoorDirections.service';
 
 describe('RoomSelectorPopoverComponent ', () => {
   let component: RoomSelectorPopoverComponent;
   let fixture: ComponentFixture<RoomSelectorPopoverComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]),
+      imports: [
+        RouterModule.forRoot([]),
         IonicModule.forRoot(),
         AgmCoreModule.forRoot({
           apiKey: APIKey,
           libraries: ['places'],
           apiVersion: '3.31'
-        }),],
-      declarations: [ RoomSelectorPopoverComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      providers: [ StatusBar,
+        })
+      ],
+      declarations: [RoomSelectorPopoverComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        StatusBar,
         SplashScreen,
         Geolocation,
         GeolocationServices,

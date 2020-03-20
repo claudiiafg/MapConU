@@ -16,9 +16,8 @@ export class IndoorNavigationSideButtonsComponent {
   constructor(
     public popoverController: PopoverController,
     private events: Events,
-    private directionsManagerService : DirectionsManagerService,
-    private translate: TranslationService,
-
+    private directionsManagerService: DirectionsManagerService,
+    private translate: TranslationService
   ) {
     this.events.subscribe('open-indoor-popup', data => {
       this.presentPopover(data);
@@ -38,7 +37,7 @@ export class IndoorNavigationSideButtonsComponent {
     return await popover.present();
   }
 
-  async showInfo(){
+  async showInfo() {
     const popover = await this.popoverController.create({
       component: InfoPopoverComponent,
       componentProps: {
@@ -52,14 +51,12 @@ export class IndoorNavigationSideButtonsComponent {
   }
 
   //return instructions to user
-  private getData(){
-    if(this.isSelectMode === true){
+  private getData() {
+    if (this.isSelectMode === true) {
       return this.translate.getTranslation('select-source-instruction');
-
-    } else if(this.isSelectMode === false){
-      if(this.directionsManagerService.isInRoute.getValue() === true){
+    } else if (this.isSelectMode === false) {
+      if (this.directionsManagerService.isInRoute.getValue() === true) {
         return this.translate.getTranslation('follow-path-instructions');
-
       } else {
         return this.translate.getTranslation('press-on-room-instruction');
       }

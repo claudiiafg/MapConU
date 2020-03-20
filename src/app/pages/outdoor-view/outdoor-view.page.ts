@@ -1,6 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { OutdoorNavigationToolbarComponent} from "../../components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component";
+import { OutdoorNavigationToolbarComponent } from '../../components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 
 @Component({
   selector: 'app-outdoor-view',
@@ -8,11 +8,10 @@ import { OutdoorNavigationToolbarComponent} from "../../components/outdoor/outdo
   styleUrls: ['./outdoor-view.page.scss']
 })
 export class OutdoorViewPage implements OnInit {
-  @ViewChild('toolbar', { static: false }) toolbar: OutdoorNavigationToolbarComponent;
+  @ViewChild('toolbar', { static: false })
+  toolbar: OutdoorNavigationToolbarComponent;
 
-  constructor(
-      private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
@@ -20,7 +19,7 @@ export class OutdoorViewPage implements OnInit {
     this.router.navigate(path);
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.toolbar.loc = '2';
   }
 }

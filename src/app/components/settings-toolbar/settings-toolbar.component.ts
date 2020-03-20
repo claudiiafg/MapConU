@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location} from "@angular/common";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-settings-toolbar',
@@ -7,16 +7,14 @@ import { Location} from "@angular/common";
   styleUrls: ['./settings-toolbar.component.scss']
 })
 export class SettingsToolbarComponent implements OnInit {
-  constructor(
-      private location: Location
-  ) {}
+  constructor(private location: Location) {}
 
   ngOnInit() {}
 
   /*
   Takes the user back to whichever page they came from, indoor or outdoor
    */
-  public goBack(){
+  public goBack() {
     this.location.back();
   }
 }

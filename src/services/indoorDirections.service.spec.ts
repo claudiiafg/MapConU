@@ -6,7 +6,9 @@ describe('IndoorDirectionsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: IndoorDirectionsService = TestBed.get(IndoorDirectionsService);
+    const service: IndoorDirectionsService = TestBed.get(
+      IndoorDirectionsService
+    );
     expect(service).toBeTruthy();
   });
   afterEach(() => {

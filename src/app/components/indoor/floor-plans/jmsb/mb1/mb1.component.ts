@@ -7,15 +7,11 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./mb1.component.scss']
 })
 export class MB1FloorPlanComponent implements OnInit {
+  constructor(private events: Events) {}
 
-  constructor(
-    private events: Events,
-  ) {}
-
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.events.publish('floor-loaded', Date.now());
   }
 
   ngOnInit() {}
-
 }

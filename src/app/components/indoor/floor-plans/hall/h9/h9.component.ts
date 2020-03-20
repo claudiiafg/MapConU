@@ -7,13 +7,9 @@ import { Events } from '@ionic/angular';
   styleUrls: ['./h9.component.scss']
 })
 export class H9FloorPlanComponent {
+  constructor(private events: Events) {}
 
-  constructor(
-    private events: Events,
-  ) {}
-
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.events.publish('floor-loaded', Date.now());
-
   }
 }
