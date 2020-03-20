@@ -10,7 +10,7 @@ import {
 import { Platform, PopoverController } from '@ionic/angular';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionService } from 'src/services/direction.service';
-import { GeolocationServices} from "../../../../services/geolocation.services";
+import { GeolocationServices} from "src/services/geolocation.services";
 
 @Component({
   selector: 'app-search-popover',

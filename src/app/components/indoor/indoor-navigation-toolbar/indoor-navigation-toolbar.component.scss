@@ -8,6 +8,25 @@
   color: white;
   display: contents;
   max-width: fit-content;
+
+  .input-wrapper{
+    display: block !important;
+  }
+}
+
+.instrunctions-wrapper{
+  padding: 10px 30px;
+  width: 100%;
+  
+  .instructions-text{
+    color: white;
+    font-size: 10pt;
+    font-weight: 600;
+  }
+}
+
+.building-info-wrapper{
+  display: flex;
 }
 
 .select-floor {
@@ -19,7 +38,8 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   color: white;
-  width: 50%;
+  width: 60%;
+  display: contents;
 }
 
 .up-button,

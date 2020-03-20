@@ -34,11 +34,12 @@ import { environment } from '../environments/environment';
 //services
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { UserServices } from 'src/services/user.services';
 import { PoiServices } from 'src/services/poi.services';
-import { DataSharingService } from 'src/services/data-sharing.service';
+import { StringHelperService } from 'src/services/stringHelper.service';
 import { DirectionService } from 'src/services/direction.service';
-
+import { DataSharingService } from 'src/services/data-sharing.service';
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -51,7 +52,7 @@ import { ModalDirectionsComponent } from './components/outdoor/modal-directions/
 import { OutdoorNavigationSideButtonsComponent } from './components/outdoor/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component';
 import { OutdoorNavigationToolbarComponent } from './components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { PoiPopoverComponent } from './components/popovers/poi-popover/poi-popover.component';
-import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover';
+import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover.component';
 import { SearchPopoverComponent } from './components/popovers/search-popover/search-popover.component';
 import { TimeFooterComponent } from './components/popovers/time-footer/time-footer.component';
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
@@ -59,6 +60,8 @@ import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
 import { SettingsPage } from "./pages/settings/settings.page";
 import { SettingsOptionsComponent } from "./components/settings-options/settings-options.component";
+import { InfoPopoverComponent } from './components/popovers/info-popover/info-popover.component';
+
 
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
@@ -92,12 +95,14 @@ export function LanguageLoader(http: HttpClient) {
     ModalDirectionsComponent,
     RoomSelectorPopoverComponent,
     SettingsOptionsComponent,
+    InfoPopoverComponent
   ],
   entryComponents: [
     SearchPopoverComponent,
     PoiPopoverComponent,
     ModalDirectionsComponent,
-    RoomSelectorPopoverComponent
+    RoomSelectorPopoverComponent,
+    InfoPopoverComponent
   ],
   imports: [
     CommonModule,
@@ -137,6 +142,8 @@ export function LanguageLoader(http: HttpClient) {
     DataSharingService,
     DirectionService,
     IndoorDirectionsService,
+    DirectionsManagerService,
+    StringHelperService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
