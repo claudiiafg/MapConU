@@ -23,6 +23,9 @@ import { AgmDirectionModule } from 'agm-direction';
 import { AgmOverlays } from 'agm-overlays';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { NgPipesModule } from 'ngx-pipes';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -33,8 +36,10 @@ import { GeolocationServices } from 'src/services/geolocation.services';
 import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { UserServices } from 'src/services/user.services';
-import { PoiServices } from 'src/services/poi.services';
 import { StringHelperService } from 'src/services/stringHelper.service';
+import { DirectionService } from 'src/services/direction.service';
+import { DataSharingService } from 'src/services/data-sharing.service';
+
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -62,6 +67,11 @@ import { InfoPopoverComponent } from './components/popovers/info-popover/info-po
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
 import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
+
+//function that loads the external JSON files to the app using http-loader.
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -111,7 +121,15 @@ import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9
     FormsModule,
     NgxIonicImageViewerModule,
     AgmDirectionModule,
-    NgPipesModule
+    NgPipesModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (LanguageLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     StatusBar,
@@ -121,6 +139,8 @@ import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9
     UserServices,
     NgxIonicImageViewerModule,
     PoiServices,
+    DataSharingService,
+    DirectionService,
     IndoorDirectionsService,
     DirectionsManagerService,
     StringHelperService,

@@ -12,6 +12,8 @@ import { GeolocationServices } from 'src/services/geolocation.services';
 import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
+import {TranslationService} from "../../../../services/translation.service";
+
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
@@ -467,7 +469,8 @@ export class GoogleMapComponent implements OnInit {
     private alertController: AlertController,
     private navController: NavController,
     private router: Router,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private translate: TranslationService
   ) {}
 
   async ngOnInit() {
@@ -683,12 +686,12 @@ export class GoogleMapComponent implements OnInit {
     }
     this.buildingToNavigateTo = building;
     const alert = await this.alertController.create({
-      header: building,
+      header: this.translate.getTranslation(building),
       subHeader: address,
       cssClass: 'alert-css',
       buttons: [
         {
-          text: 'Enter',
+          text: this.translate.getTranslation('enter'),
           cssClass: 'alert-button-map',
           handler: goIndoors => {
             if (urlSubString === 'jmsb') {
@@ -717,7 +720,7 @@ export class GoogleMapComponent implements OnInit {
           }
         },
         {
-          text: 'Go',
+          text: this.translate.getTranslation('go'),
           cssClass: 'alert-button-go',
           handler: () => {
             this.goHere();

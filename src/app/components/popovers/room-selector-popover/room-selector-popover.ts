@@ -5,6 +5,7 @@ import {
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
 import { StringHelperService } from 'src/services/stringHelper.service';
+import {TranslationService} from "../../../../services/translation.service";
 
 @Component({
   selector: 'room-selector-popover',
@@ -26,7 +27,7 @@ export class RoomSelectorPopoverComponent {
     private events: Events,
     public popoverController: PopoverController,
     private stringHelper: StringHelperService,
-
+    private translate : TranslationService
   ) {
     if (this.navParams.get('data')) {
       let data = this.navParams.get('data');

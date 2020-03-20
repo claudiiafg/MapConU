@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { Events } from '@ionic/angular';
+import { TranslationService} from "../../../../services/translation.service";
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
@@ -47,34 +48,35 @@ export class IndoorNavigationToolbarComponent {
   constructor(
     private router: Router,
     private events: Events,
-  ) {}
+    private translate: TranslationService
+  ){}
 
   ngAfterViewInit(){
     //placeholder because logic to come from outdoor-nav is not implemented yet can be deleted when it is
     switch (this.inputBuilding) {
       case 'hall':
-        this.building = 'Hall Building';
+        this.building = this.translate.getTranslation('Hall Building');
         break;
       case 'jmsb':
-        this.building = 'John Molson Building';
+        this.building = this.translate.getTranslation('John Molson Building');
         break;
       case 'fg':
-        this.building = 'Faubourg';
+        this.building = this.translate.getTranslation('Faubourg');
         break;
       case 'richard':
-        this.building = 'Richard Grey Renaud Science Complex';
+        this.building = this.translate.getTranslation('Richard Grey Renaud Science Complex');
         break;
       case 'center':
-        this.building = 'Central Building';
+        this.building = this.translate.getTranslation('Central Building');
         break;
       case 'hh':
-        this.building = 'Higston Hall';
+        this.building = this.translate.getTranslation('Higston Hall');
         break;
       case 'comm':
-        this.building = 'Communication Studies and Journalism Building';
+        this.building = this.translate.getTranslation('Communication Studies and Journalism Building');
         break;
       case 'varnier':
-        this.building = 'Vanier Extension';
+        this.building = this.translate.getTranslation('Vanier Extension');
         break;
     }
 

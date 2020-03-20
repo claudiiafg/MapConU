@@ -9,4 +9,7 @@ describe('DirectionService', () => {
     const service: DirectionService = TestBed.get(DirectionService);
     expect(service).toBeTruthy();
   });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

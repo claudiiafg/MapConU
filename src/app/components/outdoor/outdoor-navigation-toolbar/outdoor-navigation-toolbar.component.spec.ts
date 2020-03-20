@@ -12,6 +12,8 @@ import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {DataSharingService} from '../../../../services/data-sharing.service';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {DirectionService} from '../../../../services/direction.service';
+import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
 import {AgmDirectionModule} from 'agm-direction';
 import {AgmOverlays} from 'agm-overlays';
 import {AgmCoreModule} from '@agm/core';
@@ -46,6 +48,8 @@ describe('OutdoorNavigationToolbarComponent ', () => {
         UserServices,
         DataSharingService,
         PoiServices,
+        DirectionService,
+        IndoorDirectionsService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]
@@ -62,12 +66,13 @@ describe('OutdoorNavigationToolbarComponent ', () => {
   });
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(googleMapcomponent).toBeTruthy();
   });
 
   // send message function
   it('sendMessage() changes message', () => {
-    fixture.detectChanges();
-    component.ngOnInit();
+    // fixture.detectChanges();
+    // component.ngOnInit();
 
     component.loc = '1';
     component.locations = [
@@ -87,8 +92,6 @@ describe('OutdoorNavigationToolbarComponent ', () => {
   });
 
   it('test campus toggle functions', () => {
-
-    expect(googleMapcomponent).toBeTruthy();
     expect(googleMapcomponent.latitude).toBe(45.495729);
     expect(googleMapcomponent.longitude).toBe(-73.578041);
     component.loc = "1";
@@ -97,7 +100,7 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(googleMapcomponent.latitude).toBe(45.45824);
     expect(googleMapcomponent.longitude).toBe(-73.640452);
     });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

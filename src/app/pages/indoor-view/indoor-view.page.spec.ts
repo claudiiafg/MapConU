@@ -40,7 +40,7 @@ describe('IndoorViewPage ', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });
