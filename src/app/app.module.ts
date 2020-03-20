@@ -23,6 +23,9 @@ import { AgmDirectionModule } from 'agm-direction';
 import { AgmOverlays } from 'agm-overlays';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { NgPipesModule } from 'ngx-pipes';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -62,6 +65,11 @@ import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
 import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
 
+//function that loads the external JSON files to the app using http-loader.
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +91,7 @@ import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9
     TimeFooterComponent,
     ModalDirectionsComponent,
     RoomSelectorPopoverComponent,
-    SettingsOptionsComponent
+    SettingsOptionsComponent,
   ],
   entryComponents: [
     SearchPopoverComponent,
@@ -108,7 +116,15 @@ import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9
     FormsModule,
     NgxIonicImageViewerModule,
     AgmDirectionModule,
-    NgPipesModule
+    NgPipesModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (LanguageLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     StatusBar,

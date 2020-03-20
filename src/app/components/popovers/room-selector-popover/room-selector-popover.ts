@@ -4,6 +4,7 @@ import {
   Point,
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
+import {TranslationService} from "../../../../services/translation.service";
 
 @Component({
   selector: 'room-selector-popover',
@@ -22,7 +23,8 @@ export class RoomSelectorPopoverComponent {
     private navParams: NavParams,
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    private translate : TranslationService
   ) {
     if (this.navParams.get('data')) {
       let data = this.navParams.get('data');
@@ -46,37 +48,35 @@ export class RoomSelectorPopoverComponent {
       let prettyName: string = '';
 
       if (point.id.includes('wc-female')) {
-        prettyName = 'Female bathrooms';
+        prettyName = this.translate.getTranslation('bathroom-w') ;
       } else if (point.id.includes('wc-male')) {
-        prettyName = 'Male bathrooms';
+        prettyName = this.translate.getTranslation('bathroom-m');
       } else if (point.id.includes('wc')) {
-        prettyName = 'Bathrooms';
+        prettyName = this.translate.getTranslation('bathroom');
       } else if (point.id.includes('entrance')) {
-        prettyName = 'Entrance';
+        prettyName = this.translate.getTranslation('entrance');
       } else if (point.id.includes('down') && point.id.includes('stairs')) {
-        prettyName = 'Stairs going down';
+        prettyName = this.translate.getTranslation('stairs-down');
       } else if (point.id.includes('down') && point.id.includes('escalator')) {
-        prettyName = 'Escalator going down';
+        prettyName = this.translate.getTranslation('escalator-down');
       } else if (point.id.includes('up') && point.id.includes('escalator')) {
-        prettyName = 'Escalator going up';
+        prettyName = this.translate.getTranslation('escalators');
       } else if (point.id.includes('up') && point.id.includes('stairs')) {
-        prettyName = 'Stairs going up';
-      } else if (point.id.includes('down') && point.id.includes('stairs')) {
-        prettyName = 'Stairs going down';
+        prettyName = this.translate.getTranslation('stairs')
       } else if (point.id.includes('ne')) {
-        prettyName = 'North East stairs';
+        prettyName = this.translate.getTranslation('stairs-ne');
       } else if (point.id.includes('nw')) {
-        prettyName = 'North West stairs';
+        prettyName = this.translate.getTranslation('stairs-nw');
       } else if (point.id.includes('sw')) {
-        prettyName = 'South West stairs';
+        prettyName = this.translate.getTranslation('stairs-sw');
       } else if (point.id.includes('se')) {
-        prettyName = 'South East stairs';
+        prettyName = this.translate.getTranslation('stairs-se');
       } else if (point.id === 'stairs') {
-        prettyName = 'Stairs';
+        prettyName = this.translate.getTranslation('stairs');
       } else if (point.id.includes('elevator')) {
-        prettyName = 'Elevators';
+        prettyName = this.translate.getTranslation('elevators');
       } else if (point.id.includes('out')) {
-        prettyName = 'Exit';
+        prettyName = this.translate.getTranslation('exit');
       } else {
         prettyName = point.id;
       }

@@ -6,13 +6,15 @@ import {
   NgZone,
   OnInit,
   ElementRef,
-  ViewChild
+  ViewChild,
+  Input
 } from '@angular/core';
 import { Events, IonSearchbar } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
-import {Router} from "@angular/router";
+import { Router} from "@angular/router";
+import {TranslationService} from "../../../../services/translation.service";
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',
@@ -40,20 +42,23 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
   ];
 
   constructor(
-    private data: DataSharingService,
+    private dataSharing: DataSharingService,
     private events: Events,
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
     public directionService: DirectionService,
     private router: Router,
+    private translate: TranslationService,
     private geolocationServices: GeolocationServices,
   ) {
-    this.data.currentMessage.subscribe(
+    this.dataSharing.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
     );
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
       this.isDirectionSet = isDirectionSet;
     });
+
+
   }
 
   async ngOnInit() {
@@ -98,21 +103,23 @@ export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit 
     });
   }
 
-  sendMessage(updatedMessage) {
-    this.data.updateMessage(updatedMessage);
-  }
-
   public changeCampus() {
-    this.sendMessage(this.locations[this.loc]);
+    /* Added as a workaround to get the select menu for campuses to reload when the language changes.
+    A variable change is required to trigger an automatic reload but campus should not be changed
+     */
+    if(this.loc == '2'){
+      this.loc = '0';
+    }
+    this.dataSharing.updateMessage(this.locations[this.loc]);
     this.events.publish('campusChanged', Date.now());
   }
 
   public moveToFoundLocation(lat: number, lng: number) {
-    this.sendMessage({ latitude: lat, longitude: lng });
+    this.dataSharing.updateMessage({ latitude: lat, longitude: lng });
     this.events.publish('campusChanged', Date.now());
   }
 
-  public closeAutocomplete() {
+  public closeAutocomplete($event: CustomEvent) {
     this.searchRef.getInputElement().then( input => {
       input.blur();
     });

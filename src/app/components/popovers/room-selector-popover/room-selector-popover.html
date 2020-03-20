@@ -11,7 +11,7 @@
   <span class="bar"></span>
   <label>Starting Point</label> -->
   <ion-item >
-    <ion-label>Starting Point</ion-label>
+    <ion-label>{{'start-point'| translate}}</ion-label>
     <ion-select [(ngModel)]="prettySource" value="{{prettySource}}">
       <ion-select-option *ngFor="let point of prettyPoints" value="{{point.name}}">{{point.name}}</ion-select-option>
     </ion-select>
@@ -31,14 +31,14 @@
   <span class="bar"></span>
   <label>Destination</label> -->
   <ion-item >
-    <ion-label>Destination</ion-label>
+    <ion-label>{{'destination'| translate}}</ion-label>
     <ion-select [(ngModel)]="prettyDestination" value="{{prettyDestination}}">
       <ion-select-option *ngFor="let point of prettyPoints" value="{{point.name}}">{{point.name}}</ion-select-option>
     </ion-select>
   </ion-item>
 </div>
 
-<ion-button id="goButton" (click)="lookForPath()" shape="square">GO</ion-button>
+<ion-button id="goButton" (click)="lookForPath()" shape="square">{{'go'| translate}}</ion-button>
 
 <datalist id="interestPoints" autocomplete="on">
   <div *ngFor="let point of prettyPoints">

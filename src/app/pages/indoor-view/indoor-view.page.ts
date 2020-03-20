@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,7 +11,9 @@ export class IndoorViewPage implements OnInit {
   private building: string;
   private floor = 1;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+      private route: ActivatedRoute,
+  ) {
     this.sub = this.route.params.subscribe(params => {
       if (params['id']) {
         this.building = params['id'];
@@ -23,4 +25,9 @@ export class IndoorViewPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  ionViewWillEnter(){
+    //TODO: figure out a reload to make changes apply immediately when language changes
+  }
+
 }
