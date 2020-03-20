@@ -8,11 +8,11 @@ import { PopoverController, NavParams } from '@ionic/angular';
 })
 export class InfoPopoverComponent {
   private data: string = '';
-
+  public navParams = new NavParams;
 
   constructor(
     private popoverController: PopoverController,
-    private navParams: NavParams,
+    // private navParams: NavParams,
 
   ) {
     if (this.navParams.get('data')) {
