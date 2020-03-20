@@ -1,5 +1,4 @@
 <ion-header class="indoorToolbar">
-
   <ion-toolbar color="primary">
     <!-- back button -->
     <ion-button
@@ -13,15 +12,18 @@
 
     <!-- settings button -->
     <ion-button
-            class="settings-button"
-            fill="outline"
-            slot="end"
-            (click)="adjustSettings()">
+      class="settings-button"
+      fill="outline"
+      slot="end"
+      (click)="adjustSettings()"
+    >
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
     <div class="building-info-wrapper">
       <!-- name of floor selected-->
-      <ion-item slot="start" class="building">{{ building | translate }}</ion-item>
+      <ion-item slot="start" class="building">{{
+        building | translate
+      }}</ion-item>
 
       <!-- select floor button -->
       <ion-item id="floor-change">
@@ -33,12 +35,14 @@
           id="floor-item"
           interface="popover"
           placeholder="1"
-          disabled ="{{isSelectMode}}"
+          disabled="{{ isSelectMode }}"
         >
           <ion-select-option
             [value]="floor"
-            *ngFor="let floor of floors | slice: minFloorIndex:maxFloorIndex+1"
-            >{{floor}}</ion-select-option
+            *ngFor="
+              let floor of floors | slice: minFloorIndex:maxFloorIndex + 1
+            "
+            >{{ floor }}</ion-select-option
           >
         </ion-select>
       </ion-item>
@@ -50,7 +54,7 @@
       (click)="moveDownFloor()"
       shape="round"
       fill="outline"
-      disabled ="{{isSelectMode || floor === floors[minFloorIndex]}}"
+      disabled="{{ isSelectMode || floor === floors[minFloorIndex] }}"
     >
       <ion-icon name="arrow-down"></ion-icon>
     </ion-button>
@@ -59,10 +63,9 @@
       class="up-button"
       shape="round"
       fill="outline"
-      disabled ="{{isSelectMode || floor === floors[maxFloorIndex]}}"
+      disabled="{{ isSelectMode || floor === floors[maxFloorIndex] }}"
     >
       <ion-icon name="arrow-up"></ion-icon>
     </ion-button>
   </div>
-
 </ion-header>

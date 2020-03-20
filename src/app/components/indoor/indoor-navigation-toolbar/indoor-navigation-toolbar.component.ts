@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { Events } from '@ionic/angular';
-import { TranslationService} from "../../../../services/translation.service";
+import { TranslationService } from '../../../../services/translation.service';
 
 @Component({
   selector: 'app-indoor-navigation-toolbar',
@@ -43,15 +43,28 @@ export class IndoorNavigationToolbarComponent {
     { buildingName: 'Vanier Extension', topFloorIndex: 5, bottomFloorIndex: 2 }
   ];
 
-  private floors = ['s2', 's1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  private floors = [
+    's2',
+    's1',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10'
+  ];
 
   constructor(
     private router: Router,
     private events: Events,
     private translate: TranslationService
-  ){}
+  ) {}
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     //placeholder because logic to come from outdoor-nav is not implemented yet can be deleted when it is
     switch (this.inputBuilding) {
       case 'hall':
@@ -64,7 +77,9 @@ export class IndoorNavigationToolbarComponent {
         this.building = this.translate.getTranslation('Faubourg');
         break;
       case 'richard':
-        this.building = this.translate.getTranslation('Richard Grey Renaud Science Complex');
+        this.building = this.translate.getTranslation(
+          'Richard Grey Renaud Science Complex'
+        );
         break;
       case 'center':
         this.building = this.translate.getTranslation('Central Building');
@@ -73,7 +88,9 @@ export class IndoorNavigationToolbarComponent {
         this.building = this.translate.getTranslation('Higston Hall');
         break;
       case 'comm':
-        this.building = this.translate.getTranslation('Communication Studies and Journalism Building');
+        this.building = this.translate.getTranslation(
+          'Communication Studies and Journalism Building'
+        );
         break;
       case 'varnier':
         this.building = this.translate.getTranslation('Vanier Extension');
@@ -81,8 +98,8 @@ export class IndoorNavigationToolbarComponent {
     }
 
     //sets max and min number of allowed floors for the selected building
-    for(let building of this.buildingInfo){
-      if(building.buildingName === this.building){
+    for (let building of this.buildingInfo) {
+      if (building.buildingName === this.building) {
         this.maxFloorIndex = building.topFloorIndex;
         this.minFloorIndex = building.bottomFloorIndex;
         break;
@@ -117,7 +134,7 @@ export class IndoorNavigationToolbarComponent {
 
   // Takes the user back to the outdoor view
   private goBackOutside() {
-    if(this.isSelectMode){
+    if (this.isSelectMode) {
       this.events.publish('isSelectMode', false, Date.now());
     } else {
       this.router.navigateByUrl('/outdoor');
@@ -125,7 +142,7 @@ export class IndoorNavigationToolbarComponent {
   }
 
   // Takes the user to the settings page
-  private adjustSettings(){
+  private adjustSettings() {
     this.router.navigateByUrl('/appSettings');
   }
 }

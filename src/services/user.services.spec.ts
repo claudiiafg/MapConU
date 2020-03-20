@@ -6,18 +6,16 @@ import { UserServices } from './user.services';
 import { environment } from '../environments/environment';
 
 describe('UserServices', () => {
-  beforeEach((() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
-        AngularFireAuthModule,
+        AngularFireAuthModule
       ],
-      providers: [
-        UserServices,
-      ]
+      providers: [UserServices]
     }).compileComponents();
-  }));
+  });
 
   it('should be created', () => {
     const service: UserServices = TestBed.get(UserServices);

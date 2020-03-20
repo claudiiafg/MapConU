@@ -12,7 +12,7 @@
   />
   <span class="highlight"></span>
   <span class="bar"></span>
-  <label id="location-label">{{'start-location'| translate}}</label>
+  <label id="location-label">{{ 'start-location' | translate }}</label>
 </div>
 
 <div class="input-group">
@@ -29,7 +29,9 @@
   />
   <span class="highlight"></span>
   <span class="bar"></span>
-  <label>{{'end-location'| translate}}</label>
+  <label>{{ 'end-location' | translate }}</label>
 </div>
 
-<ion-button id="goButton" (click)="updateMap()" shape="square">{{'go'| translate}}</ion-button>
+<ion-button id="goButton" (click)="updateMap()" shape="square">{{
+  'go' | translate
+}}</ion-button>

@@ -12,7 +12,7 @@ import { GeolocationServices } from 'src/services/geolocation.services';
 import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
-import {TranslationService} from "../../../../services/translation.service";
+import { TranslationService } from '../../../../services/translation.service';
 
 @Component({
   selector: 'app-google-map',
