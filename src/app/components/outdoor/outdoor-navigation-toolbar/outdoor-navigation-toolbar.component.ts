@@ -14,7 +14,7 @@ import { DirectionService } from 'src/services/direction.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { Router} from "@angular/router";
-import {TranslationService} from "../../../../services/translation.service";
+import { TranslationService } from "../../../../services/translation.service";
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',

@@ -1,6 +1,6 @@
 {
-	"campus1": "SGW campus",
-	"campus2": "Loyola campus",
+	"campus1": "SGW Campus",
+	"campus2": "Loyola Campus",
 	"settings-header": "Settings + More",
 	"language-select": "Language",
 	"english": "English",
@@ -61,5 +61,14 @@
 	"find-way": "Where do you wish to know directions from?",
 	"fm-escalator": "From escalators",
 	"chose-src": "Choose source",
-	"fm-entrance": "From entrance"
+	"fm-entrance": "From entrance",
+	"this-floor": "This floor",
+	"another-floor": "Another floor",
+	"another-building": "Another building",
+	"select-source-instruction": "Please select where you're coming from.",
+	"follow-path-instructions": "Follow the path to arrive at your destination.",
+	"press-on-room-instruction": "Press on any room to start navigation to it.",
+	"start": "START",
+	"next": "NEXT",
+	"end": "END"
 }
