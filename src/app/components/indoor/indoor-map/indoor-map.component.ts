@@ -102,7 +102,9 @@ export class IndoorMapComponent implements OnInit {
     let docElementLines = document.getElementsByTagName('line');
     let docInterestPoints = document.getElementsByTagName('circle');
     this.marker = document.getElementById('marker');
-    this.marker.style.visibility = 'hidden';
+    if(this.marker){
+      this.marker.style.visibility = 'hidden';
+    }
 
     this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
     this.pathLines = this.indoorDirectionsService.getLines();

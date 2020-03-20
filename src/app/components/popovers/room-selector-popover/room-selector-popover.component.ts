@@ -22,7 +22,6 @@ export class RoomSelectorPopoverComponent {
   private prettyPoints: any[] = [];
   public navParams = new NavParams;
   constructor(
-    // private navParams: NavParams,
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
     public popoverController: PopoverController,

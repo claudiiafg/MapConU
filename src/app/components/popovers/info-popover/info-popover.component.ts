@@ -11,7 +11,6 @@ export class InfoPopoverComponent {
   public navParams = new NavParams;
   constructor(
     private popoverController: PopoverController,
-    // private navParams: NavParams
   ) {
     if (this.navParams.get('data')) {
       this.data = this.navParams.get('data');
