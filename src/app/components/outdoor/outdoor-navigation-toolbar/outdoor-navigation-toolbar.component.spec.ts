@@ -82,7 +82,7 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(component.loc).toEqual('1');
     component.message = 'clicking';
     expect(component.message).toEqual('clicking');
-    component.sendMessage('testing');
+    component.message('testing');
     expect(component.message).toEqual('testing');
     component.loc = '0';
     component.changeCampus();

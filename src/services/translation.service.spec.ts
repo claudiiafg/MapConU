@@ -9,4 +9,7 @@ describe('TranslationService', () => {
     const service: TranslationService = TestBed.get(TranslationService);
     expect(service).toBeTruthy();
   });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });
