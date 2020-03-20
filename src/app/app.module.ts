@@ -38,6 +38,7 @@ import { UserServices } from 'src/services/user.services';
 import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionService } from 'src/services/direction.service';
+import {TranslationService} from 'src/services/translation.service';
 
 
 //pages
@@ -137,6 +138,7 @@ export function LanguageLoader(http: HttpClient) {
     DataSharingService,
     DirectionService,
     IndoorDirectionsService,
+    TranslationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

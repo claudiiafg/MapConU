@@ -15,38 +15,14 @@ import {GeolocationServices} from '../../../../services/geolocation.services';
 import {DirectionService} from '../../../../services/direction.service';
 import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
 import {TranslationService} from "../../../../services/translation.service";
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
-
-// class MockData {
-//
-//   private latitude: number;
-//   private longitude: number;
-//   private coordinates = {
-//     latitude: Math.random(),
-//     longitude: Math.random()
-//   };
-//
-//   getCurrentPosition() {
-//     this.setLongitude();
-//     this.setLongitude();
-//   }
-//
-//   getLatitude() {
-//     return this.latitude;
-//   }
-//
-//   getLongitude() {
-//     return this.longitude;
-//   }
-//
-//   setLatitude() {
-//     return Math.random();
-//   }
-//
-//   setLongitude() {
-//     return Math.random();
-//   }
-// }
+//function that loads the external JSON files to the app using http-loader.
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 describe('GoogleMapComponent ', () => {
   let component: GoogleMapComponent;
@@ -55,7 +31,16 @@ describe('GoogleMapComponent ', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
-        IonicModule.forRoot()],
+        IonicModule.forRoot(),
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (LanguageLoader),
+            deps: [HttpClient]
+          }
+        })
+      ],
       declarations: [ GoogleMapComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [ StatusBar,

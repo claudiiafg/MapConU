@@ -18,8 +18,15 @@ import {AgmDirectionModule} from 'agm-direction';
 import {AgmOverlays} from 'agm-overlays';
 import {AgmCoreModule} from '@agm/core';
 import {APIKey} from '../../../../environments/env';
-import {TranslationService} from "../../../../services/translation.service";
+import { TranslationService } from '../../../../services/translation.service';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
+//function that loads the external JSON files to the app using http-loader.
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 describe('OutdoorNavigationToolbarComponent ', () => {
   let component: OutdoorNavigationToolbarComponent;
   let fixture: ComponentFixture<OutdoorNavigationToolbarComponent>;
@@ -37,6 +44,14 @@ describe('OutdoorNavigationToolbarComponent ', () => {
           apiVersion: '3.31'
         }),
         AgmDirectionModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (LanguageLoader),
+            deps: [HttpClient]
+          }
+        })
       ],
       declarations: [ OutdoorNavigationToolbarComponent,
         GoogleMapComponent ],
@@ -84,7 +99,7 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(component.loc).toEqual('1');
     component.message = 'clicking';
     expect(component.message).toEqual('clicking');
-    component.message('testing');
+    component.message = 'testing';
     expect(component.message).toEqual('testing');
     component.loc = '0';
     component.changeCampus();
