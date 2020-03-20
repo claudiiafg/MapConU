@@ -10,7 +10,15 @@ import {IndoorViewPage} from './indoor-view.page';
 import {UserServices} from '../../../services/user.services';
 import {PoiServices} from '../../../services/poi.services';
 import {GeolocationServices} from '../../../services/geolocation.services';
+import {DirectionsManagerService} from "../../../services/directionsManager.service";
+import {TranslationService} from "../../../services/translation.service";
+import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from "@ngx-translate/core";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 describe('IndoorViewPage ', () => {
   let component: IndoorViewPage;
@@ -18,7 +26,14 @@ describe('IndoorViewPage ', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
-        IonicModule.forRoot()],
+        IonicModule.forRoot(),HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (LanguageLoader),
+            deps: [HttpClient]
+          }
+        })],
       declarations: [ IndoorViewPage ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [ StatusBar,
@@ -27,6 +42,10 @@ describe('IndoorViewPage ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionsManagerService,
+        TranslationService,
+        TranslateService,
+        TranslateStore,TranslateLoader,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]

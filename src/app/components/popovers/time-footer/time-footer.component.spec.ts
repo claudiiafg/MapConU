@@ -12,7 +12,15 @@ import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
 import {DirectionService} from '../../../../services/direction.service';
 import {IndoorDirectionsService} from '../../../../services/indoorDirections.service';
+import {TranslationService} from "../../../../services/translation.service";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {DirectionsManagerService} from "../../../../services/directionsManager.service";
 
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 describe('TimeFooterComponent ', () => {
   let component: TimeFooterComponent;
@@ -20,7 +28,15 @@ describe('TimeFooterComponent ', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
-        IonicModule.forRoot()],
+        IonicModule.forRoot(),HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (LanguageLoader),
+            deps: [HttpClient]
+          }
+        })
+      ],
       declarations: [ TimeFooterComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [ StatusBar,
@@ -31,6 +47,8 @@ describe('TimeFooterComponent ', () => {
         PoiServices,
         DirectionService,
         IndoorDirectionsService,
+        TranslationService,
+        DirectionsManagerService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]

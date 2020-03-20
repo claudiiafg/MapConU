@@ -10,14 +10,29 @@ import {IndoorMapComponent} from './indoor-map.component';
 import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {DirectionsManagerService} from "../../../../services/directionsManager.service";
+import {TranslationService} from "../../../../services/translation.service";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 describe('IndoorMapComponent ', () => {
   let component: IndoorMapComponent;
   let fixture: ComponentFixture<IndoorMapComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([])],
+      imports: [RouterModule.forRoot([]),HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (LanguageLoader),
+            deps: [HttpClient]
+          }
+        })],
       declarations: [ IndoorMapComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [StatusBar,
@@ -26,6 +41,8 @@ describe('IndoorMapComponent ', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionsManagerService,
+        TranslationService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         {provide: FirestoreSettingsToken, useValue: {}}
       ]
