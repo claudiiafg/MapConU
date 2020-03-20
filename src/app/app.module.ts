@@ -52,7 +52,7 @@ import { ModalDirectionsComponent } from './components/outdoor/modal-directions/
 import { OutdoorNavigationSideButtonsComponent } from './components/outdoor/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component';
 import { OutdoorNavigationToolbarComponent } from './components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { PoiPopoverComponent } from './components/popovers/poi-popover/poi-popover.component';
-import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover';
+import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover.component';
 import { SearchPopoverComponent } from './components/popovers/search-popover/search-popover.component';
 import { TimeFooterComponent } from './components/popovers/time-footer/time-footer.component';
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';

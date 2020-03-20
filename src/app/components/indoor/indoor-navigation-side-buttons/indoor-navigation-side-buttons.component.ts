@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PopoverController, Events } from '@ionic/angular';
-import { RoomSelectorPopoverComponent } from '../../popovers/room-selector-popover/room-selector-popover';
+import { RoomSelectorPopoverComponent } from '../../popovers/room-selector-popover/room-selector-popover.component';
 import { InfoPopoverComponent } from '../../popovers/info-popover/info-popover.component';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { TranslationService } from 'src/services/translation.service';

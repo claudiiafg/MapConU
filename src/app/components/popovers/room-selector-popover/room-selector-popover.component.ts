@@ -5,12 +5,12 @@ import {
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
 import { StringHelperService } from 'src/services/stringHelper.service';
-import {TranslationService} from "../../../../services/translation.service";
+import {TranslationService} from "src/services/translation.service";
 
 @Component({
   selector: 'room-selector-popover',
-  templateUrl: './room-selector-popover.html',
-  styleUrls: ['./room-selector-popover.scss']
+  templateUrl: './room-selector-popover.component.html',
+  styleUrls: ['./room-selector-popover.component.scss']
 })
 export class RoomSelectorPopoverComponent {
   private type: string;
