@@ -71,7 +71,6 @@ describe("IndoorNavigationToolbarComponent ", () => {
     component["currentFloorIndex"] = 3;
     component["floor"] = 6;
     component["changeFloor"]();
-    component["adjustSettings"]();
     // + 1 than floor due to array structure of floors
     expect(component["currentFloorIndex"]).toEqual(7);
   });
@@ -80,7 +79,6 @@ describe("IndoorNavigationToolbarComponent ", () => {
     component["isSelectMode"] = true;
     component["maxFloorIndex"] = 12;
     component["moveUpFloor"]();
-    component["goBackOutside"]();
     expect(component["currentFloorIndex"]).toEqual(9);
   });
   it("should moveUpFloor() currentFloorIndex > maxFloorIndex", () => {
@@ -88,7 +86,6 @@ describe("IndoorNavigationToolbarComponent ", () => {
     component["isSelectMode"] = false;
     component["maxFloorIndex"] = 6;
     component["moveUpFloor"]();
-    component["goBackOutside"]();
     expect(component["currentFloorIndex"]).toEqual(8);
   });
   it("should moveDownFloor() currentFloorIndex > minFloorIndex", () => {

@@ -20,6 +20,7 @@ import {
 } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { By } from "@angular/platform-browser";
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -68,16 +69,30 @@ describe("IndoorNavigationSideButtonsComponent ", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+  it("should test compass button clicked presentPopover()", () => {
+    fixture.detectChanges();
+    const spyCompass = spyOn(component, "presentPopover");
+    let compass = fixture.debugElement.query(By.css("ion-fab.navPopover"));
+    compass.triggerEventHandler("click", null);
+    fixture.detectChanges();
+    expect(spyCompass).toHaveBeenCalled();
+  });
+  it("should test showInfo button clicked showInfo()", () => {
+    fixture.detectChanges();
+    const spyPin = spyOn(component, "showInfo");
+    let information = fixture.debugElement.query(
+      By.css("ion-fab-button.informationButton")
+    );
+    information.triggerEventHandler("click", null);
+    fixture.detectChanges();
+    expect(spyPin).toHaveBeenCalled();
+  });
   it("should getData TRUE isSelectMode", () => {
     component["isSelectMode"] = true;
-    component["presentPopover"]("123");
-    component["showInfo"]();
     expect(component["getData"]()).toEqual("select-source-instruction");
   });
   it("should getData FALSE isSelectMode and FALSE directionsManagerService.isInRoute", () => {
     component["isSelectMode"] = false;
-    component["presentPopover"]("123");
-    component["showInfo"]();
     expect(component["getData"]()).toEqual("press-on-room-instruction");
   });
   afterEach(() => {
