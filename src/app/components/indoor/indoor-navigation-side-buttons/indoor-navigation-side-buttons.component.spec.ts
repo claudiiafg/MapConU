@@ -7,7 +7,6 @@ import { RouteReuseStrategy, RouterModule } from "@angular/router";
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { FirestoreSettingsToken } from "@angular/fire/firestore";
 import { IndoorNavigationSideButtonsComponent } from "./indoor-navigation-side-buttons.component";
-import { InfoPopoverComponent } from "../../popovers/info-popover/info-popover.component";
 import { UserServices } from "../../../../services/user.services";
 import { PoiServices } from "../../../../services/poi.services";
 import { GeolocationServices } from "../../../../services/geolocation.services";
