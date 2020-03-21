@@ -25,7 +25,7 @@ export class GoogleOauthService {
 
   async logoutUser() {
     try {
-      var logout: any = await GooglePlus.logout();
+      await GooglePlus.logout();
       this.nativeStorage.remove('google_session');
     } catch(err) {
       console.error(err);
