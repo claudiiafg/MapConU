@@ -62,15 +62,13 @@ describe("IndoorMapComponent ", () => {
   });
   it("should initNav() without point and invalid name", () => {
     console.log = jasmine.createSpy("Point not available.");
-    var tempInitNav = "Point not available.";
     component["initNav"]("invalidname");
-    expect(console.log).toHaveBeenCalledWith(tempInitNav);
+    expect(console.log).toHaveBeenCalledWith("Point not available.");
   });
   it("should initNav() without point and valid name mb", () => {
     console.log = jasmine.createSpy("Point not available.");
-    var tempInitNav = "Point not available.";
     component["initNav"]("invalidname");
-    expect(console.log).toHaveBeenCalledWith(tempInitNav);
+    expect(console.log).toHaveBeenCalledWith("Point not available.");
   });
   it("should initNav() without point and valid name mb valid point", () => {
     let points: Point;
@@ -80,15 +78,13 @@ describe("IndoorMapComponent ", () => {
   });
   it("should initNav() without point and valid name escalator up", () => {
     console.log = jasmine.createSpy("Point not available.");
-    var tempInitNav = "Point not available.";
     component["initNav"]("invalidname");
-    expect(console.log).toHaveBeenCalledWith(tempInitNav);
+    expect(console.log).toHaveBeenCalledWith("Point not available.");
   });
   it("should initNav() without point and valid name escalator down", () => {
     console.log = jasmine.createSpy("Point not available.");
-    var tempInitNav = "Point not available.";
     component["initNav"]("invalidname");
-    expect(console.log).toHaveBeenCalledWith(tempInitNav);
+    expect(console.log).toHaveBeenCalledWith("Point not available.");
   });
   it("should resetNav()", () => {
     component["foundPath"] = true;
