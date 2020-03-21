@@ -89,6 +89,8 @@ describe("IndoorNavigationSideButtonsComponent ", () => {
   });
   it("should getData TRUE isSelectMode", () => {
     component["isSelectMode"] = true;
+    component["presentPopover"]("123");
+    component["showInfo"]();
     expect(component["getData"]()).toEqual("select-source-instruction");
   });
   it("should getData FALSE isSelectMode and FALSE directionsManagerService.isInRoute", () => {
