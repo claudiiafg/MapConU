@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { webClientId } from 'src/environments/env';
 
 @Injectable({
   providedIn: 'root'
