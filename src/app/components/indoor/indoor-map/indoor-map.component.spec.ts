@@ -60,6 +60,11 @@ describe("IndoorMapComponent ", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+  it("should ngAfterViewInit", () => {
+    const spyIn = spyOn(component, "setMap");
+    component.ngAfterViewInit();
+    expect(spyIn).toHaveBeenCalled();
+  });
   it("should initNav() without point and invalid name", () => {
     console.log = jasmine.createSpy("Point not available.");
     component["initNav"]("invalidname");

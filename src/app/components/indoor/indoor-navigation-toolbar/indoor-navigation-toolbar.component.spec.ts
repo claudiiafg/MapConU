@@ -20,15 +20,6 @@ export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
 
-// private maxFloorIndex: number;
-// private minFloorIndex: number;
-// private currentFloorIndex: number;
-// private building: string;
-//
-// buildingInfo
-//
-// floors
-
 describe("IndoorNavigationToolbarComponent ", () => {
   let component: IndoorNavigationToolbarComponent;
   let fixture: ComponentFixture<IndoorNavigationToolbarComponent>;
@@ -68,6 +59,14 @@ describe("IndoorNavigationToolbarComponent ", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+  it("should ngAfterViewInit()", () => {
+    component["inputBuilding"] = "hall";
+    spyOn(component["translate"], "getTranslation").and.callFake(() => {
+      return null;
+    });
+    component.ngAfterViewInit();
+    expect(component["translate"].getTranslation).toHaveBeenCalled();
+  });
   it("should changeFloor", () => {
     component["currentFloorIndex"] = 3;
     component["floor"] = 6;
@@ -103,6 +102,35 @@ describe("IndoorNavigationToolbarComponent ", () => {
     component["minFloorIndex"] = 5;
     component["moveDownFloor"]();
     expect(component["currentFloorIndex"]).toEqual(2);
+  });
+  it("should goBackOutside() FALSE isSelectMode", () => {
+    component["isSelectMode"] = false;
+    spyOn(component["router"], "navigateByUrl").and.callFake(() => {
+      return null;
+    });
+    component["goBackOutside"]();
+    expect(component["router"].navigateByUrl).toHaveBeenCalledWith("/outdoor");
+  });
+  it("should goBackOutside() TRUE isSelectMode", () => {
+    component["isSelectMode"] = true;
+    spyOn(component["events"], "publish").and.callFake(() => {
+      return null;
+    });
+    component["goBackOutside"]();
+    expect(component["events"].publish).toHaveBeenCalledWith(
+      "isSelectMode",
+      false,
+      Date.now()
+    );
+  });
+  it("should adjustSettings()", () => {
+    spyOn(component["router"], "navigateByUrl").and.callFake(() => {
+      return null;
+    });
+    component["adjustSettings"]();
+    expect(component["router"].navigateByUrl).toHaveBeenCalledWith(
+      "/appSettings"
+    );
   });
   afterEach(() => {
     TestBed.resetTestingModule();
