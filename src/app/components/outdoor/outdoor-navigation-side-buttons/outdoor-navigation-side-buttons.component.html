@@ -6,16 +6,16 @@
     <ion-icon
       *ngIf="!poiClicked"
       name="pin"
-      (click)="presentPopover($event, 'poi')"
+      (click)="presentPopover($event, 'poi')" class="pinButton"
     ></ion-icon>
     <ion-icon
       *ngIf="poiClicked"
       name="close"
-      (click)="presentPopover($event, 'poi')"
+      (click)="presentPopover($event, 'poi')" class="closeButton"
     ></ion-icon>
   </ion-fab-button>
   <ion-fab-button>
-    <ion-icon name="bus" (click)="openViewer()"></ion-icon>
+    <ion-icon name="bus" (click)="openViewer()" class="busButton"></ion-icon>
   </ion-fab-button>
 </ion-fab>
 

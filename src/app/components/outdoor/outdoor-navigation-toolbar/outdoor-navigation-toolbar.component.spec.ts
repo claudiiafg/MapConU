@@ -102,11 +102,6 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(component.message).toEqual('clicking');
     component.message = 'testing';
     expect(component.message).toEqual('testing');
-    component.loc = '0';
-    component.changeCampus();
-    const sendMessageSpy = spyOn(component, 'changeCampus');
-    expect(sendMessageSpy.calls.count()).toEqual(0);
-    expect(component.changeCampus()).toBeUndefined();
   });
 
   it('test campus toggle functions', () => {
@@ -118,6 +113,20 @@ describe('OutdoorNavigationToolbarComponent ', () => {
     expect(googleMapcomponent.latitude).toBe(45.45824);
     expect(googleMapcomponent.longitude).toBe(-73.640452);
   });
+
+  it('test changeTravelMode', () => {
+    const travelMode = 'DRIVING';
+    component.changeTravelMode(travelMode);
+    component.setSelectedColor(travelMode);
+    expect(component.carColor).toBe('yellow');
+    component.changeTravelMode('WALKING');
+    component.setSelectedColor('WALKING');
+    expect(component.carColor).toBe('white');
+    expect(component.walkColor).toBe('yellow');
+    googleMapcomponent.subscribeToTravelMode();
+    expect(googleMapcomponent.travelMode).toBe('WALKING');
+  });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
