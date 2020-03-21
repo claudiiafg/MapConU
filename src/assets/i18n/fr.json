@@ -70,5 +70,6 @@
   "press-on-room-instruction": "Appuyez sur n'importe quelle pièce pour démarrer la navigation.",
   "start": "DÉBUT",
   "next": "SUIVANT",
-  "end": "FIN"
+  "end": "FIN",
+  "no-floor-plan-msg" : "aucun plan d'étage disponible pour l'"
 }
