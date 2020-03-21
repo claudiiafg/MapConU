@@ -26,6 +26,7 @@ import { NgPipesModule } from 'ngx-pipes';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -41,6 +42,7 @@ import { StringHelperService } from 'src/services/stringHelper.service';
 import { DirectionService } from 'src/services/direction.service';
 import {TranslationService} from 'src/services/translation.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
+import { GoogleOauthService } from 'src/services/google-oauth.service';
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -140,6 +142,8 @@ export function LanguageLoader(http: HttpClient) {
     NgxIonicImageViewerModule,
     PoiServices,
     DataSharingService,
+    NativeStorage,
+    GoogleOauthService,
     DirectionService,
     IndoorDirectionsService,
     TranslationService,
