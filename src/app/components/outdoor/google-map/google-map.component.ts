@@ -688,6 +688,7 @@ export class GoogleMapComponent implements OnInit {
     const alert = await this.alertController.create({
       header: this.translate.getTranslation(building),
       subHeader: address,
+      message: "",
       cssClass: 'alert-css',
       buttons: [
         {
@@ -703,6 +704,7 @@ export class GoogleMapComponent implements OnInit {
               this.router.navigateByUrl(url);
               return true;
             } else {
+              alert.message = this.translate.getTranslation('no-floor-plan-msg') + this.translate.getTranslation(building);
               console.error('no floor plans for this building');
               return false;
             }
