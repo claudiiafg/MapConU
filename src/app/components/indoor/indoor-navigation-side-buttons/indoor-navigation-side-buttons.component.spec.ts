@@ -1,38 +1,48 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { RouteReuseStrategy, RouterModule } from '@angular/router';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { FirestoreSettingsToken } from '@angular/fire/firestore';
-import { IndoorNavigationSideButtonsComponent } from './indoor-navigation-side-buttons.component';
-import { UserServices } from '../../../../services/user.services';
-import { PoiServices } from '../../../../services/poi.services';
-import { GeolocationServices } from '../../../../services/geolocation.services';
-import {DirectionsManagerService} from "../../../../services/directionsManager.service";
-import {TranslationService} from "../../../../services/translation.service";
-import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from "@ngx-translate/core";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { Geolocation } from "@ionic-native/geolocation/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { RouteReuseStrategy, RouterModule } from "@angular/router";
+import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
+import { FirestoreSettingsToken } from "@angular/fire/firestore";
+import { IndoorNavigationSideButtonsComponent } from "./indoor-navigation-side-buttons.component";
+import { InfoPopoverComponent } from "../../popovers/info-popover/info-popover.component";
+import { UserServices } from "../../../../services/user.services";
+import { PoiServices } from "../../../../services/poi.services";
+import { GeolocationServices } from "../../../../services/geolocation.services";
+import { DirectionsManagerService } from "../../../../services/directionsManager.service";
+import { TranslationService } from "../../../../services/translation.service";
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+  TranslateStore
+} from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 export function LanguageLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
 
-describe('IndoorNavigationSideButtonsComponent ', () => {
+describe("IndoorNavigationSideButtonsComponent ", () => {
   let component: IndoorNavigationSideButtonsComponent;
   let fixture: ComponentFixture<IndoorNavigationSideButtonsComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), IonicModule.forRoot(),HttpClientModule,
+      imports: [
+        RouterModule.forRoot([]),
+        IonicModule.forRoot(),
+        HttpClientModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useFactory: (LanguageLoader),
+            useFactory: LanguageLoader,
             deps: [HttpClient]
           }
-        })],
+        })
+      ],
       declarations: [IndoorNavigationSideButtonsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
@@ -56,8 +66,20 @@ describe('IndoorNavigationSideButtonsComponent ', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
+  });
+  it("should getData TRUE isSelectMode", () => {
+    component["isSelectMode"] = true;
+    component["presentPopover"]("123");
+    component["showInfo"]();
+    expect(component["getData"]()).toEqual("select-source-instruction");
+  });
+  it("should getData FALSE isSelectMode and FALSE directionsManagerService.isInRoute", () => {
+    component["isSelectMode"] = false;
+    component["presentPopover"]("123");
+    component["showInfo"]();
+    expect(component["getData"]()).toEqual("press-on-room-instruction");
   });
   afterEach(() => {
     TestBed.resetTestingModule();
