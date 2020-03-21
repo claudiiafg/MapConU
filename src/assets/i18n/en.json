@@ -70,5 +70,7 @@
   "press-on-room-instruction": "Press on any room to start navigation to it.",
   "start": "START",
   "next": "NEXT",
-  "end": "END"
+  "end": "END",
+  "no-floor-plan-msg" : "No floor plan available for "
+
 }
