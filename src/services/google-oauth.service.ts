@@ -15,7 +15,7 @@ export class GoogleOauthService {
   async loginUser() {
     try {
       var login: any = await GooglePlus.login({
-        'webClientId': webClientId,
+        'webClientId': '587682338275-slma4inmi8e0fgft1tv89plac17iud1g.apps.googleusercontent.com',
       });
       this.nativeStorage.setItem('google_session', login);
     } catch(err) {
