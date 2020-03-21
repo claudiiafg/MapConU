@@ -6,7 +6,7 @@ import { GoogleOauthService } from "../../../services/google-oauth.service";
 @Component({
   selector: 'app-settings-options',
   templateUrl: './settings-options.component.html',
-  styleUrls: ['./settings-options.component.scss'],
+  styleUrls: ['./settings-options.component.scss']
 })
 export class SettingsOptionsComponent implements OnInit {
   public appLanguage: string;
@@ -29,12 +29,11 @@ export class SettingsOptionsComponent implements OnInit {
   }
 
   //changes app language
-  languageChange(){
-    if (this.appLanguage == "french"){
+  languageChange() {
+    if (this.appLanguage == 'french') {
       this.translate.setLanguage('fr');
       this.dataSharing.updateAppLanguage('fr');
-    }
-    else{
+    } else {
       this.translate.setLanguage('en');
       this.dataSharing.updateAppLanguage('en');
     }

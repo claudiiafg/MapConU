@@ -24,7 +24,7 @@ export class DataSharingService {
     this.mapSize.next(this.platform.height() + size);
   }
 
-  public updateAppLanguage(languageUpdate: string){
+  public updateAppLanguage(languageUpdate: string) {
     this.language.next(languageUpdate);
   }
 }

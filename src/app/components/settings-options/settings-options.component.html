@@ -1,17 +1,21 @@
 <ion-list>
   <ion-item>
-    <img src="/assets/icon/language-icon.png" class = "lang-icon">
-    <ion-label>{{'language-select'|translate}}</ion-label>
+    <img src="/assets/icon/language-icon.png" class="lang-icon" />
+    <ion-label>{{ 'language-select' | translate }}</ion-label>
     <ion-item id="language-selection">
       <ion-select
-              [(ngModel)]="appLanguage"
-              class="select-language"
-              interface="popover"
-              placeholder="English"
-              (ionChange)="languageChange()"
+        [(ngModel)]="appLanguage"
+        class="select-language"
+        interface="popover"
+        placeholder="English"
+        (ionChange)="languageChange()"
       >
-        <ion-select-option value="english">{{'english'| translate}}</ion-select-option>
-        <ion-select-option value="french">{{'french'| translate}}</ion-select-option>
+        <ion-select-option value="english">{{
+          'english' | translate
+        }}</ion-select-option>
+        <ion-select-option value="french">{{
+          'french' | translate
+        }}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-item>

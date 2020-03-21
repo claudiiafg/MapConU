@@ -8,12 +8,9 @@ import { PopoverController, NavParams } from '@ionic/angular';
 })
 export class InfoPopoverComponent {
   private data: string = '';
-
-
+  public navParams = new NavParams;
   constructor(
     private popoverController: PopoverController,
-    private navParams: NavParams,
-
   ) {
     if (this.navParams.get('data')) {
       this.data = this.navParams.get('data');
@@ -21,9 +18,10 @@ export class InfoPopoverComponent {
   }
 
   ngOnInit() {
-    setTimeout(() => {this.closePopover()}, 2000);
+    setTimeout(() => {
+      this.closePopover();
+    }, 2000);
   }
-
 
   closePopover() {
     this.popoverController.dismiss();

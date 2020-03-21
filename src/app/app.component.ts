@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { DataSharingService } from '../services/data-sharing.service';
 import { UserServices } from 'src/services/user.services';
-import { TranslationService} from "../services/translation.service";
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-root',

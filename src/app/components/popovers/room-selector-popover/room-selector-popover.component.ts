@@ -5,7 +5,7 @@ import {
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
 import { StringHelperService } from 'src/services/stringHelper.service';
-import {TranslationService} from "src/services/translation.service";
+import { TranslationService } from 'src/services/translation.service';
 
 @Component({
   selector: 'room-selector-popover',
@@ -20,14 +20,13 @@ export class RoomSelectorPopoverComponent {
   private prettyDestination: string;
   private points: Point[] = [];
   private prettyPoints: any[] = [];
-
+  public navParams = new NavParams;
   constructor(
-    private navParams: NavParams,
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
     public popoverController: PopoverController,
     private stringHelper: StringHelperService,
-    private translate : TranslationService
+    private translate: TranslationService
   ) {
     if (this.navParams.get('data')) {
       let data = this.navParams.get('data');
@@ -35,7 +34,6 @@ export class RoomSelectorPopoverComponent {
       this.destination = data.destination;
       this.points = data.points;
       this.prettifyTitles();
-
     } else {
       this.points = this.indoorDirectionsService.getPoints();
       this.prettifyTitles();

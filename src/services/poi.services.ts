@@ -13,7 +13,7 @@ export class PoiServices {
     drugstore: false,
     hotels: false,
     grocery: false
-  }
+  };
 
   constructor(private geolocationServices: GeolocationServices) {}
 

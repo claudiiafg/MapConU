@@ -19,22 +19,21 @@ p {
   width: 100%;
   padding: 10px;
 
-  .footer-elements-wrapper{
+  .footer-elements-wrapper {
     display: contents;
 
-    .start-container{
+    .start-container {
       position: relative;
       left: calc(50% - 40px);
     }
 
-    .arrow-icon{
+    .arrow-icon {
       width: 30px;
       height: 30px;
     }
-
   }
 
-  .start-button{
+  .start-button {
     display: block;
     background-color: var(--ConcordiaRed);
     color: white;
@@ -44,18 +43,18 @@ p {
     border-radius: 10px;
   }
 
-  .room-wrapper{
+  .room-wrapper {
     text-align: center;
     width: 35%;
     padding: 5px 10px;
     font-size: 14pt;
   }
 
-  .arrow-wrapper{
+  .arrow-wrapper {
     width: 10%;
   }
 
-  .button-wrapper{
+  .button-wrapper {
     width: 20%;
   }
 }
