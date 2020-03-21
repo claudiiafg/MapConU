@@ -72,30 +72,38 @@ describe("IndoorNavigationToolbarComponent ", () => {
     component["currentFloorIndex"] = 3;
     component["floor"] = 6;
     component["changeFloor"]();
+    component["adjustSettings"]();
     // + 1 than floor due to array structure of floors
     expect(component["currentFloorIndex"]).toEqual(7);
   });
-  it("should moveUpFloor", () => {
+  it("should moveUpFloor() currentFloorIndex < maxFloorIndex", () => {
     component["currentFloorIndex"] = 8;
+    component["isSelectMode"] = true;
     component["maxFloorIndex"] = 12;
     component["moveUpFloor"]();
+    component["goBackOutside"]();
     expect(component["currentFloorIndex"]).toEqual(9);
   });
-  it("should moveDownFloor", () => {
+  it("should moveUpFloor() currentFloorIndex > maxFloorIndex", () => {
+    component["currentFloorIndex"] = 8;
+    component["isSelectMode"] = false;
+    component["maxFloorIndex"] = 6;
+    component["moveUpFloor"]();
+    component["goBackOutside"]();
+    expect(component["currentFloorIndex"]).toEqual(8);
+  });
+  it("should moveDownFloor() currentFloorIndex > minFloorIndex", () => {
     component["currentFloorIndex"] = 5;
     component["minFloorIndex"] = 1;
     component["moveDownFloor"]();
     expect(component["currentFloorIndex"]).toEqual(4);
   });
-  // it("should goBackOutside", () => {
-  //   component["isSelectMode"] = false;
-  //   component["goBackOutside"]();
-  //   expect(component["router"].navigateByUrl).toEqual("/outdoor");
-  // });
-  // it("should adjustSettings", () => {
-  //   component["adjustSettings"]();
-  //   expect(component["router"].navigateByUrl).toEqual("/appSettings");
-  // });
+  it("should moveDownFloor() currentFloorIndex < minFloorIndex", () => {
+    component["currentFloorIndex"] = 2;
+    component["minFloorIndex"] = 5;
+    component["moveDownFloor"]();
+    expect(component["currentFloorIndex"]).toEqual(2);
+  });
   afterEach(() => {
     TestBed.resetTestingModule();
   });
