@@ -45,6 +45,14 @@ describe('OutdoorNavigationSideButtonsComponent ', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('test poi toggle', () => {
+    fixture.detectChanges();
+    fixture.debugElement
+        .triggerEventHandler('click', 'pin' );
+    expect(component.presentPopover('click', 'poi')).toBeTruthy();
+  });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
