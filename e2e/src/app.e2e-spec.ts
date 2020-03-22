@@ -14,28 +14,23 @@ describe('new App', () => {
   });
   it('Should toggle Campuses when selected at top of the UI', () => {
     browser.get('/');
-    //set location to sgw
-    // element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
-    // browser.driver.sleep(500);
-    // element(
-    //   by.xpath(
-    //     '/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[1]'
-    //   )
-    // ).click();
-
     //check location is set to SGW
     expect(element(by.id('campus-change')).getText()).toContain('SGW Campus');
     expect(element(by.css('ng-reflect-longitude="-73.578041"'))).toBeDefined();
     expect(element(by.css('ng-reflect-latitude="45.495729"'))).toBeDefined();
 
     //set location to Loyola
-    element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
+    //element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
+    //element(by.id('campus-select'))
+    browser.actions().mouseMove(element(by.id('campus-select'))).click();
     browser.driver.sleep(500);
+    //browser.actions().mouseMove(element(by.id('ion-rb-1-lbl'))).click();
+    console.log(element(by.id('campus-select')));
     element(
       by.xpath(
         '/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[2]'
       )
-    ).click();
+    );
 
     //check locations is set to loyla
     expect(element(by.id('campus-change')).getText()).toContain(
@@ -46,7 +41,6 @@ describe('new App', () => {
   });
   it('Shows Current Position Marker', () => {
     browser.get('/');
-    //let ele = element(by.xpath("/html/body/app-root/ion-app/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
     let ele = element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-content/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
     expect(ele).toBeTruthy();
   });
