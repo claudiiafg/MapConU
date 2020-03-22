@@ -7,6 +7,13 @@ describe('DirectionService', () => {
 
   it('should be created', () => {
     const service: DirectionService = TestBed.get(DirectionService);
+    service.setDirectionsSteps(1);
+    service.getDirectionsSteps();
+    service.setStepsIcons(1);
+    service.addInfoWindow('test','test');
+    service.closeInfoWindows();
+    service.closeMainWindow();
+    service.closeAlternateWindow();
     expect(service).toBeTruthy();
   });
   afterEach(() => {

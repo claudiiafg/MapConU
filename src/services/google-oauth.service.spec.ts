@@ -15,6 +15,9 @@ describe('GoogleOauthService', () => {
   });
   it('should be created', () => {
     const service: GoogleOauthService = TestBed.get(GoogleOauthService);
+    service.getStoredSession();
+    service.loginUser();
+    service.logoutUser();
     expect(service).toBeTruthy();
   });
 });
