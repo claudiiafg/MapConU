@@ -38,6 +38,8 @@ describe('OutdoorViewPage ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
+    component.ionViewWillEnter();
+    component.navigate([]);
     expect(component).toBeTruthy();
   });
   afterEach(() => {
