@@ -34,7 +34,7 @@
         [style.color]="walkColor"
         shape="round"
         fill="outline"
-        (click)="changeTravelMode('WALKING')"
+        (click)="changeTravelMode('WALKING')" class="walkButton"
       >
         <ion-icon name="walk"></ion-icon>
       </ion-button>
@@ -43,7 +43,7 @@
         [style.color]="transitColor"
         shape="round"
         fill="outline"
-        (click)="changeTravelMode('TRANSIT')"
+        (click)="changeTravelMode('TRANSIT')" class="transitButton"
       >
         <ion-icon name="train"></ion-icon>
       </ion-button>
@@ -52,7 +52,7 @@
         [style.color]="carColor"
         shape="round"
         fill="outline"
-        (click)="changeTravelMode('DRIVING')"
+        (click)="changeTravelMode('DRIVING')" class="driveButton"
       >
         <ion-icon name="car"></ion-icon>
       </ion-button>
@@ -63,6 +63,6 @@
     #search
     class="search-location"
     [placeholder]="'location-searchbar' | translate"
-    (ionClear)="closeAutocomplete($event)"
+    (ionClear)="closeAutocomplete($event)" class="searchButton"
   ></ion-searchbar>
 </ion-header>

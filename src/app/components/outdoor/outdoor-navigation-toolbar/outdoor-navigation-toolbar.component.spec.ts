@@ -22,6 +22,7 @@ import { TranslationService } from "../../../../services/translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import {By} from "@angular/platform-browser";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -129,6 +130,57 @@ describe("OutdoorNavigationToolbarComponent ", () => {
     expect(component.walkColor).toBe("yellow");
     googleMapcomponent.subscribeToTravelMode();
     expect(googleMapcomponent.travelMode).toBe("WALKING");
+  });
+
+  it('test click changeTravelMode walk', () => {
+    component.isDirectionSet = true;
+    fixture.detectChanges();
+    const spyWalk = spyOn(component, "changeTravelMode");
+    let walk = fixture.debugElement.query(By.css("ion-button.walkButton"));
+    walk.triggerEventHandler("click", null);
+    fixture.detectChanges();
+    expect(spyWalk).toHaveBeenCalled();
+  });
+
+  it('test click changeTravelMode transit', () => {
+    component.isDirectionSet = true;
+    fixture.detectChanges();
+    const spyTransit = spyOn(component, "changeTravelMode");
+    let transit = fixture.debugElement.query(By.css("ion-button.transitButton"));
+    transit.triggerEventHandler("click", null);
+    fixture.detectChanges();
+    expect(spyTransit).toHaveBeenCalled();
+  });
+
+  it('test click changeTravelMode car', () => {
+    component.isDirectionSet = true;
+    fixture.detectChanges();
+    const spyDirectionClose = spyOn(component, "changeTravelMode");
+    let directionClose = fixture.debugElement.query(By.css("ion-button.driveButton"));
+    directionClose.triggerEventHandler("click", null);
+    fixture.detectChanges();
+    expect(spyDirectionClose).toHaveBeenCalled();
+  });
+
+  it('test closeAutocomplete', () => {
+    fixture.detectChanges();
+    const spySearch = spyOn(component, "closeAutocomplete");
+    let search = fixture.debugElement.query(By.css("ion-searchbar.searchButton"));
+    search.triggerEventHandler("ionClear", null);
+    fixture.detectChanges();
+    expect(spySearch).toHaveBeenCalled();
+  });
+
+  it('should move to found location', () => {
+    expect(googleMapcomponent.latitude).toBe(45.495729);
+    expect(googleMapcomponent.longitude).toBe(-73.578041);
+    const lat = 45.494828;
+    const lng = -73.577981;
+    component.moveToFoundLocation(lat, lng);
+    fixture.detectChanges();
+    googleMapcomponent.subscribeToChangeInCurrentPOS();
+    expect(googleMapcomponent.latitude).toBe(45.494828);
+    expect(googleMapcomponent.longitude).toBe(-73.577981);
   });
 
   afterEach(() => {
