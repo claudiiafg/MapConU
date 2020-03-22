@@ -18,6 +18,7 @@ export class AppComponent {
   private concordiaRed: string = '#800000';
   message: any;
   subscribe: any;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -36,7 +37,7 @@ export class AppComponent {
       //&& !this.googleMapComp.isOpen
       if (this.router.url == "/outdoor" && !this.googleMapComp.isOpen)
       {
-
+        console.log("clicked on back button" + this.googleMapComp.isOpen);
         this.confirmMessage();
 
       }

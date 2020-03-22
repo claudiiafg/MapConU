@@ -626,9 +626,9 @@ export class GoogleMapComponent implements OnInit {
       Creates popup containing Concordia building descriptions.
        */
   async showAlert(building: string, address: string) {
-    console.log(this.isOpen);
+    console.log("just entered method: " + this.isOpen);
     this.isOpen = true;
-    console.log(this.isOpen);
+    console.log("after setting it to true:" + this.isOpen);
     let urlSubString;
     switch (building) {
       case 'Hall Building':
@@ -712,15 +712,18 @@ export class GoogleMapComponent implements OnInit {
               let url = '/indoor' + '/jmsb';
               this.router.navigateByUrl(url);
               this.isOpen = false;
+              console.log("jmsb");
               return true;
             } else if (urlSubString === 'hall') {
               let url = '/indoor' + '/hall';
               this.router.navigateByUrl(url);
               this.isOpen = false;
+              console.log("hall");
               return true;
             } else {
               console.error('no floor plans for this building');
               this.isOpen = false;
+              console.log("other building");
               return false;
             }
           }
@@ -743,14 +746,16 @@ export class GoogleMapComponent implements OnInit {
           handler: () => {
             this.goHere();
             this.isOpen = false;
+            console.log("decides to go");
             return true;
           }
         }
       ]
     });
-    console.log(this.isOpen);
+    console.log("before waiting for response" + this.isOpen);
     await alert.present();
     let result = await alert.onDidDismiss();
+    console.log("after waiting for response" + this.isOpen);
     this.isOpen = false;
   }
 
