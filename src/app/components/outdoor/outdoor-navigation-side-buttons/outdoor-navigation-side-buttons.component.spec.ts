@@ -61,7 +61,7 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
     expect(component.presentPopover("click", "poi")).toBeTruthy();
   });
 
-  it("test open pin", () => {
+  it("test open poi toggle", () => {
     component.poiClicked = false;
     fixture.detectChanges();
     const spyPin = spyOn(component, "presentPopover");
@@ -71,7 +71,7 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
     expect(spyPin).toHaveBeenCalled();
   });
 
-  it("test close", () => {
+  it("test close poi toggle", () => {
     component.poiClicked = true;
     fixture.detectChanges();
     const spyClose = spyOn(component, "presentPopover");
@@ -89,6 +89,16 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
     bus.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyBus).toHaveBeenCalled();
+  });
+
+  it('test close direction button',() => {
+    component.isDirectionSet = true;
+    fixture.detectChanges();
+    const spyDirectionClose = spyOn(component, "close");
+    let directionClose = fixture.debugElement.query(By.css("ion-fab-button.directionCloseButton"));
+    directionClose.triggerEventHandler("click", null);
+    fixture.detectChanges();
+    expect(spyDirectionClose).toHaveBeenCalled();
   });
 
   afterEach(() => {
