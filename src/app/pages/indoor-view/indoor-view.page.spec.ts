@@ -75,12 +75,13 @@ describe("IndoorViewPage ", () => {
     component["isSelectMode"] = false;
     component["floor"] = 1;
     spyOn(component["events"], "subscribe").and.callFake(() => {
+      component["isSelectMode"] = true;
       return (component["floor"] = parseInt("4"));
     });
     component["subscribeToEvents"]();
     fixture.detectChanges();
     expect(component["events"].subscribe).toHaveBeenCalled();
-    expect(component["isSelectMode"]).toBeFalsy();
+    expect(component["isSelectMode"]).toBeTruthy();
     expect(component["floor"]).toEqual(4);
   });
   afterEach(() => {
