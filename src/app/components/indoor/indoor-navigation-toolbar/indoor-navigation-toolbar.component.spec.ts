@@ -117,11 +117,7 @@ describe("IndoorNavigationToolbarComponent ", () => {
       return null;
     });
     component["goBackOutside"]();
-    expect(component["events"].publish).toHaveBeenCalledWith(
-      "isSelectMode",
-      false,
-      Date.now()
-    );
+    expect(component["events"].publish).toHaveBeenCalled();
   });
   it("should adjustSettings()", () => {
     spyOn(component["router"], "navigateByUrl").and.callFake(() => {
