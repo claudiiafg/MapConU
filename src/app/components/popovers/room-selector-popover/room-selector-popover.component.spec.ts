@@ -68,8 +68,11 @@ describe('RoomSelectorPopoverComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
+    component.prettifyTitles();
+    component.closePopover();
     expect(component).toBeTruthy();
   });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });

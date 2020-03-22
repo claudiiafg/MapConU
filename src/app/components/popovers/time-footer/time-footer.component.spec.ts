@@ -60,6 +60,7 @@ describe('TimeFooterComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
+    component.ngOnInit();
     expect(component).toBeTruthy();
   });
   afterEach(() => {

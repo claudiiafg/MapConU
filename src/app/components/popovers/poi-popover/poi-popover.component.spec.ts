@@ -59,6 +59,12 @@ describe('PoiPopoverComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
+    component.ngOnInit();
+    component.update('testing');
+    component.update('restaurant');
+    expect(component.update('testing')).toBeUndefined();
+    expect(component.update('restaurant')).toBeUndefined();
+    component.closePopover();
     expect(component).toBeTruthy();
   });
   afterEach(() => {

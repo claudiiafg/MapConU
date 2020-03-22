@@ -68,6 +68,10 @@ describe('SearchPopoverComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
+    component.ngAfterViewInit();
+    component.findAddress();
+    component.closePopover();
+    component.updateMap();
     expect(component).toBeTruthy();
   });
   afterEach(() => {
