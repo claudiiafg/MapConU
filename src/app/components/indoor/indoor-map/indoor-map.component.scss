@@ -1,4 +1,8 @@
 .indoor-map-wrapper {
   width: 100%;
-  position: fixed;
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 500px;
+  display: contents;
 }
