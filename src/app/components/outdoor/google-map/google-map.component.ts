@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AlertController,
@@ -14,11 +14,17 @@ import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../../../services/translation.service';
 
+
+@Injectable({
+  providedIn: "root"
+})
+
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
   styleUrls: ['./google-map.component.scss']
 })
+
 export class GoogleMapComponent implements OnInit {
   public height: number = 0;
   public latitude: number = 45.495729;
@@ -620,7 +626,9 @@ export class GoogleMapComponent implements OnInit {
       Creates popup containing Concordia building descriptions.
        */
   async showAlert(building: string, address: string) {
+    console.log(this.isOpen);
     this.isOpen = true;
+    console.log(this.isOpen);
     let urlSubString;
     switch (building) {
       case 'Hall Building':
@@ -740,10 +748,10 @@ export class GoogleMapComponent implements OnInit {
         }
       ]
     });
-
+    console.log(this.isOpen);
     await alert.present();
     let result = await alert.onDidDismiss();
-    //this.isOpen = false;
+    this.isOpen = false;
   }
 
   /*
