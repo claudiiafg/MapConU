@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   AngularFirestoreCollection,
   AngularFirestore
-} from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from 'src/models/userModel';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+} from "@angular/fire/firestore";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { User } from "src/models/userModel";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UserServices {
   private userID: string;
@@ -32,9 +32,9 @@ export class UserServices {
       this.user = user;
       this.userID = user.id;
     }
-    this.usersCollection$ = await this.db.collection<User>('users');
+    this.usersCollection$ = await this.db.collection<User>("users");
     this.usersList$ = this.db
-      .collection<User>('users')
+      .collection<User>("users")
       .valueChanges()
       .pipe(
         map(changes => {
@@ -64,7 +64,7 @@ export class UserServices {
       .then(result => {
         tempUser.id = result.user.uid;
         this.db
-          .collection<User>('users')
+          .collection<User>("users")
           .doc(tempUser.id)
           .set(tempUser);
       })
@@ -84,7 +84,7 @@ export class UserServices {
     if (id) {
       try {
         const res = await this.db
-          .collection('users')
+          .collection("users")
           .doc(id)
           .valueChanges();
         return this.getValueFromObservable(res);
@@ -102,14 +102,14 @@ export class UserServices {
   ) {
     if (email && email.length > 0 && password && password.length > 0) {
       const tempUser: User = {
-        id: '',
+        id: "",
         username: userName,
         email: email,
         googleApiKey: apiKey
       };
       this.createNewUser(tempUser, password);
     } else {
-      console.log('insufficient info to create an account');
+      console.log("insufficient info to create an account");
     }
   }
 

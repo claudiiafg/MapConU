@@ -160,6 +160,22 @@ describe("UserServices", () => {
     // shouldn't log anything since valid inputs
     expect(console_log.calls.count()).toEqual(0);
   });
+  it("should test createUser(...) valid inputs", () => {
+    let tempUser = {
+      id: "temp",
+      username: "temp",
+      email: "temp",
+      googleApiKey: "temp"
+    };
+    const service: UserServices = TestBed.get(UserServices);
+    const mySpy = spyOn<any>(service, "modifyUser").and.callFake(async () => {
+      service["setUser"](tempUser);
+      user = tempUser; // fake the set from AFauth
+    });
+    service.modifyUser("temp", "temp", "temp", "temp");
+    expect(mySpy).toHaveBeenCalled();
+    expect(user).toEqual(tempUser);
+  });
   afterEach(() => {
     TestBed.resetTestingModule();
   });
