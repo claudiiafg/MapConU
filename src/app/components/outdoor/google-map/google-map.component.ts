@@ -40,6 +40,7 @@ export class GoogleMapComponent implements OnInit {
   };
   public provideRouteAlternatives: boolean = true;
   public map: any;
+  public isOpen: boolean;
 
   // Directions rendering options
   public walkingNotSelectedRenderOptions = {
@@ -471,7 +472,11 @@ export class GoogleMapComponent implements OnInit {
     private router: Router,
     private dataSharingService: DataSharingService,
     private translate: TranslationService
-  ) {}
+  ) {
+
+    this.isOpen = false;
+
+  }
 
   async ngOnInit() {
     await this.platform.ready();
@@ -615,6 +620,7 @@ export class GoogleMapComponent implements OnInit {
       Creates popup containing Concordia building descriptions.
        */
   async showAlert(building: string, address: string) {
+    this.isOpen = true;
     let urlSubString;
     switch (building) {
       case 'Hall Building':
@@ -697,13 +703,16 @@ export class GoogleMapComponent implements OnInit {
             if (urlSubString === 'jmsb') {
               let url = '/indoor' + '/jmsb';
               this.router.navigateByUrl(url);
+              this.isOpen = false;
               return true;
             } else if (urlSubString === 'hall') {
               let url = '/indoor' + '/hall';
               this.router.navigateByUrl(url);
+              this.isOpen = false;
               return true;
             } else {
               console.error('no floor plans for this building');
+              this.isOpen = false;
               return false;
             }
           }
@@ -717,6 +726,7 @@ export class GoogleMapComponent implements OnInit {
           role: 'cancel',
           handler: () => {
             console.log('building-popup closed');
+            this.isOpen = false;
           }
         },
         {
@@ -724,6 +734,7 @@ export class GoogleMapComponent implements OnInit {
           cssClass: 'alert-button-go',
           handler: () => {
             this.goHere();
+            this.isOpen = false;
             return true;
           }
         }
@@ -732,6 +743,7 @@ export class GoogleMapComponent implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
+    //this.isOpen = false;
   }
 
   /*

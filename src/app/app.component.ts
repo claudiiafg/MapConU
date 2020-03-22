@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { DataSharingService } from '../services/data-sharing.service';
 import { UserServices } from 'src/services/user.services';
 import { TranslationService } from '../services/translation.service';
+import {Router} from '@angular/router';
+import {GoogleMapComponent} from './components/outdoor/google-map/google-map.component';
 
 @Component({
   selector: 'app-root',
@@ -15,17 +17,59 @@ import { TranslationService } from '../services/translation.service';
 export class AppComponent {
   private concordiaRed: string = '#800000';
   message: any;
-
+  subscribe: any;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private data: DataSharingService,
     private userServices: UserServices,
+    private alertController: AlertController,
+    private router: Router,
+    private googleMapComp: GoogleMapComponent,
     private translationService: TranslationService
   ) {
     this.initializeApp();
+    this.subscribe = this.platform.backButton.subscribeWithPriority(666666,()=>
+    {
+
+      //&& !this.googleMapComp.isOpen
+      if (this.router.url == "/outdoor" && !this.googleMapComp.isOpen)
+      {
+
+        this.confirmMessage();
+
+      }
+    })
   }
+  async confirmMessage(){
+    let alert = await this.alertController.create({
+      header: this.translationService.getTranslation('Do you want to quit?'),
+      cssClass: 'alert-css',
+      buttons: [
+        {
+          text: this.translationService.getTranslation('cancel'),
+          cssClass: 'alert-button-map',
+          role: 'cancel',
+          handler: () => {
+            // close popup
+          }
+        },
+        {
+          text: this.translationService.getTranslation('quit'),
+          cssClass: 'alert-button-map',
+          role: 'quit',
+          handler: () => {
+            navigator["app"].exitApp();
+          }
+        }
+      ]
+    });
+    await alert.present();
+
+  }
+
+
 
   initializeApp() {
     this.platform.ready().then(() => {

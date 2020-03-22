@@ -70,5 +70,8 @@
   "press-on-room-instruction": "Press on any room to start navigation to it.",
   "start": "START",
   "next": "NEXT",
-  "end": "END"
+  "end": "END",
+  "Do you want to quit?": "Do you want to quit?",
+  "cancel": "Cancel",
+  "quit": "Quit"
 }
