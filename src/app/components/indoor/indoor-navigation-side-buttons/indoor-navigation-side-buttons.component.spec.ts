@@ -67,6 +67,9 @@ describe("IndoorNavigationSideButtonsComponent ", () => {
     fixture.detectChanges();
   });
   it("should create", () => {
+    component.presentPopover();
+    component.showInfo();
+    component["getData"]();
     expect(component).toBeTruthy();
   });
   it("should test compass button clicked presentPopover()", () => {
@@ -89,8 +92,6 @@ describe("IndoorNavigationSideButtonsComponent ", () => {
   });
   it("should getData TRUE isSelectMode", () => {
     component["isSelectMode"] = true;
-    component["presentPopover"]("123");
-    component["showInfo"]();
     expect(component["getData"]()).toEqual("select-source-instruction");
   });
   it("should getData FALSE isSelectMode and FALSE directionsManagerService.isInRoute", () => {

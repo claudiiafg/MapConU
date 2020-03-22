@@ -58,6 +58,7 @@ describe("IndoorMapComponent ", () => {
     fixture.detectChanges();
   });
   it("should create", () => {
+    component.ngAfterViewInit();
     expect(component).toBeTruthy();
   });
   it("should ngAfterViewInit", () => {

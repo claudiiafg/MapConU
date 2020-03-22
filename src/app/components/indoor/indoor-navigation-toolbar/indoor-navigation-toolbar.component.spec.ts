@@ -57,6 +57,9 @@ describe("IndoorNavigationToolbarComponent ", () => {
     fixture.detectChanges();
   });
   it("should create", () => {
+    component.ngAfterViewInit();
+    component["goBackOutside"]();
+    component["adjustSettings"]();
     expect(component).toBeTruthy();
   });
   it("should ngAfterViewInit()", () => {

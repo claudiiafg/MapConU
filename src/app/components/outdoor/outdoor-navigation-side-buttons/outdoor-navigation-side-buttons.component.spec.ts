@@ -1,21 +1,26 @@
-import {async, ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { RouteReuseStrategy, RouterModule } from '@angular/router';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { FirestoreSettingsToken } from '@angular/fire/firestore';
-import { OutdoorNavigationSideButtonsComponent } from './outdoor-navigation-side-buttons.component';
-import { UserServices } from '../../../../services/user.services';
-import { PoiServices } from '../../../../services/poi.services';
-import { GeolocationServices } from '../../../../services/geolocation.services';
-import { DirectionService } from '../../../../services/direction.service';
-import { IndoorDirectionsService } from '../../../../services/indoorDirections.service';
-import {TranslationService} from "../../../../services/translation.service";
-import {By} from "@angular/platform-browser";
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed
+} from "@angular/core/testing";
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { Geolocation } from "@ionic-native/geolocation/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { RouteReuseStrategy, RouterModule } from "@angular/router";
+import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
+import { FirestoreSettingsToken } from "@angular/fire/firestore";
+import { OutdoorNavigationSideButtonsComponent } from "./outdoor-navigation-side-buttons.component";
+import { UserServices } from "../../../../services/user.services";
+import { PoiServices } from "../../../../services/poi.services";
+import { GeolocationServices } from "../../../../services/geolocation.services";
+import { DirectionService } from "../../../../services/direction.service";
+import { IndoorDirectionsService } from "../../../../services/indoorDirections.service";
+import { TranslationService } from "../../../../services/translation.service";
+import { By } from "@angular/platform-browser";
 
-describe('OutdoorNavigationSideButtonsComponent ', () => {
+describe("OutdoorNavigationSideButtonsComponent ", () => {
   let component: OutdoorNavigationSideButtonsComponent;
   let fixture: ComponentFixture<OutdoorNavigationSideButtonsComponent>;
   beforeEach(async(() => {
@@ -43,46 +48,48 @@ describe('OutdoorNavigationSideButtonsComponent ', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should create', () => {
+  it("should create", () => {
+    component.openViewer();
+    component.presentPopover(null, null);
+    component.close();
     expect(component).toBeTruthy();
   });
 
-  it('test poi toggle', () => {
+  it("test poi toggle", () => {
     fixture.detectChanges();
-    fixture.debugElement
-        .triggerEventHandler('click', 'pin' );
-    expect(component.presentPopover('click', 'poi')).toBeTruthy();
+    fixture.debugElement.triggerEventHandler("click", "pin");
+    expect(component.presentPopover("click", "poi")).toBeTruthy();
   });
 
-  it('test open pin', () => {
+  it("test open pin", () => {
     component.poiClicked = false;
     fixture.detectChanges();
-    const spyPin = spyOn(component, 'presentPopover');
-    let pin = fixture.debugElement.query(By.css('ion-icon.pinButton'));
-    pin.triggerEventHandler('click', null);
+    const spyPin = spyOn(component, "presentPopover");
+    let pin = fixture.debugElement.query(By.css("ion-icon.pinButton"));
+    pin.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyPin).toHaveBeenCalled();
   });
 
-  it('test close', () => {
+  it("test close", () => {
     component.poiClicked = true;
     fixture.detectChanges();
-    const spyClose = spyOn(component, 'presentPopover');
-    let close = fixture.debugElement.query(By.css('ion-icon.closeButton'));
-    close.triggerEventHandler('click', null);
+    const spyClose = spyOn(component, "presentPopover");
+    let close = fixture.debugElement.query(By.css("ion-icon.closeButton"));
+    close.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyClose).toHaveBeenCalled();
   });
 
-  it('test open bus schedule',() => {
+  it("test open bus schedule", () => {
     component.poiClicked = true;
     fixture.detectChanges();
-    const spyBus = spyOn(component,'openViewer');
-    let bus = fixture.debugElement.query(By.css('ion-icon.busButton'));
-    bus.triggerEventHandler('click', null );
+    const spyBus = spyOn(component, "openViewer");
+    let bus = fixture.debugElement.query(By.css("ion-icon.busButton"));
+    bus.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyBus).toHaveBeenCalled();
-    });
+  });
 
   afterEach(() => {
     TestBed.resetTestingModule();
