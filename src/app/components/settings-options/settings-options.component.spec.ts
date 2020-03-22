@@ -16,6 +16,7 @@ import { TranslationService } from '../../../services/translation.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -50,6 +51,8 @@ describe('SettingsOptionsComponent', () => {
         DirectionService,
         IndoorDirectionsService,
         TranslationService,
+        NativeStorage,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]
