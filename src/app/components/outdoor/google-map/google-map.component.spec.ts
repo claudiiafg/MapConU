@@ -71,6 +71,24 @@ describe("GoogleMapComponent ", () => {
     fixture.detectChanges();
   });
   it("should create", () => {
+    component.mapReady(null);
+    component.subscribeToChangeInPOI();
+    component.subscribeToChangeInCurrentPOS();
+    component.clickedMarker(null);
+    component.subscribeToUserInput();
+    // component.getIcon(null);
+    component.showAlert("test", "test");
+    component.goHere();
+    component.sendMessage("test");
+    component.subscribeToMapSize();
+    component.subscribeToTravelMode();
+    // component.onResponse(null);
+    // component["setRenderOptions"](null);
+    // component["sendDirectionInfo"](null, null);
+    // component["setAlternativeRoute"](null);
+    // component["setInfoWindow"](null, null, null);
+    // component["infoWindowClicked"](null, null, null);
+    // component["changeRouteColors"](null, null);
     expect(component).toBeTruthy();
   });
 
