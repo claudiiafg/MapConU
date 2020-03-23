@@ -48,7 +48,7 @@ export class DirectionsManagerService {
   }
 
   private subscribeToEvents() {
-    //when all components of map have been set, route can begging
+    //when all components of map have been set, route can begin
     this.events.subscribe('map-set', res => {
       if (this.isInRoute.getValue() === true) {
         const data = {
