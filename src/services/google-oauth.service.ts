@@ -6,7 +6,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
   providedIn: 'root'
 })
 
-// Implementation of goole oauth ionic native plugin
+// Implementation of google oauth ionic native plugin
 export class GoogleOauthService {
 
   constructor(private nativeStorage: NativeStorage) {}
