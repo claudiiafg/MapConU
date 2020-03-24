@@ -43,7 +43,7 @@ export class OutdoorNavigationToolbarComponent
   ];
 
   constructor(
-    private dataSharing: DataSharingService,
+    private dataSharingService: DataSharingService,
     private events: Events,
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
@@ -52,7 +52,7 @@ export class OutdoorNavigationToolbarComponent
     private translate: TranslationService,
     private geolocationServices: GeolocationServices
   ) {
-    this.dataSharing.currentMessage.subscribe(
+    this.dataSharingService.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
     );
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
@@ -88,17 +88,15 @@ export class OutdoorNavigationToolbarComponent
 
         searchAutocomplete.addListener('place_changed', () => {
           this.ngZone.run(() => {
-            //get the place result
             let place: google.maps.places.PlaceResult = searchAutocomplete.getPlace();
 
-            //verify result
-            if (place.geometry === undefined || place.geometry === null) {
+            if (!place.geometry) {
               return;
             }
 
             this.latitudeFound = place.geometry.location.lat();
             this.longitudeFound = place.geometry.location.lng();
-            this.moveToFoundLocation(this.latitudeFound, this.longitudeFound);
+            this.moveToFoundLocation(this.latitudeFound, this.longitudeFound, place.geometry.viewport);
           });
         });
       });
@@ -112,13 +110,13 @@ export class OutdoorNavigationToolbarComponent
     if (this.loc == '2') {
       this.loc = '0';
     }
-    this.dataSharing.updateMessage(this.locations[this.loc]);
+    this.dataSharingService.updateMessage(this.locations[this.loc]);
     this.events.publish('campusChanged', Date.now());
   }
 
-  public moveToFoundLocation(lat: number, lng: number) {
-    this.dataSharing.updateMessage({ latitude: lat, longitude: lng });
-    this.events.publish('campusChanged', Date.now());
+  public moveToFoundLocation(lat: number, lng: number, mapBounds: any) {
+    this.dataSharingService.updateMessage({ latitude: lat, longitude: lng, mapBounds: mapBounds });
+    this.events.publish('coordinatesChanged', { latitude: lat, longitude: lng, mapBounds: mapBounds });
   }
 
   public closeAutocomplete($event: CustomEvent) {
