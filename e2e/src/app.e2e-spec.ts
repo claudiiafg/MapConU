@@ -12,29 +12,53 @@ describe('new App', () => {
     let x = element(by.id('campus-change')).getText();
     expect(browser.getTitle()).toContain('MapConU');
   });
-  it('Should toggle Campuses when selected at top of the UI', () => {
-    browser.get('/');
+it("Should toggle Campuses when selected at top of the UI", () => {
+    // commenting this as it refreshes the page
+    // can also sleep and wait until page fully loaded
+    // browser.get("/");
+
     //check location is set to SGW
-    expect(element(by.id('campus-change')).getText()).toContain('SGW Campus');
+    expect(element(by.id("campus-change")).getText()).toContain("SGW Campus");
     expect(element(by.css('ng-reflect-longitude="-73.578041"'))).toBeDefined();
     expect(element(by.css('ng-reflect-latitude="45.495729"'))).toBeDefined();
 
     //set location to Loyola
-    //element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
-    //element(by.id('campus-select'))
-    browser.actions().mouseMove(element(by.id('campus-select'))).click();
-    browser.driver.sleep(500);
-    //browser.actions().mouseMove(element(by.id('ion-rb-1-lbl'))).click();
-    console.log(element(by.id('campus-select')));
-    element(
-      by.xpath(
-        '/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[2]'
-      )
-    );
+    browser.driver.sleep(1000);
+
+    browser
+      .actions()
+      .mouseMove(element(by.css("button.alert-button")))
+      .click()
+      .perform();
+    browser.driver.sleep(1000);
+
+    browser
+      .actions()
+      .mouseMove(element(by.css("button.alert-button")))
+      .click()
+      .perform();
+
+    browser.driver.sleep(1000);
+
+    browser
+      .actions()
+      .mouseMove(element(by.id("campus-select")))
+      .click()
+      .perform();
+
+    browser.driver.sleep(1000);
+
+    //set location to Loyola
+    browser
+      .actions()
+      .mouseMove(element(by.id("ion-rb-1-lbl")))
+      .click()
+      .perform();
+    browser.driver.sleep(1000);
 
     //check locations is set to loyla
-    expect(element(by.id('campus-change')).getText()).toContain(
-      'Loyola Campus'
+    expect(element(by.id("campus-change")).getText()).toContain(
+      "Loyola Campus"
     );
     expect(element(by.css('ng-reflect-longitude="-73.640452"'))).toBeDefined();
     expect(element(by.css('ng-reflect-latitude="45.45824"'))).toBeDefined();
