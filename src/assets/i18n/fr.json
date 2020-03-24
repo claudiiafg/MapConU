@@ -73,5 +73,6 @@
   "end": "FIN",
   "Do you want to quit?": "Voulez-vous quitter?",
   "cancel": "Annuler",
-  "quit": "Quitter"
+  "quit": "Quitter",
+  "no-floor-plan-msg" : "aucun plan d'étage disponible pour l'"
 }

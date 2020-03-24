@@ -73,5 +73,6 @@
   "end": "END",
   "Do you want to quit?": "Do you want to quit?",
   "cancel": "Cancel",
-  "quit": "Quit"
+  "quit": "Quit",
+  "no-floor-plan-msg" : "No floor plan available for "
 }

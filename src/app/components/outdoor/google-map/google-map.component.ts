@@ -697,6 +697,8 @@ export class GoogleMapComponent implements OnInit {
       header: this.translate.getTranslation(building),
       subHeader: address,
       cssClass: "alert-css",
+      message: "",
+      //cssClass: 'alert-css',
       buttons: [
         {
           text: this.translate.getTranslation("enter"),
@@ -715,9 +717,12 @@ export class GoogleMapComponent implements OnInit {
 
               return true;
             } else {
+
               console.error("no floor plans for this building");
               GoogleMapComponent.isOpen = false;
 
+              alert.message = this.translate.getTranslation('no-floor-plan-msg') + this.translate.getTranslation(building);
+              console.error('no floor plans for this building');
               return false;
             }
           }
