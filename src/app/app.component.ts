@@ -35,7 +35,6 @@ export class AppComponent {
       () => {
         //&& !this.googleMapComp.isOpen
         if (this.router.url == "/outdoor" && !GoogleMapComponent.isOpen) {
-          console.log("clicked on back button" + GoogleMapComponent.isOpen);
           this.confirmMessage();
         }
       }
