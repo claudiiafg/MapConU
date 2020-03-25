@@ -6,6 +6,7 @@ import { SettingsPage } from './pages/settings/settings.page';
 
 const routes: Routes = [
   { path: 'outdoor', component: OutdoorViewPage },
+  { path: 'outdoor/isMixedNav/:id', component: OutdoorViewPage },
   { path: 'indoor', component: IndoorViewPage },
   { path: 'appSettings', component: SettingsPage },
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, onSameUrlNavigation: 'reload'})
   ],
   exports: [RouterModule]
 })

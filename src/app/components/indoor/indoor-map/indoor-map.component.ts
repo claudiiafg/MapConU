@@ -53,6 +53,7 @@ export class IndoorMapComponent implements OnInit {
 
     //when user wants to start a new path -> get data necessary and compute path
     this.events.subscribe('init-new-path', data => {
+      console.log(data);
       if (data) {
         this.resetNav();
         this.sourceID = data.source;
@@ -70,6 +71,7 @@ export class IndoorMapComponent implements OnInit {
 
     //add event listener to all 'points of interest' elements of map
     document.addEventListener('click', (res: any) => {
+      res.stopImmediatePropagation();
       let ele: string = res.toElement.id;
       if (
         ele.includes('wc') ||
@@ -166,15 +168,13 @@ export class IndoorMapComponent implements OnInit {
           this.directionManager.initDifferentFloorDir(
             false,
             'h8',
-            this.destID,
-            this.interestPoints
+            this.destID
           );
         } else if (this.inputBuilding === 'hall' && this.floor === 9) {
           this.directionManager.initDifferentFloorDir(
             false,
             'h9',
-            this.destID,
-            this.interestPoints
+            this.destID
           );
         }
 

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   AlertController,
   Events,
@@ -13,6 +13,7 @@ import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../../../services/translation.service';
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-google-map',
@@ -30,6 +31,7 @@ export class GoogleMapComponent implements OnInit {
   public poiMarkers: any[] = [];
   public travelMode = 'WALKING';
   public previous: any;
+  private sub;
   public currentToggles: any = {
     restaurants: false,
     coffee: false,
@@ -470,7 +472,10 @@ export class GoogleMapComponent implements OnInit {
     private navController: NavController,
     private router: Router,
     private dataSharingService: DataSharingService,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private route: ActivatedRoute,
+    private directionsManager: DirectionsManagerService
+
   ) {}
 
   async ngOnInit() {
@@ -685,6 +690,7 @@ export class GoogleMapComponent implements OnInit {
         break;
     }
     this.buildingToNavigateTo = building;
+
     const alert = await this.alertController.create({
       header: this.translate.getTranslation(building),
       subHeader: address,
@@ -741,31 +747,78 @@ export class GoogleMapComponent implements OnInit {
       'Go' button is clicked on the building information popup
        */
   goHere() {
-    let buildingLat: number;
-    let buildingLng: number;
+    if(this.router.url.includes('/outdoor/isMixedNav')){
+      console.log('DO SOMETHING');
+      let fromBuildingLat: number;
+      let fromBuildingLng: number;
+      let fromBuilding: any;
+      let toBuildingLat: number;
+      let toBuildingLng: number;
+      let toBuilding: any;
+      this.sub = this.route.params.subscribe(params => {
+        if(params['id']){
+          if(params['id'] === 'hall'){
+            fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'Hall Building')[0];
+            fromBuildingLat = fromBuilding.coords[0].lat;
+            fromBuildingLng = fromBuilding.coords[0].lng;
 
-    for (let i = 0; i < this.overlayCoords.length; i++) {
-      if (this.overlayCoords[i].name === this.buildingToNavigateTo) {
-        buildingLat = this.overlayCoords[i].coords[0].lat;
-        buildingLng = this.overlayCoords[i].coords[0].lng;
+          } else if(params['id'] === 'jmsb'){
+            fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'John Molson Building')[0];
+            fromBuildingLat = fromBuilding.coords[0].lat;
+            fromBuildingLng = fromBuilding.coords[0].lng;
+          }
+        }
+      });
+      toBuilding = this.overlayCoords.filter(overlay => overlay.name === this.buildingToNavigateTo)[0];
+      toBuildingLat = toBuilding.coords[0].lat;
+      toBuildingLng = toBuilding.coords[0].lng;
+      const to = {
+        building: toBuilding,
+        lat: toBuildingLat,
+        lng: toBuildingLng
       }
+      const from = {
+        building: fromBuilding,
+        lat: fromBuildingLat,
+        lng: fromBuildingLng
+      }
+      const tempStep = {
+        source: from,
+        dest: to,
+        wasDone: false,
+        isLast: true
+      }
+      this.directionsManager.pushStep(tempStep);
+      this.directionsManager.isIndoorInRoute.next(true);
+      this.directionsManager.isMixedInRoute.next(true);
+
+    } else {
+      let buildingLat: number;
+      let buildingLng: number;
+
+      for (let i = 0; i < this.overlayCoords.length; i++) {
+        if (this.overlayCoords[i].name === this.buildingToNavigateTo) {
+          buildingLat = this.overlayCoords[i].coords[0].lat;
+          buildingLng = this.overlayCoords[i].coords[0].lng;
+        }
+      }
+      this.directionService.isDirectionSet.next(true);
+
+      if (this.directionService.alternateDirection) {
+        this.directionService.alternateDirection.set('directions', null);
+        this.directionService.alternateDirectionSet = false;
+      }
+
+      this.dataSharingService.updateMapSize(-210);
+
+      this.directionService.origin.next([
+        this.geolocationServices.getLatitude(),
+        this.geolocationServices.getLongitude()
+      ]);
+      this.directionService.destination.next([buildingLat, buildingLng]);
+
+      this.buildingToNavigateTo = null;
     }
-    this.directionService.isDirectionSet.next(true);
-
-    if (this.directionService.alternateDirection) {
-      this.directionService.alternateDirection.set('directions', null);
-      this.directionService.alternateDirectionSet = false;
-    }
-
-    this.dataSharingService.updateMapSize(-210);
-
-    this.directionService.origin.next([
-      this.geolocationServices.getLatitude(),
-      this.geolocationServices.getLongitude()
-    ]);
-    this.directionService.destination.next([buildingLat, buildingLng]);
-
-    this.buildingToNavigateTo = null;
   }
 
   //use to send data to other components
@@ -929,6 +982,8 @@ export class GoogleMapComponent implements OnInit {
         }
       }
     }
-    this.directionService.alternateDirection.setMap(this.map);
+    if(this.directionService.alternateDirection){
+      this.directionService.alternateDirection.setMap(this.map);
+    }
   }
 }

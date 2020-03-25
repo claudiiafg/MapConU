@@ -2,6 +2,7 @@ import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { Events } from "@ionic/angular";
 import { TranslationService } from "../../../../services/translation.service";
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: "app-indoor-navigation-toolbar",
@@ -60,7 +61,8 @@ export class IndoorNavigationToolbarComponent {
   constructor(
     private router: Router,
     private events: Events,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private directionsManager: DirectionsManagerService
   ) {}
 
   ngAfterViewInit() {
@@ -136,6 +138,7 @@ export class IndoorNavigationToolbarComponent {
     if (this.isSelectMode) {
       this.events.publish("isSelectMode", false, Date.now());
     } else {
+      this.directionsManager.resetSteps()
       this.router.navigateByUrl("/outdoor");
     }
   }

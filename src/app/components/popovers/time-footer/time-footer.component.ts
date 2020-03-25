@@ -18,12 +18,12 @@ export class TimeFooterComponent implements OnInit {
   public fare: string;
   private isIndoorDirectionsSet: boolean = false;
   private currentStep = null;
-  private isInRoute: boolean = false;
+  private isIndoorInRoute: boolean = false;
 
   constructor(
     public modalController: ModalController,
     private directionService: DirectionService,
-    private directionsManagerService: DirectionsManagerService,
+    private directionsManager: DirectionsManagerService,
     private events: Events,
     private stringHelper: StringHelperService,
     private translate: TranslationService
@@ -42,7 +42,7 @@ export class TimeFooterComponent implements OnInit {
     });
 
     //indoor directions subscription
-    this.directionsManagerService.isInRoute.subscribe(res => {
+    this.directionsManager.isIndoorInRoute.subscribe(res => {
       if (res === true) {
         this.isIndoorDirectionsSet = true;
       } else {
@@ -54,24 +54,29 @@ export class TimeFooterComponent implements OnInit {
   //initiate indoor direction
   private initRoute() {
     this.events.publish('isSelectMode', false, Date.now());
-    this.isInRoute = true;
+    this.isIndoorInRoute = true;
     this.getNextStep();
   }
 
   //get next step to compute in indoor directions
   private getNextStep() {
-    this.currentStep = this.directionsManagerService.getNextStep();
-    this.currentStep._prettySource = this.stringHelper.prettifyTitles(
-      this.currentStep.source
-    );
-    this.currentStep._prettyDest = this.stringHelper.prettifyTitles(
-      this.currentStep.dest
-    );
+    this.currentStep = this.directionsManager.getNextStep();
+    if(this.currentStep.floor){
+      this.currentStep._prettySource = this.stringHelper.prettifyTitles(
+        this.currentStep.source
+      );
+      this.currentStep._prettyDest = this.stringHelper.prettifyTitles(
+        this.currentStep.dest
+      );
+    } else {
+      this.directionsManager.continueWithOutdoorDirection();
+    }
+
   }
 
   //user has arrived at destination and pressed end
   private endRoute() {
-    this.isInRoute = false;
+    this.isIndoorInRoute = false;
     this.events.publish('path-completed', true, Date.now());
   }
 

@@ -15,6 +15,10 @@ export class OutdoorViewPage implements OnInit {
 
   ngOnInit() {}
 
+  ngAfterViewInit(){
+
+  }
+
   navigate(path: []) {
     this.router.navigate(path);
   }

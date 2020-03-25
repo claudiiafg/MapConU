@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
@@ -13,19 +13,36 @@ export class IndoorViewPage implements OnInit {
   private building: string = 'hall';
   private floor: number = 1;
   private isSelectMode: boolean = false;
+  private mySubscription: any;
 
   constructor(
     private route: ActivatedRoute,
     private events: Events,
+    private router: Router,
     private directionManager: DirectionsManagerService
+
   ) {
     this.subscribeToEvents();
     this.sub = this.route.params.subscribe(params => {
       if (params['id']) {
         this.building = params['id'];
         if (this.building === 'hall') {
-          this.floor = 8;
+          if(this.directionManager.isMixedInRoute.getValue() === true){
+            this.floor = this.directionManager.getHallFloor();
+          } else {
+            this.floor = 8;
+          }
         }
+      }
+    });
+    //important to reload current route
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
       }
     });
   }
@@ -41,8 +58,21 @@ export class IndoorViewPage implements OnInit {
     //when floor changes -> change view
     this.events.subscribe('floor-changes', res => {
       if (res) {
-        this.floor = parseInt(res);
+        if(this.floor ===  parseInt(res)){
+          this.events.publish('map-set', Date.now());
+          
+        } else {
+          this.floor = parseInt(res);
+        }
       }
     });
+  }
+
+
+  //important to reload route
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 }

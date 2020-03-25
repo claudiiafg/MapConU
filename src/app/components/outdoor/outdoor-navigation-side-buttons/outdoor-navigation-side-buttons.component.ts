@@ -6,6 +6,7 @@ import { PoiPopoverComponent } from '../../popovers/poi-popover/poi-popover.comp
 import { SearchPopoverComponent } from '../../popovers/search-popover/search-popover.component';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',
@@ -22,7 +23,8 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     private events: Events,
     public modalController: ModalController,
     public directionService: DirectionService,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private directionManager: DirectionsManagerService,
   ) {
     this.directionService.isDirectionSet.subscribe(
       (isDirectionSet: boolean) => {
@@ -79,6 +81,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   }
 
   public close() {
+    this.directionManager.resetSteps()
     this.directionService.origin.next([]);
     this.directionService.destination.next([]);
     this.directionService.isDirectionSet.next(false);
