@@ -33,6 +33,7 @@ export class OutdoorNavigationToolbarComponent
   public carColor: string = 'white';
   public walkColor: string = 'yellow';
   readonly mapRadius: number = 0.3;
+  public searchAutocomplete: any;
   currentLat: number = 45.495729;
   currentLng: number = -73.578041;
 
@@ -82,13 +83,13 @@ export class OutdoorNavigationToolbarComponent
           lat: this.currentLat + this.mapRadius,
           lng: this.currentLng + this.mapRadius
         });
-        let searchAutocomplete = new google.maps.places.Autocomplete(input, {
+        this.searchAutocomplete = new google.maps.places.Autocomplete(input, {
           bounds: new google.maps.LatLngBounds(nwBounds, seBounds)
         });
 
-        searchAutocomplete.addListener('place_changed', () => {
+        this.searchAutocomplete.addListener('place_changed', () => {
           this.ngZone.run(() => {
-            let place: google.maps.places.PlaceResult = searchAutocomplete.getPlace();
+            let place: google.maps.places.PlaceResult = this.searchAutocomplete.getPlace();
 
             if (!place.geometry) {
               return;
@@ -98,6 +99,10 @@ export class OutdoorNavigationToolbarComponent
             this.longitudeFound = place.geometry.location.lng();
             this.moveToFoundLocation(this.latitudeFound, this.longitudeFound, place.geometry.viewport);
           });
+        });
+
+        this.events.subscribe('mapClicked', () => {
+          input.blur()
         });
       });
     });
@@ -117,12 +122,6 @@ export class OutdoorNavigationToolbarComponent
   public moveToFoundLocation(lat: number, lng: number, mapBounds: any) {
     this.dataSharingService.updateMessage({ latitude: lat, longitude: lng, mapBounds: mapBounds });
     this.events.publish('coordinatesChanged', { latitude: lat, longitude: lng, mapBounds: mapBounds });
-  }
-
-  public closeAutocomplete($event: CustomEvent) {
-    this.searchRef.getInputElement().then(input => {
-      input.blur();
-    });
   }
 
   public changeTravelMode(travelMode: string) {
