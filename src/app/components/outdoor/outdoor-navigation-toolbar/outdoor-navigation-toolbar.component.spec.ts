@@ -86,7 +86,7 @@ describe("OutdoorNavigationToolbarComponent ", () => {
   it("should create", () => {
     component.findAddress();
     component.changeCampus();
-    component.moveToFoundLocation(45, -73);
+    component.moveToFoundLocation(45, -73, 100);
     component.closeAutocomplete(null);
     component.changeTravelMode("TRANSIT");
     component.setSelectedColor("TRANSIT");
@@ -176,7 +176,7 @@ describe("OutdoorNavigationToolbarComponent ", () => {
     expect(googleMapcomponent.longitude).toBe(-73.578041);
     const lat = 45.494828;
     const lng = -73.577981;
-    component.moveToFoundLocation(lat, lng);
+    component.moveToFoundLocation(lat, lng, 100);
     fixture.detectChanges();
     googleMapcomponent.subscribeToChangeInCurrentPOS();
     expect(googleMapcomponent.latitude).toBe(45.494828);

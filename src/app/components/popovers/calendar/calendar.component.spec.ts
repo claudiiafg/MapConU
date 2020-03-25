@@ -9,7 +9,7 @@ describe('CalendarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ],
+      declarations: [CalendarComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
@@ -18,7 +18,11 @@ describe('CalendarComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });
