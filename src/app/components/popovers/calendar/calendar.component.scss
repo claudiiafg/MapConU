@@ -1,0 +1,61 @@
+.calendar-body {
+  overflow-y: scroll;
+  height: 80%;
+}
+
+#title {
+  margin-left: 10px;
+  font-size: 100%;
+}
+
+#today {
+  margin: 0 5px;
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+pre {
+  background-color: #f5f5f5;
+  padding: 15px;
+}
+
+ion-title {
+  text-align: center;
+}
+
+.outside-wrapper, .month-change-buttons, .view-calendar, ion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttondiv {
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  padding: 5px;
+}
+
+.back {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.back2 {
+  border-right-style: none;
+}
+
+.front {
+  border-left-style: none;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.middle {
+  border-left-style: none;
+  border-right-style: none;
+}
+
+.view-calendar {
+  margin-right: 5px;
+}
