@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
@@ -23,7 +23,9 @@ export class IndoorViewPage implements OnInit {
     private directionManager: DirectionsManagerService,
     private indoorDirections: IndoorDirectionsService,
 
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       if (params['id']) {
         this.building = params['id'];
@@ -49,8 +51,6 @@ export class IndoorViewPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
   private subscribeToEvents() {
     this.events.subscribe('isSelectMode', res => {
       this.isSelectMode = res;
@@ -59,12 +59,12 @@ export class IndoorViewPage implements OnInit {
 
     //when floor changes -> change view
     this.events.subscribe('floor-changes', res => {
-      this.building = this.router.url.substring(this.router.url.lastIndexOf('/') + 1, this.router.url.length);
       if (res) {
-        if(this.floor ===  parseInt(res)){
+        if(this.floor === parseInt(res)){
           this.events.publish('map-set', Date.now());
 
         } else {
+          this.events.publish('initNewMap', Date.now());
           this.floor = parseInt(res);
         }
       }
@@ -80,6 +80,7 @@ export class IndoorViewPage implements OnInit {
 
 
   //important to reload route
+  @HostListener('unloaded')
   ngOnDestroy() {
     if (this.mySubscription) {
       this.mySubscription.unsubscribe();

@@ -44,7 +44,7 @@ export class IndoorDirectionsService {
   //**********************PUBLC HELPERS**********************
 
   public setMap(docElementLines, docInterestPoints) {
-    this.reset();
+    this.resetAll();
     let tempPathLines: Line[] = [];
     let tempInterestPoints: Point[] = [];
 
@@ -136,6 +136,12 @@ export class IndoorDirectionsService {
     }
   }
 
+  private resetAll(){
+    this.reset();
+    this.pathLines = null;
+    this.interestPoints = null;
+  }
+
   //public helper to make sure all necessary information is available to compute path
   public computePathHelper(source: string, destination: string) {
     if (source !== destination) {
@@ -195,6 +201,49 @@ export class IndoorDirectionsService {
     } else {
       throw new Error(pointID + ': Point does not exist');
     }
+  }
+
+  //get specific point element by its name
+  public getPointByName(name): Point {
+    let point;
+    if (name.includes('mb')) {
+      point = this.interestPoints.filter(point => point.id === name)[0];
+    } else if (name.includes('h8')) {
+      point = this.interestPoints.filter(point => point.id === name)[0];
+    } else if (name.includes('h9')) {
+      point = this.interestPoints.filter(point => point.id === name)[0];
+    } else if (name.includes('elevator')) {
+      point = this.interestPoints.filter(point => point.id === 'elevator')[0];
+    } else if (name.includes('female')) {
+      point = this.interestPoints.filter(point => point.id === 'wc-female')[0];
+    } else if (name.includes('male')) {
+      point = this.interestPoints.filter(point => point.id === 'wc-male')[0];
+    } else if (name.includes('ne')) {
+      point = this.interestPoints.filter(
+        point => point.id === 'stairs-ne'
+      )[0];
+    } else if (name.includes('nw')) {
+      point = this.interestPoints.filter(
+        point => point.id === 'stairs-nw'
+      )[0];
+    } else if (name.includes('sw')) {
+      point = this.interestPoints.filter(
+        point => point.id === 'stairs-sw'
+      )[0];
+    } else if (name.includes('se')) {
+      point = this.interestPoints.filter(
+        point => point.id === 'stairs-se'
+      )[0];
+    } else if (name.includes('escalator-down')) {
+      point = this.interestPoints.filter(
+        point => point.id === 'escalator-down'
+      )[0];
+    } else if (name.includes('escalator-up')) {
+      point = this.interestPoints.filter(
+        point => point.id === 'escalator-up'
+      )[0];
+    }
+    return point;
   }
 
   //check if 2 lines share a point

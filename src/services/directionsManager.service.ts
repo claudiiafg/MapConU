@@ -7,33 +7,8 @@ import { TranslationService } from './translation.service';
 import { Router } from '@angular/router';
 import { DataSharingService } from './data-sharing.service';
 
-enum Mode {
-  indoor,
-  outdoor,
-  mixed
-}
-
-enum IndoorDirectionsType {
-  sameFloor,
-  differentFloor
-}
-
-enum OutdoorDirectionsType {
-  buildingToBuilding
-}
-
-enum MixedDirectionsType {
-  floorToBuilding,
-  buildingToFloor,
-  classToClass
-}
-
 @Injectable()
 export class DirectionsManagerService {
-  private directionsMode: Mode;
-  private indoorType: IndoorDirectionsType;
-  private outdoorType: OutdoorDirectionsType;
-  private mixedType: MixedDirectionsType;
   private steps: any[] = [];
   private isSelectMode: boolean = false;
   public isIndoorInRoute = new BehaviorSubject(false);
@@ -56,8 +31,8 @@ export class DirectionsManagerService {
   private subscribeToEvents() {
     //when all components of map have been set, route can begging
     this.events.subscribe('map-set', res => {
-      if (this.isIndoorInRoute.getValue() === true && !this.pathHasBeenInit) {
-        this.initNewPath()
+      if (this.isIndoorInRoute.getValue() === true) {
+        this.initNewPath();
       }
     });
 
@@ -73,7 +48,10 @@ export class DirectionsManagerService {
   }
 
   private initNewPath(){
-    this.currentStep = this.steps[0];
+    if(!this.currentStep){
+      this.currentStep = this.steps[0];
+    }
+
     const data = {
       source: this.currentStep.source,
       destination: this.currentStep.dest
@@ -130,7 +108,6 @@ export class DirectionsManagerService {
 
     //if want to find path within the same (current) floor
     if (result.role === 'sameFloor') {
-      this.indoorType = IndoorDirectionsType.sameFloor;
       const data = {
         source: defaultStartingPoint,
         destination: destination,
@@ -140,7 +117,6 @@ export class DirectionsManagerService {
 
       //if want to find from this to another floor
     } else if (result.role === 'diffFloor') {
-      this.indoorType = IndoorDirectionsType.differentFloor;
       if (building.indexOf('h') === 0) {
         this.initDifferentFloorDir(true, building, destination);
         this.isSelectMode = true;
@@ -236,7 +212,6 @@ export class DirectionsManagerService {
   }
 
   private changeFloor(building: any) {
-    this.events.publish('initNewMap', Date.now());
     //if isIndoorInRoute -> change floor to the input value of bulding
     if (this.isIndoorInRoute.getValue() === true) {
       if (building === 'h8') {
@@ -244,10 +219,11 @@ export class DirectionsManagerService {
       } else if (building === 'h9') {
         this.events.publish('floor-changes', 9, Date.now());
       } else {
+        console.log('else');
         return;
       }
 
-      //if NOT isIndoorInRoute -> change floor to the other possiblr floor
+    //if NOT isIndoorInRoute -> change floor to the other possiblr floor
     } else {
       if (building === 'h8') {
         this.events.publish('floor-changes', 9, Date.now());
@@ -305,7 +281,7 @@ export class DirectionsManagerService {
     }
     this.currentStep = this.steps[i];
     if(this.currentStep.floor){
-      this.changeFloor(this.currentStep);
+      this.changeFloor(this.currentStep.floor);
     }
     return this.currentStep;
   }

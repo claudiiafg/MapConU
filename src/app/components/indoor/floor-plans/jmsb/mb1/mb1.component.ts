@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 @Component({
@@ -12,4 +12,7 @@ export class MB1FloorPlanComponent {
   ngAfterViewInit() {
     this.events.publish('floor-loaded', {building: 'jmsb', floor: '1'}, Date.now());
   }
+
+  @HostListener('unloaded')
+  ngOnDestroy() {}
 }
