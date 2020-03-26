@@ -141,7 +141,7 @@ export class IndoorNavigationToolbarComponent {
     if (this.isSelectMode) {
       this.events.publish("isSelectMode", false, Date.now());
     } else {
-      this.directionsManager.resetSteps()
+      this.events.publish('reset-indoor', Date.now());
       this.router.navigateByUrl("/outdoor");
     }
   }

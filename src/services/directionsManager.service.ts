@@ -73,14 +73,11 @@ export class DirectionsManagerService {
   }
 
   private initNewPath(){
-    if(!this.currentStep){
-      this.currentStep = this.steps[0];
-    }
+    this.currentStep = this.steps[0];
     const data = {
       source: this.currentStep.source,
       destination: this.currentStep.dest
     };
-    console.log(this.steps);
     this.events.publish('init-new-path', data, Date.now());
     this.pathHasBeenInit = true;
   }
@@ -159,7 +156,6 @@ export class DirectionsManagerService {
       const data = {
         destination: destination
       };
-      console.log(building);
       this.initDifferentBuilding(true, building, destination);
     }
   }

@@ -6,6 +6,7 @@ import {
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-indoor-map',
@@ -29,8 +30,12 @@ export class IndoorMapComponent implements OnInit {
   constructor(
     private events: Events,
     private indoorDirectionsService: IndoorDirectionsService,
-    private directionManager: DirectionsManagerService
-  ) {
+    private directionManager: DirectionsManagerService,
+    private router: Router,
+
+  ) {}
+
+  ngOnInit() {
     this.events.subscribe('initNewMap', () =>{
       //if is new floor plan init new map
       this.isInit = true;
@@ -62,7 +67,6 @@ export class IndoorMapComponent implements OnInit {
 
     //when user wants to start a new path -> get data necessary and compute path
     this.events.subscribe('init-new-path', data => {
-      console.log(data);
       if (data) {
         this.resetNav();
         this.sourceID = data.source;
@@ -97,13 +101,14 @@ export class IndoorMapComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
   //get all element from floor plan and setup indoorDirections map
   setMap() {
     if (this.directionManager.getIsSelectMode()) {
       this.isSelectMode = true;
     }
+    //reset lines and points
+    this.pathLines = [];
+    this.interestPoints = [];
 
     let docElementLines = document.getElementsByTagName('line');
     let docInterestPoints = document.getElementsByTagName('circle');
@@ -113,12 +118,12 @@ export class IndoorMapComponent implements OnInit {
     }
 
     this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
+
     this.pathLines = this.indoorDirectionsService.getLines();
     this.interestPoints = this.indoorDirectionsService.getPoints();
     const data = {
       building: this.inputBuilding,
       floor: this.floor,
-      here: 'HEREEEEE BRUH'
     }
     this.events.publish('map-set', data, Date.now());
   }
@@ -126,6 +131,7 @@ export class IndoorMapComponent implements OnInit {
   //initiate the process of navigation (when user click on a element)
   public initNav(name: string) {
     let point: Point;
+    this.interestPoints = this.indoorDirectionsService.getPoints();
 
     if (name.includes('mb')) {
       point = this.interestPoints.filter(point => point.id === name)[0];
@@ -136,37 +142,37 @@ export class IndoorMapComponent implements OnInit {
     } else if (name.includes('elevator')) {
       point = this.interestPoints.filter(point => point.id === 'elevator')[0];
     } else if (name.includes('female')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-wc-female'
-      )[0];
+      point = this.interestPoints.filter(point => point.id === 'wc-female')[0];
     } else if (name.includes('male')) {
-      point = this.interestPoints.filter(point => point.id === 'h8-wc-male')[0];
+      point = this.interestPoints.filter(point => point.id === 'wc-male')[0];
     } else if (name.includes('ne')) {
       point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-ne'
+        point => point.id === 'stairs-ne'
       )[0];
     } else if (name.includes('nw')) {
       point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-nw'
+        point => point.id === 'stairs-nw'
       )[0];
     } else if (name.includes('sw')) {
       point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-sw'
+        point => point.id === 'stairs-sw'
       )[0];
     } else if (name.includes('se')) {
       point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-se'
+        point => point.id === 'stairs-se'
       )[0];
     } else if (name.includes('escalator-down')) {
       point = this.interestPoints.filter(
-        point => point.id === 'h8-escalator-down'
+        point => point.id === 'escalator-down'
       )[0];
     } else if (name.includes('escalator-up')) {
       point = this.interestPoints.filter(
-        point => point.id === 'h8-escalator-up'
+        point => point.id === 'escalator-up'
       )[0];
     }
     if (point) {
+      this.inputBuilding = this.router.url.substring(this.router.url.lastIndexOf('/') + 1, this.router.url.length);
+
       this.destID = point.id;
       this.setMarker(point);
       this.isSelectMode = this.directionManager.getIsSelectMode();
@@ -216,6 +222,9 @@ export class IndoorMapComponent implements OnInit {
 
   //set marker on the map
   setMarker(point: Point) {
+    if(!this.marker){
+      this.marker = document.getElementById('marker');
+    }
     this.marker.setAttribute('x', point.x - 26);
     this.marker.setAttribute('y', point.y - 26);
     this.marker.style.visibility = 'visible';

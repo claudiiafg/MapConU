@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 
 @Component({
   selector: 'app-indoor-view',
@@ -19,7 +20,8 @@ export class IndoorViewPage implements OnInit {
     private route: ActivatedRoute,
     private events: Events,
     private router: Router,
-    private directionManager: DirectionsManagerService
+    private directionManager: DirectionsManagerService,
+    private indoorDirections: IndoorDirectionsService,
 
   ) {
     this.sub = this.route.params.subscribe(params => {
@@ -66,6 +68,13 @@ export class IndoorViewPage implements OnInit {
           this.floor = parseInt(res);
         }
       }
+    });
+
+    this.events.subscribe('reset-indoor', () => {
+      this.directionManager.resetSteps();
+      this.indoorDirections.resetNav()
+      this.building = null;
+      this.floor = null;
     });
   }
 

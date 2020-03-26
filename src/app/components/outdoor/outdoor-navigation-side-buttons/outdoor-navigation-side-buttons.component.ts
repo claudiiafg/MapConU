@@ -81,7 +81,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   }
 
   public close() {
-    this.directionManager.resetSteps()
+    this.events.publish('reset-indoor', Date.now());
     this.directionService.origin.next([]);
     this.directionService.destination.next([]);
     this.directionService.isDirectionSet.next(false);
