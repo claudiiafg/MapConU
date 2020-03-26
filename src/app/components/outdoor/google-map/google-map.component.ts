@@ -700,13 +700,13 @@ export class GoogleMapComponent implements OnInit {
         {
           text: this.translate.getTranslation('enter'),
           cssClass: 'alert-button-map',
-          handler: goIndoors => {
+          handler: () => {
             if (urlSubString === 'jmsb') {
-              let url = '/indoor' + '/jmsb';
+              let url = '/indoor/jmsb';
               this.router.navigateByUrl(url);
               return true;
             } else if (urlSubString === 'hall') {
-              let url = '/indoor' + '/hall';
+              let url = '/indoor/hall';
               this.router.navigateByUrl(url);
               return true;
             } else {

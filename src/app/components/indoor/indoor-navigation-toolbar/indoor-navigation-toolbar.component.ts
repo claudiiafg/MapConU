@@ -111,6 +111,7 @@ export class IndoorNavigationToolbarComponent {
 
   // Method to update the floor when the user selects a floor from the dropdown menu
   private changeFloor() {
+    this.events.publish('initNewMap', Date.now());
     this.events.publish("floor-changes", this.floor, Date.now());
     this.currentFloorIndex = this.floors.indexOf(JSON.stringify(this.floor));
   }
@@ -120,6 +121,7 @@ export class IndoorNavigationToolbarComponent {
     if (this.currentFloorIndex < this.maxFloorIndex) {
       this.currentFloorIndex++;
       this.floor = this.floors[this.currentFloorIndex];
+      this.events.publish('initNewMap', Date.now());
       this.events.publish("floor-changes", this.floor, Date.now());
     }
   }
@@ -129,6 +131,7 @@ export class IndoorNavigationToolbarComponent {
     if (this.currentFloorIndex > this.minFloorIndex) {
       this.currentFloorIndex--;
       this.floor = this.floors[this.currentFloorIndex];
+      this.events.publish('initNewMap', Date.now());
       this.events.publish("floor-changes", this.floor, Date.now());
     }
   }

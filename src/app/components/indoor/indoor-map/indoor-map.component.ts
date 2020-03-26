@@ -24,15 +24,24 @@ export class IndoorMapComponent implements OnInit {
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
   private marker: any;
+  private isInit: boolean = true;
 
   constructor(
     private events: Events,
     private indoorDirectionsService: IndoorDirectionsService,
     private directionManager: DirectionsManagerService
   ) {
+    this.events.subscribe('initNewMap', () =>{
+      //if is new floor plan init new map
+      this.isInit = true;
+    });
+
     //when floor component is loaded -> setup map
-    this.events.subscribe('floor-loaded', () => {
-      this.setMap();
+    this.events.subscribe('floor-loaded', res => {
+      if(this.inputBuilding === res.building && this.isInit){
+        this.isInit = false;
+        this.setMap();
+      }
     });
 
     //when path is found -> display lines of path on map
@@ -90,11 +99,6 @@ export class IndoorMapComponent implements OnInit {
 
   ngOnInit() {}
 
-  //when indoor component is first initiated
-  ngAfterViewInit() {
-    this.setMap();
-  }
-
   //get all element from floor plan and setup indoorDirections map
   setMap() {
     if (this.directionManager.getIsSelectMode()) {
@@ -111,7 +115,12 @@ export class IndoorMapComponent implements OnInit {
     this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
     this.pathLines = this.indoorDirectionsService.getLines();
     this.interestPoints = this.indoorDirectionsService.getPoints();
-    this.events.publish('map-set', true, Date.now());
+    const data = {
+      building: this.inputBuilding,
+      floor: this.floor,
+      here: 'HEREEEEE BRUH'
+    }
+    this.events.publish('map-set', data, Date.now());
   }
 
   //initiate the process of navigation (when user click on a element)

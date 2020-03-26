@@ -240,6 +240,7 @@ export class DirectionsManagerService {
   }
 
   private changeFloor(building: any) {
+    this.events.publish('initNewMap', Date.now());
     //if isIndoorInRoute -> change floor to the input value of bulding
     if (this.isIndoorInRoute.getValue() === true) {
       if (building === 'h8') {

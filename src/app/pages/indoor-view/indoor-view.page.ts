@@ -10,7 +10,7 @@ import { DirectionsManagerService } from 'src/services/directionsManager.service
 })
 export class IndoorViewPage implements OnInit {
   private sub;
-  private building: string = 'hall';
+  private building: string;
   private floor: number = 1;
   private isSelectMode: boolean = false;
   private mySubscription: any;
@@ -22,10 +22,10 @@ export class IndoorViewPage implements OnInit {
     private directionManager: DirectionsManagerService
 
   ) {
-    this.subscribeToEvents();
     this.sub = this.route.params.subscribe(params => {
       if (params['id']) {
         this.building = params['id'];
+        this.subscribeToEvents();
         if (this.building === 'hall') {
           if(this.directionManager.isMixedInRoute.getValue() === true){
             this.floor = this.directionManager.getHallFloor();
@@ -57,10 +57,11 @@ export class IndoorViewPage implements OnInit {
 
     //when floor changes -> change view
     this.events.subscribe('floor-changes', res => {
+      this.building = this.router.url.substring(this.router.url.lastIndexOf('/') + 1, this.router.url.length);
       if (res) {
         if(this.floor ===  parseInt(res)){
           this.events.publish('map-set', Date.now());
-          
+
         } else {
           this.floor = parseInt(res);
         }
