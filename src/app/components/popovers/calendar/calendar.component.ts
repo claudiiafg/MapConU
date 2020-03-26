@@ -19,6 +19,8 @@ import {
   CalendarView
 } from 'angular-calendar';
 import { ModalController } from '@ionic/angular';
+import { HttpClientService } from '../../../../services/httpclient.service';
+import { GoogleOauthService } from '../../../../services/google-oauth.service';
 
 const colors: any = {
   red: {
@@ -42,10 +44,14 @@ const colors: any = {
 })
 
 export class CalendarComponent implements OnInit {
+  private googleSession: any = null;
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   activeDayIsOpen: boolean = true;
+
+  calendarsId: any;
+  calendarEvents: any;
 
   events: CalendarEvent[] = [
     {
@@ -75,9 +81,17 @@ export class CalendarComponent implements OnInit {
     }
   ];
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private http: HttpClientService, private googleOAuth: GoogleOauthService) { }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    try {
+      this.googleSession = await this.googleOAuth.getStoredSession();
+    } catch(err) {
+      this.googleSession = null;
+    }
+
+    this.getUserCalendarsRequest();
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       if (isSameMonth(date, this.viewDate)) {
@@ -99,5 +113,11 @@ export class CalendarComponent implements OnInit {
 
   close() {
     this.modalController.dismiss();
+  }
+
+  getUserCalendarsRequest() {
+    this.http.getUserCalendars(this.googleSession).subscribe(data => {
+      console.log(data);
+    })
   }
 }
