@@ -4,6 +4,7 @@ import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
 import { PoiPopoverComponent } from '../../popovers/poi-popover/poi-popover.component';
 import { SearchPopoverComponent } from '../../popovers/search-popover/search-popover.component';
+import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
@@ -46,6 +47,14 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       keyboardClose: true,
       showBackdrop: true
     });
+
+    return await modal.present();
+  }
+
+  async openCalendar() {
+    const modal = await this.modalController.create({
+      component: CalendarComponent
+    })
 
     return await modal.present();
   }
