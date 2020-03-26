@@ -490,6 +490,11 @@ export class GoogleMapComponent implements OnInit {
     this.map = $event;
   }
 
+  public handleMapClicked()
+  {
+    this.events.publish('mapClicked');
+  }
+
   public subscribeToChangeInPOI() {
     //subscribe to changes in POI toggles
     this.events.subscribe('poi-toggle-changed', async res => {
