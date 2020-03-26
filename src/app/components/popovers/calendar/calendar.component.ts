@@ -50,8 +50,7 @@ export class CalendarComponent implements OnInit {
   viewDate: Date = new Date();
   activeDayIsOpen: boolean = true;
 
-  calendarsId: any;
-  calendarEvents: any;
+  private calendarsList: any;
 
   events: CalendarEvent[] = [
     {
@@ -90,7 +89,7 @@ export class CalendarComponent implements OnInit {
       this.googleSession = null;
     }
 
-    this.getUserCalendarsRequest();
+   this.getUserCalendarsRequest();
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -117,7 +116,46 @@ export class CalendarComponent implements OnInit {
 
   getUserCalendarsRequest() {
     this.http.getUserCalendars(this.googleSession).subscribe(data => {
-      console.log(data);
-    })
+      this.calendarsList = data['items'];
+      this.getUserEventsRequest();
+    });
+  }
+
+  getUserEventsRequest() {
+    for(let i in this.calendarsList) {
+      try {
+        this.http.getEvents(this.googleSession, this.calendarsList[i].id).subscribe(data => {
+          this.events.push(...this.getEventToInsert(data['items'], this.calendarsList[i].backgroundColor));
+          console.log(this.events);
+        });
+      } catch(err) {
+        console.error("No events in calendar: " + this.calendarsList[i].id);
+      }
+    }
+  }
+
+/*
+{
+  start: subDays(startOfDay(new Date()), 1),
+  end: addDays(new Date(), 1),
+  title: 'A 3 day event',
+  color: colors.red,
+  allDay: true
+}
+*/
+
+  private getEventToInsert(events: any, color: any) {
+    let eventsList: CalendarEvent[] = [];
+
+    for(let event of events) {
+      let entry: CalendarEvent = {
+        start: new Date(event.start.dateTime),
+        end: new Date(event.end.dateTime),
+        title: event.summary,
+        color: color
+      }
+      eventsList.push(entry);
+    }
+    return eventsList;
   }
 }
