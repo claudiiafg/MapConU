@@ -713,12 +713,12 @@ export class GoogleMapComponent implements OnInit {
           text: this.translate.getTranslation('enter'),
           cssClass: 'alert-button-map',
           handler: () => {
-            if (urlSubString === 'jmsb') {
-              let url = '/indoor/jmsb';
-              this.router.navigateByUrl(url);
-              return true;
-            } else if (urlSubString === 'hall') {
-              let url = '/indoor/hall';
+            if (urlSubString === 'jmsb' || urlSubString === 'hall') {
+              if(this.router.url.includes('/outdoor/isMixedNav')){
+                this.pushIndoorStep(false);
+                this.events.publish("isSelectMode", true, Date.now());
+              }
+              let url = '/indoor/' + urlSubString;
               this.router.navigateByUrl(url);
               return true;
             } else {
@@ -760,47 +760,7 @@ export class GoogleMapComponent implements OnInit {
        */
   goHere() {
     if(this.router.url.includes('/outdoor/isMixedNav')){
-      console.log('DO SOMETHING');
-      let fromBuildingLat: number;
-      let fromBuildingLng: number;
-      let fromBuilding: any;
-      let toBuildingLat: number;
-      let toBuildingLng: number;
-      let toBuilding: any;
-      this.sub = this.route.params.subscribe(params => {
-        if(params['id']){
-          if(params['id'] === 'hall'){
-            fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'Hall Building')[0];
-            fromBuildingLat = fromBuilding.coords[0].lat;
-            fromBuildingLng = fromBuilding.coords[0].lng;
-
-          } else if(params['id'] === 'jmsb'){
-            fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'John Molson Building')[0];
-            fromBuildingLat = fromBuilding.coords[0].lat;
-            fromBuildingLng = fromBuilding.coords[0].lng;
-          }
-        }
-      });
-      toBuilding = this.overlayCoords.filter(overlay => overlay.name === this.buildingToNavigateTo)[0];
-      toBuildingLat = toBuilding.coords[0].lat;
-      toBuildingLng = toBuilding.coords[0].lng;
-      const to = {
-        building: toBuilding,
-        lat: toBuildingLat,
-        lng: toBuildingLng
-      }
-      const from = {
-        building: fromBuilding,
-        lat: fromBuildingLat,
-        lng: fromBuildingLng
-      }
-      const tempStep = {
-        source: from,
-        dest: to,
-        wasDone: false,
-        isLast: true
-      }
-      this.directionsManager.pushStep(tempStep);
+      this.pushIndoorStep(true);
       this.directionsManager.isIndoorInRoute.next(true);
       this.directionsManager.isMixedInRoute.next(true);
 
@@ -831,6 +791,49 @@ export class GoogleMapComponent implements OnInit {
 
       this.buildingToNavigateTo = null;
     }
+  }
+
+  public pushIndoorStep(isLast: boolean){
+    let fromBuildingLat: number;
+    let fromBuildingLng: number;
+    let fromBuilding: any;
+    let toBuildingLat: number;
+    let toBuildingLng: number;
+    let toBuilding: any;
+    this.sub = this.route.params.subscribe(params => {
+      if(params['id']){
+        if(params['id'] === 'hall'){
+          fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'Hall Building')[0];
+          fromBuildingLat = fromBuilding.coords[0].lat;
+          fromBuildingLng = fromBuilding.coords[0].lng;
+
+        } else if(params['id'] === 'jmsb'){
+          fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'John Molson Building')[0];
+          fromBuildingLat = fromBuilding.coords[0].lat;
+          fromBuildingLng = fromBuilding.coords[0].lng;
+        }
+      }
+    });
+    toBuilding = this.overlayCoords.filter(overlay => overlay.name === this.buildingToNavigateTo)[0];
+    toBuildingLat = toBuilding.coords[0].lat;
+    toBuildingLng = toBuilding.coords[0].lng;
+    const to = {
+      building: toBuilding,
+      lat: toBuildingLat,
+      lng: toBuildingLng
+    }
+    const from = {
+      building: fromBuilding,
+      lat: fromBuildingLat,
+      lng: fromBuildingLng
+    }
+    const tempStep = {
+      source: from,
+      dest: to,
+      wasDone: false,
+      isLast: isLast
+    }
+    this.directionsManager.pushStep(tempStep);
   }
 
   //use to send data to other components

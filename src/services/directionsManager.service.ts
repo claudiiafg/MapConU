@@ -188,7 +188,7 @@ export class DirectionsManagerService {
 
       //ask user to choose source and initiate the path steps
     } else {
-      let source: string = floor === 'h8' ? 'escalators-down' : 'escalators-up';
+      let source: string = (floor === 'h8') ? 'escalators-down' : ((floor === 'h8') ? 'escalators-up' : 'entrance');
       const tempPath = {
         floor: floor,
         source: source,
@@ -281,7 +281,11 @@ export class DirectionsManagerService {
     }
     this.currentStep = this.steps[i];
     if(this.currentStep.floor){
-      this.changeFloor(this.currentStep.floor);
+      if(this.router.url.includes('hall') && this.currentStep.floor.includes('h')){
+        this.changeFloor(this.currentStep.floor);
+      } else {
+        this.continueWithIndoorDirections();
+      }
     }
     return this.currentStep;
   }
@@ -304,4 +308,19 @@ export class DirectionsManagerService {
     }
   }
 
+  public continueWithIndoorDirections(){
+    //move to the hall buildin
+    if (this.currentStep.floor.indexOf('h') === 0) {
+      if(this.currentStep.floor === 'h8'){
+        this.router.navigateByUrl('/indoor/hall');
+      } else {
+        this.router.navigateByUrl('/indoor/hall');
+        this.changeFloor(this.currentStep.floor);
+      }
+
+    //move to jmsb
+    } else {
+      this.router.navigateByUrl('/indoor/jmsb');
+    }
+  }
 }

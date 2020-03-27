@@ -162,6 +162,12 @@ export class IndoorMapComponent implements OnInit {
             'h9',
             this.destID
           );
+        } else if (this.inputBuilding === 'jmsb') {
+          this.directionManager.initDifferentFloorDir(
+            false,
+            'mb1',
+            this.destID
+          );
         }
 
       //initiating first step

@@ -5,6 +5,7 @@ import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-d
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { StringHelperService } from 'src/services/stringHelper.service';
 import { TranslationService } from 'src/services/translation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-time-footer',
@@ -26,7 +27,9 @@ export class TimeFooterComponent implements OnInit {
     private directionsManager: DirectionsManagerService,
     private events: Events,
     private stringHelper: StringHelperService,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private router: Router,
+
   ) {
     //outdoor directions subscription
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
@@ -49,6 +52,11 @@ export class TimeFooterComponent implements OnInit {
         this.isIndoorDirectionsSet = false;
       }
     });
+
+    this.events.subscribe('get-next-step', () => {
+      this.getNextStep();
+    });
+
   }
 
   //initiate indoor direction
@@ -62,6 +70,9 @@ export class TimeFooterComponent implements OnInit {
   private getNextStep() {
     this.currentStep = this.directionsManager.getNextStep();
     if(this.currentStep.floor){
+      if(this.router.url.includes('outdoor')){
+        this.directionsManager.continueWithIndoorDirections();
+      }
       this.currentStep._prettySource = this.stringHelper.prettifyTitles(
         this.currentStep.source
       );

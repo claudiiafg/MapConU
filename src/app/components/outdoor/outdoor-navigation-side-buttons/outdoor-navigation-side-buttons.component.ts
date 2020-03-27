@@ -91,6 +91,15 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
 
   public close() {
     this.events.publish('reset-indoor', Date.now());
+    this.resetOutdoor();
+  }
+
+  public next(){
+    this.events.publish('get-next-step', Date.now());
+    this.resetOutdoor();
+  }
+
+  private resetOutdoor(){
     this.directionService.origin.next([]);
     this.directionService.destination.next([]);
     this.directionService.isDirectionSet.next(false);
@@ -102,4 +111,5 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       this.directionService.alternateDirectionSet = false;
     }
   }
+
 }

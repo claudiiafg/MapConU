@@ -34,9 +34,14 @@
       (click)="presentPopover($event, 'search')"
     ></ion-icon>
   </ion-fab-button>
-  <ng-container *ngIf="isDirectionSet">
+  <ng-container *ngIf="isDirectionSet && directionManager.isIndoorInRoute.getValue() === false">
     <ion-fab-button class="close-button" (click)="close()">
       <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ng-container>
+  <ng-container *ngIf="isDirectionSet && directionManager.isIndoorInRoute.getValue() === true">
+    <ion-fab-button class="close-button" (click)="next()">
+      <ion-icon name="arrow-forward"></ion-icon>
     </ion-fab-button>
   </ng-container>
 </ion-fab>
