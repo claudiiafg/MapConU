@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="3" time="10.663">
- <testsuite name="new App" timestamp="2020-03-24T19:39:09" hostname="localhost" time="10.663" errors="0" tests="3" skipped="0" disabled="0" failures="0">
-  <testcase classname="new App" name="Has MapConU as the Title " time="3.257" />
-  <testcase classname="new App" name="Should toggle Campuses when selected at top of the UI" time="5.371" />
-  <testcase classname="new App" name="Shows Current Position Marker" time="2.03" />
+<testsuites disabled="0" errors="0" failures="0" tests="2" time="11.633">
+ <testsuite name="new App" timestamp="2020-03-27T20:33:06" hostname="localhost" time="11.633" errors="0" tests="2" skipped="0" disabled="0" failures="0">
+  <testcase classname="new App" name="Has MapConU as the Title " time="3.705" />
+  <testcase classname="new App" name="Should toggle Campuses when selected at top of the UI" time="7.922" />
  </testsuite>
 </testsuites>
