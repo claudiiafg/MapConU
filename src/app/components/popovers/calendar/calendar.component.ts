@@ -46,9 +46,11 @@ export class CalendarComponent implements OnInit {
   async ngOnInit() {
     try {
       this.googleSession = await this.googleOAuth.getStoredSession();
-      this.isReady = false;
+      console.log(this.googleSession);
+      this.isReady = true;
       this.getUserCalendarsRequest();
     } catch(err) {
+      console.error(err);
       this.googleSession = null;
     }
   }
@@ -80,16 +82,28 @@ export class CalendarComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  getUserCalendarsRequest() {
-    this.http.getUserCalendars(this.googleSession).subscribe(data => {
-      this.calendarsList = data['items'];
-      this.getUserEventsRequest();
-    });
+  async getUserCalendarsRequest() {
+
+    try{
+      const response = await this.http.getUserCalendars(this.googleSession);
+      console.log(response);
+      if(response){
+        this.calendarsList = response
+      } else {
+        console.error('NO CALENDARS FETCHED');
+      }
+    } catch(e){
+      console.error('Error fetching calendars: ' + e);
+    }
+
+
+
+
   }
 
 private getUserEventsRequest() {
     for(let i in this.calendarsList) {
-      this.eventsObservables.push(this.http.getEvents(this.googleSession, this.calendarsList[i].id).pipe(
+      this.eventsObservables.push(this.http.getEvents(this.googleSession, this.calendarsList[i]).pipe(
         catchError(error => of(error))
       ));
     }
