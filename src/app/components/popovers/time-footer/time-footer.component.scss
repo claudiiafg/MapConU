@@ -12,3 +12,49 @@ p {
 .green {
   color: green;
 }
+
+.indoor-timefooter-wrapper {
+  display: flex;
+  height: 70px;
+  width: 100%;
+  padding: 10px;
+
+  .footer-elements-wrapper {
+    display: contents;
+
+    .start-container {
+      position: relative;
+      left: calc(50% - 40px);
+    }
+
+    .arrow-icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .start-button {
+    display: block;
+    background-color: var(--ConcordiaRed);
+    color: white;
+    font-weight: 600;
+    height: 100%;
+    padding: 1px 20px;
+    border-radius: 10px;
+  }
+
+  .room-wrapper {
+    text-align: center;
+    width: 35%;
+    padding: 5px 10px;
+    font-size: 14pt;
+  }
+
+  .arrow-wrapper {
+    width: 10%;
+  }
+
+  .button-wrapper {
+    width: 20%;
+  }
+}

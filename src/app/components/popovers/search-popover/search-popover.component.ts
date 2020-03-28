@@ -10,7 +10,7 @@ import {
 import { Platform, PopoverController } from '@ionic/angular';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionService } from 'src/services/direction.service';
-import { GeolocationServices} from "../../../../services/geolocation.services";
+import { GeolocationServices } from 'src/services/geolocation.services';
 
 @Component({
   selector: 'app-search-popover',
@@ -24,6 +24,9 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
   longitudeTo: number;
   latitudeFrom: number;
   longitudeFrom: number;
+  readonly mapRadius: number = 0.3;
+  currentLat: number = 45.495729;
+  currentLng: number = -73.578041;
   constructor(
     public popoverController: PopoverController,
     public mapsAPILoader: MapsAPILoader,
@@ -36,27 +39,35 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     await this.geolocationServices.getCurrentPosition();
-    this.latitudeFrom = this.geolocationServices.getLatitude();
-    this.longitudeFrom = this.geolocationServices.getLongitude();
+    this.latitudeFrom = this.currentLat = this.geolocationServices.getLatitude();
+    this.longitudeFrom = this.currentLng = this.geolocationServices.getLongitude();
   }
 
   ngAfterViewInit() {
-    this.findAdress();
+    this.findAddress();
   }
 
-  findAdress() {
+  findAddress() {
     this.mapsAPILoader.load().then(() => {
+      const nwBounds = new google.maps.LatLng({
+        lat: this.currentLat - this.mapRadius,
+        lng: this.currentLng - this.mapRadius
+      });
+      const seBounds = new google.maps.LatLng({
+        lat: this.currentLat + this.mapRadius,
+        lng: this.currentLng + this.mapRadius
+      });
       let toAutocomplete = new google.maps.places.Autocomplete(
         this.toAddressRef.nativeElement,
         {
-          types: ['address']
+          bounds: new google.maps.LatLngBounds(nwBounds, seBounds)
         }
       );
 
       let fromAutoComplete = new google.maps.places.Autocomplete(
         this.fromAddressRef.nativeElement,
         {
-          types: ['address']
+          bounds: new google.maps.LatLngBounds(nwBounds, seBounds)
         }
       );
 
@@ -98,7 +109,7 @@ export class SearchPopoverComponent implements OnInit, AfterViewInit {
 
   public updateMap() {
     this.closePopover();
-    if(!this.latitudeFrom){
+    if (!this.latitudeFrom) {
       this.latitudeFrom = this.geolocationServices.getLatitude();
       this.longitudeFrom = this.geolocationServices.getLongitude();
     }

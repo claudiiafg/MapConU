@@ -1,17 +1,20 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 
-import {IonicModule, IonicRouteStrategy, Platform} from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
-import {FirestoreSettingsToken} from '@angular/fire/firestore';
-import {UserServices} from '../services/user.services';
-import {PoiServices} from '../services/poi.services';
-import {GeolocationServices} from '../services/geolocation.services';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { FirestoreSettingsToken } from '@angular/fire/firestore';
+import { UserServices } from '../services/user.services';
+import { PoiServices } from '../services/poi.services';
+import { GeolocationServices } from '../services/geolocation.services';
+import { DirectionService } from '../services/direction.service';
+import { IndoorDirectionsService } from '../services/indoorDirections.service';
+import {TranslationService} from "../services/translation.service";
 
 describe('AppComponent', () => {
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
@@ -23,8 +26,7 @@ describe('AppComponent', () => {
     platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
 
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]),
-          IonicModule.forRoot()],
+      imports: [RouterModule.forRoot([]), IonicModule.forRoot()],
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
@@ -34,8 +36,11 @@ describe('AppComponent', () => {
         GeolocationServices,
         UserServices,
         PoiServices,
+        DirectionService,
+        IndoorDirectionsService,
+        TranslationService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: FirestoreSettingsToken, useValue: {}},
+        { provide: FirestoreSettingsToken, useValue: {} },
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy }

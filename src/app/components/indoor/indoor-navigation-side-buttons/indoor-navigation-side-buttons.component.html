@@ -12,8 +12,15 @@
   horizontal="start"
   slot="fixed"
   (click)="presentPopover()"
+  class="navPopover"
 >
   <ion-fab-button class="nav-button">
     <ion-icon name="compass"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="showInfo()" class="informationButton">
+    <ion-icon name="information"></ion-icon>
   </ion-fab-button>
 </ion-fab>

@@ -1,10 +1,17 @@
 <ion-header>
   <app-indoor-navigation-toolbar
     [inputBuilding]="building"
-    [floor]="1"
+    [floor]="floor"
+    [isSelectMode]="isSelectMode"
   ></app-indoor-navigation-toolbar>
 </ion-header>
 <ion-content>
-  <app-indoor-navigation-side-buttons></app-indoor-navigation-side-buttons>
-  <app-indoor-map [inputBuilding]="building" [floor]="floor"></app-indoor-map>
+  <app-indoor-navigation-side-buttons [isSelectMode]="isSelectMode">
+  </app-indoor-navigation-side-buttons>
+  <app-indoor-map
+    [inputBuilding]="building"
+    [floor]="floor"
+    [isSelectMode]="isSelectMode"
+  ></app-indoor-map>
 </ion-content>
+<app-time-footer></app-time-footer>

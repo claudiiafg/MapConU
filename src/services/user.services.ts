@@ -8,7 +8,9 @@ import { User } from 'src/models/userModel';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserServices {
   private userID: string;
   public user: User;

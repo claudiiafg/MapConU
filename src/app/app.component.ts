@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { DataSharingService } from '../services/data-sharing.service';
 import { UserServices } from 'src/services/user.services';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private data: DataSharingService,
-    private userServices: UserServices
+    private userServices: UserServices,
+    private translationService: TranslationService
   ) {
     this.initializeApp();
   }
@@ -38,6 +40,8 @@ export class AppComponent {
         }
       });
     });
+    /*Sets the default app language to french or english based on the users language setting*/
+    this.translationService.getDefaultLanguage();
   }
 
   setStatusBarParameters(show: boolean, overWebView: boolean, color: string) {

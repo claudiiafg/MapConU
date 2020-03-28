@@ -1,7 +1,7 @@
 <div id="poi-popover">
   <ion-list>
     <ion-item class="toggle-item">
-      <ion-label>Restaurants</ion-label>
+      <ion-label>{{ 'restaurant-poi' | translate }}</ion-label>
       <ion-toggle
         [(ngModel)]="restaurants"
         (ionChange)="update('restaurant')"
@@ -9,7 +9,7 @@
     </ion-item>
 
     <ion-item class="toggle-item">
-      <ion-label>Coffee Shops</ion-label>
+      <ion-label>{{ 'coffee-poi' | translate }}</ion-label>
       <ion-toggle
         [(ngModel)]="coffee"
         (ionChange)="update('coffee shop')"
@@ -17,7 +17,7 @@
     </ion-item>
 
     <ion-item class="toggle-item">
-      <ion-label>Gas Stations</ion-label>
+      <ion-label>{{ 'gas-poi' | translate }}</ion-label>
       <ion-toggle
         [(ngModel)]="gas"
         (ionChange)="update('gas station')"
@@ -25,7 +25,7 @@
     </ion-item>
 
     <ion-item class="toggle-item">
-      <ion-label>Drugstore</ion-label>
+      <ion-label>{{ 'drugstore-poi' | translate }}</ion-label>
       <ion-toggle
         [(ngModel)]="drugstore"
         (ionChange)="update('drugstore')"
@@ -33,7 +33,7 @@
     </ion-item>
 
     <ion-item class="toggle-item">
-      <ion-label>Hotels</ion-label>
+      <ion-label>{{ 'hotel-poi' | translate }}</ion-label>
       <ion-toggle
         [(ngModel)]="hotels"
         (ionChange)="update('hotel')"
@@ -41,7 +41,7 @@
     </ion-item>
 
     <ion-item class="toggle-item">
-      <ion-label>Grocery Stores</ion-label>
+      <ion-label>{{ 'grocery-poi' | translate}}</ion-label>
       <ion-toggle
         [(ngModel)]="grocery"
         (ionChange)="update('groceries')"

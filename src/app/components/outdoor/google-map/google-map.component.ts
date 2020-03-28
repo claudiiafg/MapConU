@@ -14,6 +14,8 @@ import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
 import {Buildinginfo} from '../../../../services/buildinginfo';
+import { TranslationService } from '../../../../services/translation.service';
+
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
@@ -107,6 +109,7 @@ export class GoogleMapComponent implements OnInit {
   };
 
   private buildingToNavigateTo: string;
+  private currentRouteSelected: string = 'Main';
 
   // TODO: Move coordinates to json file, import json object and set coordinates here.
 /*
@@ -462,6 +465,8 @@ export class GoogleMapComponent implements OnInit {
   };
 
 
+  private readonly defaultCampusZoom = 17;
+
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
@@ -473,7 +478,10 @@ export class GoogleMapComponent implements OnInit {
     private navController: NavController,
     private router: Router,
     private dataSharingService: DataSharingService,
-    private db: SqliteService
+
+    private db: SqliteService,
+
+    private translate: TranslationService
   ) {}
 
   async ngOnInit() {
@@ -508,6 +516,11 @@ export class GoogleMapComponent implements OnInit {
 
   public mapReady($event: any) {
     this.map = $event;
+  }
+
+  public handleMapClicked()
+  {
+    this.events.publish('mapClicked');
   }
 
   public subscribeToChangeInPOI() {
@@ -571,6 +584,7 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('campusChanged', () => {
       this.poiMarkers = [];
       this.currentToggles = this.poiServices.resetPOIMarkers();
+      this.map.zoom = this.defaultCampusZoom;
     });
   }
 
@@ -583,6 +597,10 @@ export class GoogleMapComponent implements OnInit {
       };
       this.positionMarkers = [];
       this.positionMarkers.push(tempMarker);
+      if(coordinates.mapBounds)
+      {
+        this.map.fitBounds(coordinates.mapBounds)
+      }
     });
 
     this.data.currentMessage.subscribe(incomingMessage => {
@@ -617,25 +635,19 @@ export class GoogleMapComponent implements OnInit {
     });
   }
 
-  getIcon(poiMarker: any){
-    if(poiMarker.type === 'restaurant'){
+  getIcon(poiMarker: any) {
+    if (poiMarker.type === 'restaurant') {
       return this.poiMarkerIcon.resto;
-
-    } else if(poiMarker.type === 'coffee shop') {
+    } else if (poiMarker.type === 'coffee shop') {
       return this.poiMarkerIcon.coffee;
-
-    } else if(poiMarker.type === 'gas station') {
+    } else if (poiMarker.type === 'gas station') {
       return this.poiMarkerIcon.gas;
-
-    } else if(poiMarker.type === 'drugstore') {
+    } else if (poiMarker.type === 'drugstore') {
       return this.poiMarkerIcon.drug;
-
-    } else if(poiMarker.type === 'hotel') {
+    } else if (poiMarker.type === 'hotel') {
       return this.poiMarkerIcon.hotel;
-
-    } else if(poiMarker.type === 'groceries') {
+    } else if (poiMarker.type === 'groceries') {
       return this.poiMarkerIcon.groceries;
-
     }
   }
 
@@ -714,44 +726,43 @@ export class GoogleMapComponent implements OnInit {
     }
     this.buildingToNavigateTo = building;
     const alert = await this.alertController.create({
-      header: building,
+      header: this.translate.getTranslation(building),
       subHeader: address,
+      message: "",
       cssClass: 'alert-css',
       buttons: [
         {
-          text: 'Enter',
+          text: this.translate.getTranslation('enter'),
           cssClass: 'alert-button-map',
           handler: goIndoors => {
             if (urlSubString === 'jmsb') {
               let url = '/indoor' + '/jmsb';
               this.router.navigateByUrl(url);
               return true;
-
-            } else if(urlSubString === 'hall') {
+            } else if (urlSubString === 'hall') {
               let url = '/indoor' + '/hall';
               this.router.navigateByUrl(url);
               return true;
-
             } else {
+              alert.message = this.translate.getTranslation('no-floor-plan-msg') + this.translate.getTranslation(building);
               console.error('no floor plans for this building');
               return false;
             }
           }
         },
-          /*This button has it's opacity set to 0 and does not show up on the building info box but it needs to be
+        /*This button has it's opacity set to 0 and does not show up on the building info box but it needs to be
           here so that the alert dismisses properly when the user clicks outside the box to close it.  DO NOT REMOVE!!
            */
         {
           text: 'x',
           cssClass: 'alert-button-cancel',
           role: 'cancel',
-          handler: ()=> {
+          handler: () => {
             console.log('building-popup closed');
           }
-
         },
         {
-          text: 'Go',
+          text: this.translate.getTranslation('go'),
           cssClass: 'alert-button-go',
           handler: () => {
             this.goHere();
@@ -817,18 +828,21 @@ export class GoogleMapComponent implements OnInit {
   // This function is triggered when the API send back a response
   public onResponse($event: any) {
     this.directionService.closeMainWindow();
-    this.setRenderOptions($event);
-    this.sendDirectionInfo($event.routes[0]);
-    this.directionService.setDirectionsSteps($event.routes[0].legs[0].steps);
-    this.setInfoWindow($event.routes[0], 'Main');
+    let routeIndex = this.currentRouteSelected === 'Main' ? 0 : 1;
+    this.sendDirectionInfo($event.routes[routeIndex]);
+    this.directionService.setDirectionsSteps(
+      $event.routes[routeIndex].legs[0].steps
+    );
+    this.setInfoWindow($event.routes[0], 'Main', $event.request.travelMode);
     this.setAlternativeRoute($event);
+    this.setRenderOptions($event);
   }
 
   private setRenderOptions(directionInfo: any) {
-    this.renderOptions =
-      directionInfo.request.travelMode === 'WALKING'
-        ? this.walkingSelectedRenderOptions
-        : this.selectedRenderOptions;
+    this.changeRouteColors(
+      this.currentRouteSelected,
+      directionInfo.request.travelMode
+    );
   }
 
   private sendDirectionInfo(route: any, presentModal?: boolean) {
@@ -870,12 +884,16 @@ export class GoogleMapComponent implements OnInit {
         }
       );
 
-      this.setInfoWindow(directionInfo.routes[1], 'Alternative');
+      this.setInfoWindow(
+        directionInfo.routes[1],
+        'Alternative',
+        directionInfo.request.travelMode
+      );
       this.directionService.alternateDirectionSet = true;
     }
   }
 
-  private setInfoWindow(route: any, type: string) {
+  private setInfoWindow(route: any, type: string, travelMode: string) {
     let infoWindow = new google.maps.InfoWindow();
 
     if (isPlatformBrowser) {
@@ -889,7 +907,7 @@ export class GoogleMapComponent implements OnInit {
         '<br>' +
         ' ';
       div.onclick = () => {
-        this.infoWindowClicked(route);
+        this.infoWindowClicked(route, type, travelMode);
       };
       infoWindow.setContent(div);
       let stepsLength = route.legs[0].steps.length;
@@ -902,8 +920,55 @@ export class GoogleMapComponent implements OnInit {
     }
   }
 
-  private infoWindowClicked(route: any) {
-    this.sendDirectionInfo(route, true);
+  private infoWindowClicked(route: any, type: string, travelMode: string) {
+    this.currentRouteSelected = type;
+    this.changeRouteColors(type, travelMode);
     this.directionService.setDirectionsSteps(route.legs[0].steps);
+    this.sendDirectionInfo(route, true);
+  }
+
+  private changeRouteColors(type: string, travelMode: string) {
+    if (type === 'Alternative') {
+      if (travelMode === 'WALKING') {
+        // Walk + Alternative options
+        this.renderOptions = this.walkingNotSelectedRenderOptions;
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.walkingSelectedRenderOptions
+          );
+        }
+      } else {
+        // car or transit + Alternative options
+        this.renderOptions = this.notSelectedRenderOptions;
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.selectedRenderOptions
+          );
+        }
+      }
+    } else {
+      if (travelMode === 'WALKING') {
+        // Walk + Main options
+        this.renderOptions = this.walkingSelectedRenderOptions;
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.walkingNotSelectedRenderOptions
+          );
+        }
+      } else {
+        // car or transit + Main options
+        this.renderOptions = this.selectedRenderOptions;
+
+        if (this.directionService.alternateDirection) {
+          this.directionService.alternateDirection.setOptions(
+            this.notSelectedRenderOptions
+          );
+        }
+      }
+    }
+    this.directionService.alternateDirection.setMap(this.map);
   }
 }

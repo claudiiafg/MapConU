@@ -37,17 +37,20 @@
   text-align: center;
 }
 
+.alert-message {
+  color: var(--ConcordiaRed) !important;
+}
+
 .alert-button-group {
   position: relative !important;
   flex-direction: row !important;
   align-content: center !important;
   justify-content: flex-start !important;
 }
-.alert-button-go{
-
+.alert-button-go {
 }
 
-.alert-button-enter{
+.alert-button-enter {
   padding-left: 10% !important;
 }
 

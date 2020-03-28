@@ -6,3 +6,54 @@
     </p>
   </div>
 </ng-container>
+
+<div *ngIf="isIndoorDirectionsSet" class="indoor-timefooter-wrapper ">
+  <div *ngIf="!isInRoute" class="footer-elements-wrapper">
+    <div class="start-container">
+      <button
+        class="start-button"
+        type="button"
+        name="button"
+        (click)="initRoute()"
+      >
+        {{ 'start' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="currentStep && isInRoute" class="footer-elements-wrapper">
+    <div class="room-wrapper">
+      <span *ngIf="currentStep._prettySource">{{
+        currentStep._prettySource
+      }}</span>
+    </div>
+    <div class="arrow-wrapper">
+      <div class="">
+        <ion-icon class="arrow-icon" name="md-arrow-round-forward"></ion-icon>
+      </div>
+    </div>
+    <div class="room-wrapper">
+      <span *ngIf="currentStep._prettyDest">{{ currentStep._prettyDest }}</span>
+    </div>
+    <div class="button-wrapper">
+      <button
+        class="start-button"
+        type="button"
+        name="button"
+        (click)="getNextStep()"
+        *ngIf="!currentStep.isLast"
+      >
+        {{ 'next' | translate }}
+      </button>
+      <button
+        class="start-button"
+        type="button"
+        name="button"
+        (click)="endRoute()"
+        *ngIf="currentStep.isLast"
+      >
+        {{ 'end' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
