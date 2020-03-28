@@ -1,7 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="2" time="11.633">
- <testsuite name="new App" timestamp="2020-03-27T20:33:06" hostname="localhost" time="11.633" errors="0" tests="2" skipped="0" disabled="0" failures="0">
-  <testcase classname="new App" name="Has MapConU as the Title " time="3.705" />
-  <testcase classname="new App" name="Should toggle Campuses when selected at top of the UI" time="7.922" />
+<testsuites disabled="0" errors="0" failures="1" tests="4" time="14.279">
+ <testsuite name="new App" timestamp="2020-03-28T13:27:43" hostname="localhost" time="14.279" errors="0" tests="4" skipped="0" disabled="0" failures="1">
+  <testcase classname="new App" name="Has MapConU as the Title " time="5.589" />
+  <testcase classname="new App" name="Should toggle Campuses when selected at top of the UI" time="3.019" />
+  <testcase classname="new App" name="Should open up the bus schedule" time="2.798" />
+  <testcase classname="new App" name="Should look up Hall building in the searchbar" time="2.871">
+   <failure type="exception" message="Failed: element not interactable
+  (Session info: headless chrome=80.0.3987.0)
+  (Driver info: chromedriver=80.0.3987.16 (320f6526c1632ad4f205ebce69b99a062ed78647-refs/branch-heads/3987@{#185}),platform=Mac OS X 10.15.3 x86_64)"><![CDATA[WebDriverError: element not interactable
+  (Session info: headless chrome=80.0.3987.0)
+  (Driver info: chromedriver=80.0.3987.16 (320f6526c1632ad4f205ebce69b99a062ed78647-refs/branch-heads/3987@{#185}),platform=Mac OS X 10.15.3 x86_64)
+    at Object.checkLegacyResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/error.js:546:15)
+    at parseHttpResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:509:13)
+    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:441:30
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+From: Task: WebElement.sendKeys()
+    at Driver.schedule (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:807:17)
+    at WebElement.schedule_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:2010:25)
+    at WebElement.sendKeys (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:2174:19)
+    at actionFn (/usr/local/lib/node_modules/protractor/built/element.js:89:44)
+    at Array.map (<anonymous>)
+    at /usr/local/lib/node_modules/protractor/built/element.js:461:65
+    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27Error: 
+    at ElementArrayFinder.applyAction_ (/usr/local/lib/node_modules/protractor/built/element.js:459:27)
+    at ElementArrayFinder.<computed> [as sendKeys] (/usr/local/lib/node_modules/protractor/built/element.js:91:29)
+    at ElementFinder.<computed> [as sendKeys] (/usr/local/lib/node_modules/protractor/built/element.js:831:22)
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:75:36)
+    at /usr/local/lib/node_modules/protractor/node_modules/jasminewd2/index.js:112:25
+    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)
+    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)
+    at schedulerExecute (/usr/local/lib/node_modules/protractor/node_modules/jasminewd2/index.js:95:18)
+    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+From: Task: Run it("Should look up Hall building in the searchbar") in control flow
+    at UserContext.<anonymous> (/usr/local/lib/node_modules/protractor/node_modules/jasminewd2/index.js:94:19)
+    at attempt (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4297:26)
+    at QueueRunner.run (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4217:20)
+    at runNext (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4257:20)
+    at /usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4264:13
+    at /usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4172:9
+    at /usr/local/lib/node_modules/protractor/node_modules/jasminewd2/index.js:64:48
+    at ControlFlow.emit (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/events.js:62:21)
+    at ControlFlow.shutdown_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2674:10)
+    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2599:53
+From asynchronous test: 
+Error: 
+    at Suite.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:72:1)
+    at addSpecsToSuite (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1107:25)
+    at Env.describe (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1074:7)
+    at describe (/usr/local/lib/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4399:18)
+    at Object.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:4:1)
+    at Module._compile (internal/modules/cjs/loader.js:1121:30)
+    at Module.m._compile (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:439:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1160:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:442:12)]]>
+   </failure>
+  </testcase>
  </testsuite>
 </testsuites>
