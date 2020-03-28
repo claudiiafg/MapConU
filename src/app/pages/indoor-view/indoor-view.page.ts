@@ -78,7 +78,6 @@ export class IndoorViewPage implements OnInit {
     });
   }
 
-
   //important to reload route
   @HostListener('unloaded')
   ngOnDestroy() {

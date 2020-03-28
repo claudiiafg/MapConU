@@ -7,7 +7,7 @@ import { SearchPopoverComponent } from '../../popovers/search-popover/search-pop
 import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
-import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',
@@ -18,6 +18,9 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
   public isDirectionSet: boolean = false;
   public bottomStyle: number = 0;
+  private mixedDirectionsType = null;
+  private isClassToClass: boolean = false;
+  private isClassToBuilding: boolean = false;
 
   constructor(
     public popoverController: PopoverController,
@@ -31,6 +34,17 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       (isDirectionSet: boolean) => {
         this.isDirectionSet = isDirectionSet;
         this.bottomStyle = isDirectionSet ? -7 : 0;
+
+        if(this.directionManager.getMixedType() === MixedDirectionsType.floorToBuilding){
+          this.isClassToBuilding = true;
+          this.isClassToClass = false;
+        } else if(this.directionManager.getMixedType() === MixedDirectionsType.classToClass){
+          this.isClassToClass = true;
+          this.isClassToBuilding = false;
+        } else {
+          this.isClassToBuilding = false;
+          this.isClassToClass = false;
+        }
       }
     );
   }

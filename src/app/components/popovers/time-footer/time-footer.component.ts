@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, Events } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
-import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
 import { StringHelperService } from 'src/services/stringHelper.service';
 import { TranslationService } from 'src/services/translation.service';
 import { Router } from '@angular/router';
@@ -20,6 +20,7 @@ export class TimeFooterComponent implements OnInit {
   private isIndoorDirectionsSet: boolean = false;
   private currentStep = null;
   private isIndoorInRoute: boolean = false;
+  private startFromCurrent : boolean = false;
 
   constructor(
     public modalController: ModalController,
@@ -57,13 +58,32 @@ export class TimeFooterComponent implements OnInit {
       this.getNextStep();
     });
 
+    if(this.directionsManager.stepsBeenInit()){
+      this.isIndoorInRoute = true;
+    }
+
+    if(this.directionsManager.isIndoorInRoute.getValue() === true){
+      if(!this.router.url.includes('outdoor') && this.directionsManager.getMixedType() === MixedDirectionsType.classToClass){
+        this.isIndoorDirectionsSet = true;
+        this.currentStep = this.directionsManager.getCurrentStep();
+        this.isIndoorInRoute = false;
+        this.startFromCurrent = true;
+        this.setCurrentStep();
+      }
+    }
+
   }
 
   //initiate indoor direction
   private initRoute() {
     this.events.publish('isSelectMode', false, Date.now());
     this.isIndoorInRoute = true;
-    this.getNextStep();
+    if(this.startFromCurrent){
+      this.currentStep = this.directionsManager.startFromCurrentStep();
+      this.setCurrentStep();
+    } else {
+      this.getNextStep();
+    }
   }
 
   //get next step to compute in indoor directions
@@ -73,16 +93,19 @@ export class TimeFooterComponent implements OnInit {
       if(this.router.url.includes('outdoor')){
         this.directionsManager.continueWithIndoorDirections();
       }
-      this.currentStep._prettySource = this.stringHelper.prettifyTitles(
-        this.currentStep.source
-      );
-      this.currentStep._prettyDest = this.stringHelper.prettifyTitles(
-        this.currentStep.dest
-      );
+      this.setCurrentStep();
     } else {
       this.directionsManager.continueWithOutdoorDirection();
     }
+  }
 
+  private setCurrentStep(){
+    this.currentStep._prettySource = this.stringHelper.prettifyTitles(
+      this.currentStep.source
+    );
+    this.currentStep._prettyDest = this.stringHelper.prettifyTitles(
+      this.currentStep.dest
+    );
   }
 
   //user has arrived at destination and pressed end

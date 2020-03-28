@@ -13,7 +13,7 @@ import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../../../services/translation.service';
-import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-google-map',
@@ -716,6 +716,7 @@ export class GoogleMapComponent implements OnInit {
             if (urlSubString === 'jmsb' || urlSubString === 'hall') {
               if(this.router.url.includes('/outdoor/isMixedNav')){
                 this.pushIndoorStep(false);
+                this.directionsManager.setMixedType(MixedDirectionsType.classToClass);
                 this.events.publish("isSelectMode", true, Date.now());
               }
               let url = '/indoor/' + urlSubString;

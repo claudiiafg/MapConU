@@ -32,7 +32,6 @@ export class IndoorMapComponent implements OnInit {
     private indoorDirectionsService: IndoorDirectionsService,
     private directionManager: DirectionsManagerService,
     private router: Router,
-
   ) {}
 
   ngOnInit() {
@@ -111,6 +110,7 @@ export class IndoorMapComponent implements OnInit {
 
     //in order to avoid any mixture of data between floors, target actual div element of the floor plan
     let currentDoc : any;
+    console.log(this.inputBuilding + ": " + this.floor);
     if(this.inputBuilding === 'hall' && this.floor === 8){
       currentDoc = document.getElementById('h8-plan-wrapper');
     } else if(this.inputBuilding === 'hall' && this.floor === 9){

@@ -7,8 +7,15 @@ import { TranslationService } from './translation.service';
 import { Router } from '@angular/router';
 import { DataSharingService } from './data-sharing.service';
 
+export enum MixedDirectionsType {
+  floorToBuilding,
+  buildingToFloor,
+  classToClass
+}
+
 @Injectable()
 export class DirectionsManagerService {
+  private mixedType: MixedDirectionsType;
   private steps: any[] = [];
   private isSelectMode: boolean = false;
   public isIndoorInRoute = new BehaviorSubject(false);
@@ -31,7 +38,7 @@ export class DirectionsManagerService {
   private subscribeToEvents() {
     //when all components of map have been set, route can begging
     this.events.subscribe('map-set', res => {
-      if (this.isIndoorInRoute.getValue() === true) {
+      if (this.isIndoorInRoute.getValue() === true || this.isMixedInRoute.getValue() === true ) {
         this.initNewPath();
       }
     });
@@ -48,7 +55,7 @@ export class DirectionsManagerService {
   }
 
   private initNewPath(){
-    if(!this.currentStep){
+    if(!this.stepsBeenInit || !this.currentStep){
       this.currentStep = this.steps[0];
     }
 
@@ -129,6 +136,7 @@ export class DirectionsManagerService {
 
       //if want to find from this to another building
     } else if (result.role === 'diffBuilding') {
+      this.setMixedType(MixedDirectionsType.floorToBuilding);
       const data = {
         destination: destination
       };
@@ -188,7 +196,7 @@ export class DirectionsManagerService {
 
       //ask user to choose source and initiate the path steps
     } else {
-      let source: string = (floor === 'h8') ? 'escalators-down' : ((floor === 'h8') ? 'escalators-up' : 'entrance');
+      let source: string = (floor === 'h8') ? 'escalators-down' : ((floor === 'h9') ? 'escalators-up' : 'entrance');
       const tempPath = {
         floor: floor,
         source: source,
@@ -257,11 +265,12 @@ export class DirectionsManagerService {
     this.isIndoorInRoute.next(false);
     this.isMixedInRoute.next(false);
     this.steps = [];
+    this.mixedType = null;
   }
 
   public getHallFloor() : number{
-    if(this.steps[0].floor.includes('h')){
-      return (this.steps[0].floor === 'h8') ? 8 : 9;
+    if(this.currentStep.floor.includes('h')){
+      return (this.currentStep.floor === 'h8') ? 8 : 9;
     } else {
       throw new Error('First step is not in the hall building');
     }
@@ -287,6 +296,19 @@ export class DirectionsManagerService {
         this.continueWithIndoorDirections();
       }
     }
+    console.log(this.currentStep);
+    return this.currentStep;
+  }
+
+  public startFromCurrentStep(){
+    if(this.currentStep.floor){
+      if(this.router.url.includes('hall') && this.currentStep.floor.includes('h')){
+        this.changeFloor(this.currentStep.floor);
+      } else {
+        this.continueWithIndoorDirections();
+      }
+    }
+    console.log(this.currentStep);
     return this.currentStep;
   }
 
@@ -309,18 +331,54 @@ export class DirectionsManagerService {
   }
 
   public continueWithIndoorDirections(){
-    //move to the hall buildin
-    if (this.currentStep.floor.indexOf('h') === 0) {
-      if(this.currentStep.floor === 'h8'){
-        this.router.navigateByUrl('/indoor/hall');
-      } else {
-        this.router.navigateByUrl('/indoor/hall');
-        this.changeFloor(this.currentStep.floor);
-      }
+    this.router.navigateByUrl('/outdoor');
+    setTimeout( () => {
+      //move to the hall buildin
+      if (this.currentStep.floor.indexOf('h') === 0) {
+        if(this.currentStep.floor === 'h8'){
+          this.router.navigateByUrl('/indoor/hall');
+        } else {
+          this.router.navigateByUrl('/indoor/hall');
+          this.changeFloor(this.currentStep.floor);
+        }
 
-    //move to jmsb
+      //move to jmsb
+      } else {
+        this.router.navigateByUrl('/indoor/jmsb');
+      }
+    }, 500)
+
+  }
+
+  public getCurrentStep(){
+    let i = 0;
+    for (i = 0; i < this.steps.length; i++) {
+      if (!this.steps[i].wasDone) {
+        break;
+      }
+    }
+    if(i !== 0){
+      return this.steps[i-1];
+    }
+  }
+
+  public stepsBeenInit() : boolean{
+    return (this.steps[0]) ? this.steps[0].wasDone : false;
+  }
+
+  public setMixedType(type){
+    if(type === MixedDirectionsType.floorToBuilding || type === MixedDirectionsType.classToClass || type === MixedDirectionsType.buildingToFloor){
+      this.mixedType = type;
     } else {
-      this.router.navigateByUrl('/indoor/jmsb');
+      throw new Error('Wrong type of Mixed Directions');
+    }
+  }
+
+  public getMixedType(){
+    if(this.mixedType === MixedDirectionsType.floorToBuilding || this.mixedType === MixedDirectionsType.classToClass || this.mixedType === MixedDirectionsType.buildingToFloor ){
+      return this.mixedType;
+    } else {
+      return null;
     }
   }
 }
