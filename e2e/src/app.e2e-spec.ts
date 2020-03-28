@@ -1,6 +1,15 @@
 import { AppPage } from './app.po';
-import { browser, by, element, $ } from 'protractor';
+import { browser, by, element, $, By } from 'protractor';
 import { protractor } from 'protractor/built/ptor';
+var fs = require('fs')
+// abstract writing screen shot to a file
+function writeScreenShot(data, filename) {
+  var stream = fs.createWriteStream(filename);
+  stream.write(new Buffer(data, 'base64'));
+  stream.end();
+}
+// within a test:
+
 describe('new App', () => {
   let page: AppPage;
 
@@ -28,6 +37,9 @@ describe('new App', () => {
   it('Has MapConU as the Title ', () => {
     browser.get('/');
     expect(browser.getTitle()).toContain('MapConU');
+    browser.takeScreenshot().then(function (png) {
+    writeScreenShot(png, 'exception.png');
+});
   });
 it("Should toggle Campuses when selected at top of the UI", () => {
     // commenting this as it refreshes the page
@@ -70,8 +82,10 @@ it("Should open up the bus schedule", () => {
   expect(element(by.css('src="./assets/schedule/schedule.png"'))).toBeDefined();
   });
 it("Should look up Hall building in the searchbar", () => {
-  //element(by.id("outdoor-search")).click();
   browser.driver.sleep(200);
-  element(by.id("outdoor-search")).sendKeys("hall"+protractor.Key.ENTER);
+  //element(by.id("outdoor-search")).sendKeys("hall"+protractor.Key.ENTER);
+  browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
+  browser.actions().sendKeys("hall").perform();
+
   });
 });
