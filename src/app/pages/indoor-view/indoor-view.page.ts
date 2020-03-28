@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
-import { DataSharingService} from "../../../services/data-sharing.service";
+import { DataSharingService} from '../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-view',

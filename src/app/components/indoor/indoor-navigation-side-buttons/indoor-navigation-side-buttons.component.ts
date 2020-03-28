@@ -4,7 +4,7 @@ import { RoomSelectorPopoverComponent } from '../../popovers/room-selector-popov
 import { InfoPopoverComponent } from '../../popovers/info-popover/info-popover.component';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { TranslationService } from 'src/services/translation.service';
-import { DataSharingService} from "../../../../services/data-sharing.service";
+import { DataSharingService} from '../../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-navigation-side-buttons',

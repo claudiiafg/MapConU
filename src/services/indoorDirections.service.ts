@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Events } from '@ionic/angular';
-import { DataSharingService} from "./data-sharing.service";
+import { DataSharingService} from './data-sharing.service';
 
 export interface Line {
   id: string;

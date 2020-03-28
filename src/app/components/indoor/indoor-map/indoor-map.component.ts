@@ -6,7 +6,7 @@ import {
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
-import { DataSharingService} from "../../../../services/data-sharing.service";
+import { DataSharingService} from '../../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-map',

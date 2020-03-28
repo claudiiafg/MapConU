@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataSharingService} from "../../../../services/data-sharing.service";
-import { StringHelperService} from "../../../../services/stringHelper.service";
+import { DataSharingService} from '../../../../services/data-sharing.service';
+import { StringHelperService} from '../../../../services/stringHelper.service';
 
 @Component({
   selector: 'app-indoor-time-of-arrival',

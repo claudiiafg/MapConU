@@ -66,7 +66,7 @@ import { SettingsPage } from './pages/settings/settings.page';
 import { SettingsOptionsComponent } from './components/settings-options/settings-options.component';
 import { InfoPopoverComponent } from './components/popovers/info-popover/info-popover.component';
 import { CalendarComponent } from './components/popovers/calendar/calendar.component';
-import { IndoorTimeOfArrivalComponent} from "./components/indoor/indoor-time-of-arrival/indoor-time-of-arrival.component";
+import { IndoorTimeOfArrivalComponent} from './components/indoor/indoor-time-of-arrival/indoor-time-of-arrival.component';
 
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
