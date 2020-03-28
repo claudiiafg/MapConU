@@ -26,6 +26,8 @@ import { NgPipesModule } from 'ngx-pipes';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -41,6 +43,7 @@ import { StringHelperService } from 'src/services/stringHelper.service';
 import { DirectionService } from 'src/services/direction.service';
 import {TranslationService} from 'src/services/translation.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
+import { GoogleOauthService } from 'src/services/google-oauth.service';
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -62,11 +65,14 @@ import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
 import { SettingsPage } from './pages/settings/settings.page';
 import { SettingsOptionsComponent } from './components/settings-options/settings-options.component';
 import { InfoPopoverComponent } from './components/popovers/info-popover/info-popover.component';
+import { CalendarComponent } from './components/popovers/calendar/calendar.component';
 
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
 import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -95,14 +101,16 @@ export function LanguageLoader(http: HttpClient) {
     ModalDirectionsComponent,
     RoomSelectorPopoverComponent,
     SettingsOptionsComponent,
-    InfoPopoverComponent
+    InfoPopoverComponent,
+    CalendarComponent
   ],
   entryComponents: [
     SearchPopoverComponent,
     PoiPopoverComponent,
     ModalDirectionsComponent,
     RoomSelectorPopoverComponent,
-    InfoPopoverComponent
+    InfoPopoverComponent,
+    CalendarComponent
   ],
   imports: [
     CommonModule,
@@ -123,13 +131,15 @@ export function LanguageLoader(http: HttpClient) {
     AgmDirectionModule,
     NgPipesModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: LanguageLoader,
         deps: [HttpClient]
       }
-    })
+    }),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [
     StatusBar,
@@ -140,6 +150,8 @@ export function LanguageLoader(http: HttpClient) {
     NgxIonicImageViewerModule,
     PoiServices,
     DataSharingService,
+    NativeStorage,
+    GoogleOauthService,
     DirectionService,
     IndoorDirectionsService,
     TranslationService,

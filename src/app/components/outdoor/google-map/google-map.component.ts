@@ -459,6 +459,8 @@ export class GoogleMapComponent implements OnInit {
     }
   };
 
+  private readonly defaultCampusZoom = 17;
+
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
@@ -486,6 +488,11 @@ export class GoogleMapComponent implements OnInit {
 
   public mapReady($event: any) {
     this.map = $event;
+  }
+
+  public handleMapClicked()
+  {
+    this.events.publish('mapClicked');
   }
 
   public subscribeToChangeInPOI() {
@@ -549,6 +556,7 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('campusChanged', () => {
       this.poiMarkers = [];
       this.currentToggles = this.poiServices.resetPOIMarkers();
+      this.map.zoom = this.defaultCampusZoom;
     });
   }
 
@@ -561,6 +569,10 @@ export class GoogleMapComponent implements OnInit {
       };
       this.positionMarkers = [];
       this.positionMarkers.push(tempMarker);
+      if(coordinates.mapBounds)
+      {
+        this.map.fitBounds(coordinates.mapBounds)
+      }
     });
 
     this.data.currentMessage.subscribe(incomingMessage => {
