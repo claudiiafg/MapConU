@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SqliteService } from '../../../../services/sqlite.service';
 import {
   AlertController,
   Events,
@@ -12,6 +13,7 @@ import { GeolocationServices } from 'src/services/geolocation.services';
 import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
+import {Buildinginfo} from '../../../../services/buildinginfo';
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
@@ -38,7 +40,8 @@ export class GoogleMapComponent implements OnInit {
   };
   public provideRouteAlternatives: boolean = true;
   public map: any;
-
+  Data: Buildinginfo[] = [];
+  public overlayCoords: Buildinginfo[] = [];
   // Directions rendering options
   public walkingNotSelectedRenderOptions = {
     polylineOptions: {
@@ -106,7 +109,7 @@ export class GoogleMapComponent implements OnInit {
   private buildingToNavigateTo: string;
 
   // TODO: Move coordinates to json file, import json object and set coordinates here.
-
+/*
   hallCoords = [
     { lat: 45.496836, lng: -73.578858 },
     { lat: 45.497164, lng: -73.579539 },
@@ -143,110 +146,110 @@ export class GoogleMapComponent implements OnInit {
 
   fbCoords = [
     { lat: 45.494922, lng: -73.577777 },
-    { lat: 45.494653, lng: -73.577217 },
-    { lat: 45.494395, lng: -73.577517 },
-    { lat: 45.494702, lng: -73.578037 }
+    { lat: 45.494653, lng: -73.577217 },//24
+    { lat: 45.494395, lng: -73.577517 },//25
+    { lat: 45.494702, lng: -73.578037 }//26
   ];
 
   evCoords = [
-    { lat: 45.496057, lng: -73.577718 },
-    { lat: 45.495793, lng: -73.577176 },
-    { lat: 45.495143, lng: -73.577821 },
-    { lat: 45.495596, lng: -73.578766 },
-    { lat: 45.495945, lng: -73.578428 },
-    { lat: 45.495736, lng: -73.578031 }
+    { lat: 45.496057, lng: -73.577718 },//27
+    { lat: 45.495793, lng: -73.577176 },//28
+    { lat: 45.495143, lng: -73.577821 },//29
+    { lat: 45.495596, lng: -73.578766 },//30
+    { lat: 45.495945, lng: -73.578428 },//31
+    { lat: 45.495736, lng: -73.578031 }//32
   ];
 
   gmCoords = [
-    { lat: 45.495596, lng: -73.578766 },
-    { lat: 45.495945, lng: -73.578428 },
-    { lat: 45.496125, lng: -73.578814 },
-    { lat: 45.495774, lng: -73.579154 }
+    { lat: 45.495596, lng: -73.578766 },//33
+    { lat: 45.495945, lng: -73.578428 },//34
+    { lat: 45.496125, lng: -73.578814 },//35
+    { lat: 45.495774, lng: -73.579154 }//36
   ];
 
   gnCoords = [
-    { lat: 45.493338, lng: -73.576621 },
-    { lat: 45.493781, lng: -73.577758 },
-    { lat: 45.494406, lng: -73.577115 },
-    { lat: 45.494026, lng: -73.576289 },
-    { lat: 45.494127, lng: -73.576176 },
-    { lat: 45.494026, lng: -73.575993 },
-    { lat: 45.493932, lng: -73.57609 },
-    { lat: 45.493714, lng: -73.575639 },
-    { lat: 45.493571, lng: -73.575784 },
-    { lat: 45.49377, lng: -73.576197 }
+    { lat: 45.493338, lng: -73.576621 },//37
+    { lat: 45.493781, lng: -73.577758 },//38
+    { lat: 45.494406, lng: -73.577115 },//39
+    { lat: 45.494026, lng: -73.576289 },//40
+    { lat: 45.494127, lng: -73.576176 },//41
+    { lat: 45.494026, lng: -73.575993 },//42
+    { lat: 45.493932, lng: -73.57609 },//43
+    { lat: 45.493714, lng: -73.575639 },//44
+    { lat: 45.493571, lng: -73.575784 },//45
+    { lat: 45.49377, lng: -73.576197 }//46
   ];
 
   annexCoords = [
-    { lat: 45.496721, lng: -73.579157 },
-    { lat: 45.497092, lng: -73.579916 },
-    { lat: 45.496944, lng: -73.580066 },
-    { lat: 45.496563, lng: -73.579303 }
+    { lat: 45.496721, lng: -73.579157 },//47
+    { lat: 45.497092, lng: -73.579916 },//48
+    { lat: 45.496944, lng: -73.580066 },//49
+    { lat: 45.496563, lng: -73.579303 }//50
   ];
 
   tdCoords = [
-    { lat: 45.494734, lng: -73.578952 },
-    { lat: 45.494861, lng: -73.578799 },
-    { lat: 45.494656, lng: -73.57845 },
-    { lat: 45.49454, lng: -73.57861 }
+    { lat: 45.494734, lng: -73.578952 },//51
+    { lat: 45.494861, lng: -73.578799 },//52
+    { lat: 45.494656, lng: -73.57845 },//53
+    { lat: 45.49454, lng: -73.57861 }//54
   ];
 
   vaCoords = [
-    { lat: 45.495392, lng: -73.573756 },
-    { lat: 45.495673, lng: -73.574319 },
-    { lat: 45.496193, lng: -73.573784 },
-    { lat: 45.496073, lng: -73.573539 },
-    { lat: 45.49582, lng: -73.573805 },
-    { lat: 45.495664, lng: -73.573488 }
+    { lat: 45.495392, lng: -73.573756 },//55
+    { lat: 45.495673, lng: -73.574319 },//56
+    { lat: 45.496193, lng: -73.573784 },//57
+    { lat: 45.496073, lng: -73.573539 },//58
+    { lat: 45.49582, lng: -73.573805 },//59
+    { lat: 45.495664, lng: -73.573488 }//60
   ];
 
   adCoords = [
-    { lat: 45.457922, lng: -73.640125 },
-    { lat: 45.457998, lng: -73.640067 },
-    { lat: 45.457975, lng: -73.640007 },
-    { lat: 45.458281, lng: -73.639775 },
-    { lat: 45.458299, lng: -73.639826 },
-    { lat: 45.458384, lng: -73.639766 },
-    { lat: 45.458268, lng: -73.639468 },
-    { lat: 45.458172, lng: -73.639528 },
-    { lat: 45.458207, lng: -73.639618 },
-    { lat: 45.457912, lng: -73.639848 },
-    { lat: 45.457875, lng: -73.639775 },
-    { lat: 45.457803, lng: -73.639829 }
+    { lat: 45.457922, lng: -73.640125 },//61
+    { lat: 45.457998, lng: -73.640067 },//62
+    { lat: 45.457975, lng: -73.640007 },//63
+    { lat: 45.458281, lng: -73.639775 },//64
+    { lat: 45.458299, lng: -73.639826 },//65
+    { lat: 45.458384, lng: -73.639766 },//66
+    { lat: 45.458268, lng: -73.639468 },//67
+    { lat: 45.458172, lng: -73.639528 },//68
+    { lat: 45.458207, lng: -73.639618 },//69
+    { lat: 45.457912, lng: -73.639848 },//70
+    { lat: 45.457875, lng: -73.639775 },//71
+    { lat: 45.457803, lng: -73.639829 }//72
   ];
 
   ccCoords = [
-    { lat: 45.458079, lng: -73.640012 },
-    { lat: 45.458366, lng: -73.640796 },
-    { lat: 45.458534, lng: -73.640678 },
-    { lat: 45.45824, lng: -73.639897 }
+    { lat: 45.458079, lng: -73.640012 },//73
+    { lat: 45.458366, lng: -73.640796 },//74
+    { lat: 45.458534, lng: -73.640678 },//75
+    { lat: 45.45824, lng: -73.639897 }//76
   ];
 
   spCoords = [
-    { lat: 45.457213, lng: -73.640656 },
-    { lat: 45.457527, lng: -73.641469 },
-    { lat: 45.458167, lng: -73.640975 },
-    { lat: 45.458329, lng: -73.641415 },
-    { lat: 45.457469, lng: -73.642075 },
-    { lat: 45.456982, lng: -73.640833 }
+    { lat: 45.457213, lng: -73.640656 },//77
+    { lat: 45.457527, lng: -73.641469 },//78
+    { lat: 45.458167, lng: -73.640975 },//79
+    { lat: 45.458329, lng: -73.641415 },//80
+    { lat: 45.457469, lng: -73.642075 },//81
+    { lat: 45.456982, lng: -73.640833 }//82
   ];
 
   cjCoords = [
-    { lat: 45.457217, lng: -73.640015 },
-    { lat: 45.457362, lng: -73.640074 },
-    { lat: 45.457409, lng: -73.640203 },
-    { lat: 45.457177, lng: -73.640393 },
-    { lat: 45.457311, lng: -73.640734 },
-    { lat: 45.457597, lng: -73.640501 },
-    { lat: 45.45765, lng: -73.640632 },
-    { lat: 45.457828, lng: -73.640479 },
-    { lat: 45.457652, lng: -73.640021 },
-    { lat: 45.457495, lng: -73.640144 },
-    { lat: 45.457439, lng: -73.640026 },
-    { lat: 45.457469, lng: -73.639809 },
-    { lat: 45.457388, lng: -73.639758 },
-    { lat: 45.457285, lng: -73.639795 },
-    { lat: 45.457226, lng: -73.639905 }
+    { lat: 45.457217, lng: -73.640015 },//83
+    { lat: 45.457362, lng: -73.640074 },//84
+    { lat: 45.457409, lng: -73.640203 },//85
+    { lat: 45.457177, lng: -73.640393 },//86
+    { lat: 45.457311, lng: -73.640734 },//87
+    { lat: 45.457597, lng: -73.640501 },//88
+    { lat: 45.45765, lng: -73.640632 },//89
+    { lat: 45.457828, lng: -73.640479 },//90
+    { lat: 45.457652, lng: -73.640021 },//91
+    { lat: 45.457495, lng: -73.640144 },//92
+    { lat: 45.457439, lng: -73.640026 },//93
+    { lat: 45.457469, lng: -73.639809 },//94
+    { lat: 45.457388, lng: -73.639758 },//95
+    { lat: 45.457285, lng: -73.639795 },//96
+    { lat: 45.457226, lng: -73.639905 }//97
   ];
 
   vlCoords = [
@@ -310,10 +313,12 @@ export class GoogleMapComponent implements OnInit {
     { lat: 45.458536, lng: -73.638923 }
   ];
 
+  public overlay2 : any[] = [];
   public overlayCoords = [
     {
       name: 'Hall Building',
-      address: '1455 De Maisonneeuve Blvd. W.',
+      //name: ""+this.Data[0].building_name,
+      address: '1455 De Maisonneuve Blvd. W.',
       coords: this.hallCoords
     },
     {
@@ -323,7 +328,7 @@ export class GoogleMapComponent implements OnInit {
     },
     {
       name: 'JW McConnell Building',
-      address: '1400 De Maisonneeuve Blvd. W.',
+      address: '1400 De Maisonneuve Blvd. W.',
       coords: this.lbCoords
     },
     {
@@ -410,7 +415,7 @@ export class GoogleMapComponent implements OnInit {
       coords: this.fcCoords
     }
   ];
-
+*/
   poiMarkerIcon = {
     resto: {
       url: 'assets/icon/Marker_Restaurant.png',
@@ -456,6 +461,7 @@ export class GoogleMapComponent implements OnInit {
     }
   };
 
+
   constructor(
     private platform: Platform,
     private geolocationServices: GeolocationServices,
@@ -466,18 +472,38 @@ export class GoogleMapComponent implements OnInit {
     private alertController: AlertController,
     private navController: NavController,
     private router: Router,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private db: SqliteService
   ) {}
 
   async ngOnInit() {
+
+    await this.db.platform.ready();
+
+    this.db.dbState().subscribe((res) =>{
+      if (res){
+        this.db.fetchBuildings().subscribe(item => {
+          //console.log(item);
+          if (item.length != 0){
+
+            this.overlayCoords = item;
+            console.log(this.overlayCoords)
+          }
+        })
+      }
+    });
+
     await this.platform.ready();
     this.height = this.platform.height() - 106;
+
     await this.geolocationServices.getCurrentPosition();
 
     this.subscribeToMapSize();
     this.subscribeToTravelMode();
     this.subscribeToChangeInCurrentPOS();
     this.subscribeToChangeInPOI();
+
+    console.log(this.overlayCoords)
   }
 
   public mapReady($event: any) {

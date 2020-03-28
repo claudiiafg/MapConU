@@ -23,6 +23,9 @@ import { AgmDirectionModule } from 'agm-direction';
 import { AgmOverlays } from 'agm-overlays';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { NgPipesModule } from 'ngx-pipes';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { HttpClientModule } from '@angular/common/http';
+import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -103,7 +106,8 @@ import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8
     FormsModule,
     NgxIonicImageViewerModule,
     AgmDirectionModule,
-    NgPipesModule
+    NgPipesModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
@@ -114,6 +118,8 @@ import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8
     NgxIonicImageViewerModule,
     PoiServices,
     IndoorDirectionsService,
+    SQLite,
+    SQLitePorter,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

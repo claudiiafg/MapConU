@@ -1,0 +1,111 @@
+import { Injectable } from "@angular/core";
+import { Platform } from "@ionic/angular";
+import { Buildinginfo } from "./buildinginfo";
+import { Coordinates } from "./coordinates";
+import { BehaviorSubject, Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { SQLitePorter } from "@ionic-native/sqlite-porter/ngx";
+import { SQLite, SQLiteObject } from "@ionic-native/sqlite/ngx";
+
+@Injectable({
+  providedIn: "root"
+})
+export class SqliteService {
+  private storage: SQLiteObject;
+  buildingList = new BehaviorSubject([]);
+  private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  constructor(
+    public platform: Platform,
+    private sqlite: SQLite,
+    private httpClient: HttpClient,
+    private sqlPorter: SQLitePorter
+  ) {
+    this.platform.ready().then(() => {
+      this.sqlite
+        .create({
+          name: "data.db",
+          location: "default"
+        })
+        .then((db: SQLiteObject) => {
+          this.storage = db;
+          this.getData();
+        });
+    });
+  }
+
+  getData() {
+    this.httpClient
+      .get("../assets/dump.sql", { responseType: "text" })
+      .subscribe(data => {
+        this.sqlPorter
+          .importSqlToDb(this.storage, data)
+          .then(_ => {
+            this.getBuildingsInfo();
+            this.isDbReady.next(true);
+          })
+          .catch(error => console.error(error));
+      });
+  }
+
+  getBuildingsInfo() {
+    let tempName = "";
+    let tempAddress = "";
+    let tempCoordArr: Coordinates[] = [];
+    let tempCoord: Coordinates = {lat: 0, lng: 0};
+    let isDone = false;
+    return this.storage
+      .executeSql(
+        "SELECT name, address, lat, lng " +
+          "FROM buildinginfo, buildingcoordinates " +
+          "WHERE buildinginfo.id = buildingcoordinates.build_id " +
+          "ORDER BY buildinginfo.id",
+        []
+      )
+      .then(res => {
+        let items: Buildinginfo[] = [];
+        if (res.rows.length > 0) {
+          for (var i = 0; i < res.rows.length; i++) {
+
+              tempCoord.lat = res.rows.item(i).lat;
+              tempCoord.lng = res.rows.item(i).lng;
+              tempCoordArr.push(tempCoord);
+              console.log("tempName: " + tempName)
+              console.log("curr val: " + res.rows.item(i).name)
+              console.log(tempName === res.rows.item(i).name)
+            if (tempName === res.rows.item(i).name) {//still same building
+                if (i+1 == res.rows.length){
+
+                    isDone = true;
+
+                }else if (res.rows.item(i+1).name !== tempName){
+                    isDone = true;
+                }
+
+            } else {//new building
+              tempName = res.rows.item(i).name;
+              tempAddress = res.rows.item(i).address;
+            }
+            if (isDone) {
+              items.push({
+                name: res.rows.item(i).name,
+                address: res.rows.item(i).address,
+                coords: tempCoordArr
+              });
+              tempCoordArr = [];
+              isDone = false;
+            }
+          }
+        }
+        this.buildingList.next(items);
+      });
+  }
+
+  dbState() {
+    return this.isDbReady.asObservable();
+  }
+
+  fetchBuildings(): Observable<Buildinginfo[]> {
+    return this.buildingList.asObservable();
+  }
+}

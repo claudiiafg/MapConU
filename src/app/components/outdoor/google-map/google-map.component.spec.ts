@@ -12,6 +12,9 @@ import { Events } from '@ionic/angular';
 import {UserServices} from '../../../../services/user.services';
 import {PoiServices} from '../../../../services/poi.services';
 import {GeolocationServices} from '../../../../services/geolocation.services';
+import {Buildinginfo} from '../../../../services/buildinginfo';
+import {SQLite} from '@ionic-native/sqlite/ngx';
+import {SQLitePorter} from '@ionic-native/sqlite-porter/ngx';
 
 
 
@@ -49,7 +52,7 @@ import {GeolocationServices} from '../../../../services/geolocation.services';
 describe('GoogleMapComponent ', () => {
   let component: GoogleMapComponent;
   let fixture: ComponentFixture<GoogleMapComponent>;
-  let service: GeolocationServices = new GeolocationServices( new Geolocation, new Events);
+  let service: GeolocationServices = new GeolocationServices( new Geolocation, new Events, new AlertController());
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]),
@@ -63,6 +66,8 @@ describe('GoogleMapComponent ', () => {
         UserServices,
         PoiServices,
         AlertController,
+        SQLite,
+        SQLitePorter,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
         // { provide: GeolocationServices, useClass: MockData }
@@ -94,7 +99,7 @@ describe('GoogleMapComponent ', () => {
 
   it('should mock building info', () => {
     // Get all buildings info
-    let buildingsInfo: any = component.overlayCoords;
+    let buildingsInfo: Buildinginfo[] = component.overlayCoords;
 
     // Calling alert
     component.showAlert(buildingsInfo[0].name, buildingsInfo[0].address);
