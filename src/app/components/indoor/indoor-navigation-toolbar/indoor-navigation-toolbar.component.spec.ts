@@ -37,7 +37,7 @@ describe("IndoorNavigationToolbarComponent ", () => {
         })
       ],
       declarations: [IndoorNavigationToolbarComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         StatusBar,
         SplashScreen,
@@ -57,19 +57,90 @@ describe("IndoorNavigationToolbarComponent ", () => {
     fixture.detectChanges();
   });
   it("should create", () => {
-    component.ngAfterViewInit();
     component["goBackOutside"]();
     component["adjustSettings"]();
     expect(component).toBeTruthy();
   });
-  it("should ngAfterViewInit()", () => {
+  it("should ngAfterViewInit() Hall Building", () => {
     component["inputBuilding"] = "hall";
     spyOn(component["translate"], "getTranslation").and.callFake(() => {
-      return null;
+      return "Hall Building";
     });
     component.ngAfterViewInit();
     expect(component["translate"].getTranslation).toHaveBeenCalled();
+    // default floor for hall
+    expect(component["currentFloorIndex"]).toEqual(9);
   });
+  // it("should ngAfterViewInit() jmsb", () => {
+  //   component["inputBuilding"] = "jmsb";
+  //   spyOn(component["translate"], "getTranslation").and.callFake(() => {
+  //     return "John Molson Building";
+  //   });
+  //   component.ngAfterViewInit();
+  //   expect(component["translate"].getTranslation).toHaveBeenCalled();
+  //   // default floor for jmsb
+  //   expect(component["currentFloorIndex"]).toEqual(9);
+  // });
+  // it("should ngAfterViewInit() fg", () => {
+  //   component["inputBuilding"] = "fg";
+  //   spyOn(component["translate"], "getTranslation").and.callFake(() => {
+  //     return "Faubourg";
+  //   });
+  //   component.ngAfterViewInit();
+  //   expect(component["translate"].getTranslation).toHaveBeenCalled();
+  //   // default floor for fg
+  //   expect(component["currentFloorIndex"]).toEqual(9);
+  // });
+  // it("should ngAfterViewInit() richard", () => {
+  //   component["inputBuilding"] = "richard";
+  //   spyOn(component["translate"], "getTranslation").and.callFake(() => {
+  //     return "Richard Grey Renaud Science Complex";
+  //   });
+  //   component.ngAfterViewInit();
+  //   expect(component["translate"].getTranslation).toHaveBeenCalled();
+  //   // default floor for richard
+  //   expect(component["currentFloorIndex"]).toEqual(9);
+  // });
+  // it("should ngAfterViewInit() center", () => {
+  //   component["inputBuilding"] = "center";
+  //   spyOn(component["translate"], "getTranslation").and.callFake(() => {
+  //     return "Central Building";
+  //   });
+  //   component.ngAfterViewInit();
+  //   expect(component["translate"].getTranslation).toHaveBeenCalled();
+  //   // default floor for center
+  //   expect(component["currentFloorIndex"]).toEqual(9);
+  // });
+  // it("should ngAfterViewInit() hh", () => {
+  //   component["inputBuilding"] = "hh";
+  //   spyOn(component["translate"], "getTranslation").and.callFake(() => {
+  //     return "Higston Hall";
+  //   });
+  //   component.ngAfterViewInit();
+  //   expect(component["translate"].getTranslation).toHaveBeenCalled();
+  //   // default floor for hh
+  //   expect(component["currentFloorIndex"]).toEqual(9);
+  // });
+  // it("should ngAfterViewInit() comm", () => {
+  //   component["inputBuilding"] = "comm";
+  //   spyOn(component["translate"], "getTranslation").and.callFake(() => {
+  //     return "Communication Studies and Journalism Building";
+  //   });
+  //   component.ngAfterViewInit();
+  //   expect(component["translate"].getTranslation).toHaveBeenCalled();
+  //   // default floor for comm
+  //   expect(component["currentFloorIndex"]).toEqual(9);
+  // });
+  // it("should ngAfterViewInit() varnier", () => {
+  //   component["inputBuilding"] = "varnier";
+  //   spyOn(component["translate"], "getTranslation").and.callFake(() => {
+  //     return "Vanier Extension";
+  //   });
+  //   component.ngAfterViewInit();
+  //   expect(component["translate"].getTranslation).toHaveBeenCalled();
+  //   // default floor for varnier
+  //   expect(component["currentFloorIndex"]).toEqual(9);
+  // });
   it("should changeFloor", () => {
     component["currentFloorIndex"] = 3;
     component["floor"] = 6;
