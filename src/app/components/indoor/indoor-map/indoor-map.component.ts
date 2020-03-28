@@ -6,6 +6,7 @@ import {
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { DataSharingService} from "../../../../services/data-sharing.service";
 
 @Component({
   selector: 'app-indoor-map',
@@ -28,7 +29,8 @@ export class IndoorMapComponent implements OnInit {
   constructor(
     private events: Events,
     private indoorDirectionsService: IndoorDirectionsService,
-    private directionManager: DirectionsManagerService
+    private directionManager: DirectionsManagerService,
+    private dataSharing: DataSharingService
   ) {
     //when floor component is loaded -> setup map
     this.events.subscribe('floor-loaded', () => {
@@ -91,8 +93,18 @@ export class IndoorMapComponent implements OnInit {
   //when indoor component is first initiated
   ngAfterViewInit() {
     this.setMap();
+    this.subscribeToshowToa();
+
   }
 
+  subscribeToshowToa(){
+    this.dataSharing.showToa.subscribe(updateShow =>{
+      if (updateShow === false){
+        this.resetNav();
+        this.unsetMarker();
+      }
+    })
+  }
   //get all element from floor plan and setup indoorDirections map
   setMap() {
     if (this.directionManager.getIsSelectMode()) {
@@ -210,6 +222,10 @@ export class IndoorMapComponent implements OnInit {
     this.marker.setAttribute('x', point.x - 26);
     this.marker.setAttribute('y', point.y - 26);
     this.marker.style.visibility = 'visible';
+  }
+
+  unsetMarker(){
+    this.marker.style.visibility = 'hidden';
   }
 
   //reset all navigations instance variables in component and indoor directions service

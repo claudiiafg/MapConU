@@ -71,6 +71,10 @@
   "start": "START",
   "next": "NEXT",
   "end": "END",
-  "no-floor-plan-msg" : "No floor plan available for "
+  "no-floor-plan-msg" : "No floor plan available for ",
+  "estimated-toa": "Arrival time at",
+  "from": "from",
+  "time": "Time:",
+  "mins": "minutes"
 
 }
