@@ -4,7 +4,7 @@ import { protractor } from 'protractor/built/ptor';
 var fs = require('fs')
 // abstract writing screen shot to a file
 function writeScreenShot(data, filename) {
-  var stream = fs.createWriteStream(filename);
+  var stream = fs.createWriteStream('./screenshots/'+filename);
   stream.write(new Buffer(data, 'base64'));
   stream.end();
 }
@@ -38,7 +38,7 @@ describe('new App', () => {
     browser.get('/');
     expect(browser.getTitle()).toContain('MapConU');
     browser.takeScreenshot().then(function (png) {
-    writeScreenShot(png, 'exception.png');
+    writeScreenShot(png, 'TitleTest.png');
 });
   });
 it("Should toggle Campuses when selected at top of the UI", () => {
@@ -72,6 +72,7 @@ it("Should toggle Campuses when selected at top of the UI", () => {
     );
     expect(element(by.css('ng-reflect-longitude="-73.640452"'))).toBeDefined();
     expect(element(by.css('ng-reflect-latitude="45.45824"'))).toBeDefined();
+    browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'ToggleCampusTest.png');});
   });
 it("Should open up the bus schedule", () => {
   browser
@@ -80,12 +81,14 @@ it("Should open up the bus schedule", () => {
     .click()
     .perform();
   expect(element(by.css('src="./assets/schedule/schedule.png"'))).toBeDefined();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'BusScheduleTest');});
   });
 it("Should look up Hall building in the searchbar", () => {
   browser.driver.sleep(200);
   //element(by.id("outdoor-search")).sendKeys("hall"+protractor.Key.ENTER);
   browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
   browser.actions().sendKeys("hall").perform();
-
+  expect(element(by.css('value="Henry F.Hall Building, Boulevard de Maisonneuve Ouest, Montreal, QC, Canada"'))).toBeDefined();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorSearchTest.png');});
   });
 });
