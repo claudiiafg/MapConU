@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="4" time="18.978">
- <testsuite name="new App" timestamp="2020-03-28T15:06:27" hostname="localhost" time="18.978" errors="0" tests="4" skipped="0" disabled="0" failures="0">
-  <testcase classname="new App" name="Has MapConU as the Title " time="7.552" />
-  <testcase classname="new App" name="Should toggle Campuses when selected at top of the UI" time="4.051" />
-  <testcase classname="new App" name="Should open up the bus schedule" time="3.792" />
-  <testcase classname="new App" name="Should look up Hall building in the searchbar" time="3.579" />
+<testsuites disabled="0" errors="0" failures="0" tests="5" time="33.085">
+ <testsuite name="MapConU" timestamp="2020-03-28T16:04:27" hostname="localhost" time="33.085" errors="0" tests="5" skipped="0" disabled="0" failures="0">
+  <testcase classname="MapConU" name="Has MapConU as the Title " time="9.262" />
+  <testcase classname="MapConU" name="Should toggle Campuses when selected at top of the UI" time="6.082" />
+  <testcase classname="MapConU" name="Should open up the bus schedule" time="6.244" />
+  <testcase classname="MapConU" name="Should look up Hall building in the searchbar" time="5.842" />
+  <testcase classname="MapConU" name="Should bring up a menu to input current address and destination address" time="5.651" />
  </testsuite>
 </testsuites>

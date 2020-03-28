@@ -10,19 +10,18 @@ function writeScreenShot(data, filename) {
 }
 // within a test:
 
-describe('new App', () => {
+describe('MapConU', () => {
   let page: AppPage;
-
   beforeEach(() => {
     browser.get("/");
-    browser.driver.sleep(200);
+    browser.driver.sleep(1000);
 
     browser
       .actions()
       .mouseMove(element(by.css("button.alert-button")))
       .click()
       .perform();
-    browser.driver.sleep(200);
+    browser.driver.sleep(1000);
 
     browser
       .actions()
@@ -30,7 +29,7 @@ describe('new App', () => {
       .click()
       .perform();
 
-    browser.driver.sleep(200);
+    browser.driver.sleep(1000);
 
   });
 
@@ -84,11 +83,19 @@ it("Should open up the bus schedule", () => {
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'BusScheduleTest');});
   });
 it("Should look up Hall building in the searchbar", () => {
-  browser.driver.sleep(200);
-  //element(by.id("outdoor-search")).sendKeys("hall"+protractor.Key.ENTER);
   browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
   browser.actions().sendKeys("hall").perform();
   expect(element(by.css('value="Henry F.Hall Building, Boulevard de Maisonneuve Ouest, Montreal, QC, Canada"'))).toBeDefined();
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorSearchTest.png');});
+  });
+it("Should bring up a menu to input current address and destination address", () => {
+  
+  browser
+    .actions()
+    .mouseMove(element(by.id("navigation-button")))
+    .click()
+    .perform();
+  expect(element(by.id("fromAddress"))).toBeDefined();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'toandfromTest.png');});
   });
 });
