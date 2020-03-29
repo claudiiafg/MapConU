@@ -183,6 +183,31 @@ describe("OutdoorNavigationToolbarComponent ", () => {
     expect(googleMapcomponent.longitude).toBe(-73.577981);
   });
 
+  it("should adjustSettings()", () => {
+    spyOn(component["router"], "navigateByUrl").and.callFake(() => {
+      return null;
+    });
+    component["adjustSettings"]();
+    expect(component["router"].navigateByUrl).toHaveBeenCalledWith(
+        "/appSettings"
+    );
+  });
+
+  it('should test set selected colour', () => {
+    component.setSelectedColor('DRIVING');
+    expect(component.transitColor).toEqual('white');
+    expect(component.walkColor).toEqual('white');
+    expect(component.carColor).toEqual('yellow');
+    component.setSelectedColor('TRANSIT');
+    expect(component.transitColor).toEqual('yellow');
+    expect(component.carColor).toEqual('white');
+    expect(component.walkColor).toEqual('white');
+    component.setSelectedColor('PLANE');
+    expect(component.transitColor).toEqual('white');
+    expect(component.carColor).toEqual('white');
+    expect(component.walkColor).toEqual('yellow');
+  });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
