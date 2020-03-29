@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
+import { DataSharingService} from '../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-view',
@@ -15,6 +16,7 @@ export class IndoorViewPage implements OnInit {
   private floor: number = 1;
   private isSelectMode: boolean = false;
   private mySubscription: any;
+  private showToaComponent: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +24,7 @@ export class IndoorViewPage implements OnInit {
     private router: Router,
     private directionManager: DirectionsManagerService,
     private indoorDirections: IndoorDirectionsService,
+    private dataSharing: DataSharingService
 
   ) {}
 
@@ -76,6 +79,7 @@ export class IndoorViewPage implements OnInit {
       this.building = null;
       this.floor = null;
     });
+    this.subscribeToShowToa();
   }
 
   //important to reload route

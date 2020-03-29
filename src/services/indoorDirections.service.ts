@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Events } from '@ionic/angular';
+import { DataSharingService} from './data-sharing.service';
 
 export interface Line {
   id: string;
@@ -38,8 +39,12 @@ export class IndoorDirectionsService {
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
   private pathLength: number = 0;
+  private pathTime: number = 0;
 
-  constructor(private events: Events) {}
+  constructor(
+      private events: Events,
+      private dataSharing: DataSharingService
+  ) {}
 
   //**********************PUBLC HELPERS**********************
 
@@ -512,6 +517,17 @@ export class IndoorDirectionsService {
     this.calculateLength();
   }
 
+  setArrivalTime(){
+    /*found that the average human walk speed is 1.35m/s and the and the distance between 2 adjacent classrooms is
+    *approximately 7m at pathlength = 40, so for pathlength = 1 we have 0.175m.
+     */
+    this.pathTime = ((this.pathLength * 0.175) * 1.35)/60;
+    this.pathTime = (Math.round((this.pathTime*10))/10);
+    this.dataSharing.updateIndoorToaParameters([this.sourceID, this.destID, this.pathTime]);
+    this.dataSharing.showIndoorToa(true);
+  }
+
+
   //********************** MAIN ALGORITHM **********************
   private computePath() {
     //find last line in path and set it as visited
@@ -555,5 +571,7 @@ export class IndoorDirectionsService {
     } else if (this.isIntersection(line.id) && !this.hasUnvisitedLine(line)) {
       this.rollPathBack();
     }
+    //notify indoor-time-of-arrival component of path and time required to get there
+    this.setArrivalTime();
   }
 }
