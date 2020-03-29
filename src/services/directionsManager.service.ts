@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TranslationService } from './translation.service';
 import { Router } from '@angular/router';
 import { DataSharingService } from './data-sharing.service';
+import { GeolocationServices } from './geolocation.services';
 
 export enum MixedDirectionsType {
   floorToBuilding,
@@ -22,6 +23,15 @@ export class DirectionsManagerService {
   public isMixedInRoute = new BehaviorSubject(false);
   private currentStep: any;
   private pathHasBeenInit: boolean = false;
+  private hallCoords = {
+    lat: 45.496836,
+    lng: -73.578858
+  };
+
+  private jmsbCoords = {
+    lat: 45.495531,
+    lng: -73.579197
+  };
 
   constructor(
     private events: Events,
@@ -31,6 +41,7 @@ export class DirectionsManagerService {
     private translate: TranslationService,
     private router: Router,
     private dataSharingService: DataSharingService,
+    private geolocationService: GeolocationServices
   ) {
     this.subscribeToEvents();
   }
@@ -428,6 +439,74 @@ export class DirectionsManagerService {
       return this.mixedType;
     } else {
       return null;
+    }
+  }
+
+  //create path from current location to class room using destination classroom string
+  public getPathToRoom(classroom: string){
+    //remove all white space or symbols from classroom string
+    classroom.replace(/[\s|\W]*/g, '');
+
+    const coordinates = this.geolocationService.getCoordinates();
+    if(coordinates){
+      let toBuildingLat: number;
+      let toBuildingLng: number;
+      let toBuilding: any;
+      let tempIndoorStep: any;
+      if(classroom.includes('mb1')){
+        toBuilding = 'jmsb';
+        toBuildingLat = this.jmsbCoords.lat;
+        toBuildingLng = this.jmsbCoords.lng;
+
+        //indoor path to jmsb classroom
+        tempIndoorStep = {
+          floor: 'mb1',
+          source: 'entrance',
+          dest: classroom,
+          wasDone: false,
+          isLast: true
+        }
+
+      } else if(classroom.includes('h8') || classroom.includes('h9')){
+        toBuilding = "hall";
+        toBuildingLat = this.hallCoords.lat;
+        toBuildingLng = this.hallCoords.lng;
+        
+        //indoor path to hall building classroom
+        tempIndoorStep = {
+          floor: (classroom.includes('h8')) ? 'h8' : 'h9',
+          source: 'escalators-up',
+          dest: classroom,
+          wasDone: false,
+          isLast: true
+        }
+      }
+      //building of classroom
+      const to = {
+        building: toBuilding,
+        lat: toBuildingLat,
+        lng: toBuildingLng
+      }
+      //current position
+      const from = {
+        building: '',
+        lat: coordinates.latitude,
+        lng: coordinates.longitude
+      }
+      //outdoor step
+      const tempOutdoorStep = {
+        source: from,
+        dest: to,
+        wasDone: false,
+        isLast: false
+      }
+      this.pushStep(tempOutdoorStep);
+      this.pushStep(tempIndoorStep);
+      this.mixedType = MixedDirectionsType.buildingToFloor;
+      this.initiatePathSteps();
+
+    } else {
+      throw new Error('Current location unavailable');
     }
   }
 }
