@@ -12,8 +12,8 @@ import { APIKey } from '../../../../environments/env';
 import { UserServices } from '../../../../services/user.services';
 import { PoiServices } from '../../../../services/poi.services';
 import { GeolocationServices } from '../../../../services/geolocation.services';
-import { DirectionService } from '../../../../services/direction.service';
-import { IndoorDirectionsService } from '../../../../services/indoorDirections.service';
+import {DirectionService} from '../../../../services/direction.service';
+import {IndoorDirectionsService, Point} from '../../../../services/indoorDirections.service';
 import {TranslationService} from "../../../../services/translation.service";
 import {DirectionsManagerService} from "../../../../services/directionsManager.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
@@ -71,6 +71,27 @@ describe('RoomSelectorPopoverComponent ', () => {
     component.prettifyTitles();
     component.closePopover();
     expect(component).toBeTruthy();
+  });
+
+  it("should prettify titles", () => {
+    const mySpy = spyOn(component, "prettifyTitles").and.callThrough();
+    component["prettyPoints"] = [];
+    component["points"].push({
+      id: "wc",
+      x: 12,
+      y: 13
+    });
+    let result = [
+      {
+        id: "wc",
+        name: "bathroom"
+      }
+    ];
+    component["destination"] = "wc";
+    component.prettifyTitles();
+    expect(mySpy).toHaveBeenCalled();
+    expect(component["prettyDestination"]).toEqual("bathroom");
+    expect(component["prettyPoints"]).toEqual(result);
   });
 
   afterEach(() => {
