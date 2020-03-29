@@ -1,12 +1,25 @@
 .indoor-toa{
-  margin-left: 75px;
-  margin-right: 75px;
+  margin-top: 10px;
+  width: calc(100% - 15px);
+  left: 35%;
+  position: relative;
+
+  .sc-ion-card-ios-h{
+    margin: 0;
+  }
+}
+
+ion-card-header{
+  padding: 10px;
 }
 
 ion-card-title{
-  font-size: 18px;
+  font-size: 12px;
   text-align: center;
 }
+
 ion-card-content{
+  padding: 10px;
+  font-size: 12px;
   text-align: center;
 }

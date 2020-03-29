@@ -10,6 +10,7 @@ export class H8FloorPlanComponent {
   constructor(private events: Events) {}
 
   ngAfterViewInit() {
+    console.log('display')
     this.events.publish('floor-loaded', {building: 'hall', floor: '8'}, Date.now());
   }
 
