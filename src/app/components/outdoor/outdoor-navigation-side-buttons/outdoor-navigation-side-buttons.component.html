@@ -17,7 +17,7 @@
       (click)="presentPopover($event, 'poi')" class="closeButton"
     ></ion-icon>
   </ion-fab-button>
-  <ion-fab-button>
+  <ion-fab-button id="bus-button">
     <ion-icon name="bus" (click)="openViewer()" class="busButton"></ion-icon>
   </ion-fab-button>
 </ion-fab>
@@ -28,7 +28,7 @@
   slot="fixed"
   [style.bottom.px]="bottomStyle"
 >
-  <ion-fab-button class="nav-button">
+  <ion-fab-button class="nav-button" id="navigation-button"> 
     <ion-icon
       name="compass"
       (click)="presentPopover($event, 'search')"
