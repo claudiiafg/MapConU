@@ -37,7 +37,7 @@ describe("IndoorMapComponent ", () => {
         })
       ],
       declarations: [IndoorMapComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         StatusBar,
         SplashScreen,
@@ -70,18 +70,83 @@ describe("IndoorMapComponent ", () => {
     console.log = jasmine.createSpy("Point not available.");
     component["initNav"]("invalidname");
     expect(console.log).toHaveBeenCalledWith("Point not available.");
+    expect(component["isSelectMode"]).toBeFalsy();
   });
   it("should initNav() without point and valid name mb", () => {
     console.log = jasmine.createSpy("Point not available.");
     component["initNav"]("invalidname");
     expect(console.log).toHaveBeenCalledWith("Point not available.");
+    expect(component["isSelectMode"]).toBeFalsy();
   });
-  it("should initNav() without point and valid name mb valid point", () => {
-    let points: Point;
-    component["isSelectMode"] = true;
+  it("should initNav() without point and valid name mb valid point isSelectMode", () => {
+    component["inputBuilding"] = "hall";
+    let point: Point[];
+    point = [
+      {
+        id: "mb",
+        x: 123,
+        y: 123
+      }
+    ];
+    component["isSelectMode"] = false;
+    component["floor"] = 8;
+    spyOn(component["interestPoints"], "filter").and.callFake(() => {
+      return point;
+    });
+    // tested elsewhere
+    spyOn(component, "setMarker").and.callFake(() => {
+      return null;
+    });
+    spyOn(component["directionManager"], "getIsSelectMode").and.callFake(() => {
+      return true;
+    });
+    spyOn(component["directionManager"], "initDifferentFloorDir").and.callFake(
+      () => {
+        return null;
+      }
+    );
     component["initNav"]("mb");
-    expect(component["isSelectMode"]).toBeDefined();
+    expect(component["destID"]).toEqual("mb");
+    expect(component["isSelectMode"]).toBeTruthy();
+    expect(
+      component["directionManager"].initDifferentFloorDir
+    ).toHaveBeenCalled();
   });
+  // it("should initNav() without point and valid name escalator-down valid point isSelectMode false", () => {
+  //   component["inputBuilding"] = "hall";
+  //   let point: Point[];
+  //   point = [
+  //     {
+  //       id: "escalator-down",
+  //       x: 123,
+  //       y: 123
+  //     }
+  //   ];
+  //   component["isSelectMode"] = false;
+  //   component["floor"] = 9;
+  //   // spyOn(component["interestPoints"], "filter").and.callFake(() => {
+  //   //   return point;
+  //   // });
+  //   // // tested elsewhere
+  //   // spyOn(component, "setMarker").and.callFake(() => {
+  //   //   return null;
+  //   // });
+  //   // spyOn(component["directionManager"], "getIsSelectMode").and.callFake(() => {
+  //   //   return false;
+  //   // });
+  //   // spyOn(
+  //   //   component["directionManager"],
+  //   //   "initiateIndoorDirections"
+  //   // ).and.callFake(() => {
+  //   //   return null;
+  //   // });
+  //   component["initNav"]("escalator-down");
+  //   expect(component["destID"]).toEqual("escalator-down");
+  //   expect(component["isSelectMode"]).toBeFalsy();
+  //   expect(
+  //     component["directionManager"].initiateIndoorDirections
+  //   ).toHaveBeenCalled();
+  // });
   it("should initNav() without point and valid name escalator up", () => {
     console.log = jasmine.createSpy("Point not available.");
     component["initNav"]("invalidname");
