@@ -477,7 +477,6 @@ export class GoogleMapComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-
     await this.db.platform.ready();
 
     this.db.dbState().subscribe((res) =>{
@@ -487,7 +486,6 @@ export class GoogleMapComponent implements OnInit {
           if (item.length != 0){
 
             this.overlayCoords = item;
-            console.log(this.overlayCoords)
           }
         })
       }

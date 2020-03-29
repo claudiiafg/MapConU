@@ -49,11 +49,6 @@ export class SqliteService {
   }
 
   getBuildingsInfo() {
-    let tempName = "";
-    let tempAddress = "";
-    let tempCoordArr: Coordinates[] = [];
-    let tempCoord: Coordinates = {lat: 0, lng: 0};
-    let isDone = false;
     return this.storage
       .executeSql(
         "SELECT name, address, lat, lng " +
@@ -63,40 +58,47 @@ export class SqliteService {
         []
       )
       .then(res => {
+        let tempName = "";
+        let tempAddress = "";
+        let tempCoordArr: Coordinates[] = [];
+        let tempCoord: Coordinates = {lat: 0, lng: 0};
+        let isDone = false;
         let items: Buildinginfo[] = [];
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) {
-
-              tempCoord.lat = res.rows.item(i).lat;
-              tempCoord.lng = res.rows.item(i).lng;
-              tempCoordArr.push(tempCoord);
-              console.log("tempName: " + tempName)
-              console.log("curr val: " + res.rows.item(i).name)
-              console.log(tempName === res.rows.item(i).name)
-            if (tempName === res.rows.item(i).name) {//still same building
-                if (i+1 == res.rows.length){
-
-                    isDone = true;
-
-                }else if (res.rows.item(i+1).name !== tempName){
-                    isDone = true;
-                }
-
-            } else {//new building
-              tempName = res.rows.item(i).name;
-              tempAddress = res.rows.item(i).address;
+            tempName = res.rows.item(i).name;
+            tempAddress = res.rows.item(i).address;
+            tempCoord = {
+              lat: res.rows.item(i).lat,
+              lng: res.rows.item(i).lng
             }
-            if (isDone) {
+            console.log(tempCoord);
+            tempCoordArr.push(tempCoord);
+
+            if(res.rows.item(i+1)) {
+              if (tempName !== res.rows.item(i+1).name) {
+                isDone = true;
+              }
+
+              if (isDone) {
+                items.push({
+                  name: res.rows.item(i).name,
+                  address: res.rows.item(i).address,
+                  coords: tempCoordArr
+                });
+                tempCoordArr = [];
+                isDone = false;
+              }
+            } else {
               items.push({
-                name: res.rows.item(i).name,
-                address: res.rows.item(i).address,
+                name: tempName,
+                address: tempAddress,
                 coords: tempCoordArr
               });
-              tempCoordArr = [];
-              isDone = false;
             }
           }
         }
+        console.log(items);
         this.buildingList.next(items);
       });
   }
