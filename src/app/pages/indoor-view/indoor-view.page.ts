@@ -79,7 +79,10 @@ export class IndoorViewPage implements OnInit {
       this.building = null;
       this.floor = null;
     });
-    this.subscribeToShowToa();
+
+    this.dataSharing.showToa.subscribe( updateShow => {
+      this.showToaComponent = updateShow;
+    })
   }
 
   //important to reload route
