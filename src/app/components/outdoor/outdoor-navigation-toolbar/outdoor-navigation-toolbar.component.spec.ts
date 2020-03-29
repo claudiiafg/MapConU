@@ -22,7 +22,7 @@ import { TranslationService } from "../../../../services/translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import {By} from "@angular/platform-browser";
+import { By } from "@angular/platform-browser";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -132,7 +132,7 @@ describe("OutdoorNavigationToolbarComponent ", () => {
     expect(googleMapcomponent.travelMode).toBe("WALKING");
   });
 
-  it('test click changeTravelMode walk', () => {
+  it("test click changeTravelMode walk", () => {
     component.isDirectionSet = true;
     fixture.detectChanges();
     const spyWalk = spyOn(component, "changeTravelMode");
@@ -142,36 +142,42 @@ describe("OutdoorNavigationToolbarComponent ", () => {
     expect(spyWalk).toHaveBeenCalled();
   });
 
-  it('test click changeTravelMode transit', () => {
+  it("test click changeTravelMode transit", () => {
     component.isDirectionSet = true;
     fixture.detectChanges();
     const spyTransit = spyOn(component, "changeTravelMode");
-    let transit = fixture.debugElement.query(By.css("ion-button.transitButton"));
+    let transit = fixture.debugElement.query(
+      By.css("ion-button.transitButton")
+    );
     transit.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyTransit).toHaveBeenCalled();
   });
 
-  it('test click changeTravelMode car', () => {
+  it("test click changeTravelMode car", () => {
     component.isDirectionSet = true;
     fixture.detectChanges();
     const spyDirectionClose = spyOn(component, "changeTravelMode");
-    let directionClose = fixture.debugElement.query(By.css("ion-button.driveButton"));
+    let directionClose = fixture.debugElement.query(
+      By.css("ion-button.driveButton")
+    );
     directionClose.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyDirectionClose).toHaveBeenCalled();
   });
 
-  it('test closeAutocomplete', () => {
+  it("test closeAutocomplete", () => {
     fixture.detectChanges();
     const spySearch = spyOn(component, "closeAutocomplete");
-    let search = fixture.debugElement.query(By.css("ion-searchbar.searchButton"));
+    let search = fixture.debugElement.query(
+      By.css("ion-searchbar.searchButton")
+    );
     search.triggerEventHandler("ionClear", null);
     fixture.detectChanges();
     expect(spySearch).toHaveBeenCalled();
   });
 
-  it('should move to found location', () => {
+  it("should move to found location", () => {
     expect(googleMapcomponent.latitude).toBe(45.495729);
     expect(googleMapcomponent.longitude).toBe(-73.578041);
     const lat = 45.494828;
@@ -184,28 +190,26 @@ describe("OutdoorNavigationToolbarComponent ", () => {
   });
 
   it("should adjustSettings()", () => {
-    spyOn(component["router"], "navigateByUrl").and.callFake(() => {
-      return null;
-    });
+    spyOn(component["router"], "navigateByUrl").and.callThrough();
     component["adjustSettings"]();
     expect(component["router"].navigateByUrl).toHaveBeenCalledWith(
-        "/appSettings"
+      "/appSettings"
     );
   });
 
-  it('should test set selected colour', () => {
-    component.setSelectedColor('DRIVING');
-    expect(component.transitColor).toEqual('white');
-    expect(component.walkColor).toEqual('white');
-    expect(component.carColor).toEqual('yellow');
-    component.setSelectedColor('TRANSIT');
-    expect(component.transitColor).toEqual('yellow');
-    expect(component.carColor).toEqual('white');
-    expect(component.walkColor).toEqual('white');
-    component.setSelectedColor('PLANE');
-    expect(component.transitColor).toEqual('white');
-    expect(component.carColor).toEqual('white');
-    expect(component.walkColor).toEqual('yellow');
+  it("should test set selected colour", () => {
+    component.setSelectedColor("DRIVING");
+    expect(component.transitColor).toEqual("white");
+    expect(component.walkColor).toEqual("white");
+    expect(component.carColor).toEqual("yellow");
+    component.setSelectedColor("TRANSIT");
+    expect(component.transitColor).toEqual("yellow");
+    expect(component.carColor).toEqual("white");
+    expect(component.walkColor).toEqual("white");
+    component.setSelectedColor("PLANE");
+    expect(component.transitColor).toEqual("white");
+    expect(component.carColor).toEqual("white");
+    expect(component.walkColor).toEqual("yellow");
   });
 
   afterEach(() => {

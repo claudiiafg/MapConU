@@ -63,9 +63,7 @@ describe("IndoorNavigationToolbarComponent ", () => {
   });
   it("should ngAfterViewInit() Hall Building", () => {
     component["inputBuilding"] = "hall";
-    spyOn(component["translate"], "getTranslation").and.callFake(() => {
-      return "Hall Building";
-    });
+    spyOn(component["translate"], "getTranslation").and.callThrough();
     component.ngAfterViewInit();
     expect(component["translate"].getTranslation).toHaveBeenCalled();
     // default floor for hall
@@ -176,24 +174,18 @@ describe("IndoorNavigationToolbarComponent ", () => {
   });
   it("should goBackOutside() FALSE isSelectMode", () => {
     component["isSelectMode"] = false;
-    spyOn(component["router"], "navigateByUrl").and.callFake(() => {
-      return null;
-    });
+    spyOn(component["router"], "navigateByUrl").and.callThrough();
     component["goBackOutside"]();
     expect(component["router"].navigateByUrl).toHaveBeenCalledWith("/outdoor");
   });
   it("should goBackOutside() TRUE isSelectMode", () => {
     component["isSelectMode"] = true;
-    spyOn(component["events"], "publish").and.callFake(() => {
-      return null;
-    });
+    spyOn(component["events"], "publish").and.callThrough();
     component["goBackOutside"]();
     expect(component["events"].publish).toHaveBeenCalled();
   });
   it("should adjustSettings()", () => {
-    spyOn(component["router"], "navigateByUrl").and.callFake(() => {
-      return null;
-    });
+    spyOn(component["router"], "navigateByUrl").and.callThrough();
     component["adjustSettings"]();
     expect(component["router"].navigateByUrl).toHaveBeenCalledWith(
       "/appSettings"
