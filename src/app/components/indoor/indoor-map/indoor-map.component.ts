@@ -109,6 +109,15 @@ export class IndoorMapComponent implements OnInit {
     this.subscribeToshowToa();
   }
 
+  public subscribeToshowToa(){
+    this.dataSharing.showToa.subscribe(updateShow =>{
+      if (updateShow === false){
+        this.resetNav();
+        this.unsetMarker();
+      }
+    })
+  }
+
   //get all element from floor plan and setup indoorDirections map
   setMap() {
     if (this.directionManager.getIsSelectMode() === true) {
