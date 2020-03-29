@@ -28,6 +28,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material'
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -134,6 +135,7 @@ export function LanguageLoader(http: HttpClient) {
     NgPipesModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
