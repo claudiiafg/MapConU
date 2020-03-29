@@ -13,6 +13,7 @@ function writeScreenShot(data, filename) {
 describe('MapConU', () => {
   let page: AppPage;
   beforeEach(() => {
+    browser.waitForAngularEnabled(false);
     browser.get("/");
     browser.driver.sleep(1000);
 
@@ -34,7 +35,6 @@ describe('MapConU', () => {
   });
 
   it('Has MapConU as the Title ', () => {
-    browser.get('/');
     expect(browser.getTitle()).toContain('MapConU');
     browser.takeScreenshot().then(function (png) {
     writeScreenShot(png, 'TitleTest.png');
@@ -89,7 +89,6 @@ it("Should look up Hall building in the searchbar", () => {
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorSearchTest.png');});
   });
 it("Should bring up a menu to input current address and destination address", () => {
-  
   browser
     .actions()
     .mouseMove(element(by.id("navigation-button")))
