@@ -68,30 +68,49 @@ describe('RoomSelectorPopoverComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
-    component.prettifyTitles();
     component.closePopover();
     expect(component).toBeTruthy();
   });
 
-  it("should prettify titles", () => {
-    const mySpy = spyOn(component, "prettifyTitles").and.callThrough();
+  it('should prettify and look for path', () => {
+    let tempComponent = component["events"];
+    const mySpy1 = spyOn(component, "lookForPath").and.callThrough();
+    const mySpy2 = spyOn(component, "closePopover").and.callThrough();
+    const mySpy3 = spyOn(tempComponent, "publish").and.callThrough();
     component["prettyPoints"] = [];
     component["points"].push({
-      id: "wc",
-      x: 12,
-      y: 13
-    });
+          id: "wc",
+          x: 12,
+          y: 13
+        }
+        ,
+        {
+          id: "ne",
+          x: 10,
+          y: 15
+        }
+    );
     let result = [
       {
         id: "wc",
         name: "bathroom"
       }
+      ,
+      {
+        id: "ne",
+        name: "stairs-ne"
+      }
     ];
     component["destination"] = "wc";
+    component["source"] = "ne";
     component.prettifyTitles();
-    expect(mySpy).toHaveBeenCalled();
-    expect(component["prettyDestination"]).toEqual("bathroom");
     expect(component["prettyPoints"]).toEqual(result);
+    component.lookForPath();
+    expect(component["destination"]).toEqual('wc');
+    expect(component["source"]).toEqual('ne');
+    expect(mySpy1).toHaveBeenCalled();
+    expect(mySpy2).toHaveBeenCalled();
+    expect(mySpy3).toHaveBeenCalled();
   });
 
   afterEach(() => {
