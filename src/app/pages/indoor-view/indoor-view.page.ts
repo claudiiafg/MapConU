@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Events } from '@ionic/angular';
-import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-indoor-view',
@@ -10,20 +8,14 @@ import { DirectionsManagerService } from 'src/services/directionsManager.service
 })
 export class IndoorViewPage implements OnInit {
   private sub;
-  private building: string = 'hall';
-  private floor: number = 1;
-  private isSelectMode: boolean = false;
+  private building: string;
+  private floor = 1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private events: Events,
-    private directionManager: DirectionsManagerService
-  ) {
-    this.subscribeToEvents();
+  constructor(private route: ActivatedRoute) {
     this.sub = this.route.params.subscribe(params => {
       if (params['id']) {
         this.building = params['id'];
-        if (this.building === 'hall') {
+        if(this.building === 'hall'){
           this.floor = 8;
         }
       }
@@ -31,18 +23,4 @@ export class IndoorViewPage implements OnInit {
   }
 
   ngOnInit() {}
-
-  private subscribeToEvents() {
-    this.events.subscribe('isSelectMode', res => {
-      this.isSelectMode = res;
-      this.directionManager.setSelectMode(this.isSelectMode);
-    });
-
-    //when floor changes -> change view
-    this.events.subscribe('floor-changes', res => {
-      if (res) {
-        this.floor = parseInt(res);
-      }
-    });
-  }
 }

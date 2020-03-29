@@ -12,60 +12,58 @@
 
     <!-- settings button -->
     <ion-button
-      class="settings-button"
-      fill="outline"
-      slot="end"
-      (click)="adjustSettings()"
+            class="settings-button"
+            fill="outline"
+            slot="end"
+            (click)="adjustSettings()"
     >
       <ion-icon name="settings" size="large"></ion-icon>
     </ion-button>
-    <div class="building-info-wrapper">
-      <!-- name of floor selected-->
-      <ion-item slot="start" class="building">{{
-        building | translate
-      }}</ion-item>
 
-      <!-- select floor button -->
-      <ion-item id="floor-change">
-        <ion-select
-          (ionChange)="changeFloor()"
-          [(ngModel)]="floor"
-          [selectedText]="floor.valueOf()"
-          class="select-floor"
-          id="floor-item"
-          interface="popover"
-          placeholder="1"
-          disabled="{{ isSelectMode }}"
+    <!-- name of floor selected-->
+    <ion-item slot="start" class="building">{{ building }}</ion-item>
+
+    <!-- select floor button -->
+    <ion-item id="floor-change">
+      <ion-select
+        (ionChange)="changeFloor()"
+        [(ngModel)]="updateFloor"
+        [selectedText]="currentFloor.valueOf()"
+        class="select-floor"
+        id="floor-item"
+        interface="popover"
+        placeholder="1"
+      >
+        <ion-select-option
+          [value]="floor"
+          *ngFor="let floor of floors | slice: minFloorIndex:maxFloorIndex"
+          >{{ floor }}</ion-select-option
         >
-          <ion-select-option
-            [value]="floor"
-            *ngFor="
-              let floor of floors | slice: minFloorIndex:maxFloorIndex + 1
-            "
-            >{{ floor }}</ion-select-option
-          >
-        </ion-select>
-      </ion-item>
-    </div>
+      </ion-select>
+    </ion-item>
   </ion-toolbar>
+
   <div class="move-floor">
-    <ion-button
-      class="down-button ion-float-end"
-      (click)="moveDownFloor()"
-      shape="round"
-      fill="outline"
-      disabled="{{ isSelectMode || floor === floors[minFloorIndex] }}"
-    >
-      <ion-icon name="arrow-down"></ion-icon>
-    </ion-button>
     <ion-button
       (click)="moveUpFloor()"
       class="up-button"
       shape="round"
       fill="outline"
-      disabled="{{ isSelectMode || floor === floors[maxFloorIndex] }}"
     >
       <ion-icon name="arrow-up"></ion-icon>
     </ion-button>
+    <ion-button
+      class="down-button ion-float-end"
+      (click)="moveDownFloor()"
+      shape="round"
+      fill="outline"
+    >
+      <ion-icon name="arrow-down"></ion-icon>
+    </ion-button>
   </div>
+  <!-- <ion-searchbar
+    class="search-location"
+    placeholder="Search for a location.."
+    autocomplete="on"
+  ></ion-searchbar> -->
 </ion-header>

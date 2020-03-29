@@ -24,12 +24,8 @@ import { AgmOverlays } from 'agm-overlays';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 import { NgPipesModule } from 'ngx-pipes';
 import { SQLite } from '@ionic-native/sqlite/ngx';
+import { HttpClientModule } from '@angular/common/http';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //env variables
 import { APIKey } from 'src/environments/env';
@@ -38,14 +34,8 @@ import { environment } from '../environments/environment';
 //services
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
-import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { UserServices } from 'src/services/user.services';
-import { PoiServices } from 'src/services/poi.services';
-import { StringHelperService } from 'src/services/stringHelper.service';
-import { DirectionService } from 'src/services/direction.service';
-import {TranslationService} from 'src/services/translation.service';
-import { DataSharingService } from 'src/services/data-sharing.service';
-import { GoogleOauthService } from 'src/services/google-oauth.service';
+import { PoiServices } from '../services/poi.services';
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -58,28 +48,18 @@ import { ModalDirectionsComponent } from './components/outdoor/modal-directions/
 import { OutdoorNavigationSideButtonsComponent } from './components/outdoor/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component';
 import { OutdoorNavigationToolbarComponent } from './components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { PoiPopoverComponent } from './components/popovers/poi-popover/poi-popover.component';
-import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover.component';
+import { RoomSelectorPopoverComponent } from './components/popovers/room-selector-popover/room-selector-popover';
 import { SearchPopoverComponent } from './components/popovers/search-popover/search-popover.component';
 import { TimeFooterComponent } from './components/popovers/time-footer/time-footer.component';
 import { SettingsToolbarComponent } from './components/settings-toolbar/settings-toolbar.component';
 import { IndoorViewPage } from './pages/indoor-view/indoor-view.page';
 import { OutdoorViewPage } from './pages/outdoor-view/outdoor-view.page';
-import { SettingsPage } from './pages/settings/settings.page';
-import { SettingsOptionsComponent } from './components/settings-options/settings-options.component';
-import { InfoPopoverComponent } from './components/popovers/info-popover/info-popover.component';
-import { CalendarComponent } from './components/popovers/calendar/calendar.component';
+import { SettingsPage } from "./pages/settings/settings.page";
+import { SettingsOptionsComponent } from "./components/settings-options/settings-options.component";
 
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
-import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
-//function that loads the external JSON files to the app using http-loader.
-export function LanguageLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
-}
 
 @NgModule({
   declarations: [
@@ -95,24 +75,19 @@ export function LanguageLoader(http: HttpClient) {
     IndoorNavigationToolbarComponent,
     MB1FloorPlanComponent,
     H8FloorPlanComponent,
-    H9FloorPlanComponent,
     OutdoorViewPage,
     IndoorViewPage,
     SettingsPage,
     TimeFooterComponent,
     ModalDirectionsComponent,
     RoomSelectorPopoverComponent,
-    SettingsOptionsComponent,
-    InfoPopoverComponent,
-    CalendarComponent
+    SettingsOptionsComponent
   ],
   entryComponents: [
     SearchPopoverComponent,
     PoiPopoverComponent,
     ModalDirectionsComponent,
-    RoomSelectorPopoverComponent,
-    InfoPopoverComponent,
-    CalendarComponent
+    RoomSelectorPopoverComponent
   ],
   imports: [
     CommonModule,
@@ -132,17 +107,7 @@ export function LanguageLoader(http: HttpClient) {
     NgxIonicImageViewerModule,
     AgmDirectionModule,
     NgPipesModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: LanguageLoader,
-        deps: [HttpClient]
-      }
-    }),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
-
+    HttpClientModule
   ],
   providers: [
     StatusBar,
@@ -152,16 +117,9 @@ export function LanguageLoader(http: HttpClient) {
     UserServices,
     NgxIonicImageViewerModule,
     PoiServices,
-    DataSharingService,
-    NativeStorage,
-    GoogleOauthService,
-    DirectionService,
     IndoorDirectionsService,
     SQLite,
     SQLitePorter,
-    TranslationService,
-    DirectionsManagerService,
-    StringHelperService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

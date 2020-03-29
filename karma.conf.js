@@ -18,10 +18,7 @@ module.exports = function(config) {
       require('karma-sonarqube-unit-reporter')
     ],
     client: {
-      clearContext: false, // leave Jasmine Spec Runner output visible in browser
-      jasmine: {
-        random: false
-      }
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '/coverage'),

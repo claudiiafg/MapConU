@@ -6,23 +6,19 @@ import {
   NgZone,
   OnInit,
   ElementRef,
-  ViewChild,
-  Input
+  ViewChild
 } from '@angular/core';
 import { Events, IonSearchbar } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
-import { GeolocationServices } from 'src/services/geolocation.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
-import { Router } from '@angular/router';
-import { TranslationService } from '../../../../services/translation.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-outdoor-navigation-toolbar',
   templateUrl: './outdoor-navigation-toolbar.component.html',
   styleUrls: ['./outdoor-navigation-toolbar.component.scss']
 })
-export class OutdoorNavigationToolbarComponent
-  implements OnInit, AfterViewInit {
+export class OutdoorNavigationToolbarComponent implements OnInit, AfterViewInit {
   @ViewChild('search', { static: false }) public searchRef: IonSearchbar;
   public loc: string;
   public latitudeFound: number;
@@ -32,10 +28,6 @@ export class OutdoorNavigationToolbarComponent
   public transitColor: string = 'white';
   public carColor: string = 'white';
   public walkColor: string = 'yellow';
-  readonly mapRadius: number = 0.3;
-  public searchAutocomplete: any;
-  currentLat: number = 45.495729;
-  currentLng: number = -73.578041;
 
   //Array for lat, long of specific locations
   public locations = [
@@ -44,16 +36,14 @@ export class OutdoorNavigationToolbarComponent
   ];
 
   constructor(
-    private dataSharingService: DataSharingService,
+    private data: DataSharingService,
     private events: Events,
     public mapsAPILoader: MapsAPILoader,
     public ngZone: NgZone,
     public directionService: DirectionService,
-    private router: Router,
-    private translate: TranslationService,
-    private geolocationServices: GeolocationServices
+    private router: Router
   ) {
-    this.dataSharingService.currentMessage.subscribe(
+    this.data.currentMessage.subscribe(
       incomingMessage => (this.message = incomingMessage)
     );
     this.directionService.isDirectionSet.subscribe(isDirectionSet => {
@@ -61,67 +51,61 @@ export class OutdoorNavigationToolbarComponent
     });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.loc = '0';
-    await this.geolocationServices.getCurrentPosition();
-    this.currentLat = this.geolocationServices.getLatitude();
-    this.currentLng = this.geolocationServices.getLongitude();
   }
 
   ngAfterViewInit() {
-    this.findAddress();
+    this.findAdress();
   }
 
-  findAddress() {
-    this.searchRef.getInputElement().then(input => {
+  findAdress() {
+    this.searchRef.getInputElement().then( input => {
       this.mapsAPILoader.load().then(() => {
-        const nwBounds = new google.maps.LatLng({
-          lat: this.currentLat - this.mapRadius,
-          lng: this.currentLng - this.mapRadius
-        });
-        const seBounds = new google.maps.LatLng({
-          lat: this.currentLat + this.mapRadius,
-          lng: this.currentLng + this.mapRadius
-        });
-        this.searchAutocomplete = new google.maps.places.Autocomplete(input, {
-          bounds: new google.maps.LatLngBounds(nwBounds, seBounds)
-        });
+        let toAutocomplete = new google.maps.places.Autocomplete(
+          input,
+          {
+            types: ['address']
+          }
+        );
 
-        this.searchAutocomplete.addListener('place_changed', () => {
+        toAutocomplete.addListener('place_changed', () => {
           this.ngZone.run(() => {
-            let place: google.maps.places.PlaceResult = this.searchAutocomplete.getPlace();
+            //get the place result
+            let place: google.maps.places.PlaceResult = toAutocomplete.getPlace();
 
-            if (!place.geometry) {
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
               return;
             }
 
             this.latitudeFound = place.geometry.location.lat();
             this.longitudeFound = place.geometry.location.lng();
-            this.moveToFoundLocation(this.latitudeFound, this.longitudeFound, place.geometry.viewport);
+            this.moveToFoundLocation(this.latitudeFound, this.longitudeFound)
           });
-        });
-
-        this.events.subscribe('mapClicked', () => {
-          input.blur()
         });
       });
     });
   }
 
+  sendMessage(updatedMessage) {
+    this.data.updateMessage(updatedMessage);
+  }
+
   public changeCampus() {
-    /* Added as a workaround to get the select menu for campuses to reload when the language changes.
-    A variable change is required to trigger an automatic reload but campus should not be changed
-     */
-    if (this.loc == '2') {
-      this.loc = '0';
-    }
-    this.dataSharingService.updateMessage(this.locations[this.loc]);
+    this.sendMessage(this.locations[this.loc]);
     this.events.publish('campusChanged', Date.now());
   }
 
-  public moveToFoundLocation(lat: number, lng: number, mapBounds: any) {
-    this.dataSharingService.updateMessage({ latitude: lat, longitude: lng, mapBounds: mapBounds });
-    this.events.publish('coordinatesChanged', { latitude: lat, longitude: lng, mapBounds: mapBounds });
+  public moveToFoundLocation(lat: number, lng: number) {
+    this.sendMessage({ latitude: lat, longitude: lng });
+    this.events.publish('campusChanged', Date.now());
+  }
+
+  public closeAutocomplete() {
+    this.searchRef.getInputElement().then( input => {
+      input.blur();
+    });
   }
 
   public changeTravelMode(travelMode: string) {
@@ -153,7 +137,7 @@ export class OutdoorNavigationToolbarComponent
   /*
   Takes the user to the settings page
    */
-  public adjustSettings() {
+  public adjustSettings(){
     this.router.navigateByUrl('/appSettings');
   }
 }

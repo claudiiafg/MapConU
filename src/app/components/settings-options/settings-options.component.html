@@ -1,45 +1,31 @@
 <ion-list>
   <ion-item>
-    <img src="/assets/icon/language-icon.png" class="lang-icon" />
-    <ion-label>{{ 'language-select' | translate }}</ion-label>
+    <img src="/assets/icon/language-icon.png" class = "lang-icon">
+    <ion-label>Language</ion-label>
     <ion-item id="language-selection">
       <ion-select
-        [(ngModel)]="appLanguage"
-        class="select-language"
-        interface="popover"
-        placeholder="English"
-        (ionChange)="languageChange()"
+              [(ngModel)]="appLanguage"
+              class="select-language"
+              interface="popover"
+              placeholder="English"
       >
-        <ion-select-option value="english">{{
-          'english' | translate
-        }}</ion-select-option>
-        <ion-select-option value="french">{{
-          'french' | translate
-        }}</ion-select-option>
+        <ion-select-option value="english">English</ion-select-option>
+        <ion-select-option value="french">French</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-item>
   <ion-item>
     <ion-icon name="logo-google" color="black" size="large"></ion-icon>
-    <div *ngIf="!googleSession; then loginBlock else logoutBlock"></div>
-    <ng-template #loginBlock>
-      <ion-label>{{'google'| translate}}</ion-label>
-      <ion-button (click)="login()">
-        <ion-icon name="link"></ion-icon>
-      </ion-button>
-    </ng-template>
-    <ng-template #logoutBlock>
-      <ion-label>{{ googleSession.email }}</ion-label>
-      <ion-button (click)="logout()">
-        Logout
-      </ion-button>
-    </ng-template>
+    <ion-label>Google Account</ion-label>
+    <ion-button>
+      <ion-icon name="link"></ion-icon>
+    </ion-button>
   </ion-item>
   <ion-item>
     <ion-icon name="code" color="black" size="large"></ion-icon>
-    <ion-label>{{'source-code'| translate}}</ion-label>
-    <a href="https://github.com/claudiiafg/MapConU"><ion-button>
+    <ion-label>Source Code</ion-label>
+    <ion-button>
       <ion-icon name="logo-github"></ion-icon>
-    </ion-button></a>
+    </ion-button>
   </ion-item>
 </ion-list>
