@@ -28,13 +28,13 @@
   slot="fixed"
   [style.bottom.px]="bottomStyle"
 >
-  <ion-fab-button class="nav-button" id="navigation-button"> 
+  <ion-fab-button class="nav-button" id="navigation-button">
     <ion-icon
       name="compass"
       (click)="presentPopover($event, 'search')"
     ></ion-icon>
   </ion-fab-button>
-  <ng-container *ngIf="isDirectionSet && isClassToBuilding">
+  <ng-container *ngIf="isDirectionSet || isClassToBuilding">
     <ion-fab-button class="close-button" (click)="close()">
       <ion-icon name="close"></ion-icon>
     </ion-fab-button>
