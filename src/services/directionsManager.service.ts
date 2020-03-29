@@ -36,7 +36,7 @@ export class DirectionsManagerService {
   }
 
   private subscribeToEvents() {
-    //when all components of map have been set, route can begging
+    //when all components of map have been set, route can begin
     this.events.subscribe('map-set', res => {
       if (this.isIndoorInRoute.getValue() === true || this.isMixedInRoute.getValue() === true ) {
         this.initNewPath();
@@ -54,6 +54,7 @@ export class DirectionsManagerService {
     });
   }
 
+  //initiate path in the current floorplan
   private initNewPath(){
     if(!this.stepsBeenInit || !this.currentStep){
       this.currentStep = this.steps[0];
@@ -196,6 +197,16 @@ export class DirectionsManagerService {
 
       //ask user to choose source and initiate the path steps
     } else {
+      if(floor === 'h9' && this.mixedType === MixedDirectionsType.classToClass){
+        const tempPath = {
+          floor: 'h8',
+          source: 'escalators-up',
+          dest: 'escalators-up',
+          wasDone: false,
+          isLast: false
+        };
+        this.steps.push(tempPath);
+      }
       let source: string = (floor === 'h8') ? 'escalators-down' : ((floor === 'h9') ? 'escalators-up' : 'entrance');
       const tempPath = {
         floor: floor,
@@ -227,11 +238,10 @@ export class DirectionsManagerService {
       } else if (building === 'h9') {
         this.events.publish('floor-changes', 9, Date.now());
       } else {
-        console.log('else');
         return;
       }
 
-    //if NOT isIndoorInRoute -> change floor to the other possiblr floor
+    //if NOT isIndoorInRoute -> change floor to the other possible floor
     } else {
       if (building === 'h8') {
         this.events.publish('floor-changes', 9, Date.now());
@@ -243,16 +253,20 @@ export class DirectionsManagerService {
     }
   }
 
-  //helper
+//************************************helpers************************************
+  //return if is select mode or not
   public getIsSelectMode(): boolean {
     return this.isSelectMode;
   }
 
+  //set select mode
   public setSelectMode(value: boolean) {
     this.isSelectMode = value;
   }
 
+  //push step in directions
   public pushStep(step: any){
+    //step must have source and directions
     if(step.source && step.dest){
       this.steps.push(step);
     } else {
@@ -260,6 +274,7 @@ export class DirectionsManagerService {
     }
   }
 
+  //reset all variables
   public resetSteps() {
     this.pathHasBeenInit = false;
     this.isIndoorInRoute.next(false);
@@ -268,6 +283,7 @@ export class DirectionsManagerService {
     this.mixedType = null;
   }
 
+  //get building and floor from step 'floor' attribute
   public getHallFloor() : number{
     if(this.currentStep.floor.includes('h')){
       return (this.currentStep.floor === 'h8') ? 8 : 9;
@@ -288,15 +304,33 @@ export class DirectionsManagerService {
         break;
       }
     }
+    //if out of the loop use last one;
+    if(!this.steps[i]){
+      i--;
+    }
     this.currentStep = this.steps[i];
     if(this.currentStep.floor){
       if(this.router.url.includes('hall') && this.currentStep.floor.includes('h')){
         this.changeFloor(this.currentStep.floor);
+      // } else if(this.router.url.includes('jmsb') && this.currentStep.floor.includes('mb1')) {
+      //   return this.currentStep;
       } else {
         this.continueWithIndoorDirections();
       }
     }
-    console.log(this.currentStep);
+    return this.currentStep;
+  }
+
+  public getStepAfterOutdoor(){
+    let i = 0;
+    for (i = 0; i < this.steps.length; i++) {
+      if (i !== 0 && !this.steps[i-1].floor && this.steps[i].floor) {
+        this.steps[i].wasDone = true;
+        break;
+      }
+    }
+    this.currentStep = this.steps[i];
+    this.continueWithIndoorDirections();
     return this.currentStep;
   }
 
@@ -304,14 +338,18 @@ export class DirectionsManagerService {
     if(this.currentStep.floor){
       if(this.router.url.includes('hall') && this.currentStep.floor.includes('h')){
         this.changeFloor(this.currentStep.floor);
+
+      } else if(this.router.url.includes('jmsb') && this.currentStep.floor.includes('mb1')) {
+        return this.currentStep;
+
       } else {
         this.continueWithIndoorDirections();
       }
     }
-    console.log(this.currentStep);
     return this.currentStep;
   }
 
+  //next step in directions is outdoor -> start outdoor directions and navigate outside
   public continueWithOutdoorDirection(){
     if(this.currentStep && !this.currentStep.floor){
       this.outdoorDirections.isDirectionSet.next(true);
@@ -330,11 +368,16 @@ export class DirectionsManagerService {
     }
   }
 
+  //next step in directions is indoor -> check which building and floor needed and more
   public continueWithIndoorDirections(){
-    this.router.navigateByUrl('/outdoor');
+    //move outside first so there's a clean start in the next building without any corruption of data
+    if(!this.router.url.includes('outdoor')) {
+      this.router.navigateByUrl('/outdoor');
+    }
+    //set timeout to allow all components to be loaded
     setTimeout( () => {
       //move to the hall buildin
-      if (this.currentStep.floor.indexOf('h') === 0) {
+      if (this.currentStep.floor.includes('h')) {
         if(this.currentStep.floor === 'h8'){
           this.router.navigateByUrl('/indoor/hall');
         } else {
@@ -344,12 +387,15 @@ export class DirectionsManagerService {
 
       //move to jmsb
       } else {
-        this.router.navigateByUrl('/indoor/jmsb');
+        if(this.router.url !== '/indoor/jmsb'){
+          this.router.navigateByUrl('/indoor/jmsb');
+        }
       }
     }, 500)
 
   }
 
+  //returns step before the first that wasn't done yet
   public getCurrentStep(){
     let i = 0;
     for (i = 0; i < this.steps.length; i++) {
@@ -362,10 +408,12 @@ export class DirectionsManagerService {
     }
   }
 
+  //if first step wasn't done, returns that steps haven't been initiated
   public stepsBeenInit() : boolean{
     return (this.steps[0]) ? this.steps[0].wasDone : false;
   }
 
+  //set type of mixed directions
   public setMixedType(type){
     if(type === MixedDirectionsType.floorToBuilding || type === MixedDirectionsType.classToClass || type === MixedDirectionsType.buildingToFloor){
       this.mixedType = type;
@@ -374,6 +422,7 @@ export class DirectionsManagerService {
     }
   }
 
+  //get type of mixed directions
   public getMixedType(){
     if(this.mixedType === MixedDirectionsType.floorToBuilding || this.mixedType === MixedDirectionsType.classToClass || this.mixedType === MixedDirectionsType.buildingToFloor ){
       return this.mixedType;

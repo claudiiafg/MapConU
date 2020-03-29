@@ -151,7 +151,7 @@ export class IndoorDirectionsService {
         this.setDest(destination);
         this.computePath();
       } catch (e) {
-        console.error(e);
+        // console.error(e);
       }
     }
   }
@@ -479,7 +479,6 @@ export class IndoorDirectionsService {
 
   //after path is found look for shortest path within it
   private getShortestWithin() {
-    console.log('FOUND ROOM');
     this.foundPath = true;
     let tempPath = [];
     let i = 0;

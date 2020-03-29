@@ -10,6 +10,7 @@ export class MB1FloorPlanComponent {
   constructor(private events: Events) {}
 
   ngAfterViewInit() {
+    console.log('lalal');
     this.events.publish('floor-loaded', {building: 'jmsb', floor: '1'}, Date.now());
   }
 

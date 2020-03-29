@@ -109,7 +109,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   }
 
   public next(){
-    this.events.publish('get-next-step', Date.now());
+    this.events.publish('get-next-step', true, Date.now());
     this.resetOutdoor();
   }
 

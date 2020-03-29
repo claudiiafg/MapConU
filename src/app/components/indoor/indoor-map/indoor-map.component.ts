@@ -104,13 +104,11 @@ export class IndoorMapComponent implements OnInit {
 
   //get all element from floor plan and setup indoorDirections map
   setMap() {
-    if (this.directionManager.getIsSelectMode()) {
+    if (this.directionManager.getIsSelectMode() === true) {
       this.isSelectMode = true;
     }
-
     //in order to avoid any mixture of data between floors, target actual div element of the floor plan
     let currentDoc : any;
-    console.log(this.inputBuilding + ": " + this.floor);
     if(this.inputBuilding === 'hall' && this.floor === 8){
       currentDoc = document.getElementById('h8-plan-wrapper');
     } else if(this.inputBuilding === 'hall' && this.floor === 9){
@@ -149,7 +147,8 @@ export class IndoorMapComponent implements OnInit {
       this.isSelectMode = this.directionManager.getIsSelectMode();
 
       //user wants floor to floor directions -> the room he just selected is to be concated to the already existing steps of navigation
-      if (this.isSelectMode) {
+      if (this.isSelectMode === true) {
+        this.floor = this.checkCurrentFloorNumber();
         if (this.inputBuilding === 'hall' && this.floor === 8) {
           this.directionManager.initDifferentFloorDir(
             false,
@@ -197,14 +196,31 @@ export class IndoorMapComponent implements OnInit {
     }
   }
 
+  private checkCurrentFloorNumber(): number{
+    let floor8 = document.getElementById('h8-plan-wrapper');
+    let floor9 = document.getElementById('h9-plan-wrapper');
+    let floor1 = document.getElementById('mb1-plan-wrapper');
+
+    if(floor8){
+      return 8;
+    } else if(floor9) {
+      return 9;
+    } else if(floor1) {
+      return 1;
+    }
+
+  }
+
   //set marker on the map
   private setMarker(point: Point) {
-    if(!this.marker){
-      this.marker = document.getElementById('marker');
+    if(point && point.x && point.y){
+      if(!this.marker){
+        this.marker = document.getElementById('marker');
+      }
+      this.marker.setAttribute('x', point.x - 26);
+      this.marker.setAttribute('y', point.y - 26);
+      this.marker.style.visibility = 'visible';
     }
-    this.marker.setAttribute('x', point.x - 26);
-    this.marker.setAttribute('y', point.y - 26);
-    this.marker.style.visibility = 'visible';
   }
 
   //reset all navigations instance variables in component and indoor directions service

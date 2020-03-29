@@ -54,10 +54,12 @@ export class TimeFooterComponent implements OnInit {
       }
     });
 
+    //subscribe to user clicking on next step from outside
     this.events.subscribe('get-next-step', () => {
-      this.getNextStep();
+      this.getStepAfterOutdoor()
     });
 
+    //when initiating the indoor component during a route
     if(this.directionsManager.stepsBeenInit()){
       this.isIndoorInRoute = true;
     }
@@ -66,12 +68,19 @@ export class TimeFooterComponent implements OnInit {
       if(!this.router.url.includes('outdoor') && this.directionsManager.getMixedType() === MixedDirectionsType.classToClass){
         this.isIndoorDirectionsSet = true;
         this.currentStep = this.directionsManager.getCurrentStep();
-        this.isIndoorInRoute = false;
-        this.startFromCurrent = true;
+
+        if(this.currentStep.isLast){
+          this.isIndoorInRoute = true;
+          this.startFromCurrent = false;
+
+        } else {
+          this.isIndoorInRoute = false;
+          this.startFromCurrent = true;
+        }
+
         this.setCurrentStep();
       }
     }
-
   }
 
   //initiate indoor direction
@@ -84,6 +93,11 @@ export class TimeFooterComponent implements OnInit {
     } else {
       this.getNextStep();
     }
+  }
+
+  private getStepAfterOutdoor(){
+    this.currentStep = this.directionsManager.getStepAfterOutdoor();
+    this.setCurrentStep();
   }
 
   //get next step to compute in indoor directions
