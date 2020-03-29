@@ -59,3 +59,7 @@ ion-title {
 .view-calendar {
   margin-right: 5px;
 }
+
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: var(--ConcordiaRed);
+}
