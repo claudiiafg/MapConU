@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { DataSharingService} from '../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-view',
@@ -13,11 +14,13 @@ export class IndoorViewPage implements OnInit {
   private building: string = 'hall';
   private floor: number = 1;
   private isSelectMode: boolean = false;
+  private showToaComponent: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private events: Events,
-    private directionManager: DirectionsManagerService
+    private directionManager: DirectionsManagerService,
+    private dataSharing: DataSharingService
   ) {
     this.subscribeToEvents();
     this.sub = this.route.params.subscribe(params => {
@@ -44,5 +47,12 @@ export class IndoorViewPage implements OnInit {
         this.floor = parseInt(res);
       }
     });
+    this.subscribeToShowToa();
+  }
+
+  subscribeToShowToa(){
+    this.dataSharing.showToa.subscribe( updateShow => {
+      this.showToaComponent = updateShow;
+    })
   }
 }

@@ -9,6 +9,8 @@ export class DataSharingService {
   private messageSrc = new BehaviorSubject<any>('msg');
   public mapSize = new BehaviorSubject(this.platform.height() - 106); // original map size
   public language = new BehaviorSubject<string>('lang'); //current language of the app ['fr', 'en']
+  public toaParams = new BehaviorSubject<any>(['start', 'dest', 0]);
+  public showToa = new BehaviorSubject<boolean>(false);
   currentMessage = this.messageSrc.asObservable();
   currentLanguage = this.language.asObservable();
 
@@ -26,5 +28,13 @@ export class DataSharingService {
 
   public updateAppLanguage(languageUpdate: string) {
     this.language.next(languageUpdate);
+  }
+
+  public updateIndoorToaParameters(toaParamsUpdate: any[3]){
+    this.toaParams.next(toaParamsUpdate);
+  }
+
+  public showIndoorToa(updateShow: boolean){
+    this.showToa.next(updateShow);
   }
 }

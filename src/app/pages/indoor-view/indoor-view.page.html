@@ -8,6 +8,10 @@
 <ion-content>
   <app-indoor-navigation-side-buttons [isSelectMode]="isSelectMode">
   </app-indoor-navigation-side-buttons>
+  <app-indoor-time-of-arrival
+          *ngIf="showToaComponent"
+  >
+  </app-indoor-time-of-arrival>
   <app-indoor-map
     [inputBuilding]="building"
     [floor]="floor"

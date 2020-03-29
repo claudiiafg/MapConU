@@ -20,13 +20,13 @@ export class RoomSelectorPopoverComponent {
   private prettyDestination: string;
   private points: Point[] = [];
   private prettyPoints: any[] = [];
-  public navParams = new NavParams;
   constructor(
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
     public popoverController: PopoverController,
     private stringHelper: StringHelperService,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private navParams: NavParams
   ) {
     if (this.navParams.get('data')) {
       let data = this.navParams.get('data');
