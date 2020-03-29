@@ -4,7 +4,7 @@ import { protractor } from 'protractor/built/ptor';
 var fs = require('fs')
 // abstract writing screen shot to a file
 function writeScreenShot(data, filename) {
-  var stream = fs.createWriteStream('./screenshots/'+filename);
+  var stream = fs.createWriteStream('./e2e/screenshots/'+filename);
   stream.write(new Buffer(data, 'base64'));
   stream.end();
 }
@@ -16,7 +16,24 @@ describe('MapConU', () => {
     browser.waitForAngularEnabled(false);
     browser.get("/");
     browser.driver.sleep(1000);
+    try {
+      browser
+      .actions()
+      .mouseMove(element(by.css("button.alert-button")))
+      .click()
+      .perform();
+    browser.driver.sleep(1000);
 
+    browser
+      .actions()
+      .mouseMove(element(by.css("button.alert-button")))
+      .click()
+      .perform();
+
+    browser.driver.sleep(1000);
+    } catch (error) {
+      
+    }
     browser
       .actions()
       .mouseMove(element(by.css("button.alert-button")))
@@ -88,7 +105,7 @@ it("Should look up Hall building in the searchbar", () => {
   expect(element(by.css('value="Henry F.Hall Building, Boulevard de Maisonneuve Ouest, Montreal, QC, Canada"'))).toBeDefined();
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorSearchTest.png');});
   });
-it("Should bring up a menu to input current address and destination address", () => {
+it("Should bring up a menu to input current address and destination address", () => {I ma
   browser
     .actions()
     .mouseMove(element(by.id("navigation-button")))

@@ -1,10 +1,141 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="5" time="31.087">
- <testsuite name="MapConU" timestamp="2020-03-28T22:13:06" hostname="localhost" time="31.087" errors="0" tests="5" skipped="0" disabled="0" failures="0">
-  <testcase classname="MapConU" name="Has MapConU as the Title " time="7.435" />
-  <testcase classname="MapConU" name="Should toggle Campuses when selected at top of the UI" time="6.345" />
-  <testcase classname="MapConU" name="Should open up the bus schedule" time="5.858" />
-  <testcase classname="MapConU" name="Should look up Hall building in the searchbar" time="5.75" />
-  <testcase classname="MapConU" name="Should bring up a menu to input current address and destination address" time="5.693" />
+<testsuites disabled="0" errors="0" failures="6" tests="5" time="27.477">
+ <testsuite name="MapConU" timestamp="2020-03-28T22:23:38" hostname="localhost" time="27.477" errors="0" tests="5" skipped="0" disabled="0" failures="6">
+  <testcase classname="MapConU" name="Has MapConU as the Title " time="7.889" />
+  <testcase classname="MapConU" name="Should toggle Campuses when selected at top of the UI" time="3.239">
+   <failure type="exception" message="Error: ENOENT: no such file or directory, open &apos;./screenshots/TitleTest.png&apos;"><![CDATA[Error: ENOENT: no such file or directory, open './screenshots/TitleTest.png']]>
+   </failure>
+   <failure type="exception" message="Failed: No element found using locator: By(css selector, *[id=&quot;ion-rb-1-lbl&quot;])"><![CDATA[NoSuchElementError: No element found using locator: By(css selector, *[id="ion-rb-1-lbl"])
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:814:27
+    at ManagedPromise.invokeCallback_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:2927:27
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)Error: 
+    at ElementArrayFinder.applyAction_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:459:27)
+    at ElementArrayFinder.<computed> [as getId] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:91:29)
+    at ElementFinder.<computed> [as getId] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:831:22)
+    at ActionSequence.mouseMove (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/actions.js:151:44)
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:63:8)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:112:25
+    at new ManagedPromise (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:1077:7)
+    at ControlFlow.promise (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:2505:12)
+    at schedulerExecute (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:95:18)
+    at TaskQueue.execute_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+From: Task: Run it("Should toggle Campuses when selected at top of the UI") in control flow
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:94:19)
+    at attempt (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4297:26)
+    at QueueRunner.run (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4217:20)
+    at runNext (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4257:20)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4264:13
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4172:9
+    at handleError (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4244:11)
+    at process.onerror (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:2371:17)
+    at process.emit (events.js:210:5)
+    at process.emit (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/source-map-support/source-map-support.js:439:21)
+From asynchronous test: 
+Error: 
+    at Suite.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:43:1)
+    at addSpecsToSuite (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1107:25)
+    at Env.describe (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1074:7)
+    at describe (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4399:18)
+    at Object.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:13:1)
+    at Module._compile (internal/modules/cjs/loader.js:1121:30)
+    at Module.m._compile (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:439:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1160:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:442:12)]]>
+   </failure>
+   <failure type="exception" message="Failed: No element found using locator: By(css selector, button.alert-button)"><![CDATA[NoSuchElementError: No element found using locator: By(css selector, button.alert-button)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:814:27
+    at ManagedPromise.invokeCallback_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:2927:27
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)Error: 
+    at ElementArrayFinder.applyAction_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:459:27)
+    at ElementArrayFinder.<computed> [as getId] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:91:29)
+    at ElementFinder.<computed> [as getId] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:831:22)
+    at ActionSequence.mouseMove (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/actions.js:151:44)
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:29:8)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:112:25
+    at new ManagedPromise (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:1077:7)
+    at ControlFlow.promise (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:2505:12)
+    at schedulerExecute (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:95:18)
+    at TaskQueue.execute_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+From: Task: Run beforeEach in control flow
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:94:19)
+    at attempt (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4297:26)
+    at QueueRunner.run (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4217:20)
+    at QueueRunner.execute (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4199:10)
+    at Spec.queueRunnerFactory (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:909:35)
+    at Spec.execute (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:526:10)
+    at UserContext.fn (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:5340:37)
+    at attempt (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4297:26)
+    at QueueRunner.run (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4217:20)
+    at runNext (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4257:20)
+From asynchronous test: 
+Error: 
+    at Suite.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:15:3)
+    at addSpecsToSuite (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1107:25)
+    at Env.describe (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1074:7)
+    at describe (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4399:18)
+    at Object.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:13:1)
+    at Module._compile (internal/modules/cjs/loader.js:1121:30)
+    at Module.m._compile (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:439:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1160:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:442:12)]]>
+   </failure>
+  </testcase>
+  <testcase classname="MapConU" name="Should open up the bus schedule" time="6.088" />
+  <testcase classname="MapConU" name="Should look up Hall building in the searchbar" time="4.197">
+   <failure type="exception" message="Error: ENOENT: no such file or directory, open &apos;./screenshots/BusScheduleTest&apos;"><![CDATA[Error: ENOENT: no such file or directory, open './screenshots/BusScheduleTest']]>
+   </failure>
+   <failure type="exception" message="Error: ENOENT: no such file or directory, open &apos;./screenshots/OutdoorSearchTest.png&apos;"><![CDATA[Error: ENOENT: no such file or directory, open './screenshots/OutdoorSearchTest.png']]>
+   </failure>
+   <failure type="exception" message="Failed: No element found using locator: By(css selector, button.alert-button)"><![CDATA[NoSuchElementError: No element found using locator: By(css selector, button.alert-button)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:814:27
+    at ManagedPromise.invokeCallback_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:2927:27
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)Error: 
+    at ElementArrayFinder.applyAction_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:459:27)
+    at ElementArrayFinder.<computed> [as getId] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:91:29)
+    at ElementFinder.<computed> [as getId] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/built/element.js:831:22)
+    at ActionSequence.mouseMove (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/actions.js:151:44)
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:29:8)
+    at /Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:112:25
+    at new ManagedPromise (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:1077:7)
+    at ControlFlow.promise (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:2505:12)
+    at schedulerExecute (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:95:18)
+    at TaskQueue.execute_ (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+From: Task: Run beforeEach in control flow
+    at UserContext.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/jasminewd2/index.js:94:19)
+    at attempt (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4297:26)
+    at QueueRunner.run (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4217:20)
+    at QueueRunner.execute (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4199:10)
+    at Spec.queueRunnerFactory (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:909:35)
+    at Spec.execute (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:526:10)
+    at UserContext.fn (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:5340:37)
+    at attempt (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4297:26)
+    at QueueRunner.run (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4217:20)
+    at runNext (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4257:20)
+From asynchronous test: 
+Error: 
+    at Suite.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:15:3)
+    at addSpecsToSuite (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1107:25)
+    at Env.describe (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1074:7)
+    at describe (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/protractor/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:4399:18)
+    at Object.<anonymous> (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/e2e/src/app.e2e-spec.ts:13:1)
+    at Module._compile (internal/modules/cjs/loader.js:1121:30)
+    at Module.m._compile (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:439:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1160:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/Rob/Documents/School/Winter2020/SOEN390/MapConU/node_modules/ts-node/src/index.ts:442:12)]]>
+   </failure>
+  </testcase>
+  <testcase classname="MapConU" name="Should bring up a menu to input current address and destination address" time="6.047" />
  </testsuite>
 </testsuites>
