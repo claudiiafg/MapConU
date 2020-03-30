@@ -2,6 +2,7 @@ import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { Events } from "@ionic/angular";
 import { TranslationService } from "../../../../services/translation.service";
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 
 @Component({
   selector: "app-indoor-navigation-toolbar",
@@ -60,7 +61,8 @@ export class IndoorNavigationToolbarComponent {
   constructor(
     private router: Router,
     private events: Events,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private directionsManager: DirectionsManagerService
   ) {}
 
   ngAfterViewInit() {
@@ -109,6 +111,7 @@ export class IndoorNavigationToolbarComponent {
 
   // Method to update the floor when the user selects a floor from the dropdown menu
   private changeFloor() {
+    this.events.publish('initNewMap', Date.now());
     this.events.publish("floor-changes", this.floor, Date.now());
     this.currentFloorIndex = this.floors.indexOf(JSON.stringify(this.floor));
   }
@@ -118,6 +121,7 @@ export class IndoorNavigationToolbarComponent {
     if (this.currentFloorIndex < this.maxFloorIndex) {
       this.currentFloorIndex++;
       this.floor = this.floors[this.currentFloorIndex];
+      this.events.publish('initNewMap', Date.now());
       this.events.publish("floor-changes", this.floor, Date.now());
     }
   }
@@ -127,6 +131,7 @@ export class IndoorNavigationToolbarComponent {
     if (this.currentFloorIndex > this.minFloorIndex) {
       this.currentFloorIndex--;
       this.floor = this.floors[this.currentFloorIndex];
+      this.events.publish('initNewMap', Date.now());
       this.events.publish("floor-changes", this.floor, Date.now());
     }
   }
@@ -136,6 +141,7 @@ export class IndoorNavigationToolbarComponent {
     if (this.isSelectMode) {
       this.events.publish("isSelectMode", false, Date.now());
     } else {
+      this.events.publish('reset-indoor', Date.now());
       this.router.navigateByUrl("/outdoor");
     }
   }
