@@ -120,7 +120,7 @@ describe("IndoorMapComponent ", () => {
     component["initNav"]("escalator-down");
     expect(component["isSelectMode"]).toBeTruthy();
     expect(
-      component["directionManager"].initDifferentFloorDir
+        component["directionManager"].initDifferentFloorDir
     ).toHaveBeenCalled();
   });
   it("should initNav() without point and valid name escalator up", () => {
@@ -128,19 +128,20 @@ describe("IndoorMapComponent ", () => {
     component["initNav"]("invalidname");
     expect(console.log).toHaveBeenCalledWith("Point not available.");
   });
-  // it("should initNav() without point and valid name escalator down", () => {
-  //   console.log = jasmine.createSpy("Point not available.");
-  //   component["initNav"]("invalidname");
-  //   expect(console.log).toHaveBeenCalledWith("Point not available.");
-  // });
+
+  it("should initNav() without point and valid name escalator down", () => {
+    console.log = jasmine.createSpy("Point not available.");
+    component["initNav"]("invalidname");
+    expect(console.log).toHaveBeenCalledWith("Point not available.");
+  });
   it("should setMarker(point)", () => {
     component["marker"] = document.createElement("image");
     component["marker"].setAttribute("x", "50");
     component["marker"].setAttribute("y", "50");
     component["marker"].setAttribute("id", "marker");
     component["marker"].setAttribute(
-      "href",
-      "../../../../assets/icon/logo_as_marker.png"
+        "href",
+        "../../../../assets/icon/logo_as_marker.png"
     );
     component["marker"].setAttribute("height", "50");
     component["marker"].setAttribute("width", "50");

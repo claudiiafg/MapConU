@@ -59,12 +59,12 @@ describe('PoiPopoverComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
-    component.update('testing');
-    component.update('restaurant');
-    expect(component.update('testing')).toBeUndefined();
-    expect(component.update('restaurant')).toBeUndefined();
     component.closePopover();
     expect(component).toBeTruthy();
+    const tempComponent = component['events'];
+    const mySpy = spyOn(tempComponent, 'publish').and.callThrough();
+    component.update('restaurant');
+    expect(mySpy).toHaveBeenCalled();
   });
   afterEach(() => {
     TestBed.resetTestingModule();

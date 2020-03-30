@@ -17,7 +17,8 @@ import { IndoorDirectionsService } from '../../../../services/indoorDirections.s
 import { TranslationService } from '../../../../services/translation.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {BehaviorSubject} from "rxjs";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -74,6 +75,51 @@ describe('SearchPopoverComponent ', () => {
     component.updateMap();
     expect(component).toBeTruthy();
   });
+
+  it('given no coordinates update map should call get latitude and longitude', () => {
+    const tempComp1 = component['geolocationServices'];
+    const mySpy = spyOn(tempComp1, 'getLatitude');
+    component.updateMap();
+    expect(mySpy).toHaveBeenCalled();
+  });
+
+  it('given latitudes to and from update map should call updateMapSize', () => {
+    component.latitudeTo = 45.99;
+    component.latitudeFrom = 45.759;
+    const tempComp2 = component['dataSharingService'];
+    const mySpy = spyOn(tempComp2, 'updateMapSize');
+    component.updateMap();
+    expect(mySpy).toHaveBeenCalled();
+  });
+
+  it('update map should call close popover', () => {
+    const mySpy = spyOn(component, 'closePopover');
+    component.updateMap();
+    expect(mySpy).toHaveBeenCalled();
+  });
+
+  it('all coordinates given, update map should call next and return destination', () => {
+    component.latitudeTo = 45.688;
+    component.latitudeFrom = 45.758;
+    component.longitudeFrom = -74.568;
+    component.longitudeTo = -74.610;
+    const tempComp2 = component['directionService'];
+    const mySpy = spyOn(tempComp2.origin, 'next');
+    component.updateMap();
+    expect(mySpy).toHaveBeenCalled();
+    expect(tempComp2.destination).toEqual(new BehaviorSubject([45.688, -74.610]));
+  });
+
+  it('dummy test 1+1', () => {
+    const hello = 1;
+    expect(hello * 2).toEqual(2);
+  });
+
+  // it('dummy test 2+2', () => {
+  //   const hello = 2;
+  //   expect(hello*2).toEqual(4);
+  // });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
