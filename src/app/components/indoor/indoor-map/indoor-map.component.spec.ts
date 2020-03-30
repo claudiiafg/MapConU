@@ -128,10 +128,32 @@ describe("IndoorMapComponent ", () => {
     component["initNav"]("invalidname");
     expect(console.log).toHaveBeenCalledWith("Point not available.");
   });
-  it("should initNav() without point and valid name escalator down", () => {
-    console.log = jasmine.createSpy("Point not available.");
-    component["initNav"]("invalidname");
-    expect(console.log).toHaveBeenCalledWith("Point not available.");
+  // it("should initNav() without point and valid name escalator down", () => {
+  //   console.log = jasmine.createSpy("Point not available.");
+  //   component["initNav"]("invalidname");
+  //   expect(console.log).toHaveBeenCalledWith("Point not available.");
+  // });
+  it("should setMarker(point)", () => {
+    component["marker"] = document.createElement("image");
+    component["marker"].setAttribute("x", "50");
+    component["marker"].setAttribute("y", "50");
+    component["marker"].setAttribute("id", "marker");
+    component["marker"].setAttribute(
+      "href",
+      "../../../../assets/icon/logo_as_marker.png"
+    );
+    component["marker"].setAttribute("height", "50");
+    component["marker"].setAttribute("width", "50");
+    let point: Point;
+    point = {
+      id: "wc",
+      x: 27,
+      y: 27
+    };
+    component["setMarker"](point);
+    expect(component["marker"].getAttribute("x")).toEqual("1");
+    expect(component["marker"].getAttribute("y")).toEqual("1");
+    expect(component["marker"].style.visibility).toEqual("visible");
   });
   it("should resetNav()", () => {
     component["foundPath"] = true;
