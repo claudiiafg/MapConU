@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HttpClientService } from './httpclient.service';
+import { SqliteService } from './sqlite.service';
 
-describe('HttpclientService', () => {
+describe('SqliteService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: HttpClientService = TestBed.get(HttpClientService);
+    const service: SqliteService = TestBed.get(SqliteService);
     expect(service).toBeTruthy();
   });
 });
