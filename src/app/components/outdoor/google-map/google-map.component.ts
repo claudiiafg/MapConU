@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SqliteService } from '../../../../services/sqlite.service';
+import {Buildinginfo} from '../../../../services/buildinginfo';
 import {
   AlertController,
   Events,
@@ -40,7 +42,7 @@ export class GoogleMapComponent implements OnInit {
   };
   public provideRouteAlternatives: boolean = true;
   public map: any;
-
+  public overlayCoords: Buildinginfo[] = [];
   // Directions rendering options
   public walkingNotSelectedRenderOptions = {
     polylineOptions: {
@@ -109,7 +111,7 @@ export class GoogleMapComponent implements OnInit {
   private currentRouteSelected: string = 'Main';
 
   // TODO: Move coordinates to json file, import json object and set coordinates here.
-
+/*
   hallCoords = [
     { lat: 45.496836, lng: -73.578858 },
     { lat: 45.497164, lng: -73.579539 },
@@ -413,7 +415,7 @@ export class GoogleMapComponent implements OnInit {
       coords: this.fcCoords
     }
   ];
-
+*/
   poiMarkerIcon = {
     resto: {
       url: 'assets/icon/Marker_Restaurant.png',
@@ -472,10 +474,26 @@ export class GoogleMapComponent implements OnInit {
     private navController: NavController,
     private router: Router,
     private dataSharingService: DataSharingService,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private db: SqliteService
   ) {}
 
   async ngOnInit() {
+
+    await this.db.platform.ready();
+
+    this.db.dbState().subscribe((res) =>{
+      if (res){
+        this.db.fetchBuildings().subscribe(item => {
+          //console.log(item);
+          if (item.length != 0){
+
+            this.overlayCoords = item;
+          }
+        })
+      }
+    });
+
     await this.platform.ready();
     this.height = this.platform.height() - 106;
     await this.geolocationServices.getCurrentPosition();

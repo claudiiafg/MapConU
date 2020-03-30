@@ -29,7 +29,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material'
-
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 //env variables
 import { APIKey } from 'src/environments/env';
 import { environment } from '../environments/environment';
@@ -161,6 +162,8 @@ export function LanguageLoader(http: HttpClient) {
     TranslationService,
     DirectionsManagerService,
     StringHelperService,
+    SQLite,
+    SQLitePorter,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
