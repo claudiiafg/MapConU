@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { IndoorDirectionsService } from 'src/services/indoorDirections.service';
 import { DataSharingService} from '../../../services/data-sharing.service';
 
 @Component({
@@ -11,29 +12,47 @@ import { DataSharingService} from '../../../services/data-sharing.service';
 })
 export class IndoorViewPage implements OnInit {
   private sub;
-  private building: string = 'hall';
+  private building: string;
   private floor: number = 1;
   private isSelectMode: boolean = false;
+  private mySubscription: any;
   private showToaComponent: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private events: Events,
+    private router: Router,
     private directionManager: DirectionsManagerService,
+    private indoorDirections: IndoorDirectionsService,
     private dataSharing: DataSharingService
-  ) {
-    this.subscribeToEvents();
+
+  ) {}
+
+  ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       if (params['id']) {
         this.building = params['id'];
+        this.subscribeToEvents();
         if (this.building === 'hall') {
-          this.floor = 8;
+          if(this.directionManager.isMixedInRoute.getValue() === true){
+            this.floor = this.directionManager.getHallFloor();
+          } else {
+            this.floor = 8;
+          }
         }
       }
     });
+    //important to reload current route
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
   }
-
-  ngOnInit() {}
 
   private subscribeToEvents() {
     this.events.subscribe('isSelectMode', res => {
@@ -44,15 +63,33 @@ export class IndoorViewPage implements OnInit {
     //when floor changes -> change view
     this.events.subscribe('floor-changes', res => {
       if (res) {
-        this.floor = parseInt(res);
+        if(this.floor === parseInt(res)){
+          this.events.publish('map-set', Date.now());
+
+        } else {
+          this.events.publish('initNewMap', Date.now());
+          this.floor = parseInt(res);
+        }
       }
     });
-    this.subscribeToShowToa();
-  }
 
-  subscribeToShowToa(){
+    this.events.subscribe('reset-indoor', () => {
+      this.directionManager.resetSteps();
+      this.indoorDirections.resetNav()
+      this.building = null;
+      this.floor = null;
+    });
+
     this.dataSharing.showToa.subscribe( updateShow => {
       this.showToaComponent = updateShow;
     })
+  }
+
+  //important to reload route
+  @HostListener('unloaded')
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 }

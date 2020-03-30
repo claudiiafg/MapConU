@@ -2,7 +2,10 @@
   display: contents;
 
   svg {
-   transform: translate(80px, 145px) scale(1.5);
+    transform: scale(1.5);
+    left: 20%;
+    position: relative;
+    bottom: -100px;
   }
 
   text{

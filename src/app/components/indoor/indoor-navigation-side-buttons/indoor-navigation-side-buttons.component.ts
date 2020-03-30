@@ -62,7 +62,7 @@ export class IndoorNavigationSideButtonsComponent {
     if (this.isSelectMode === true) {
       return this.translate.getTranslation('select-source-instruction');
     } else if (this.isSelectMode === false) {
-      if (this.directionsManagerService.isInRoute.getValue() === true) {
+      if (this.directionsManagerService.isIndoorInRoute.getValue() === true) {
         return this.translate.getTranslation('follow-path-instructions');
       } else {
         return this.translate.getTranslation('press-on-room-instruction');

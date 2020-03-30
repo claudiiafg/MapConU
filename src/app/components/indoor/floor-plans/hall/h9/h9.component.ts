@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 @Component({
@@ -10,6 +10,9 @@ export class H9FloorPlanComponent {
   constructor(private events: Events) {}
 
   ngAfterViewInit() {
-    this.events.publish('floor-loaded', Date.now());
+    this.events.publish('floor-loaded', {building: 'hall', floor: '9'}, Date.now());
   }
+
+  @HostListener('unloaded')
+  ngOnDestroy() {}
 }
