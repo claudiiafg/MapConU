@@ -11,6 +11,8 @@ export class DataSharingService {
   public language = new BehaviorSubject<string>('lang'); //current language of the app ['fr', 'en']
   public toaParams = new BehaviorSubject<any>(['start', 'dest', 0]);
   public showToa = new BehaviorSubject<boolean>(false);
+  public showPoi = new BehaviorSubject<string>('poiToShow');
+  public hidePoi = new BehaviorSubject<string>('poiToHide');
   currentMessage = this.messageSrc.asObservable();
   currentLanguage = this.language.asObservable();
 
@@ -36,5 +38,13 @@ export class DataSharingService {
 
   public showIndoorToa(updateShow: boolean){
     this.showToa.next(updateShow);
+  }
+
+  public showIndoorPoi(showPoi: string){
+    this.showPoi.next(showPoi);
+  }
+
+  public hideIndoorPoi(hidePoi: string){
+    this.hidePoi.next(hidePoi);
   }
 }
