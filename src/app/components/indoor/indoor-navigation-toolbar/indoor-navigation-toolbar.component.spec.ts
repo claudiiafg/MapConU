@@ -13,7 +13,8 @@ import { GeolocationServices } from "../../../../services/geolocation.services";
 import { TranslationService } from "../../../../services/translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import {TranslateModule, TranslateLoader} from "@ngx-translate/core";
+import {DirectionsManagerService} from "../../../../services/directionsManager.service";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -39,15 +40,16 @@ describe("IndoorNavigationToolbarComponent ", () => {
       declarations: [IndoorNavigationToolbarComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
-        StatusBar,
-        SplashScreen,
-        Geolocation,
-        GeolocationServices,
-        UserServices,
-        PoiServices,
-        TranslationService,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: FirestoreSettingsToken, useValue: {} }
+          StatusBar,
+          SplashScreen,
+          Geolocation,
+          GeolocationServices,
+          UserServices,
+          PoiServices,
+          TranslationService,
+          DirectionsManagerService,
+          {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+          {provide: FirestoreSettingsToken, useValue: {}}
       ]
     }).compileComponents();
   }));

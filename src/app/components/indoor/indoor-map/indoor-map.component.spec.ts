@@ -83,29 +83,29 @@ describe("IndoorMapComponent ", () => {
     let point: Point[];
     point = [
       {
-        id: "mb",
-        x: 123,
-        y: 123
+          id: "mb",
+          x: 123,
+          y: 123
       }
     ];
-    component["inputBuilding"] = "jmsb";
-    spyOn(component["interestPoints"], "filter").and.callFake(() => {
-      return point;
-    });
-    // tested elsewhere
-    spyOn(component, "setMarker").and.callFake(() => {
-      return null;
-    });
-    spyOn(
-      component["directionManager"],
-      "initiateIndoorDirections"
-    ).and.callThrough();
-    component["initNav"]("mb");
-    expect(component["destID"]).toEqual("mb");
-    expect(component["isSelectMode"]).toBeFalsy();
-    expect(
-      component["directionManager"].initiateIndoorDirections
-    ).toHaveBeenCalled();
+      component["inputBuilding"] = "jmsb";
+      spyOn(component["interestPoints"], "filter").and.callFake(() => {
+          return point;
+      });
+      // tested elsewhere
+      // spyOn(component, "setMarker").and.callFake(() => {
+      //   return null;
+      // });
+      spyOn(
+          component["directionManager"],
+          "initiateIndoorDirections"
+      ).and.callThrough();
+      component["initNav"]("mb");
+      expect(component["destID"]).toEqual("mb");
+      expect(component["isSelectMode"]).toBeFalsy();
+      expect(
+          component["directionManager"].initiateIndoorDirections
+      ).toHaveBeenCalled();
 
     component["inputBuilding"] = "hall";
     component["floor"] = 9;
@@ -158,7 +158,7 @@ describe("IndoorMapComponent ", () => {
   });
   it("should resetNav()", () => {
     component["foundPath"] = true;
-    component["setMap"]();
+      // component["setMap"]();
     component["resetNav"]();
     // foundPath is reset and should be false
     expect(component["foundPath"]).toBeFalsy();

@@ -13,21 +13,24 @@ import { PoiServices } from "../../../../services/poi.services";
 import { DataSharingService } from "../../../../services/data-sharing.service";
 import { GeolocationServices } from "../../../../services/geolocation.services";
 import { DirectionService } from "../../../../services/direction.service";
-import { IndoorDirectionsService } from "../../../../services/indoorDirections.service";
-import { AgmDirectionModule } from "agm-direction";
-import { AgmOverlays } from "agm-overlays";
-import { AgmCoreModule } from "@agm/core";
-import { APIKey } from "../../../../environments/env";
-import { TranslationService } from "../../../../services/translation.service";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { By } from "@angular/platform-browser";
+import {IndoorDirectionsService} from "../../../../services/indoorDirections.service";
+import {AgmDirectionModule} from "agm-direction";
+import {AgmOverlays} from "agm-overlays";
+import {AgmCoreModule} from "@agm/core";
+import {APIKey} from "../../../../environments/env";
+import {TranslationService} from "../../../../services/translation.service";
+import {HttpClientModule, HttpClient} from "@angular/common/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {TranslateModule, TranslateLoader} from "@ngx-translate/core";
+import {By} from "@angular/platform-browser";
+import {DirectionsManagerService} from "../../../../services/directionsManager.service";
+import {SQLite} from "@ionic-native/sqlite";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
+
 describe("OutdoorNavigationToolbarComponent ", () => {
   let component: OutdoorNavigationToolbarComponent;
   let fixture: ComponentFixture<OutdoorNavigationToolbarComponent>;
@@ -69,8 +72,10 @@ describe("OutdoorNavigationToolbarComponent ", () => {
         DirectionService,
         IndoorDirectionsService,
         TranslationService,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: FirestoreSettingsToken, useValue: {} }
+        DirectionsManagerService,
+        SQLite,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        {provide: FirestoreSettingsToken, useValue: {}}
       ]
     }).compileComponents();
   }));
@@ -87,7 +92,7 @@ describe("OutdoorNavigationToolbarComponent ", () => {
     component.findAddress();
     component.changeCampus();
     component.moveToFoundLocation(45, -73, 100);
-    component.closeAutocomplete(null);
+    // component.closeAutocomplete(null);
     component.changeTravelMode("TRANSIT");
     component.setSelectedColor("TRANSIT");
     component.adjustSettings();
@@ -159,23 +164,23 @@ describe("OutdoorNavigationToolbarComponent ", () => {
     fixture.detectChanges();
     const spyDirectionClose = spyOn(component, "changeTravelMode");
     let directionClose = fixture.debugElement.query(
-      By.css("ion-button.driveButton")
+        By.css("ion-button.driveButton")
     );
     directionClose.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyDirectionClose).toHaveBeenCalled();
   });
 
-  it("test closeAutocomplete", () => {
-    fixture.detectChanges();
-    const spySearch = spyOn(component, "closeAutocomplete");
-    let search = fixture.debugElement.query(
-      By.css("ion-searchbar.searchButton")
-    );
-    search.triggerEventHandler("ionClear", null);
-    fixture.detectChanges();
-    expect(spySearch).toHaveBeenCalled();
-  });
+  // it("test closeAutocomplete", () => {
+  //   fixture.detectChanges();
+  //   const spySearch = spyOn(component, "closeAutocomplete");
+  //   let search = fixture.debugElement.query(
+  //     By.css("ion-searchbar.searchButton")
+  //   );
+  //   search.triggerEventHandler("ionClear", null);
+  //   fixture.detectChanges();
+  //   expect(spySearch).toHaveBeenCalled();
+  // });
 
   it("should move to found location", () => {
     expect(googleMapcomponent.latitude).toBe(45.495729);

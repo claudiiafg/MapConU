@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import {BehaviorSubject} from "rxjs";
+import {Router} from "@angular/router";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -26,7 +27,8 @@ describe('DirectionsManagerService', () => {
       ],
       providers: [
         TranslationService,
-        DirectionsManagerService
+        DirectionsManagerService,
+        Router,
       ]
     }).compileComponents();
   }));

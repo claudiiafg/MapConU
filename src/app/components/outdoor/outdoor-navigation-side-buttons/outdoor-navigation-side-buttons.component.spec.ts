@@ -9,16 +9,24 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { RouteReuseStrategy, RouterModule } from "@angular/router";
-import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
-import { FirestoreSettingsToken } from "@angular/fire/firestore";
-import { OutdoorNavigationSideButtonsComponent } from "./outdoor-navigation-side-buttons.component";
-import { UserServices } from "../../../../services/user.services";
-import { PoiServices } from "../../../../services/poi.services";
-import { GeolocationServices } from "../../../../services/geolocation.services";
-import { DirectionService } from "../../../../services/direction.service";
-import { IndoorDirectionsService } from "../../../../services/indoorDirections.service";
-import { TranslationService } from "../../../../services/translation.service";
-import { By } from "@angular/platform-browser";
+import {IonicModule, IonicRouteStrategy} from "@ionic/angular";
+import {FirestoreSettingsToken} from "@angular/fire/firestore";
+import {OutdoorNavigationSideButtonsComponent} from "./outdoor-navigation-side-buttons.component";
+import {UserServices} from "../../../../services/user.services";
+import {PoiServices} from "../../../../services/poi.services";
+import {GeolocationServices} from "../../../../services/geolocation.services";
+import {DirectionService} from "../../../../services/direction.service";
+import {IndoorDirectionsService} from "../../../../services/indoorDirections.service";
+import {TranslationService} from "../../../../services/translation.service";
+import {By} from "@angular/platform-browser";
+import {DirectionsManagerService} from "../../../../services/directionsManager.service";
+import {TranslateService} from "@ngx-translate/core";
+import {HttpClient} from "@angular/common/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, "assets/i18n/", ".json");
+}
 
 describe("OutdoorNavigationSideButtonsComponent ", () => {
   let component: OutdoorNavigationSideButtonsComponent;
@@ -38,8 +46,10 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
         DirectionService,
         IndoorDirectionsService,
         TranslationService,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: FirestoreSettingsToken, useValue: {} }
+        DirectionsManagerService,
+        TranslateService,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        {provide: FirestoreSettingsToken, useValue: {}}
       ]
     }).compileComponents();
   }));

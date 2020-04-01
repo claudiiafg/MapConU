@@ -21,6 +21,7 @@ import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import {Buildinginfo} from '../../../../services/buildinginfo';
 import {SQLite} from '@ionic-native/sqlite/ngx';
 import {SQLitePorter} from '@ionic-native/sqlite-porter/ngx';
+import {DirectionsManagerService} from "../../../../services/directionsManager.service";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -64,8 +65,9 @@ describe("GoogleMapComponent ", () => {
         TranslationService,
         SQLite,
         SQLitePorter,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        { provide: FirestoreSettingsToken, useValue: {} }
+        DirectionsManagerService,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        {provide: FirestoreSettingsToken, useValue: {}}
         // { provide: GeolocationServices, useClass: MockData }
       ]
     }).compileComponents();
