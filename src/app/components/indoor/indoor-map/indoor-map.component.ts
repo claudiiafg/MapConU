@@ -26,6 +26,7 @@ export class IndoorMapComponent implements OnInit {
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
   private marker: any;
+  private poiMarker: any;
   private isInit: boolean = true;
 
   constructor(
@@ -101,6 +102,20 @@ export class IndoorMapComponent implements OnInit {
         this.resetNav();
         this.initNav(ele);
       }
+    });
+
+    this.dataSharing.showPoi.subscribe( markerId =>{
+      console.log('show markerId is: ', markerId);
+      let poiMarkerId = markerId.concat('-marker');
+      this.poiMarker = document.getElementById(poiMarkerId);
+      this.poiMarker.style.visibility = 'visible';
+    });
+
+    this.dataSharing.hidePoi.subscribe( markerId =>{
+      console.log('hide markerId is: ', markerId);
+      let poiMarkerId = markerId.concat('-marker');
+      this.poiMarker = document.getElementById(poiMarkerId);
+      this.poiMarker.style.visibility = 'hidden';
     });
   }
 

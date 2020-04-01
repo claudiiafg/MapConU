@@ -1,0 +1,58 @@
+<div id="indoor-poi-popover">
+  <ion-list>
+    <ion-item class="poi-item">
+      <ion-label>{{ 'bathroom' | translate }}</ion-label>
+      <ion-toggle
+              [(ngModel)]="bathroom"
+              (ionChange)="showLocation('bathroom')"
+      ></ion-toggle>
+    </ion-item>
+
+    <ion-item class="poi-item">
+      <ion-label>{{ 'elevators' | translate }}</ion-label>
+      <ion-toggle
+              [(ngModel)]="elevators"
+              (ionChange)="showLocation('elevators')"
+      ></ion-toggle>
+    </ion-item>
+
+    <ion-item class="poi-item">
+      <ion-label>{{ 'stairs' | translate }}</ion-label>
+      <ion-toggle
+              [(ngModel)]="stairs"
+              (ionChange)="showLocation('stairs')"
+      ></ion-toggle>
+    </ion-item>
+
+    <ion-item class="poi-item">
+      <ion-label>{{ 'escalator' | translate }}</ion-label>
+      <ion-toggle
+              [(ngModel)]="escalator"
+              (ionChange)="showLocation('escalator')"
+      ></ion-toggle>
+    </ion-item>
+
+    <ion-item class="poi-item">
+      <ion-label>{{ 'fire-extinguisher' | translate}}</ion-label>
+      <ion-toggle
+              [(ngModel)]="fireExtinguisher"
+              (ionChange)="showLocation('fireExtinguisher')"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item class="poi-item">
+      <ion-label>{{ 'fire-exit' | translate}}</ion-label>
+      <ion-toggle
+              [(ngModel)]="fireExit"
+              (ionChange)="showLocation('fireExit')"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item class="poi-item" *ngIf="building === 'mb1'">
+      <ion-label>{{ 'entrance' | translate}}</ion-label>
+      <ion-toggle
+              [(ngModel)]="entrance"
+              (ionChange)="showLocation('entrance')"
+      ></ion-toggle>
+    </ion-item>
+  </ion-list>
+  <ion-button class = 'close-button' (click)="closePoi()">Close</ion-button>
+</div>

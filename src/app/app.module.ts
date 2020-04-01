@@ -69,7 +69,7 @@ import { SettingsOptionsComponent } from './components/settings-options/settings
 import { InfoPopoverComponent } from './components/popovers/info-popover/info-popover.component';
 import { CalendarComponent } from './components/popovers/calendar/calendar.component';
 import { IndoorTimeOfArrivalComponent} from './components/indoor/indoor-time-of-arrival/indoor-time-of-arrival.component';
-
+import { IndoorPoiPopoverComponent} from './components/popovers/indoor-poi-popover/indoor-poi-popover.component';
 //floor plans
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
@@ -106,7 +106,8 @@ export function LanguageLoader(http: HttpClient) {
     SettingsOptionsComponent,
     InfoPopoverComponent,
     CalendarComponent,
-    IndoorTimeOfArrivalComponent
+    IndoorTimeOfArrivalComponent,
+    IndoorPoiPopoverComponent
   ],
   entryComponents: [
     SearchPopoverComponent,
@@ -114,7 +115,8 @@ export function LanguageLoader(http: HttpClient) {
     ModalDirectionsComponent,
     RoomSelectorPopoverComponent,
     InfoPopoverComponent,
-    CalendarComponent
+    CalendarComponent,
+    IndoorPoiPopoverComponent
   ],
   imports: [
     CommonModule,
