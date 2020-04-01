@@ -19,7 +19,12 @@ export class SettingsOptionsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-
+      try {
+        this.googleSession = await this.googleOAuth.getStoredSession();
+      } catch(err) {
+        this.googleSession = null;
+      }
+      
       if (this.translate.getCurrentLanguage() == "fr") {
         this.appLanguage = 'french';
       }

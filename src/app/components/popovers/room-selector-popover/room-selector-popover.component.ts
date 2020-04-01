@@ -20,16 +20,18 @@ export class RoomSelectorPopoverComponent {
   private prettyDestination: string;
   private points: Point[] = [];
   private prettyPoints: any[] = [];
-  public navParams = new NavParams;
   constructor(
     private indoorDirectionsService: IndoorDirectionsService,
     private events: Events,
     public popoverController: PopoverController,
     private stringHelper: StringHelperService,
-    private translate: TranslationService
-  ) {
+    private translate: TranslationService,
+    private navParams: NavParams
+  ) {}
+
+  ngOnInit(){
     if (this.navParams.get('data')) {
-      let data = this.navParams.get('data');
+      const data = this.navParams.get('data');
       this.source = data.source;
       this.destination = data.destination;
       this.points = data.points;

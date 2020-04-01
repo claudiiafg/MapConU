@@ -1,66 +1,100 @@
 import { AppPage } from './app.po';
-import { browser, by, element, $ } from 'protractor';
-describe('new App', () => {
-  let page: AppPage;
+import { browser, by, element, $, By } from 'protractor';
+import { protractor } from 'protractor/built/ptor';
+var fs = require('fs')
+// abstract writing screen shot to a file
+function writeScreenShot(data, filename) {
+  var stream = fs.createWriteStream('./e2e/screenshots/'+filename);
+  stream.write(new Buffer(data, 'base64'));
+  stream.end();
+}
+// within a test:
 
+describe('MapConU', () => {
+  let page: AppPage;
   beforeEach(() => {
-    page = new AppPage();
+    browser.waitForAngularEnabled(false);
+    browser.get("/");
+    browser.driver.sleep(1000);
+
+    browser
+      .actions()
+      .mouseMove(element(by.css("button.alert-button")))
+      .click()
+      .perform();
+    browser.driver.sleep(1000);
+
+    browser
+      .actions()
+      .mouseMove(element(by.css("button.alert-button")))
+      .click()
+      .perform();
+
+    browser.driver.sleep(1000);
+
   });
 
   it('Has MapConU as the Title ', () => {
-    browser.get('/');
-    let x = element(by.id('campus-change')).getText();
     expect(browser.getTitle()).toContain('MapConU');
+    browser.takeScreenshot().then(function (png) {
+    writeScreenShot(png, 'TitleTest.png');
+});
   });
-  it('Should toggle Campuses when selected at top of the UI', () => {
-    browser.get('/');
-    //set location to sgw
-    // element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
-    // browser.driver.sleep(500);
-    // element(
-    //   by.xpath(
-    //     '/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[1]'
-    //   )
-    // ).click();
+it("Should toggle Campuses when selected at top of the UI", () => {
+    // commenting this as it refreshes the page
+    // can also sleep and wait until page fully loaded
 
     //check location is set to SGW
-    expect(element(by.id('campus-change')).getText()).toContain('SGW Campus');
+    expect(element(by.id("campus-change")).getText()).toContain("SGW Campus");
     expect(element(by.css('ng-reflect-longitude="-73.578041"'))).toBeDefined();
     expect(element(by.css('ng-reflect-latitude="45.495729"'))).toBeDefined();
 
+    browser
+      .actions()
+      .mouseMove(element(by.id("campus-select")))
+      .click()
+      .perform();
+
+    browser.driver.sleep(200);
+
     //set location to Loyola
-    element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-header/app-outdoor-navigation-toolbar/ion-header/ion-toolbar/ion-item")).click();
-    browser.driver.sleep(500);
-    element(
-      by.xpath(
-        '/html/body/app-root/ion-app/ion-popover/div/div[2]/ion-select-popover/ion-list/ion-radio-group/ion-item[2]'
-      )
-    ).click();
+    browser
+      .actions()
+      .mouseMove(element(by.id("ion-rb-1-lbl")))
+      .click()
+      .perform();
+    browser.driver.sleep(200);
 
     //check locations is set to loyla
-    expect(element(by.id('campus-change')).getText()).toContain(
-      'Loyola Campus'
+    expect(element(by.id("campus-change")).getText()).toContain(
+      "Loyola Campus"
     );
     expect(element(by.css('ng-reflect-longitude="-73.640452"'))).toBeDefined();
     expect(element(by.css('ng-reflect-latitude="45.45824"'))).toBeDefined();
+    browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'ToggleCampusTest.png');});
   });
-  it('Shows Current Position Marker', () => {
-    browser.get('/');
-    //let ele = element(by.xpath("/html/body/app-root/ion-app/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
-    let ele = element(by.xpath("/html/body/app-root/ion-app/ion-router-outlet/app-outdoor-view/ion-content/app-google-map/div/agm-map/div[1]/div/div/div[1]/div[3]/div/div[3]")).isPresent();
-    expect(ele).toBeTruthy();
+it("Should open up the bus schedule", () => {
+  browser
+    .actions()
+    .mouseMove(element(by.id("bus-button")))
+    .click()
+    .perform();
+  expect(element(by.css('src="./assets/schedule/schedule.png"'))).toBeDefined();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'BusScheduleTest');});
   });
-  //This test will be added in the future
-  // it("Shows Directions between point A and point B", () => {
-  //   browser.get('/');
-  //   element(by.xpath("/html/body/app-root/ion-app/app-outdoor-navigation-side-buttons/ion-fab[2]/ion-fab-button")).click();
-  //   browser.driver.sleep(500);
-  //   element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[1]/input")).click()
-  //   element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[1]/input")).sendKeys("1400 de maison");
-  //   element(by.xpath("/html/body/div[2]/div[1]")).click();
-  //   element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[2]/input")).click()
-  //   element(by.xpath("/html/body/app-root/ion-app/ion-popover/div/div[2]/app-search-popover/div[2]/input")).sendKeys("1450 guy");
-  //   element(by.xpath("/html/body/div[2]/div[1]")).click();
-  //   expect(true).toBeTruthy;
-  // });
+it("Should look up Hall building in the searchbar", () => {
+  browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
+  browser.actions().sendKeys("hall").perform();
+  expect(element(by.css('value="Henry F.Hall Building, Boulevard de Maisonneuve Ouest, Montreal, QC, Canada"'))).toBeDefined();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorSearchTest.png');});
+  });
+it("Should bring up a menu to input current address and destination address", () => {
+  browser
+    .actions()
+    .mouseMove(element(by.id("navigation-button")))
+    .click()
+    .perform();
+  expect(element(by.id("fromAddress"))).toBeDefined();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'toandfromTest.png');});
+  });
 });

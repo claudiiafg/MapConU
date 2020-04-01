@@ -94,7 +94,7 @@ describe("IndoorNavigationSideButtonsComponent ", () => {
     component["isSelectMode"] = true;
     expect(component["getData"]()).toEqual("select-source-instruction");
   });
-  it("should getData FALSE isSelectMode and FALSE directionsManagerService.isInRoute", () => {
+  it("should getData FALSE isSelectMode and FALSE directionsManagerService.isIndoorInRoute", () => {
     component["isSelectMode"] = false;
     expect(component["getData"]()).toEqual("press-on-room-instruction");
   });

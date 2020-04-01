@@ -8,7 +8,7 @@
 </ng-container>
 
 <div *ngIf="isIndoorDirectionsSet" class="indoor-timefooter-wrapper ">
-  <div *ngIf="!isInRoute" class="footer-elements-wrapper">
+  <div *ngIf="!isIndoorInRoute" class="footer-elements-wrapper">
     <div class="start-container">
       <button
         class="start-button"
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div *ngIf="currentStep && isInRoute" class="footer-elements-wrapper">
+  <div *ngIf="currentStep && isIndoorInRoute" class="footer-elements-wrapper">
     <div class="room-wrapper">
       <span *ngIf="currentStep._prettySource">{{
         currentStep._prettySource

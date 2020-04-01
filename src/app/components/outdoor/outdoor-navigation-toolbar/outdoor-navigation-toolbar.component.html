@@ -17,11 +17,12 @@
         [(ngModel)]="loc"
         (ionChange)="changeCampus()"
         class="select-campus"
+        id="campus-select"
       >
-        <ion-select-option value="0">{{
+        <ion-select-option value="0" id="campus-option-1">{{
           'campus1' | translate
         }}</ion-select-option>
-        <ion-select-option value="1">{{
+        <ion-select-option value="1" id="campus-option-2">{{
           'campus2' | translate
         }}</ion-select-option>
       </ion-select>
@@ -62,6 +63,7 @@
   <ion-searchbar
     #search
     class="search-location"
+    id="outdoor-search"
     [placeholder]="'location-searchbar' | translate"
     (ionClear)="closeAutocomplete($event)" class="searchButton"
   ></ion-searchbar>

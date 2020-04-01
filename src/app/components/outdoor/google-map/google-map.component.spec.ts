@@ -18,6 +18,9 @@ import { TranslationService } from "../../../../services/translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import {Buildinginfo} from '../../../../services/buildinginfo';
+import {SQLite} from '@ionic-native/sqlite/ngx';
+import {SQLitePorter} from '@ionic-native/sqlite-porter/ngx';
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -59,6 +62,8 @@ describe("GoogleMapComponent ", () => {
         IndoorDirectionsService,
         AlertController,
         TranslationService,
+        SQLite,
+        SQLitePorter,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
         // { provide: GeolocationServices, useClass: MockData }
@@ -101,7 +106,7 @@ describe("GoogleMapComponent ", () => {
 
   it("should mock building info", () => {
     // Get all buildings info
-    let buildingsInfo: any = component.overlayCoords;
+    let buildingsInfo: Buildinginfo[] = component.overlayCoords;
 
     // Calling alert
     component.showAlert(buildingsInfo[0].name, buildingsInfo[0].address);

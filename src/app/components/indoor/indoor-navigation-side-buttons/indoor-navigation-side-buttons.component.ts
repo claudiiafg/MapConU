@@ -4,6 +4,7 @@ import { RoomSelectorPopoverComponent } from '../../popovers/room-selector-popov
 import { InfoPopoverComponent } from '../../popovers/info-popover/info-popover.component';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { TranslationService } from 'src/services/translation.service';
+import { DataSharingService} from '../../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-navigation-side-buttons',
@@ -12,16 +13,22 @@ import { TranslationService } from 'src/services/translation.service';
 })
 export class IndoorNavigationSideButtonsComponent {
   @Input() isSelectMode: boolean;
+  private showToa: boolean = false;
 
   constructor(
     public popoverController: PopoverController,
     private events: Events,
     private directionsManagerService: DirectionsManagerService,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private dataSharing: DataSharingService
   ) {
     this.events.subscribe('open-indoor-popup', data => {
       this.presentPopover(data);
     });
+  }
+
+  ngOnInit() {
+    this.subscribeToshowToa();
   }
 
   async presentPopover(data?: any) {
@@ -55,11 +62,21 @@ export class IndoorNavigationSideButtonsComponent {
     if (this.isSelectMode === true) {
       return this.translate.getTranslation('select-source-instruction');
     } else if (this.isSelectMode === false) {
-      if (this.directionsManagerService.isInRoute.getValue() === true) {
+      if (this.directionsManagerService.isIndoorInRoute.getValue() === true) {
         return this.translate.getTranslation('follow-path-instructions');
       } else {
         return this.translate.getTranslation('press-on-room-instruction');
       }
     }
+  }
+
+  subscribeToshowToa(){
+    this.dataSharing.showToa.subscribe(updateShow =>{
+      this.showToa = updateShow;
+    })
+  }
+
+  cancelPath(){
+    this.dataSharing.showIndoorToa(false);
   }
 }
