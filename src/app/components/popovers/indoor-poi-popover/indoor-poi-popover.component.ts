@@ -26,46 +26,67 @@ export class IndoorPoiPopoverComponent implements OnInit {
       private dataSharing: DataSharingService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.showLocation('bathroom');
+    console.log('poi ngoninit sending initial msg');
+  }
+
 
   showLocation(poi: string){
+    let inputPoi :boolean;
+    let pois: string[];
+
+    //set variables for selected poi
     if(poi === 'bathroom'){
-      let pois: string[] =['wc-female',  'wc-male'];
-      let p: string;
-      for(p in pois){
-        if(this.bathroom) {
-          this.dataSharing.showIndoorPoi(pois[p]);
-        }
-        if(!this.bathroom){
-          this.dataSharing.hideIndoorPoi(pois[p]);
-        }
+      inputPoi = this.bathroom;
+      console.log('T/F value is: ', inputPoi);
+      pois =['wc-female',  'wc-male'];
       }
-    }
     if(poi === 'escalator'){
-      let pois: string[] =['escalators-area',  'escalators-area-close'];
-      let p: string;
-      for(p in pois){
-        this.dataSharing.showIndoorPoi(pois[p]);
-      }
+      inputPoi = this.escalator;
+      console.log('T/F value is: ', inputPoi);
+      pois =['escalators-area',  'escalators-area-close'];
     }
     if(poi === 'stairs'){
-      let pois: string[] =['stairs-ne',  'stairs-nw', 'stairs-sw', 'stairs-se'];
-      let p: string;
-      for(p in pois){
-        this.dataSharing.showIndoorPoi(pois[p]);
-      }
+      inputPoi = this.stairs;
+      console.log('T/F value is: ', inputPoi);
+      pois =['stairs-ne',  'stairs-nw', 'stairs-sw', 'stairs-se'];
     }
     if(poi === 'elevator'){
-      let pois: string[] =['elevator-area',  'elevator'];
-      let p: string;
-      for(p in pois){
+      inputPoi = this.elevators;
+      console.log('T/F value is: ', inputPoi);
+      pois =['elevator-area',  'elevator'];
+    }
+
+    let p: any;
+    for(p in pois){
+      console.log('p being sent is: ', pois[p]);
+      if(inputPoi) {
         this.dataSharing.showIndoorPoi(pois[p]);
+        this.checkPoi(poi);
+      }
+      if(!inputPoi){
+        this.dataSharing.hideIndoorPoi(pois[p]);
+        this.uncheckPoi(poi);
       }
     }
   }
 
   closePoi(){
     this.popoverController.dismiss();
+  }
+
+  checkPoi(poi: string){
+    let poiToggle: any;
+    poiToggle = document.getElementById(poi);
+    poiToggle.style.checked = true;
+  }
+
+  uncheckPoi(poi: string){
+    let poiToggle: any;
+    poiToggle = document.getElementById(poi);
+    poiToggle.style.checked = false;
+
   }
 
 }

@@ -3,6 +3,7 @@
     <ion-item class="poi-item">
       <ion-label>{{ 'bathroom' | translate }}</ion-label>
       <ion-toggle
+              name="bathroom"
               [(ngModel)]="bathroom"
               (ionChange)="showLocation('bathroom')"
       ></ion-toggle>
@@ -11,6 +12,7 @@
     <ion-item class="poi-item">
       <ion-label>{{ 'elevators' | translate }}</ion-label>
       <ion-toggle
+              name="elevators"
               [(ngModel)]="elevators"
               (ionChange)="showLocation('elevators')"
       ></ion-toggle>
@@ -19,6 +21,7 @@
     <ion-item class="poi-item">
       <ion-label>{{ 'stairs' | translate }}</ion-label>
       <ion-toggle
+              name="stairs"
               [(ngModel)]="stairs"
               (ionChange)="showLocation('stairs')"
       ></ion-toggle>
@@ -27,6 +30,7 @@
     <ion-item class="poi-item">
       <ion-label>{{ 'escalator' | translate }}</ion-label>
       <ion-toggle
+              name="escalator"
               [(ngModel)]="escalator"
               (ionChange)="showLocation('escalator')"
       ></ion-toggle>
@@ -35,6 +39,7 @@
     <ion-item class="poi-item">
       <ion-label>{{ 'fire-extinguisher' | translate}}</ion-label>
       <ion-toggle
+              name ="fireExtinguisher"
               [(ngModel)]="fireExtinguisher"
               (ionChange)="showLocation('fireExtinguisher')"
       ></ion-toggle>
@@ -42,6 +47,7 @@
     <ion-item class="poi-item">
       <ion-label>{{ 'fire-exit' | translate}}</ion-label>
       <ion-toggle
+              name="fireExit"
               [(ngModel)]="fireExit"
               (ionChange)="showLocation('fireExit')"
       ></ion-toggle>
@@ -49,6 +55,7 @@
     <ion-item class="poi-item" *ngIf="building === 'mb1'">
       <ion-label>{{ 'entrance' | translate}}</ion-label>
       <ion-toggle
+              name ="entrance"
               [(ngModel)]="entrance"
               (ionChange)="showLocation('entrance')"
       ></ion-toggle>
