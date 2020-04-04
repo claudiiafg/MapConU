@@ -46,6 +46,7 @@ import { DirectionService } from 'src/services/direction.service';
 import {TranslationService} from 'src/services/translation.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { GoogleOauthService } from 'src/services/google-oauth.service';
+import { IndoorPoiService } from 'src/services/indoor-poi.service';
 
 //pages
 import { AppRoutingModule } from './app-routing.module';
@@ -164,6 +165,7 @@ export function LanguageLoader(http: HttpClient) {
     TranslationService,
     DirectionsManagerService,
     StringHelperService,
+    IndoorPoiService,
     SQLite,
     SQLitePorter,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

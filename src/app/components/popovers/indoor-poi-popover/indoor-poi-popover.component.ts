@@ -3,6 +3,7 @@ import { TranslationService} from '../../../../services/translation.service';
 import { PopoverController} from '@ionic/angular';
 import { IndoorDirectionsService, Point} from '../../../../services/indoorDirections.service';
 import { DataSharingService } from '../../../../services/data-sharing.service';
+import { IndoorPoiService } from '../../../../services/indoor-poi.service';
 
 @Component({
   selector: 'app-indoor-poi-popover',
@@ -23,70 +24,34 @@ export class IndoorPoiPopoverComponent implements OnInit {
       private translate: TranslationService,
       private popoverController: PopoverController,
       private indoorDirectionsService: IndoorDirectionsService,
-      private dataSharing: DataSharingService
+      private dataSharing: DataSharingService,
+      private indoorPoi: IndoorPoiService
   ) { }
 
   ngOnInit() {
-    this.showLocation('bathroom');
-    console.log('poi ngoninit sending initial msg');
+    let currentSelections = this.indoorPoi.getCurrentSelections()
+    this.bathroom = currentSelections.bathroom;
+  	this.elevators = currentSelections.elevators;
+    this.stairs = currentSelections.stairs;
+    this.escalator = currentSelections.escalator;
+    this.fireExtinguisher = currentSelections.fireExtinguisher;
+    this.fireExit = currentSelections.fireExit;
+    if(this.building == 'mb1'){
+      this.entrance = currentSelections.entrance;
+    }
   }
 
-
-  showLocation(poi: string){
-    let inputPoi :boolean;
-    let pois: string[];
-
-    //set variables for selected poi
-    if(poi === 'bathroom'){
-      inputPoi = this.bathroom;
-      console.log('T/F value is: ', inputPoi);
-      pois =['wc-female',  'wc-male'];
-      }
-    if(poi === 'escalator'){
-      inputPoi = this.escalator;
-      console.log('T/F value is: ', inputPoi);
-      pois =['escalators-area',  'escalators-area-close'];
+  togglePoi(poi: string, condition: boolean){
+    console.log('poi ', poi, ' toggled to ', condition);
+    if(condition) {
+      this.indoorPoi.showLocation(poi);
     }
-    if(poi === 'stairs'){
-      inputPoi = this.stairs;
-      console.log('T/F value is: ', inputPoi);
-      pois =['stairs-ne',  'stairs-nw', 'stairs-sw', 'stairs-se'];
-    }
-    if(poi === 'elevator'){
-      inputPoi = this.elevators;
-      console.log('T/F value is: ', inputPoi);
-      pois =['elevator-area',  'elevator'];
-    }
-
-    let p: any;
-    for(p in pois){
-      console.log('p being sent is: ', pois[p]);
-      if(inputPoi) {
-        this.dataSharing.showIndoorPoi(pois[p]);
-        this.checkPoi(poi);
-      }
-      if(!inputPoi){
-        this.dataSharing.hideIndoorPoi(pois[p]);
-        this.uncheckPoi(poi);
-      }
+    if(!condition) {
+      this.indoorPoi.hideLocation(poi);
     }
   }
 
   closePoi(){
     this.popoverController.dismiss();
   }
-
-  checkPoi(poi: string){
-    let poiToggle: any;
-    poiToggle = document.getElementById(poi);
-    poiToggle.style.checked = true;
-  }
-
-  uncheckPoi(poi: string){
-    let poiToggle: any;
-    poiToggle = document.getElementById(poi);
-    poiToggle.style.checked = false;
-
-  }
-
 }

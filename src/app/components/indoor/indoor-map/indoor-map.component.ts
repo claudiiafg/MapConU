@@ -104,22 +104,27 @@ export class IndoorMapComponent implements OnInit {
       }
     });
 
+    console.log('BEFORE showPoiSubscription');
     this.dataSharing.showPoi.subscribe( markerId =>{
       console.log('show markerId is: ', markerId);
       let poiMarkerId = markerId.concat('-marker');
-        console.log('poi with concatenation is ', markerId);
+        console.log('poi with concatenation is ', poiMarkerId);
         this.poiMarker = document.getElementById(poiMarkerId);
       console.log('making ', markerId, ' vis');
-      this.poiMarker.style.visibility = 'visible';
+      if(poiMarkerId != 'poiToShow-marker') {
+        this.poiMarker.style.visibility = 'visible';
+      }
     });
 
     this.dataSharing.hidePoi.subscribe( markerId =>{
       console.log('hide markerId is: ', markerId);
       let poiMarkerId = markerId.concat('-marker');
-        console.log('poi with concatenation is ', markerId);
+        console.log('poi with concatenation is ', poiMarkerId);
         this.poiMarker = document.getElementById(poiMarkerId);
         console.log('making ', markerId, ' hidden');
-        this.poiMarker.style.visibility = 'hidden';
+        if(poiMarkerId != 'poiToHide-marker') {
+          this.poiMarker.style.visibility = 'hidden';
+      }
     });
   }
 
