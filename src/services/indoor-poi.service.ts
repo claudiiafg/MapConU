@@ -5,16 +5,17 @@ import { DataSharingService } from './data-sharing.service';
 providedIn: 'root'
 })
 export class IndoorPoiService {
-private pois: string[];
-private currentSelections: any = {
-bathroom: false,
-elevators: false,
-stairs: false,
-fireExtinguisher: false,
-fireExit: false,
-escalator: false,
-entrance: false,
-};
+  private poiToUpdate : boolean;
+  private pois: string[];
+  private currentSelections: any = {
+    bathroom: false,
+    elevators: false,
+    stairs: false,
+    fireExtinguisher: false,
+    fireExit: false,
+    escalator: false,
+    entrance: false,
+  };
 
 constructor(
       private dataSharing: DataSharingService
@@ -27,15 +28,19 @@ constructor(
   //set variables for selected poi
   setConditions(poi: string){
     if(poi === 'bathroom'){
+      this.poiToUpdate = this.currentSelections.bathroom;
       this.pois =['wc-female',  'wc-male'];
     }
     else if(poi === 'escalator'){
+      this.poiToUpdate = this.currentSelections.escalator;
       this.pois =['escalators-area',  'escalators-area-close'];
     }
     else if(poi === 'stairs'){
+      this.poiToUpdate = this.currentSelections.stairs;
       this.pois =['stairs-ne',  'stairs-nw', 'stairs-sw', 'stairs-se'];
     }
     else if(poi === 'elevator'){
+      this.poiToUpdate = this.currentSelections.elevators;
       this.pois =['elevator-area',  'elevator'];
     }
     else{
@@ -45,6 +50,7 @@ constructor(
   }
   showLocation(poi: string){
     this.setConditions(poi);
+    this.poiToUpdate = true;
 
     let p: any;
     for(p in this.pois){
@@ -55,6 +61,7 @@ constructor(
 
   hideLocation(poi: string) {
     this.setConditions(poi);
+    this.poiToUpdate = false;
     let p: any;
     for (p in this.pois) {
       console.log('p being sent to hide is: ', this.pois[p]);
