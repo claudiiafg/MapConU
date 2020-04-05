@@ -59,6 +59,7 @@ export class IndoorNavigationSideButtonsComponent {
   }
 
   async showIndoorPoi(){
+    this.dataSharing.updateIndoorPoiToggles(true);
     const popover = await this.popoverController.create({
       component: IndoorPoiPopoverComponent,
       translucent: false

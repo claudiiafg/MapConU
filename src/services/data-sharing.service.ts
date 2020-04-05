@@ -13,6 +13,8 @@ export class DataSharingService {
   public showToa = new BehaviorSubject<boolean>(false);
   public showPoi = new BehaviorSubject<string>('poiToShow');
   public hidePoi = new BehaviorSubject<string>('poiToHide');
+  public setIndoorPoiToggles = new BehaviorSubject<boolean>(false);
+  public currentBuilding = new BehaviorSubject<string>('building');
   currentMessage = this.messageSrc.asObservable();
   currentLanguage = this.language.asObservable();
 
@@ -46,5 +48,13 @@ export class DataSharingService {
 
   public hideIndoorPoi(hidePoi: string){
     this.hidePoi.next(hidePoi);
+  }
+
+  public updateIndoorPoiToggles( update: boolean){
+    this.setIndoorPoiToggles.next(update);
+  }
+
+  public updateCurrentBuilding ( updateBuilding: string){
+    this.currentBuilding.next(updateBuilding);
   }
 }

@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { TranslationService} from '../../../../services/translation.service';
-import { PopoverController} from '@ionic/angular';
-import { IndoorDirectionsService, Point} from '../../../../services/indoorDirections.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { TranslationService } from '../../../../services/translation.service';
+import { PopoverController } from '@ionic/angular';
+import { IndoorDirectionsService, Point } from '../../../../services/indoorDirections.service';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { IndoorPoiService } from '../../../../services/indoor-poi.service';
 
@@ -25,20 +25,30 @@ export class IndoorPoiPopoverComponent implements OnInit {
       private popoverController: PopoverController,
       private indoorDirectionsService: IndoorDirectionsService,
       private dataSharing: DataSharingService,
-      private indoorPoi: IndoorPoiService
-  ) { }
+      private indoorPoi: IndoorPoiService,
+  ) {}
 
   ngOnInit() {
-    let currentSelections = this.indoorPoi.getCurrentSelections()
-    this.bathroom = currentSelections.bathroom;
-  	this.elevators = currentSelections.elevators;
-    this.stairs = currentSelections.stairs;
-    this.escalator = currentSelections.escalator;
-    this.fireExtinguisher = currentSelections.fireExtinguisher;
-    this.fireExit = currentSelections.fireExit;
-    if(this.building == 'mb1'){
-      this.entrance = currentSelections.entrance;
-    }
+    this.dataSharing.setIndoorPoiToggles.subscribe( showPoi =>{
+      console.log('show poi subscription triggered in indoor-poi-popover, equal to ', showPoi);
+      if(showPoi) {
+        let currentSelections = this.indoorPoi.getCurrentSelections();
+        console.log('bathroom in popover is ', this.bathroom, ' service bathroom is ', this.indoorPoi.getCurrentSelections().bathroom);
+        this.bathroom = currentSelections.bathroom;
+        this.elevators = currentSelections.elevators;
+        this.stairs = currentSelections.stairs;
+        this.escalator = currentSelections.escalator;
+        this.fireExtinguisher = currentSelections.fireExtinguisher;
+        this.fireExit = currentSelections.fireExit;
+        if (this.building == 'jmsb') {
+          this.entrance = currentSelections.entrance;
+        }
+      }
+    });
+
+    this.dataSharing.currentBuilding.subscribe(building =>{
+      this.building = building;
+    });
   }
 
   togglePoi(poi: string, condition: boolean){
@@ -52,6 +62,7 @@ export class IndoorPoiPopoverComponent implements OnInit {
   }
 
   closePoi(){
+    this.dataSharing.updateIndoorPoiToggles(false);
     this.popoverController.dismiss();
   }
 }

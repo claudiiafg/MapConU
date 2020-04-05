@@ -48,6 +48,7 @@ export class IndoorMapComponent implements OnInit {
       if(this.inputBuilding === res.building && this.isInit){
         this.isInit = false;
         this.setMap();
+        this.dataSharing.updateCurrentBuilding(this.inputBuilding);
       }
     });
 

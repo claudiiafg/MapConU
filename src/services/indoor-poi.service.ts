@@ -5,7 +5,6 @@ import { DataSharingService } from './data-sharing.service';
 providedIn: 'root'
 })
 export class IndoorPoiService {
-  private poiToUpdate : boolean;
   private pois: string[];
   private currentSelections: any = {
     bathroom: false,
@@ -28,19 +27,38 @@ constructor(
   //set variables for selected poi
   setConditions(poi: string){
     if(poi === 'bathroom'){
-      this.poiToUpdate = this.currentSelections.bathroom;
+      if(this.currentSelections.bathroom){
+        this.currentSelections.bathroom = true;
+      }
+      else{
+        this.currentSelections.bathroom = false;
+      }
       this.pois =['wc-female',  'wc-male'];
     }
     else if(poi === 'escalator'){
-      this.poiToUpdate = this.currentSelections.escalator;
-      this.pois =['escalators-area',  'escalators-area-close'];
+      if(this.currentSelections.escalator){
+        this.currentSelections.escalator = true;
+      }
+      else{
+        this.currentSelections.escalator = false;
+      }      this.pois =['escalators-area'];
     }
     else if(poi === 'stairs'){
-      this.poiToUpdate = this.currentSelections.stairs;
+      if(this.currentSelections.stairs){
+        this.currentSelections.stairs = true;
+      }
+      else{
+        this.currentSelections.stairs = false;
+      }
       this.pois =['stairs-ne',  'stairs-nw', 'stairs-sw', 'stairs-se'];
     }
-    else if(poi === 'elevator'){
-      this.poiToUpdate = this.currentSelections.elevators;
+    else if(poi === 'elevators'){
+      if(this.currentSelections.elevators){
+        this.currentSelections.elevators = true;
+      }
+      else{
+        this.currentSelections.elevators = false;
+      }
       this.pois =['elevator-area',  'elevator'];
     }
     else{
@@ -50,18 +68,14 @@ constructor(
   }
   showLocation(poi: string){
     this.setConditions(poi);
-    this.poiToUpdate = true;
-
     let p: any;
     for(p in this.pois){
-      console.log('p being sent is to un-hide: ', this.pois[p]);
         this.dataSharing.showIndoorPoi(this.pois[p]);
       }
   }
 
   hideLocation(poi: string) {
     this.setConditions(poi);
-    this.poiToUpdate = false;
     let p: any;
     for (p in this.pois) {
       console.log('p being sent to hide is: ', this.pois[p]);
