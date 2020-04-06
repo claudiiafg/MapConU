@@ -105,7 +105,6 @@ export class IndoorMapComponent implements OnInit {
       }
     });
 
-    console.log('BEFORE showPoiSubscription');
     this.dataSharing.showPoi.subscribe( markerId =>{
       console.log('show markerId is: ', markerId);
       let poiMarkerId = markerId.concat('-marker');
@@ -113,7 +112,12 @@ export class IndoorMapComponent implements OnInit {
         this.poiMarker = document.getElementById(poiMarkerId);
       console.log('making ', markerId, ' vis');
       if(poiMarkerId != 'poiToShow-marker') {
-        this.poiMarker.style.visibility = 'visible';
+        try {
+          this.poiMarker.style.visibility = 'visible';
+        }
+        catch(Exception){
+          console.log(this.poiMarker, ' not found for current map');
+        }
       }
     });
 
@@ -124,7 +128,12 @@ export class IndoorMapComponent implements OnInit {
         this.poiMarker = document.getElementById(poiMarkerId);
         console.log('making ', markerId, ' hidden');
         if(poiMarkerId != 'poiToHide-marker') {
-          this.poiMarker.style.visibility = 'hidden';
+          try {
+            this.poiMarker.style.visibility = 'hidden';
+          }
+          catch(Exception){
+            console.log(this.poiMarker, ' not found for current map');
+          }
       }
     });
   }

@@ -41,7 +41,7 @@ constructor(
       }
       else{
         this.currentSelections.escalator = false;
-      }      this.pois =['escalators-area'];
+      }      this.pois =['escalator-up', 'escalator-down', 'escalator'];
     }
     else if(poi === 'stairs'){
       if(this.currentSelections.stairs){
@@ -59,7 +59,7 @@ constructor(
       else{
         this.currentSelections.elevators = false;
       }
-      this.pois =['elevator-area',  'elevator'];
+      this.pois =['elevator'];
     }
     else{
       console.log(poi, 'not an accepted poi');
