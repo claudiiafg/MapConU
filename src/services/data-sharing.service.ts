@@ -11,9 +11,11 @@ export class DataSharingService {
   public language = new BehaviorSubject<string>('lang'); //current language of the app ['fr', 'en']
   public toaParams = new BehaviorSubject<any>(['start', 'dest', 0]);
   public showToa = new BehaviorSubject<boolean>(false);
-  public showPoi = new BehaviorSubject<string>('poiToShow');
-  public hidePoi = new BehaviorSubject<string>('poiToHide');
+  public showPoi = new BehaviorSubject<any>(['poiToShow', false]);
+  public hidePoi = new BehaviorSubject<any>(['poiToHide', false]);
   public setIndoorPoiToggles = new BehaviorSubject<boolean>(false);
+  //send poi status for bathroom, elevator, stairs, escalator, fireExtinguisher, fireExit, entrance in that order
+  public toggleStatus = new BehaviorSubject<any>([false, false, false, false, false, false, false]);
   public currentBuilding = new BehaviorSubject<string>('building');
   currentMessage = this.messageSrc.asObservable();
   currentLanguage = this.language.asObservable();
@@ -42,16 +44,22 @@ export class DataSharingService {
     this.showToa.next(updateShow);
   }
 
-  public showIndoorPoi(showPoi: string){
+  //sends an array with string for poi to update [0] and boolean value of toggle [1]
+  public showIndoorPoi(showPoi: any[2]){
     this.showPoi.next(showPoi);
   }
 
-  public hideIndoorPoi(hidePoi: string){
+  //sends an array with string for poi to update [0] and boolean value of toggle [1]
+  public hideIndoorPoi(hidePoi: any[2]){
     this.hidePoi.next(hidePoi);
   }
 
   public updateIndoorPoiToggles( update: boolean){
     this.setIndoorPoiToggles.next(update);
+  }
+
+  public updateToggleResponse( resp: any[7]){
+    this.toggleStatus.next(resp);
   }
 
   public updateCurrentBuilding ( updateBuilding: string){

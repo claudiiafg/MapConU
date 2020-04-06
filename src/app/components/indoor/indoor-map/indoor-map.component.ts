@@ -106,11 +106,9 @@ export class IndoorMapComponent implements OnInit {
     });
 
     this.dataSharing.showPoi.subscribe( markerId =>{
-      console.log('show markerId is: ', markerId);
-      let poiMarkerId = markerId.concat('-marker');
+      let poiMarkerId = markerId[0].concat('-marker');
         console.log('poi with concatenation is ', poiMarkerId);
         this.poiMarker = document.getElementById(poiMarkerId);
-      console.log('making ', markerId, ' vis');
       if(poiMarkerId != 'poiToShow-marker') {
         try {
           this.poiMarker.style.visibility = 'visible';
@@ -122,11 +120,9 @@ export class IndoorMapComponent implements OnInit {
     });
 
     this.dataSharing.hidePoi.subscribe( markerId =>{
-      console.log('hide markerId is: ', markerId);
-      let poiMarkerId = markerId.concat('-marker');
+      let poiMarkerId = markerId[0].concat('-marker');
         console.log('poi with concatenation is ', poiMarkerId);
         this.poiMarker = document.getElementById(poiMarkerId);
-        console.log('making ', markerId, ' hidden');
         if(poiMarkerId != 'poiToHide-marker') {
           try {
             this.poiMarker.style.visibility = 'hidden';

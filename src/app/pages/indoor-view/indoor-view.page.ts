@@ -17,6 +17,13 @@ export class IndoorViewPage implements OnInit {
   private isSelectMode: boolean = false;
   private mySubscription: any;
   private showToaComponent: boolean = false;
+  private bathroom: boolean = false;
+  private elevators: boolean = false;
+  private stairs: boolean = false;
+  private fireExtinguisher: boolean = false;
+  private fireExit: boolean = false;
+  private escalator: boolean = false;
+  private entrance: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,6 +59,29 @@ export class IndoorViewPage implements OnInit {
         this.router.navigated = false;
       }
     });
+
+    this.dataSharing.showPoi.subscribe( toggle =>{
+      this.updateToggle(toggle[0], toggle[1]);
+    });
+
+    this.dataSharing.hidePoi.subscribe( toggle =>{
+      this.updateToggle(toggle[0], toggle[1]);
+    });
+
+    this.dataSharing.setIndoorPoiToggles.subscribe(status =>{
+      //send back toggle status when popover opens
+      if(status) {
+        this.dataSharing.updateToggleResponse([
+          this.bathroom,
+          this.elevators,
+          this.stairs,
+          this.escalator,
+          this.fireExtinguisher,
+          this.fireExit,
+          this.entrance
+        ]);
+      }
+    });
   }
 
   private subscribeToEvents() {
@@ -82,7 +112,7 @@ export class IndoorViewPage implements OnInit {
 
     this.dataSharing.showToa.subscribe( updateShow => {
       this.showToaComponent = updateShow;
-    })
+    });
   }
 
   //important to reload route
@@ -90,6 +120,31 @@ export class IndoorViewPage implements OnInit {
   ngOnDestroy() {
     if (this.mySubscription) {
       this.mySubscription.unsubscribe();
+    }
+  }
+
+  updateToggle(poi: string, condition: boolean){
+    console.log('toggle update poi in indoor page is ', poi, ' condition is ', condition);
+    if(poi.includes('wc')){
+      this.bathroom = condition;
+    }
+    if(poi.includes('elevator')){
+      this.elevators = condition;
+    }
+    if(poi.includes('stairs')){
+      this.stairs = condition;
+    }
+    if(poi.includes('escalator')){
+      this.escalator = condition;
+    }
+    if(poi.includes('fire-extinguisher')){
+      this.fireExtinguisher = condition;
+    }
+    if(poi.includes('fire-exit')){
+      this.fireExit = condition;
+    }
+    if(poi.includes('entrance')){
+      this.entrance = condition;
     }
   }
 }

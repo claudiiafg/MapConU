@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslationService } from '../../../../services/translation.service';
-import { PopoverController } from '@ionic/angular';
+import {PopoverController} from '@ionic/angular';
 import { IndoorDirectionsService, Point } from '../../../../services/indoorDirections.service';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { IndoorPoiService } from '../../../../services/indoor-poi.service';
@@ -29,21 +29,14 @@ export class IndoorPoiPopoverComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataSharing.setIndoorPoiToggles.subscribe( showPoi =>{
-      console.log('show poi subscription triggered in indoor-poi-popover, equal to ', showPoi);
-      if(showPoi) {
-        let currentSelections = this.indoorPoi.getCurrentSelections();
-        console.log('bathroom in popover is ', this.bathroom, ' service bathroom is ', this.indoorPoi.getCurrentSelections().bathroom);
-        this.bathroom = currentSelections.bathroom;
-        this.elevators = currentSelections.elevators;
-        this.stairs = currentSelections.stairs;
-        this.escalator = currentSelections.escalator;
-        this.fireExtinguisher = currentSelections.fireExtinguisher;
-        this.fireExit = currentSelections.fireExit;
-        if (this.building == 'jmsb') {
-          this.entrance = currentSelections.entrance;
-        }
-      }
+    this.dataSharing.toggleStatus.subscribe( showPois =>{
+      this.bathroom = showPois[0];
+      this.elevators = showPois[1];
+      this.stairs = showPois[2];
+      this.escalator = showPois[3];
+      this.fireExtinguisher = showPois[4];
+      this.fireExit = showPois[5];
+      this.entrance = showPois[6];
     });
 
     this.dataSharing.currentBuilding.subscribe(building =>{
@@ -53,10 +46,13 @@ export class IndoorPoiPopoverComponent implements OnInit {
 
   togglePoi(poi: string, condition: boolean){
     console.log('poi ', poi, ' toggled to ', condition);
-    if(condition) {
+    if(condition === undefined){
+      //without this empty condition hideLocation() fires and removes pois when the poi is closed
+    }
+    else if(condition) {
       this.indoorPoi.showLocation(poi);
     }
-    if(!condition) {
+    else if(!condition) {
       this.indoorPoi.hideLocation(poi);
     }
   }
