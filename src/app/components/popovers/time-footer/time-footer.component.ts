@@ -17,9 +17,9 @@ export class TimeFooterComponent implements OnInit {
   public timeLeft: number;
   public distance: number;
   public fare: string;
-  private isIndoorDirectionsSet: boolean = false;
-  private currentStep = null;
-  private isIndoorInRoute: boolean = false;
+  public isIndoorDirectionsSet: boolean = false;
+  public currentStep = null;
+  public isIndoorInRoute: boolean = false;
   private startFromCurrent : boolean = false;
 
   constructor(
@@ -84,7 +84,7 @@ export class TimeFooterComponent implements OnInit {
   }
 
   //initiate indoor direction
-  private initRoute() {
+  public initRoute() {
     this.events.publish('isSelectMode', false, Date.now());
     this.isIndoorInRoute = true;
     if(this.startFromCurrent){
@@ -101,7 +101,7 @@ export class TimeFooterComponent implements OnInit {
   }
 
   //get next step to compute in indoor directions
-  private getNextStep() {
+  public getNextStep() {
     this.currentStep = this.directionsManager.getNextStep();
     if(this.currentStep.floor){
       if(this.router.url.includes('outdoor')){
@@ -123,14 +123,14 @@ export class TimeFooterComponent implements OnInit {
   }
 
   //user has arrived at destination and pressed end
-  private endRoute() {
+  public endRoute() {
     this.isIndoorInRoute = false;
     this.events.publish('path-completed', true, Date.now());
   }
 
   ngOnInit() {}
 
-  private async presentModal() {
+  public async presentModal() {
     const modal = await this.modalController.create({
       component: ModalDirectionsComponent,
       componentProps: {
