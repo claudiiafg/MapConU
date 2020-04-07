@@ -29,7 +29,7 @@ export class TimeFooterComponent implements OnInit {
     private events: Events,
     private stringHelper: StringHelperService,
     private translate: TranslationService,
-    private router: Router,
+    public router: Router,
 
   ) {
     //outdoor directions subscription

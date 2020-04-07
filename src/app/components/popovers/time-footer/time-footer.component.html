@@ -1,4 +1,4 @@
-<ng-container *ngIf="isDirectionSet">
+<ng-container *ngIf="isDirectionSet && this.router.url.includes('outdoor')">
   <div class="navigation-buttons-div" (click)="presentModal()">
     <p>
       <span class="green">{{ timeLeft }} </span><br />
