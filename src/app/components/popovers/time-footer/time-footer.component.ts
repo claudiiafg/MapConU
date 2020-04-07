@@ -1,16 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, Events } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Events, ModalController } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
-import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
-import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
+import {
+  DirectionsManagerService,
+  MixedDirectionsType,
+} from 'src/services/directionsManager.service';
 import { StringHelperService } from 'src/services/stringHelper.service';
 import { TranslationService } from 'src/services/translation.service';
-import { Router } from '@angular/router';
+import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
 
 @Component({
   selector: 'app-time-footer',
   templateUrl: './time-footer.component.html',
-  styleUrls: ['./time-footer.component.scss']
+  styleUrls: ['./time-footer.component.scss'],
 })
 export class TimeFooterComponent implements OnInit {
   public isDirectionSet = false;
@@ -20,23 +23,22 @@ export class TimeFooterComponent implements OnInit {
   public isIndoorDirectionsSet: boolean = false;
   public currentStep = null;
   public isIndoorInRoute: boolean = false;
-  private startFromCurrent : boolean = false;
+  private startFromCurrent: boolean = false;
 
   constructor(
     public modalController: ModalController,
+    public router: Router,
     private directionService: DirectionService,
     private directionsManager: DirectionsManagerService,
     private events: Events,
     private stringHelper: StringHelperService,
-    private translate: TranslationService,
-    public router: Router,
-
+    private translate: TranslationService
   ) {
     //outdoor directions subscription
-    this.directionService.isDirectionSet.subscribe(isDirectionSet => {
+    this.directionService.isDirectionSet.subscribe((isDirectionSet) => {
       this.isDirectionSet = isDirectionSet;
     });
-    this.directionService.directionInfo.subscribe(directionInfo => {
+    this.directionService.directionInfo.subscribe((directionInfo) => {
       this.timeLeft = directionInfo.time;
       this.distance = directionInfo.distance;
       this.fare = directionInfo.fare;
@@ -46,7 +48,7 @@ export class TimeFooterComponent implements OnInit {
     });
 
     //indoor directions subscription
-    this.directionsManager.isIndoorInRoute.subscribe(res => {
+    this.directionsManager.isIndoorInRoute.subscribe((res) => {
       if (res === true) {
         this.isIndoorDirectionsSet = true;
       } else {
@@ -56,23 +58,26 @@ export class TimeFooterComponent implements OnInit {
 
     //subscribe to user clicking on next step from outside
     this.events.subscribe('get-next-step', () => {
-      this.getStepAfterOutdoor()
+      this.getStepAfterOutdoor();
     });
 
     //when initiating the indoor component during a route
-    if(this.directionsManager.stepsBeenInit()){
+    if (this.directionsManager.stepsBeenInit()) {
       this.isIndoorInRoute = true;
     }
 
-    if(this.directionsManager.isIndoorInRoute.getValue() === true){
-      if(!this.router.url.includes('outdoor') && this.directionsManager.getMixedType() === MixedDirectionsType.classToClass){
+    if (this.directionsManager.isIndoorInRoute.getValue() === true) {
+      if (
+        !this.router.url.includes('outdoor') &&
+        this.directionsManager.getMixedType() ===
+          MixedDirectionsType.classToClass
+      ) {
         this.isIndoorDirectionsSet = true;
         this.currentStep = this.directionsManager.getCurrentStep();
 
-        if(this.currentStep.isLast){
+        if (this.currentStep.isLast) {
           this.isIndoorInRoute = true;
           this.startFromCurrent = false;
-
         } else {
           this.isIndoorInRoute = false;
           this.startFromCurrent = true;
@@ -83,11 +88,13 @@ export class TimeFooterComponent implements OnInit {
     }
   }
 
+  ngOnInit() {}
+
   //initiate indoor direction
   public initRoute() {
     this.events.publish('isSelectMode', false, Date.now());
     this.isIndoorInRoute = true;
-    if(this.startFromCurrent){
+    if (this.startFromCurrent) {
       this.currentStep = this.directionsManager.startFromCurrentStep();
       this.setCurrentStep();
     } else {
@@ -95,16 +102,21 @@ export class TimeFooterComponent implements OnInit {
     }
   }
 
-  private getStepAfterOutdoor(){
-    this.currentStep = this.directionsManager.getStepAfterOutdoor();
-    this.setCurrentStep();
+  public async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalDirectionsComponent,
+      componentProps: {
+        steps: this.directionService.getDirectionsSteps(),
+      },
+    });
+    return await modal.present();
   }
 
   //get next step to compute in indoor directions
   public getNextStep() {
     this.currentStep = this.directionsManager.getNextStep();
-    if(this.currentStep.floor){
-      if(this.router.url.includes('outdoor')){
+    if (this.currentStep.floor) {
+      if (this.router.url.includes('outdoor')) {
         this.directionsManager.continueWithIndoorDirections();
       }
       this.setCurrentStep();
@@ -113,30 +125,23 @@ export class TimeFooterComponent implements OnInit {
     }
   }
 
-  private setCurrentStep(){
-    this.currentStep._prettySource = this.stringHelper.prettifyTitles(
-      this.currentStep.source
-    );
-    this.currentStep._prettyDest = this.stringHelper.prettifyTitles(
-      this.currentStep.dest
-    );
-  }
-
   //user has arrived at destination and pressed end
   public endRoute() {
     this.isIndoorInRoute = false;
     this.events.publish('path-completed', true, Date.now());
   }
 
-  ngOnInit() {}
+  private getStepAfterOutdoor() {
+    this.currentStep = this.directionsManager.getStepAfterOutdoor();
+    this.setCurrentStep();
+  }
 
-  public async presentModal() {
-    const modal = await this.modalController.create({
-      component: ModalDirectionsComponent,
-      componentProps: {
-        steps: this.directionService.getDirectionsSteps()
-      }
-    });
-    return await modal.present();
+  private setCurrentStep() {
+    this.currentStep._prettySource = this.stringHelper.prettifyTitles(
+      this.currentStep.source
+    );
+    this.currentStep._prettyDest = this.stringHelper.prettifyTitles(
+      this.currentStep.dest
+    );
   }
 }
