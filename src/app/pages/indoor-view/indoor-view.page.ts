@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
@@ -20,7 +20,6 @@ export class IndoorViewPage implements OnInit {
   private bathroom: boolean = false;
   private elevators: boolean = false;
   private stairs: boolean = false;
-  private fireExtinguisher: boolean = false;
   private fireExit: boolean = false;
   private escalator: boolean = false;
   private entrance: boolean = false;
@@ -76,7 +75,6 @@ export class IndoorViewPage implements OnInit {
           this.elevators,
           this.stairs,
           this.escalator,
-          this.fireExtinguisher,
           this.fireExit,
           this.entrance
         ]);
@@ -124,7 +122,6 @@ export class IndoorViewPage implements OnInit {
   }
 
   updateToggle(poi: string, condition: boolean){
-    console.log('toggle update poi in indoor page is ', poi, ' condition is ', condition);
     if(poi.includes('wc')){
       this.bathroom = condition;
     }
@@ -137,10 +134,7 @@ export class IndoorViewPage implements OnInit {
     if(poi.includes('escalator')){
       this.escalator = condition;
     }
-    if(poi.includes('fire-extinguisher')){
-      this.fireExtinguisher = condition;
-    }
-    if(poi.includes('fire-exit')){
+    if(poi.includes('exit')){
       this.fireExit = condition;
     }
     if(poi.includes('entrance')){

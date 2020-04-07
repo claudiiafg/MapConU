@@ -14,8 +14,8 @@ export class DataSharingService {
   public showPoi = new BehaviorSubject<any>(['poiToShow', false]);
   public hidePoi = new BehaviorSubject<any>(['poiToHide', false]);
   public setIndoorPoiToggles = new BehaviorSubject<boolean>(false);
-  //send poi status for bathroom, elevator, stairs, escalator, fireExtinguisher, fireExit, entrance in that order
-  public toggleStatus = new BehaviorSubject<any>([false, false, false, false, false, false, false]);
+  //send poi status for bathroom, elevator, stairs, escalator, fireExit, entrance in that order
+  public toggleStatus = new BehaviorSubject<any>([false, false, false, false, false, false]);
   public currentBuilding = new BehaviorSubject<string>('building');
   currentMessage = this.messageSrc.asObservable();
   currentLanguage = this.language.asObservable();
@@ -58,7 +58,7 @@ export class DataSharingService {
     this.setIndoorPoiToggles.next(update);
   }
 
-  public updateToggleResponse( resp: any[7]){
+  public updateToggleResponse( resp: any[6]){
     this.toggleStatus.next(resp);
   }
 

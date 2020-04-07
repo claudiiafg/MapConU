@@ -26,6 +26,12 @@ constructor(
     else if(poi === 'elevators'){
       this.pois =['elevator'];
     }
+    else if(poi === 'fireExit'){
+      this.pois = ['exit1', 'exit2', 'exit3', 'exit4'];
+    }
+    else if(poi === 'entrance'){
+      this.pois = ['entrance'];
+    }
     else{
       console.log(poi, 'not an accepted poi');
     }

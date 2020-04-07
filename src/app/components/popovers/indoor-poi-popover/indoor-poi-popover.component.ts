@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslationService } from '../../../../services/translation.service';
 import {PopoverController} from '@ionic/angular';
-import { IndoorDirectionsService, Point } from '../../../../services/indoorDirections.service';
+import { IndoorDirectionsService } from '../../../../services/indoorDirections.service';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { IndoorPoiService } from '../../../../services/indoor-poi.service';
 
@@ -15,7 +15,6 @@ export class IndoorPoiPopoverComponent implements OnInit {
   private bathroom: boolean;
   private elevators: boolean;
   private stairs: boolean;
-  private fireExtinguisher: boolean;
   private fireExit: boolean;
   private escalator: boolean;
   private entrance: boolean;
@@ -34,9 +33,8 @@ export class IndoorPoiPopoverComponent implements OnInit {
       this.elevators = showPois[1];
       this.stairs = showPois[2];
       this.escalator = showPois[3];
-      this.fireExtinguisher = showPois[4];
-      this.fireExit = showPois[5];
-      this.entrance = showPois[6];
+      this.fireExit = showPois[4];
+      this.entrance = showPois[5];
     });
 
     this.dataSharing.currentBuilding.subscribe(building =>{
@@ -45,7 +43,6 @@ export class IndoorPoiPopoverComponent implements OnInit {
   }
 
   togglePoi(poi: string, condition: boolean){
-    console.log('poi ', poi, ' toggled to ', condition);
     if(condition === undefined){
       //without this empty condition hideLocation() fires and removes pois when the poi is closed
     }
