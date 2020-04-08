@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DirectionService {
   public origin = new BehaviorSubject([]);
@@ -50,6 +50,9 @@ export class DirectionService {
       }
       if (stepsWithIcons[key].maneuver.includes('merge')) {
         stepsWithIcons[key].maneuver_icon = 'git-merge';
+      }
+      if (stepsWithIcons[key].maneuver.includes('straight')) {
+        stepsWithIcons[key].maneuver_icon = 'arrow-up';
       }
 
       stepsWithIcons[key].position = counter;
