@@ -60,10 +60,20 @@
     </div>
   </ng-container>
 
-  <ion-searchbar
-    #search
-    class="search-location"
-    id="outdoor-search"
-    [placeholder]="'location-searchbar' | translate"
-  ></ion-searchbar>
+  <div class="parent">
+    <div class="left">
+      <ion-searchbar
+        #search
+        class="search-location"
+        id="outdoor-search"
+        [placeholder]="'location-searchbar' | translate"
+      >
+      </ion-searchbar>
+    </div>
+    <div class="right searchbar-color">
+      <ion-button color="#fffff" class="searchbar-color" (click)="tryRecording()">
+        <ion-icon class="mic-icon" name="mic"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
 </ion-header>

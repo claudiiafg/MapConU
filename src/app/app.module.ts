@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material'
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 //env variables
 import { APIKey } from 'src/environments/env';
 import { environment } from '../environments/environment';
@@ -168,6 +169,7 @@ export function LanguageLoader(http: HttpClient) {
     IndoorPoiService,
     SQLite,
     SQLitePorter,
+    SpeechRecognition,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
