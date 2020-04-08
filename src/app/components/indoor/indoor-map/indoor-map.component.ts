@@ -121,7 +121,6 @@ export class IndoorMapComponent implements OnInit {
 
     this.dataSharing.hidePoi.subscribe( markerId =>{
       let poiMarkerId = markerId[0].concat('-marker');
-        console.log('poi with concatenation is ', poiMarkerId);
         this.poiMarker = document.getElementById(poiMarkerId);
         if(poiMarkerId != 'poiToHide-marker') {
           try {
