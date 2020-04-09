@@ -26,6 +26,7 @@ export class IndoorMapComponent implements OnInit {
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
   private marker: any;
+  private poiMarker: any;
   private isInit: boolean = true;
 
   constructor(
@@ -47,6 +48,7 @@ export class IndoorMapComponent implements OnInit {
       if(this.inputBuilding === res.building && this.isInit){
         this.isInit = false;
         this.setMap();
+        this.dataSharing.updateCurrentBuilding(this.inputBuilding);
       }
     });
 
@@ -100,6 +102,33 @@ export class IndoorMapComponent implements OnInit {
       ) {
         this.resetNav();
         this.initNav(ele);
+      }
+    });
+
+    this.dataSharing.showPoi.subscribe( markerId =>{
+      let poiMarkerId = markerId[0].concat('-marker');
+        console.log('poi with concatenation is ', poiMarkerId);
+        this.poiMarker = document.getElementById(poiMarkerId);
+      if(poiMarkerId != 'poiToShow-marker') {
+        try {
+          this.poiMarker.style.visibility = 'visible';
+        }
+        catch(Exception){
+          console.log(this.poiMarker, ' not found for current map');
+        }
+      }
+    });
+
+    this.dataSharing.hidePoi.subscribe( markerId =>{
+      let poiMarkerId = markerId[0].concat('-marker');
+        this.poiMarker = document.getElementById(poiMarkerId);
+        if(poiMarkerId != 'poiToHide-marker') {
+          try {
+            this.poiMarker.style.visibility = 'hidden';
+          }
+          catch(Exception){
+            console.log(this.poiMarker, ' not found for current map');
+          }
       }
     });
   }
