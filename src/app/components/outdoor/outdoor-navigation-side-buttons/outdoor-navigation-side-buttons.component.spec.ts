@@ -9,20 +9,25 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { RouteReuseStrategy, RouterModule } from "@angular/router";
-import {IonicModule, IonicRouteStrategy} from "@ionic/angular";
-import {FirestoreSettingsToken} from "@angular/fire/firestore";
-import {OutdoorNavigationSideButtonsComponent} from "./outdoor-navigation-side-buttons.component";
-import {UserServices} from "../../../../services/user.services";
-import {PoiServices} from "../../../../services/poi.services";
-import {GeolocationServices} from "../../../../services/geolocation.services";
-import {DirectionService} from "../../../../services/direction.service";
-import {IndoorDirectionsService} from "../../../../services/indoorDirections.service";
-import {TranslationService} from "../../../../services/translation.service";
-import {By} from "@angular/platform-browser";
-import {DirectionsManagerService} from "../../../../services/directionsManager.service";
-import {TranslateService} from "@ngx-translate/core";
-import {HttpClient} from "@angular/common/http";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
+import { FirestoreSettingsToken } from "@angular/fire/firestore";
+import { OutdoorNavigationSideButtonsComponent } from "./outdoor-navigation-side-buttons.component";
+import { UserServices } from "../../../../services/user.services";
+import { PoiServices } from "../../../../services/poi.services";
+import { GeolocationServices } from "../../../../services/geolocation.services";
+import { DirectionService } from "../../../../services/direction.service";
+import { IndoorDirectionsService } from "../../../../services/indoorDirections.service";
+import { TranslationService } from "../../../../services/translation.service";
+import { By } from "@angular/platform-browser";
+import { DirectionsManagerService } from "../../../../services/directionsManager.service";
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+  TranslateStore
+} from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -33,7 +38,18 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
   let fixture: ComponentFixture<OutdoorNavigationSideButtonsComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), IonicModule.forRoot()],
+      imports: [
+        RouterModule.forRoot([]),
+        IonicModule.forRoot(),
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: LanguageLoader,
+            deps: [HttpClient]
+          }
+        })
+      ],
       declarations: [OutdoorNavigationSideButtonsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
@@ -47,9 +63,12 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
         IndoorDirectionsService,
         TranslationService,
         DirectionsManagerService,
+        TranslateLoader,
+        TranslateModule,
         TranslateService,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-        {provide: FirestoreSettingsToken, useValue: {}}
+        TranslateStore,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: FirestoreSettingsToken, useValue: {} }
       ]
     }).compileComponents();
   }));
@@ -101,11 +120,13 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
     expect(spyBus).toHaveBeenCalled();
   });
 
-  it('test close direction button',() => {
+  it("test close direction button", () => {
     component.isDirectionSet = true;
     fixture.detectChanges();
     const spyDirectionClose = spyOn(component, "close");
-    let directionClose = fixture.debugElement.query(By.css("ion-fab-button.directionCloseButton"));
+    let directionClose = fixture.debugElement.query(
+      By.css("ion-fab-button.directionCloseButton")
+    );
     directionClose.triggerEventHandler("click", null);
     fixture.detectChanges();
     expect(spyDirectionClose).toHaveBeenCalled();

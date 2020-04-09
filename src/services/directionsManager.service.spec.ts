@@ -1,26 +1,29 @@
-import { TestBed } from '@angular/core/testing';
-import {DirectionsManagerService} from './directionsManager.service';
-import { TranslationService } from './translation.service';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import {BehaviorSubject} from "rxjs";
-import {Router} from "@angular/router";
+import { TestBed } from "@angular/core/testing";
+import { DirectionsManagerService } from "./directionsManager.service";
+import { TranslationService } from "./translation.service";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { RouteReuseStrategy } from "@angular/router";
+import { IonicRouteStrategy } from "@ionic/angular";
+
+import { BehaviorSubject } from "rxjs";
+import { Router } from "@angular/router";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
 
-describe('DirectionsManagerService', () => {
-  beforeEach((() => {
+describe("DirectionsManagerService", () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useFactory: (LanguageLoader),
+            useFactory: LanguageLoader,
             deps: [HttpClient]
           }
         })
@@ -29,28 +32,35 @@ describe('DirectionsManagerService', () => {
         TranslationService,
         DirectionsManagerService,
         Router,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
       ]
     }).compileComponents();
-  }));
+  });
 
-  it('should be created', () => {
-    const service: DirectionsManagerService = TestBed.get(DirectionsManagerService);
+  it("should be created", () => {
+    const service: DirectionsManagerService = TestBed.get(
+      DirectionsManagerService
+    );
     expect(service).toBeTruthy();
   });
 
-  it('should reset steps', () => {
-    const service: DirectionsManagerService = TestBed.get(DirectionsManagerService);
-    service['steps'] =[2];
-    expect(service['steps']).toEqual([2]);
+  it("should reset steps", () => {
+    const service: DirectionsManagerService = TestBed.get(
+      DirectionsManagerService
+    );
+    service["steps"] = [2];
+    expect(service["steps"]).toEqual([2]);
     service.resetSteps();
-    expect(service['steps']).toEqual([]);
+    expect(service["steps"]).toEqual([]);
   });
 
-  it('should set and get selectmode', () => {
-    const service: DirectionsManagerService = TestBed.get(DirectionsManagerService);
+  it("should set and get selectmode", () => {
+    const service: DirectionsManagerService = TestBed.get(
+      DirectionsManagerService
+    );
     service.setSelectMode(true);
     service.getIsSelectMode();
-    expect(service['isSelectMode']).toEqual(true);
+    expect(service["isSelectMode"]).toEqual(true);
   });
 
   // it('should subscribe to events', () => {

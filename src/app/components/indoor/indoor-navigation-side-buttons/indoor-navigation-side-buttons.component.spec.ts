@@ -54,6 +54,8 @@ describe("IndoorNavigationSideButtonsComponent ", () => {
         PoiServices,
         DirectionsManagerService,
         TranslationService,
+        TranslateLoader,
+        TranslateModule,
         TranslateService,
         TranslateStore,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

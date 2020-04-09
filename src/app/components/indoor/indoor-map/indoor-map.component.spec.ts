@@ -83,29 +83,27 @@ describe("IndoorMapComponent ", () => {
     let point: Point[];
     point = [
       {
-          id: "mb",
-          x: 123,
-          y: 123
+        id: "mb",
+        x: 123,
+        y: 123
       }
     ];
-      component["inputBuilding"] = "jmsb";
-      spyOn(component["interestPoints"], "filter").and.callFake(() => {
-          return point;
-      });
-      // tested elsewhere
-      // spyOn(component, "setMarker").and.callFake(() => {
-      //   return null;
-      // });
-      spyOn(
-          component["directionManager"],
-          "initiateIndoorDirections"
-      ).and.callThrough();
-      component["initNav"]("mb");
-      expect(component["destID"]).toEqual("mb");
-      expect(component["isSelectMode"]).toBeFalsy();
-      expect(
-          component["directionManager"].initiateIndoorDirections
-      ).toHaveBeenCalled();
+    component["inputBuilding"] = "jmsb";
+    spyOn(component["interestPoints"], "filter").and.callFake(() => {
+      return point;
+    });
+    spyOn(
+      component["directionManager"],
+      "initiateIndoorDirections"
+    ).and.callThrough();
+    component["destID"];
+    component["isSelectMode"] = true;
+    component["initNav"]("mb");
+    expect(component["destID"]).toEqual("mb");
+    expect(component["isSelectMode"]).toBeFalsy();
+    expect(
+      component["directionManager"].initiateIndoorDirections
+    ).toHaveBeenCalled();
 
     component["inputBuilding"] = "hall";
     component["floor"] = 9;
@@ -120,7 +118,7 @@ describe("IndoorMapComponent ", () => {
     component["initNav"]("escalator-down");
     expect(component["isSelectMode"]).toBeTruthy();
     expect(
-        component["directionManager"].initDifferentFloorDir
+      component["directionManager"].initDifferentFloorDir
     ).toHaveBeenCalled();
   });
   it("should initNav() without point and valid name escalator up", () => {
@@ -140,8 +138,8 @@ describe("IndoorMapComponent ", () => {
     component["marker"].setAttribute("y", "50");
     component["marker"].setAttribute("id", "marker");
     component["marker"].setAttribute(
-        "href",
-        "../../../../assets/icon/logo_as_marker.png"
+      "href",
+      "../../../../assets/icon/logo_as_marker.png"
     );
     component["marker"].setAttribute("height", "50");
     component["marker"].setAttribute("width", "50");
@@ -158,7 +156,7 @@ describe("IndoorMapComponent ", () => {
   });
   it("should resetNav()", () => {
     component["foundPath"] = true;
-      // component["setMap"]();
+    // component["setMap"]();
     component["resetNav"]();
     // foundPath is reset and should be false
     expect(component["foundPath"]).toBeFalsy();
