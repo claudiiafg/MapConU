@@ -62,7 +62,7 @@ describe("IndoorMapComponent ", () => {
     expect(component).toBeTruthy();
   });
   it("should ngAfterViewInit", () => {
-    const spyIn = spyOn(component, "setMap");
+    const spyIn = spyOn(component, "subscribeToshowToa");
     component.ngAfterViewInit();
     expect(spyIn).toHaveBeenCalled();
   });
@@ -89,21 +89,13 @@ describe("IndoorMapComponent ", () => {
       }
     ];
     component["inputBuilding"] = "jmsb";
+    spyOn(
+      component["indoorDirectionsService"],
+      "getPointByName"
+    ).and.callThrough();
     spyOn(component["interestPoints"], "filter").and.callFake(() => {
       return point;
     });
-    spyOn(
-      component["directionManager"],
-      "initiateIndoorDirections"
-    ).and.callThrough();
-    component["destID"];
-    component["isSelectMode"] = true;
-    component["initNav"]("mb");
-    expect(component["destID"]).toEqual("mb");
-    expect(component["isSelectMode"]).toBeFalsy();
-    expect(
-      component["directionManager"].initiateIndoorDirections
-    ).toHaveBeenCalled();
 
     component["inputBuilding"] = "hall";
     component["floor"] = 9;

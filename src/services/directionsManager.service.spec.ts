@@ -1,19 +1,38 @@
 import { TestBed } from "@angular/core/testing";
 import { DirectionsManagerService } from "./directionsManager.service";
+import { GeolocationServices } from "./geolocation.services";
 import { TranslationService } from "./translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { RouteReuseStrategy } from "@angular/router";
 import { IonicRouteStrategy } from "@ionic/angular";
+import { Geolocation } from "@ionic-native/geolocation/ngx";
+import {
+  PreloadAllModules,
+  Router,
+  RouterModule,
+  Routes
+} from "@angular/router";
 
-import { BehaviorSubject } from "rxjs";
-import { Router } from "@angular/router";
+// import { IndoorViewPage } from "src/app/pages/indoor-view/indoor-view.page";
+// import { OutdoorViewPage } from "src/app/pages/outdoor-view/outdoor-view.page";
+// import { SettingsPage } from "src/app/pages/settings/settings.page";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
+
+// const routes: Routes = [
+//   { path: "outdoor", component: OutdoorViewPage },
+//   { path: "outdoor/isMixedNav/:id", component: OutdoorViewPage },
+//   { path: "indoor/:id", component: IndoorViewPage },
+//   { path: "appSettings", component: SettingsPage },
+//
+//   //redirect to outdoor if path is not recognized
+//   { path: "**", redirectTo: "outdoor" }
+// ];
 
 describe("DirectionsManagerService", () => {
   beforeEach(() => {
@@ -26,12 +45,15 @@ describe("DirectionsManagerService", () => {
             useFactory: LanguageLoader,
             deps: [HttpClient]
           }
-        })
+        }),
+        RouterModule.forRoot([])
       ],
       providers: [
         TranslationService,
         DirectionsManagerService,
-        Router,
+        Geolocation,
+        GeolocationServices,
+        { provide: Router },
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
       ]
     }).compileComponents();
