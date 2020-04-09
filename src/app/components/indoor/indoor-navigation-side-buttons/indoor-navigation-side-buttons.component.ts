@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { PopoverController, Events } from '@ionic/angular';
+import { ModalController, PopoverController, Events } from '@ionic/angular';
 import { RoomSelectorPopoverComponent } from '../../popovers/room-selector-popover/room-selector-popover.component';
 import { InfoPopoverComponent } from '../../popovers/info-popover/info-popover.component';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { TranslationService } from 'src/services/translation.service';
 import { DataSharingService} from '../../../../services/data-sharing.service';
+import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 
 @Component({
   selector: 'app-indoor-navigation-side-buttons',
@@ -20,7 +21,8 @@ export class IndoorNavigationSideButtonsComponent {
     private events: Events,
     private directionsManagerService: DirectionsManagerService,
     private translate: TranslationService,
-    private dataSharing: DataSharingService
+    private dataSharing: DataSharingService,
+    private modalController: ModalController
   ) {
     this.events.subscribe('open-indoor-popup', data => {
       this.presentPopover(data);
@@ -55,6 +57,14 @@ export class IndoorNavigationSideButtonsComponent {
 
     popover.style.cssText = 'top: -220px; left: 80px;';
     return await popover.present();
+  }
+
+  async openCalendar() {
+    const modal = await this.modalController.create({
+      component: CalendarComponent
+    })
+
+    return await modal.present();
   }
 
   //return instructions to user
