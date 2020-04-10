@@ -1,15 +1,16 @@
 .h9-plan-wrapper {
   display: block;
-  margin-top: 135px;
 
   svg {
     width: auto;
+    position: relative;
+    bottom: -100px;
   }
 
   text{
     fill: #1e2023;
-    font-weight: bold;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 15pt;
   }
 
 }

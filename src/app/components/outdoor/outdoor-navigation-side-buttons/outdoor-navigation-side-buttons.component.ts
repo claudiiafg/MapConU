@@ -4,8 +4,10 @@ import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
 import { PoiPopoverComponent } from '../../popovers/poi-popover/poi-popover.component';
 import { SearchPopoverComponent } from '../../popovers/search-popover/search-popover.component';
+import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
+import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',
@@ -16,18 +18,33 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
   public isDirectionSet: boolean = false;
   public bottomStyle: number = 0;
+  private mixedDirectionsType = null;
+  private isClassToClass: boolean = false;
+  private isClassToBuilding: boolean = false;
 
   constructor(
     public popoverController: PopoverController,
     private events: Events,
     public modalController: ModalController,
     public directionService: DirectionService,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private directionManager: DirectionsManagerService,
   ) {
     this.directionService.isDirectionSet.subscribe(
       (isDirectionSet: boolean) => {
         this.isDirectionSet = isDirectionSet;
         this.bottomStyle = isDirectionSet ? -7 : 0;
+
+        if(this.directionManager.getMixedType() === MixedDirectionsType.floorToBuilding){
+          this.isClassToBuilding = true;
+          this.isClassToClass = false;
+        } else if(this.directionManager.getMixedType() === MixedDirectionsType.classToClass){
+          this.isClassToClass = true;
+          this.isClassToBuilding = false;
+        } else {
+          this.isClassToBuilding = false;
+          this.isClassToClass = false;
+        }
       }
     );
   }
@@ -44,6 +61,14 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       keyboardClose: true,
       showBackdrop: true
     });
+
+    return await modal.present();
+  }
+
+  async openCalendar() {
+    const modal = await this.modalController.create({
+      component: CalendarComponent
+    })
 
     return await modal.present();
   }
@@ -79,6 +104,16 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   }
 
   public close() {
+    this.events.publish('reset-indoor', Date.now());
+    this.resetOutdoor();
+  }
+
+  public next(){
+    this.events.publish('get-next-step', true, Date.now());
+    this.resetOutdoor();
+  }
+
+  private resetOutdoor(){
     this.directionService.origin.next([]);
     this.directionService.destination.next([]);
     this.directionService.isDirectionSet.next(false);
@@ -90,4 +125,5 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       this.directionService.alternateDirectionSet = false;
     }
   }
+
 }

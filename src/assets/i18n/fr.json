@@ -6,7 +6,7 @@
   "english": "Anglais",
   "french": "Français",
   "google": "Compte Google",
-  "source-code": "Code cource",
+  "source-code": "Code source",
   "start-location": "[localisation actuelle]",
   "start-point": "Point de départ",
   "end-location": "destination",
@@ -57,6 +57,7 @@
   "stairs": " Escaliers",
   "escalators": "Escaliers mécaniques",
   "elevators": "Ascenseurs",
+  "fire-exit": "Sortie de Secours",
   "exit": "Sortie",
   "find-way": "D'où voulez-vous d'avoir des indications?",
   "fm-escalator": "À partir des escaliers mécaniques",
@@ -74,5 +75,10 @@
   "Do you want to quit?": "Voulez-vous quitter?",
   "cancel": "Annuler",
   "quit": "Quitter",
-  "no-floor-plan-msg" : "aucun plan d'étage disponible pour l'"
+  "no-floor-plan-msg" : "aucun plan d'étage disponible pour l'",
+  "estimated-toa": "Heure d'arrivée à",
+  "from" : "de",
+  "time": "Durée:",
+  "mins": "minutes"
+
 }

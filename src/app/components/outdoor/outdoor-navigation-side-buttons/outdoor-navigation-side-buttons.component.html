@@ -1,6 +1,9 @@
 <ion-fab vertical="start" horizontal="start" slot="fixed">
   <ion-fab-button>
-    <ion-icon name="calendar"></ion-icon>
+    <ion-icon
+      name="calendar"
+      (click)="openCalendar()"
+    ></ion-icon>
   </ion-fab-button>
   <ion-fab-button>
     <ion-icon
@@ -14,7 +17,7 @@
       (click)="presentPopover($event, 'poi')" class="closeButton"
     ></ion-icon>
   </ion-fab-button>
-  <ion-fab-button>
+  <ion-fab-button id="bus-button">
     <ion-icon name="bus" (click)="openViewer()" class="busButton"></ion-icon>
   </ion-fab-button>
 </ion-fab>
@@ -25,15 +28,20 @@
   slot="fixed"
   [style.bottom.px]="bottomStyle"
 >
-  <ion-fab-button class="nav-button">
+  <ion-fab-button class="nav-button" id="navigation-button">
     <ion-icon
       name="compass"
       (click)="presentPopover($event, 'search')"
     ></ion-icon>
   </ion-fab-button>
-  <ng-container *ngIf="isDirectionSet">
+  <ng-container *ngIf="isDirectionSet || isClassToBuilding">
     <ion-fab-button class="close-button" (click)="close()">
       <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ng-container>
+  <ng-container *ngIf="isDirectionSet && isClassToClass">
+    <ion-fab-button class="close-button" (click)="next()">
+      <ion-icon name="arrow-forward"></ion-icon>
     </ion-fab-button>
   </ng-container>
 </ion-fab>

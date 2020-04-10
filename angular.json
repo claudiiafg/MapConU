@@ -32,6 +32,8 @@
               }
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/angular-calendar/css/angular-calendar.css",
               {
                 "input": "src/theme/variables.scss"
               },
@@ -98,7 +100,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "styles": [],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/angular-calendar/css/angular-calendar.css"
+            ],
             "scripts": [],
             "assets": [
               {
@@ -128,7 +133,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {

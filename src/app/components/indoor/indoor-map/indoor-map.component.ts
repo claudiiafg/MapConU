@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Events } from '@ionic/angular';
 import {
   Line,
@@ -6,6 +6,8 @@ import {
   IndoorDirectionsService
 } from 'src/services/indoorDirections.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
+import { Router } from '@angular/router';
+import { DataSharingService} from '../../../../services/data-sharing.service';
 
 @Component({
   selector: 'app-indoor-map',
@@ -24,15 +26,30 @@ export class IndoorMapComponent implements OnInit {
   private path: string[] = []; //path of line ids
   private foundPath: boolean = false;
   private marker: any;
+  private poiMarker: any;
+  private isInit: boolean = true;
 
   constructor(
     private events: Events,
     private indoorDirectionsService: IndoorDirectionsService,
-    private directionManager: DirectionsManagerService
-  ) {
+    private directionManager: DirectionsManagerService,
+    private router: Router,
+    private dataSharing: DataSharingService
+  ) {}
+
+  ngOnInit() {
+    this.events.subscribe('initNewMap', () =>{
+      //if is new floor plan init new map
+      this.isInit = true;
+    });
+
     //when floor component is loaded -> setup map
-    this.events.subscribe('floor-loaded', () => {
-      this.setMap();
+    this.events.subscribe('floor-loaded', res => {
+      if(this.inputBuilding === res.building && this.isInit){
+        this.isInit = false;
+        this.setMap();
+        this.dataSharing.updateCurrentBuilding(this.inputBuilding);
+      }
     });
 
     //when path is found -> display lines of path on map
@@ -61,15 +78,18 @@ export class IndoorMapComponent implements OnInit {
           point => point.id === this.destID
         )[0];
         this.setMarker(p);
-        this.indoorDirectionsService.computePathHelper(
-          this.sourceID,
-          this.destID
-        );
+        if(this.sourceID !== this.destID){
+          this.indoorDirectionsService.computePathHelper(
+            this.sourceID,
+            this.destID
+          );
+        }
       }
     });
 
     //add event listener to all 'points of interest' elements of map
     document.addEventListener('click', (res: any) => {
+      res.stopImmediatePropagation();
       let ele: string = res.toElement.id;
       if (
         ele.includes('wc') ||
@@ -84,101 +104,117 @@ export class IndoorMapComponent implements OnInit {
         this.initNav(ele);
       }
     });
-  }
 
-  ngOnInit() {}
+    this.dataSharing.showPoi.subscribe( markerId =>{
+      let poiMarkerId = markerId[0].concat('-marker');
+        console.log('poi with concatenation is ', poiMarkerId);
+        this.poiMarker = document.getElementById(poiMarkerId);
+      if(poiMarkerId != 'poiToShow-marker') {
+        try {
+          this.poiMarker.style.visibility = 'visible';
+        }
+        catch(Exception){
+          console.log(this.poiMarker, ' not found for current map');
+        }
+      }
+    });
+
+    this.dataSharing.hidePoi.subscribe( markerId =>{
+      let poiMarkerId = markerId[0].concat('-marker');
+        this.poiMarker = document.getElementById(poiMarkerId);
+        if(poiMarkerId != 'poiToHide-marker') {
+          try {
+            this.poiMarker.style.visibility = 'hidden';
+          }
+          catch(Exception){
+            console.log(this.poiMarker, ' not found for current map');
+          }
+      }
+    });
+  }
 
   //when indoor component is first initiated
   ngAfterViewInit() {
-    this.setMap();
+    this.subscribeToshowToa();
+  }
+
+  public subscribeToshowToa(){
+    this.dataSharing.showToa.subscribe(updateShow =>{
+      if (updateShow === false){
+        this.resetNav();
+        this.unsetMarker();
+      }
+    })
   }
 
   //get all element from floor plan and setup indoorDirections map
   setMap() {
-    if (this.directionManager.getIsSelectMode()) {
+    if (this.directionManager.getIsSelectMode() === true) {
       this.isSelectMode = true;
     }
-
-    let docElementLines = document.getElementsByTagName('line');
-    let docInterestPoints = document.getElementsByTagName('circle');
+    //in order to avoid any mixture of data between floors, target actual div element of the floor plan
+    let currentDoc : any;
+    if(this.inputBuilding === 'hall' && this.floor === 8){
+      currentDoc = document.getElementById('h8-plan-wrapper');
+    } else if(this.inputBuilding === 'hall' && this.floor === 9){
+      currentDoc = document.getElementById('h9-plan-wrapper');
+    } else {
+      currentDoc = document.getElementById('mb1-plan-wrapper');
+    }
+    let docElementLines = currentDoc.getElementsByTagName('line');
+    let docInterestPoints = currentDoc.getElementsByTagName('circle');
     this.marker = document.getElementById('marker');
     if(this.marker){
       this.marker.style.visibility = 'hidden';
     }
 
+    //set map in service and get all info from it
     this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
     this.pathLines = this.indoorDirectionsService.getLines();
     this.interestPoints = this.indoorDirectionsService.getPoints();
-    this.events.publish('map-set', true, Date.now());
+
+    //when map is set, send event so any path waiting to start can begin
+    const data = {
+      building: this.inputBuilding,
+      floor: this.floor,
+    }
+    this.events.publish('map-set', data, Date.now());
   }
 
   //initiate the process of navigation (when user click on a element)
   public initNav(name: string) {
-    let point: Point;
-
-    if (name.includes('mb')) {
-      point = this.interestPoints.filter(point => point.id === name)[0];
-    } else if (name.includes('h8')) {
-      point = this.interestPoints.filter(point => point.id === name)[0];
-    } else if (name.includes('h9')) {
-      point = this.interestPoints.filter(point => point.id === name)[0];
-    } else if (name.includes('elevator')) {
-      point = this.interestPoints.filter(point => point.id === 'elevator')[0];
-    } else if (name.includes('female')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-wc-female'
-      )[0];
-    } else if (name.includes('male')) {
-      point = this.interestPoints.filter(point => point.id === 'h8-wc-male')[0];
-    } else if (name.includes('ne')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-ne'
-      )[0];
-    } else if (name.includes('nw')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-nw'
-      )[0];
-    } else if (name.includes('sw')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-sw'
-      )[0];
-    } else if (name.includes('se')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-stairs-se'
-      )[0];
-    } else if (name.includes('escalator-down')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-escalator-down'
-      )[0];
-    } else if (name.includes('escalator-up')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'h8-escalator-up'
-      )[0];
-    }
+    const point: Point = this.indoorDirectionsService.getPointByName(name);
     if (point) {
+      this.inputBuilding = this.router.url.substring(this.router.url.lastIndexOf('/') + 1, this.router.url.length);
+
       this.destID = point.id;
       this.setMarker(point);
       this.isSelectMode = this.directionManager.getIsSelectMode();
 
       //user wants floor to floor directions -> the room he just selected is to be concated to the already existing steps of navigation
-      if (this.isSelectMode) {
+      if (this.isSelectMode === true) {
+        this.floor = this.checkCurrentFloorNumber();
         if (this.inputBuilding === 'hall' && this.floor === 8) {
           this.directionManager.initDifferentFloorDir(
             false,
             'h8',
-            this.destID,
-            this.interestPoints
+            this.destID
           );
         } else if (this.inputBuilding === 'hall' && this.floor === 9) {
           this.directionManager.initDifferentFloorDir(
             false,
             'h9',
-            this.destID,
-            this.interestPoints
+            this.destID
+          );
+        } else if (this.inputBuilding === 'jmsb') {
+          this.directionManager.initDifferentFloorDir(
+            false,
+            'mb1',
+            this.destID
           );
         }
 
-        //initiating first step
+      //initiating first step
       } else {
         if (this.inputBuilding === 'hall' && this.floor === 8) {
           this.directionManager.initiateIndoorDirections(
@@ -205,11 +241,35 @@ export class IndoorMapComponent implements OnInit {
     }
   }
 
+  private checkCurrentFloorNumber(): number{
+    let floor8 = document.getElementById('h8-plan-wrapper');
+    let floor9 = document.getElementById('h9-plan-wrapper');
+    let floor1 = document.getElementById('mb1-plan-wrapper');
+
+    if(floor8){
+      return 8;
+    } else if(floor9) {
+      return 9;
+    } else if(floor1) {
+      return 1;
+    }
+
+  }
+
   //set marker on the map
-  setMarker(point: Point) {
-    this.marker.setAttribute('x', point.x - 26);
-    this.marker.setAttribute('y', point.y - 26);
-    this.marker.style.visibility = 'visible';
+  private setMarker(point: Point) {
+    if(point && point.x && point.y){
+      if(!this.marker){
+        this.marker = document.getElementById('marker');
+      }
+      this.marker.setAttribute('x', point.x - 26);
+      this.marker.setAttribute('y', point.y - 26);
+      this.marker.style.visibility = 'visible';
+    }
+  }
+
+  unsetMarker(){
+    this.marker.style.visibility = 'hidden';
   }
 
   //reset all navigations instance variables in component and indoor directions service
@@ -223,4 +283,8 @@ export class IndoorMapComponent implements OnInit {
     this.foundPath = false;
     this.indoorDirectionsService.resetNav();
   }
+
+  //important to reload route
+  @HostListener('unloaded')
+  ngOnDestroy() {}
 }

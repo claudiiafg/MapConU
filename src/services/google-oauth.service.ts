@@ -15,6 +15,7 @@ export class GoogleOauthService {
     try {
       var login: any = await GooglePlus.login({
         'webClientId': '587682338275-slma4inmi8e0fgft1tv89plac17iud1g.apps.googleusercontent.com',
+        'scopes': 'email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events'
       });
       this.nativeStorage.setItem('google_session', login);
     } catch(err) {

@@ -57,6 +57,7 @@
   "stairs": "Stairs",
   "escalator": "Escalator",
   "elevators": "Elevators",
+  "fire-exit": "Emergency Exit",
   "exit": "Exit",
   "find-way": "Where do you wish to know directions from?",
   "fm-escalator": "From escalators",
@@ -74,5 +75,10 @@
   "Do you want to quit?": "Do you want to quit?",
   "cancel": "Cancel",
   "quit": "Quit",
-  "no-floor-plan-msg" : "No floor plan available for "
+  "no-floor-plan-msg" : "No floor plan available for ",
+  "estimated-toa": "Arrival time at",
+  "from": "from",
+  "time": "Time:",
+  "mins": "minutes"
+
 }

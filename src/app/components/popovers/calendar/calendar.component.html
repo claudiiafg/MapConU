@@ -1,0 +1,101 @@
+<div *ngIf="isReady; then isLoaded else notLoaded"></div>
+<ng-template #isLoaded>
+  <ion-header>
+    <ion-icon name="logo-google" color="black" size="large"></ion-icon>
+    <ion-title>
+      Your Calendar
+    </ion-title>
+    <!-- to center the title -->
+    <ion-icon name="md-close" color="black" size="large" (click)="close()"></ion-icon>
+  </ion-header>
+
+  <div class="outside-wrapper">
+    <div class="month-change-buttons">
+      <button
+        id="today"
+        class="buttondiv"
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+      >
+        Today
+      </button>
+      <button class="buttondiv back">
+        <ion-icon
+          name="ios-arrow-back"
+          color="black"
+          size="medium"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+        >
+        </ion-icon>
+      </button>
+      <button class="buttondiv front">
+        <ion-icon
+          name="ios-arrow-forward"
+          color="black"
+          size="medium"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+        >
+        </ion-icon>
+      </button>
+      <h3 id="title">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="view-calendar">
+      <button
+        class="buttondiv back back2"
+        (click)="setView(CalendarView.Month)"
+        [class.active]="view === CalendarView.Month"
+      >
+        Month
+      </button>
+      <button
+        class="buttondiv"
+        (click)="setView(CalendarView.Week)"
+        [class.active]="view === CalendarView.Week"
+      >
+        Week
+      </button>
+      <button
+        class="buttondiv front"
+        (click)="setView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day"
+      >
+        Day
+      </button>
+    </div>
+  </div>
+
+  <div [ngSwitch]="view" class="calendar-body">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="requestDirections($event)"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+    >
+    </mwl-calendar-day-view>
+  </div>
+</ng-template>
+
+<ng-template #notLoaded>
+  <mat-progress-spinner mode="indeterminate" style="margin: auto;"></mat-progress-spinner>
+</ng-template>
