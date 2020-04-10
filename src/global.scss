@@ -25,6 +25,14 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+@import '~angular-calendar/scss/angular-calendar.scss';
+
+@include cal-theme(
+    (
+      event-color-primary: #1f262d
+    )
+);
+
 .alert-wrapper {
   display: block;
 }

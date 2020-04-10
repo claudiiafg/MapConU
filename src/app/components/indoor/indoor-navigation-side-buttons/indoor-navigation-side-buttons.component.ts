@@ -5,6 +5,7 @@ import { InfoPopoverComponent } from '../../popovers/info-popover/info-popover.c
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { TranslationService } from 'src/services/translation.service';
 import { DataSharingService} from '../../../../services/data-sharing.service';
+import { IndoorPoiPopoverComponent} from '../../popovers/indoor-poi-popover/indoor-poi-popover.component';
 import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 
 @Component({
@@ -56,6 +57,15 @@ export class IndoorNavigationSideButtonsComponent {
     });
 
     popover.style.cssText = 'top: -220px; left: 80px;';
+    return await popover.present();
+  }
+
+  async showIndoorPoi(){
+    this.dataSharing.updateIndoorPoiToggles(true);
+    const popover = await this.popoverController.create({
+      component: IndoorPoiPopoverComponent,
+      translucent: false
+    });
     return await popover.present();
   }
 

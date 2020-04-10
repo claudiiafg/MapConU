@@ -1,0 +1,62 @@
+<div id="indoor-poi-popover">
+  <ion-list>
+    <ion-item class="poi-item">
+      <img src="/assets/icon/bathroom.png" class="icon" />
+      <ion-label>{{ 'bathroom' | translate }}</ion-label>
+      <ion-toggle
+              name="bathroom"
+              [(ngModel)]="bathroom"
+              (ionChange)="togglePoi('bathroom', bathroom)"
+      ></ion-toggle>
+    </ion-item>
+
+    <ion-item class="poi-item">
+      <img src="/assets/icon/elevator.png" class="icon" />
+      <ion-label>{{ 'elevators' | translate }}</ion-label>
+      <ion-toggle
+              name="elevators"
+              [(ngModel)]="elevators"
+              (ionChange)="togglePoi('elevators', elevators)"
+      ></ion-toggle>
+    </ion-item>
+
+    <ion-item class="poi-item">
+      <img src="/assets/icon/stairs.png" class="icon" />
+      <ion-label>{{ 'stairs' | translate }}</ion-label>
+      <ion-toggle
+              name="stairs"
+              [(ngModel)]="stairs"
+              (ionChange)="togglePoi('stairs', stairs)"
+      ></ion-toggle>
+    </ion-item>
+
+    <ion-item class="poi-item">
+      <img src="/assets/icon/escalator.png" class="icon" />
+      <ion-label>{{ 'escalator' | translate }}</ion-label>
+      <ion-toggle
+              name="escalator"
+              [(ngModel)]="escalator"
+              (ionChange)="togglePoi('escalator', escalator)"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item class="poi-item">
+      <img src="/assets/icon/emerg-exit.png" class="icon" />
+      <ion-label>{{ 'fire-exit' | translate}}</ion-label>
+      <ion-toggle
+              name="fireExit"
+              [(ngModel)]="fireExit"
+              (ionChange)="togglePoi('fireExit', fireExit)"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item class="poi-item" *ngIf="building === 'jmsb'">
+      <img src="/assets/icon/entrance.png" class="icon" />
+      <ion-label>{{ 'entrance' | translate}}</ion-label>
+      <ion-toggle
+              name ="entrance"
+              [(ngModel)]="entrance"
+              (ionChange)="togglePoi('entrance', entrance)"
+      ></ion-toggle>
+    </ion-item>
+  </ion-list>
+  <ion-button class = 'close-button' (click)="closePoi()">Close</ion-button>
+</div>

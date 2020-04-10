@@ -6,7 +6,9 @@
   ></app-indoor-navigation-toolbar>
 </ion-header>
 <ion-content>
-  <app-indoor-navigation-side-buttons [isSelectMode]="isSelectMode">
+  <app-indoor-navigation-side-buttons
+          [isSelectMode]="isSelectMode"
+  >
   </app-indoor-navigation-side-buttons>
   <app-indoor-time-of-arrival
           *ngIf="showToaComponent"
