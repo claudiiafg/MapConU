@@ -33,11 +33,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 */
 
 export class CalendarComponent implements OnInit {
+  private calendarTitle: string = "";
   googleSession: any = null;
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   eventsObservables: any[] = [];
   calendarsList: any;
@@ -57,8 +58,11 @@ export class CalendarComponent implements OnInit {
     try {
       this.googleSession = await this.googleOAuth.getStoredSession();
       this.isReady = false;
+      this.calendarTitle = "Your Calendar";
       this.getUserCalendarsRequest();
     } catch(err) {
+      this.isReady = true;
+      this.events = [];
       this.googleSession = null;
     }
   }
@@ -195,5 +199,14 @@ export class CalendarComponent implements OnInit {
     }
 
     return eventsList;
+  }
+
+  /**
+    To login when the user is not logged in in the calendar
+  */
+  async login() {
+    await this.googleOAuth.loginUser();
+    this.googleSession = await this.googleOAuth.getStoredSession();
+    this.ngOnInit();
   }
 }

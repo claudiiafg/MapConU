@@ -1,14 +1,20 @@
 <div *ngIf="isReady; then isLoaded else notLoaded"></div>
 <ng-template #isLoaded>
-  <ion-header>
-    <ion-icon name="logo-google" color="black" size="large"></ion-icon>
-    <ion-title>
-      Your Calendar
-    </ion-title>
+  <ion-header id="header">
+    <ion-icon class="logo-google" name="logo-google" [color]="googleSession ? 'secondary' : 'primary'" size="large"></ion-icon>
+    <ng-template [ngIf]="!googleSession">
+      <ion-button class="login-button" size="large" (click)="login()">
+        <ion-icon name="link"></ion-icon>
+      </ion-button>
+    </ng-template>
+    <strong id="calendar">
+      {{ calendarTitle }}
+    </strong>
     <!-- to center the title -->
-    <ion-icon name="md-close" color="black" size="large" (click)="close()"></ion-icon>
+    <ion-icon name="md-close" size="large" color="black" (click)="close()"></ion-icon>
   </ion-header>
 
+  <h3 id="title">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
   <div class="outside-wrapper">
     <div class="month-change-buttons">
       <button
@@ -41,7 +47,6 @@
         >
         </ion-icon>
       </button>
-      <h3 id="title">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
     </div>
     <div class="view-calendar">
       <button
