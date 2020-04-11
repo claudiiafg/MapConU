@@ -18,7 +18,7 @@ import {TranslationService} from "../../../../services/translation.service";
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import {Buildinginfo} from '../../../../services/buildinginfo';
+import {Buildinginfo} from '../../../../models/buildinginfo';
 import {SQLite} from '@ionic-native/sqlite/ngx';
 import {SQLitePorter} from '@ionic-native/sqlite-porter/ngx';
 
