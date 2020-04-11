@@ -88,7 +88,9 @@ export class TimeFooterComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscribeToBuildingToFloor();
+  }
 
   //initiate indoor direction
   public initRoute() {
@@ -100,6 +102,12 @@ export class TimeFooterComponent implements OnInit {
     } else {
       this.getNextStep();
     }
+  }
+
+  public subscribeToBuildingToFloor() {
+    this.events.subscribe('building-to-floor', () => {
+      this.initRoute();
+    });
   }
 
   public async presentModal() {
