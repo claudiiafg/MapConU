@@ -2,18 +2,20 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   --inner-padding-bottom: 0px;
-  float: right;
-  padding-right: 2em;
   color: white;
+  display: contents;
 }
 
 .select-campus {
-  position: absolute;
   max-width: fit-content;
+  margin: auto;
+  position: relative;
+  padding-right: -45px;
 }
 
 .search-location {
   position: relative;
+  display: contents;
   padding: 0;
   --box-shadow: none;
 }
@@ -25,10 +27,6 @@
 
 .searchbar-input-container .sc-ion-searchbar-ios {
   height: 40px;
-}
-
-.select-campus {
-  position: initial;
 }
 
 .settings-button {
