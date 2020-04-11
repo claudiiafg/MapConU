@@ -19,8 +19,9 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public isDirectionSet: boolean = false;
   public bottomStyle: number = 0;
   private mixedDirectionsType = null;
-  private isClassToClass: boolean = false;
-  private isClassToBuilding: boolean = false;
+  public isClassToClass: boolean = false;
+  public isClassToBuilding: boolean = false;
+  public isBuildingToClass: boolean = false;
 
   constructor(
     public popoverController: PopoverController,
@@ -38,12 +39,19 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
         if(this.directionManager.getMixedType() === MixedDirectionsType.floorToBuilding){
           this.isClassToBuilding = true;
           this.isClassToClass = false;
+          this.isBuildingToClass = false;
         } else if(this.directionManager.getMixedType() === MixedDirectionsType.classToClass){
           this.isClassToClass = true;
           this.isClassToBuilding = false;
+          this.isBuildingToClass = false;
+        } else  if(this.directionManager.getMixedType() === MixedDirectionsType.buildingToFloor){
+          this.isClassToClass = false;
+          this.isClassToBuilding = false;
+          this.isBuildingToClass = true;
         } else {
           this.isClassToBuilding = false;
           this.isClassToClass = false;
+          this.isBuildingToClass = false;
         }
       }
     );

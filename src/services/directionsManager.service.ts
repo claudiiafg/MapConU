@@ -445,7 +445,7 @@ export class DirectionsManagerService {
   //create path from current location to class room using destination classroom string
   public getPathToRoom(classroom: string){
     //remove all white space or symbols from classroom string
-    classroom.replace(/[\s|\W]*/g, '');
+    let classroomFormatted = classroom.replace(/[\s|\W]*/g, '').toLocaleLowerCase();
 
     const coordinates = this.geolocationService.getCoordinates();
     if(coordinates){
@@ -453,35 +453,35 @@ export class DirectionsManagerService {
       let toBuildingLng: number;
       let toBuilding: any;
       let tempIndoorStep: any;
-      if(classroom.includes('mb1')){
+      if(classroomFormatted.includes('mb1')){
         toBuilding = 'jmsb';
         toBuildingLat = this.jmsbCoords.lat;
         toBuildingLng = this.jmsbCoords.lng;
 
-        //indoor path to jmsb classroom
+        //indoor path to jmsb classroomFormatted
         tempIndoorStep = {
           floor: 'mb1',
           source: 'entrance',
-          dest: classroom,
+          dest: classroomFormatted,
           wasDone: false,
           isLast: true
         }
 
-      } else if(classroom.includes('h8') || classroom.includes('h9')){
+      } else if(classroomFormatted.includes('h8') || classroomFormatted.includes('h9')){
         toBuilding = "hall";
         toBuildingLat = this.hallCoords.lat;
         toBuildingLng = this.hallCoords.lng;
         
-        //indoor path to hall building classroom
+        //indoor path to hall building classroomFormatted
         tempIndoorStep = {
-          floor: (classroom.includes('h8')) ? 'h8' : 'h9',
+          floor: (classroomFormatted.includes('h8')) ? 'h8' : 'h9',
           source: 'escalators-up',
-          dest: classroom,
+          dest: classroomFormatted,
           wasDone: false,
           isLast: true
         }
       }
-      //building of classroom
+      //building of classroomFormatted
       const to = {
         building: toBuilding,
         lat: toBuildingLat,
@@ -503,6 +503,7 @@ export class DirectionsManagerService {
       this.pushStep(tempOutdoorStep);
       this.pushStep(tempIndoorStep);
       this.mixedType = MixedDirectionsType.buildingToFloor;
+      this.dataSharingService.updateMapSize(-210);
       this.initiatePathSteps();
 
     } else {
