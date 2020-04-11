@@ -71,6 +71,7 @@
     "rxjs": "~6.5.1",
     "serialize-javascript": "^2.1.2",
     "tslib": "^1.9.0",
+    "typedoc": "^0.15.0",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "1.1.1",
     "xml-js": "^1.6.11",
     "zone.js": "~0.9.1"
@@ -88,7 +89,7 @@
     "@types/googlemaps": "^3.39.2",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "^13.11.1",
     "codelyzer": "^5.0.0",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-ionic-keyboard": "^2.2.0",

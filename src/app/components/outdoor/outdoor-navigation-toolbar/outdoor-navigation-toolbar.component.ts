@@ -5,6 +5,7 @@ import {
   NgZone,
   OnInit,
   ViewChild,
+  Input,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
@@ -163,6 +164,10 @@ export class OutdoorNavigationToolbarComponent
     this.directionService.changeTravelMode.next(travelMode);
   }
 
+  /**
+   * Function to set the color of icon selected when user switch between different travel mode.
+   * @param travelMode Travel mode selected by the user. Possible values currently within the app are DRIVING, TRANSIT, WALKING.
+   */
   public setSelectedColor(travelMode: string) {
     if (travelMode === 'DRIVING') {
       this.carColor = 'yellow';

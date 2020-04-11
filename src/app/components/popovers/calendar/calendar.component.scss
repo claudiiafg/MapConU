@@ -3,11 +3,6 @@
   height: 80%;
 }
 
-#title {
-  margin-left: 10px;
-  font-size: 100%;
-}
-
 #today {
   margin: 0 5px;
   border-radius: 3px;
@@ -19,15 +14,26 @@ pre {
   padding: 15px;
 }
 
-ion-title {
-  text-align: center;
-}
-
-.outside-wrapper, .month-change-buttons, .view-calendar, ion-header {
+.outside-wrapper, .month-change-buttons, .view-calendar {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+#header {
+  display: flex;
+  align-items: center;
+}
+
+#calendar {
+  margin: 0 auto;
+  font-size: 130%;
+}
+
+#title {
+  margin-left: 5px;
+}
+
 
 .buttondiv {
   border-style: solid;
@@ -62,4 +68,14 @@ ion-title {
 
 :host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
     stroke: var(--ConcordiaRed);
+}
+
+.login-button {
+  width: 3em;
+  height: 70%;
+}
+
+.logo-google {
+  --ion-color-primary: black;
+  --ion-color-secondary: var(--ConcordiaRed);
 }
