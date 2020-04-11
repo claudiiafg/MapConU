@@ -1,21 +1,22 @@
 import { MapsAPILoader } from '@agm/core';
-
 import {
   AfterViewInit,
   Component,
   NgZone,
   OnInit,
-  ElementRef,
   ViewChild,
   Input,
 } from '@angular/core';
+import { Router } from '@angular/router';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { Events, IonSearchbar } from '@ionic/angular';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { DirectionService } from 'src/services/direction.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
-import { Router } from '@angular/router';
 import { TranslationService } from '../../../../services/translation.service';
-
+import { isPlatformBrowser } from '@angular/common';
+import { SpeechRecognitionListeningOptions } from '@ionic-native/speech-recognition/ngx';
 @Component({
   selector: 'app-outdoor-navigation-toolbar',
   templateUrl: './outdoor-navigation-toolbar.component.html',
@@ -51,7 +52,9 @@ export class OutdoorNavigationToolbarComponent
     public directionService: DirectionService,
     private router: Router,
     private translate: TranslationService,
-    private geolocationServices: GeolocationServices
+    private geolocationServices: GeolocationServices,
+    private speechRecognition: SpeechRecognition,
+    private deviceDetector: DeviceDetectorService
   ) {
     this.dataSharingService.currentMessage.subscribe(
       (incomingMessage) => (this.message = incomingMessage)
@@ -62,10 +65,24 @@ export class OutdoorNavigationToolbarComponent
   }
 
   async ngOnInit() {
+    console.log(this.translate.getCurrentLanguage());
+    if (this.deviceDetector.os === 'iOS') {
+      this.setIOSstyle();
+    }
     this.loc = '0';
     await this.geolocationServices.getCurrentPosition();
     this.currentLat = this.geolocationServices.getLatitude();
     this.currentLng = this.geolocationServices.getLongitude();
+  }
+
+  public setIOSstyle() {
+    if (isPlatformBrowser) {
+      const searchButton = document.getElementById('search-button');
+      searchButton.style.background = '#ededed';
+      searchButton.style.height = '27px';
+      const searchRightDiv = document.getElementById('search-right-div');
+      searchRightDiv.style.background = '#ededed';
+    }
   }
 
   ngAfterViewInit() {
@@ -167,9 +184,53 @@ export class OutdoorNavigationToolbarComponent
     }
   }
   /*
-  Takes the user to the settings page
+   Takes the user to the settings page
    */
   public adjustSettings() {
     this.router.navigateByUrl('/appSettings');
+  }
+
+  public tryRecording() {
+    this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
+      if (hasPermission) {
+        this.inputVoice();
+      } else {
+        this.speechRecognition.requestPermission().then(
+          () => {
+            console.log('Granted');
+            this.inputVoice();
+          },
+          () => console.log('Denied')
+        );
+      }
+    });
+  }
+
+  private inputVoice() {
+    let languageOptions = 'en-CA';
+
+    if (this.translate.getCurrentLanguage() === 'fr') {
+      languageOptions = 'fr-FR';
+    }
+
+    const options: SpeechRecognitionListeningOptions = {
+      language: languageOptions,
+    };
+
+    const micIcon = document.getElementById('icon-mic');
+    micIcon.style.color = '#800000';
+
+    if (this.deviceDetector.os === 'iOS') {
+      setTimeout(() => this.speechRecognition.stopListening(), 5000);
+    }
+
+    this.speechRecognition.startListening(options).subscribe(
+      (matches: string[]) => {
+        this.searchRef.value = matches[0];
+        this.searchRef.setFocus();
+        micIcon.style.color = '#929292';
+      },
+      (onerror) => console.log('error:', onerror)
+    );
   }
 }
