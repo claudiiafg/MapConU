@@ -76,5 +76,11 @@
   "estimated-toa": "Heure d'arrivée à",
   "from" : "de",
   "time": "Durée:",
-  "mins": "minutes"
+  "mins": "minutes",
+  "logout": "Déconnecter",
+  "calendar-title": "Votre Calendrier",
+  "today": "Aujourd'hui",
+  "month": "Mois",
+  "week": "Semaine",
+  "day": "Jour"
 }

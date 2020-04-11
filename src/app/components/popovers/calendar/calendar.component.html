@@ -8,7 +8,7 @@
       </ion-button>
     </ng-template>
     <strong id="calendar">
-      {{ calendarTitle }}
+      {{ 'calendar-title' | translate }}
     </strong>
     <!-- to center the title -->
     <ion-icon name="md-close" size="large" color="black" (click)="close()"></ion-icon>
@@ -23,7 +23,7 @@
         mwlCalendarToday
         [(viewDate)]="viewDate"
       >
-        Today
+        <ion-label>{{'today'| translate}}</ion-label>
       </button>
       <button class="buttondiv back">
         <ion-icon
@@ -54,21 +54,21 @@
         (click)="setView(CalendarView.Month)"
         [class.active]="view === CalendarView.Month"
       >
-        Month
+        <ion-label>{{'month'| translate}}</ion-label>
       </button>
       <button
         class="buttondiv"
         (click)="setView(CalendarView.Week)"
         [class.active]="view === CalendarView.Week"
       >
-        Week
+        <ion-label>{{'week'| translate}}</ion-label>
       </button>
       <button
         class="buttondiv front"
         (click)="setView(CalendarView.Day)"
         [class.active]="view === CalendarView.Day"
       >
-        Day
+        <ion-label>{{'day'| translate}}</ion-label>
       </button>
     </div>
   </div>

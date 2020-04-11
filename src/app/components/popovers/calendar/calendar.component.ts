@@ -20,6 +20,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { rrulestr } from 'rrule'
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslationService } from '../../../../services/translation.service';
 
 @Component({
   selector: 'app-calendar',
@@ -47,7 +48,12 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [];
 
-  constructor(private modalController: ModalController, private http: HttpClientService, private googleOAuth: GoogleOauthService) { }
+  constructor(
+      private modalController: ModalController,
+      private http: HttpClientService,
+      private googleOAuth: GoogleOauthService,
+      private translate: TranslationService
+  ) { }
 
   /**
     Check if the user is logged in to his google account.
@@ -58,7 +64,7 @@ export class CalendarComponent implements OnInit {
     try {
       this.googleSession = await this.googleOAuth.getStoredSession();
       this.isReady = false;
-      this.calendarTitle = "Your Calendar";
+      this.calendarTitle = this.translate.getTranslation('calendar-title');
       this.getUserCalendarsRequest();
     } catch(err) {
       this.isReady = true;

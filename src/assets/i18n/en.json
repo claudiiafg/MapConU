@@ -76,6 +76,11 @@
   "estimated-toa": "Arrival time at",
   "from": "from",
   "time": "Time:",
-  "mins": "minutes"
-
+  "mins": "minutes",
+  "logout": "Logout",
+  "calendar-title":"Your Calendar",
+  "today": "Today",
+  "month": "Month",
+  "week": "Week",
+  "day": "Day"
 }
