@@ -57,18 +57,24 @@
         Month
       </button>
       <button
-        class="buttondiv"
+        class="buttondiv back2"
         (click)="setView(CalendarView.Week)"
         [class.active]="view === CalendarView.Week"
       >
         Week
       </button>
       <button
-        class="buttondiv front"
+        class="buttondiv"
         (click)="setView(CalendarView.Day)"
         [class.active]="view === CalendarView.Day"
       >
         Day
+      </button>
+      <button
+        class="buttondiv front"
+        (click)="presentCalendars()"
+      >
+        <ion-icon name="md-calendar"></ion-icon><ion-icon name="ios-arrow-down"></ion-icon>
       </button>
     </div>
   </div>

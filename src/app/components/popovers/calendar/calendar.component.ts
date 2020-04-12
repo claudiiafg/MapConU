@@ -69,6 +69,8 @@ export class CalendarComponent implements OnInit {
 
   /**
     Opens the small div with the events detail when a day is clicked. If the day does not contains any events, no div will be displayed
+    @param date Date day clicked
+    @param events Events in the date
   */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       if (isSameMonth(date, this.viewDate)) {
@@ -94,8 +96,8 @@ export class CalendarComponent implements OnInit {
 
   /**
     Sets the type of view of the Angular-calendar library. Could be monthly, weekly, and daily views
+    @param view MONTLY | WEEKLY | DAILY calendar view
   */
-
   setView(view: CalendarView) {
     this.view = view;
   }
@@ -150,6 +152,8 @@ export class CalendarComponent implements OnInit {
 
   /**
     Parse events fetched from google calendar to something that angular-calendar understands
+    @param events List of events in the calendar
+    @param color Color of the calendar the event belongs to
   */
   private getEventToInsert(events: any, color: any) {
     let eventsList: CalendarEvent[] = [];
@@ -208,5 +212,12 @@ export class CalendarComponent implements OnInit {
     await this.googleOAuth.loginUser();
     this.googleSession = await this.googleOAuth.getStoredSession();
     this.ngOnInit();
+  }
+
+  /**
+    Present the calendars popover
+  */
+  async presentCalendars() {
+    
   }
 }
