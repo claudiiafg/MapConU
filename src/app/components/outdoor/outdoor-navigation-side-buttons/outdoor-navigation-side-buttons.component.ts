@@ -91,6 +91,8 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
 
   async handleGoToClick()
   {
+    let latitude = this.selectedPoi.latitude
+    let longitude = this.selectedPoi.longitude
     this.directionService.isDirectionSet.next(true);
 
     if (this.directionService.alternateDirection) {
@@ -104,7 +106,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       this.geolocationServices.getLatitude(),
       this.geolocationServices.getLongitude()
     ]);
-    this.directionService.destination.next([this.selectedPoi.latLng.lat(), this.selectedPoi.latLng.lng()]);
+    this.directionService.destination.next([latitude, longitude]);
 
     this.poiUnselected()
   }

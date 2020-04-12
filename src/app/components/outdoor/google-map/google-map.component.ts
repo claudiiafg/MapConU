@@ -222,7 +222,7 @@ export class GoogleMapComponent implements OnInit {
     this.map.addListener('click', (event) => {
         this.events.publish('mapClicked');
         if (event.placeId) {
-          this.events.publish("poi-selected", {placeId: event.placeId, latLng: event.latLng});
+          this.events.publish("poi-selected", {placeId: event.placeId, latitude: event.latLng.lat(), longitude: event.latLng.lng()});
         }
         else{
           this.events.publish("poi-unselected");
@@ -318,10 +318,12 @@ export class GoogleMapComponent implements OnInit {
 
   //show name of POI when clicked on a marker
   public clickedMarker(infowindow: any) {
+    console.log(infowindow.hostMarker)
     if (this.previous) {
       this.previous.close();
     }
     this.previous = infowindow;
+    this.events.publish("poi-selected", {latitude: infowindow.hostMarker.latitude, longitude: infowindow.hostMarker.longitude});
   }
 
   public subscribeToUserInput() {
