@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
@@ -18,7 +18,8 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
   public isDirectionSet: boolean = false;
   public bottomStyle: number = 0;
-  public selectedPoiName: string = 'test2'
+  public selectedPoiName: string
+  public isPoiSelected: boolean = false
   private mixedDirectionsType = null;
   private isClassToClass: boolean = false;
   private isClassToBuilding: boolean = false;
@@ -26,6 +27,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   constructor(
     public popoverController: PopoverController,
     private events: Events,
+    private zone: NgZone,
     public modalController: ModalController,
     public directionService: DirectionService,
     private dataSharingService: DataSharingService,
@@ -51,7 +53,16 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.poiSelected(null)
+    this.events.subscribe('poi-selected', poi => {
+      this.zone.run(() => {
+        this.poiSelected(poi)
+      });
+    });
+    this.events.subscribe('poi-unselected', poi => {
+      this.zone.run(() => {
+        this.poiUnselected()
+      });
+    });
   }
 
   async openViewer() {
@@ -76,9 +87,18 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     return await modal.present();
   }
 
-  async poiSelected($event)
+  async poiSelected(poi: any)
   {
-    this.selectedPoiName = 'newName'
+
+    console.log("selected")
+    this.isPoiSelected = true
+    this.selectedPoiName = poi.placeId
+  }
+
+  async poiUnselected()
+  {
+    console.log("unselected")
+    this.isPoiSelected = false
   }
 
   async createRoute($event)

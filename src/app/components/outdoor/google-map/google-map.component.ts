@@ -209,18 +209,22 @@ export class GoogleMapComponent implements OnInit {
 
   public mapReady($event: any) {
     this.map = $event;
-    this.map.addListener('click', (e) => {
-      console.log('You clicked on: ' + e.latLng)
-        // If the event has a placeId, use it.
-        if (e.placeId) {
-          console.log('You clicked on place:' + e.placeId)
+    this.map.addListener('click', (event) => {
+        this.events.publish('mapClicked');
+        if (event.placeId) {
+          console.log('You clicked on place:' + event.placeId)
+          this.events.publish("poi-selected", {placeId: event.placeId, latLng: event.latLng});
         }
+        else{
+          this.events.publish("poi-unselected");
+        }
+
     });
   }
 
   public handleMapClicked()
   {
-    this.events.publish('mapClicked');
+    //this.events.publish('mapClicked');
   }
 
   public subscribeToChangeInPOI() {

@@ -40,6 +40,7 @@
       class="ml1"
       (click)="createRoute($event)"
       [selectedPoiName]="selectedPoiName"
+      [hidden]="!isPoiSelected"
       >
       Go to {{selectedPoiName}}
     </ion-button>
