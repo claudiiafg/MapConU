@@ -219,10 +219,15 @@ export class GoogleMapComponent implements OnInit {
 
   public mapReady($event: any) {
     this.map = $event;
-  }
-
-  public handleMapClicked() {
-    this.events.publish('mapClicked');
+    this.map.addListener('click', (event) => {
+        this.events.publish('mapClicked');
+        if (event.placeId) {
+          this.events.publish("poi-selected", {placeId: event.placeId, latitude: event.latLng.lat(), longitude: event.latLng.lng()});
+        }
+        else{
+          this.events.publish("poi-unselected");
+        }
+    });
   }
 
   public subscribeToChangeInPOI() {
@@ -321,10 +326,12 @@ export class GoogleMapComponent implements OnInit {
 
   //show name of POI when clicked on a marker
   public clickedMarker(infowindow: any) {
+    console.log(infowindow.hostMarker)
     if (this.previous) {
       this.previous.close();
     }
     this.previous = infowindow;
+    this.events.publish("poi-selected", {latitude: infowindow.hostMarker.latitude, longitude: infowindow.hostMarker.longitude});
   }
 
   public subscribeToUserInput() {

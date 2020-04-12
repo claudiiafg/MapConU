@@ -33,13 +33,24 @@
   horizontal="start"
   slot="fixed"
   [style.bottom.px]="bottomStyle"
->
-  <ion-fab-button class="nav-button" id="navigation-button">
-    <ion-icon
+  >
+  <ion-row class="center-items">
+    <ion-fab-button class="nav-button" id="navigation-button">
+      <ion-icon
       name="navigate"
       (click)="presentPopover($event, 'search')"
-    ></ion-icon>
-  </ion-fab-button>
+      ></ion-icon>
+    </ion-fab-button>
+
+    <ion-button
+      class="ml1"
+      (click)="handleGoToClick($event)"
+      [hidden]="isGoToButtonHidden"
+      >
+      <ion-label>{{ 'gotolocation-label' | translate}}</ion-label>
+    </ion-button>
+  </ion-row>
+
   <ng-container *ngIf="isDirectionSet || isClassToBuilding">
     <ion-fab-button class="close-button" (click)="close()">
       <ion-icon name="close"></ion-icon>
