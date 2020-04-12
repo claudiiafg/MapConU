@@ -31,6 +31,7 @@
     "@ionic-native/firebase": "^5.19.1",
     "@ionic-native/geolocation": "^5.20.0",
     "@ionic-native/google-plus": "^5.22.0",
+    "@ionic-native/native-geocoder": "^5.23.0",
     "@ionic-native/native-storage": "^5.22.0",
     "@ionic-native/speech-recognition": "^5.23.0",
     "@ionic-native/splash-screen": "^5.0.0",
@@ -53,6 +54,7 @@
     "cordova-plugin-googleplus": "^8.4.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^4.0.0",
+    "cordova-plugin-nativegeocoder": "^3.4.0",
     "cordova-plugin-nativestorage": "^2.3.2",
     "cordova-plugin-speechrecognition": "^1.2.0",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -132,7 +134,8 @@
       "cordova-plugin-nativestorage": {},
       "cordova-sqlite-storage": {},
       "uk.co.workingedge.cordova.plugin.sqliteporter": {},
-      "cordova-plugin-speechrecognition": {}
+      "cordova-plugin-speechrecognition": {},
+      "cordova-plugin-nativegeocoder": {}
     },
     "platforms": [
       "ios",

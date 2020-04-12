@@ -1,8 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SqliteService } from '../../../../services/sqlite.service';
-import { Buildinginfo } from '../../../../services/buildinginfo';
-
+import { Buildinginfo } from '../../../../models/buildinginfo';
 import {
   AlertController,
   Events,
