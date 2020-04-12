@@ -73,9 +73,13 @@
   "start": "DÉBUT",
   "next": "SUIVANT",
   "end": "FIN",
+  "Do you want to quit?": "Voulez-vous quitter?",
+  "cancel": "Annuler",
+  "quit": "Quitter",
   "no-floor-plan-msg" : "aucun plan d'étage disponible pour l'",
   "estimated-toa": "Heure d'arrivée à",
   "from" : "de",
   "time": "Durée:",
   "mins": "minutes"
+
 }
