@@ -8,6 +8,7 @@ import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
+import { GeolocationServices } from 'src/services/geolocation.services';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',
@@ -25,6 +26,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   constructor(
     public popoverController: PopoverController,
     private events: Events,
+    private geolocationServices: GeolocationServices,
     public modalController: ModalController,
     public directionService: DirectionService,
     private dataSharingService: DataSharingService,
@@ -103,13 +105,34 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     }
   }
 
+  async centerLocation()
+  {
+    this.geolocationServices.getCurrentPosition()
+    console.log(this.geolocationServices.getLatitude())
+    console.log(this.geolocationServices.getLongitude())
+    this.dataSharingService.updateMessage({
+      latitude: null,
+      longitude: null,
+      mapBounds: null,
+    });
+    this.dataSharingService.updateMessage({
+      latitude: this.geolocationServices.getLatitude(),
+      longitude: this.geolocationServices.getLongitude(),
+      mapBounds: null,
+    });
+    // this.events.publish('coordinatesChanged', {
+    //   latitude: this.geolocationServices.getLatitude(),
+    //   longitude: this.geolocationServices.getLongitude(),
+    // });
+  }
+
   public close() {
     this.events.publish('reset-indoor', Date.now());
     this.resetOutdoor();
   }
 
   public next(){
-    this.events.publish('get-next-step', true, Date.now());
+    this.events.publish('longitude-next-step', true, Date.now());
     this.resetOutdoor();
   }
 
