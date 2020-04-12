@@ -5,10 +5,12 @@ import {
   NativeGeocoderResult,
 } from '@ionic-native/native-geocoder/ngx';
 import { Events, ModalController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { format, isSameDay, isSameMonth } from 'date-fns';
 import { rrulestr } from 'rrule';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionService } from 'src/services/direction.service';
@@ -19,6 +21,8 @@ import { HttpClientService } from '../../../../services/httpclient.service';
 import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { Direction } from 'src/models/directionModel';
 import { Coordinates } from 'src/models/coordinates';
+
+import { DisplayCalendarsPopoverComponent } from '../display-calendars-popover/display-calendars-popover.component';
 
 @Component({
   selector: 'app-calendar',
@@ -40,8 +44,10 @@ export class CalendarComponent implements OnInit {
 
   eventsObservables: any[] = [];
   calendarsList: any;
+  refresh: Subject<any> = new Subject();
 
   isReady = false;
+  isChecked: any;
 
   events: CalendarEvent[] = [];
 
@@ -54,7 +60,9 @@ export class CalendarComponent implements OnInit {
     private dataSharingService: DataSharingService,
     private geolocationService: GeolocationServices,
     private directionManager: DirectionsManagerService,
-    private ionicEvents: Events
+    private ionicEvents: Events,
+    private popoverController: PopoverController,
+    private nativeStorage: NativeStorage
   ) {}
 
   /**
@@ -176,14 +184,40 @@ export class CalendarComponent implements OnInit {
 
   /**
     Fetch users calendars. If a calendar is found, start fetching for the user events.
+    Displays the events based on the checked user calendars, by default all calendars are checked
   */
   public getUserCalendarsRequest() {
     this.http.getUserCalendars(this.googleSession).subscribe(
-      (data) => {
+      async (data) => {
         this.calendarsList = data['items'];
-        this.getUserEventsRequest();
+        try {
+          let calendarsToLoad: any[] = [];
+          this.isChecked = await this.nativeStorage.getItem('calendars');
+          for(let calendar of data['items']) {
+            // Newly added calendars
+            if(!this.isChecked[`${calendar.summary}`]) {
+              this.isChecked[`${calendar.summary}`] = {isChecked: true, color: calendar.backgroundColor};
+              await this.nativeStorage.setItem('calendars', this.isChecked);
+              calendarsToLoad.push(calendar);
+            } else if(this.isChecked[`${calendar.summary}`].isChecked) {
+              calendarsToLoad.push(calendar);
+            }
+          }
+          this.getUserEventsRequest(calendarsToLoad);
+        } catch(err) {
+          let checkboxes: any = {};
+          for(let calendar of this.calendarsList) {
+            checkboxes[`${calendar.summary}`] = {isChecked: true, color: calendar.backgroundColor};
+          }
+          this.isChecked = checkboxes;
+          await this.nativeStorage.setItem('calendars', checkboxes);
+          this.getUserEventsRequest(this.calendarsList);
+        }
       },
-      (err) => console.error('User does not have calendars')
+      (err) => {
+        this.isReady = true;
+        console.error('User does not have calendars')
+      }
     );
   }
 
@@ -203,11 +237,18 @@ export class CalendarComponent implements OnInit {
     For each event, if the response was not an HTTP error (meaning the calendar has events in it), start building the array of events
     that will be displayed in the calendar.
   */
-  private getUserEventsRequest() {
-    for (let i in this.calendarsList) {
+  private getUserEventsRequest(calendarsToLoad: any[]) {
+    this.eventsObservables = [];
+    this.events = [];
+    if(!calendarsToLoad.length) {
+      this.isReady = true;
+      return;
+    }
+
+    for (let i in calendarsToLoad) {
       this.eventsObservables.push(
         this.http
-          .getEvents(this.googleSession, this.calendarsList[i].id)
+          .getEvents(this.googleSession, calendarsToLoad[i].id)
           .pipe(catchError((error) => of(error)))
       );
     }
@@ -215,16 +256,17 @@ export class CalendarComponent implements OnInit {
     forkJoin(this.eventsObservables).subscribe(
       (res) => {
         for (let i in res) {
-          if (!(res[i] instanceof HttpErrorResponse)) {
+          if (!(res[i] instanceof HttpErrorResponse) && calendarsToLoad[i]) {
             this.events.push(
               ...this.getEventToInsert(res[i]['items'], {
-                primary: this.calendarsList[i].backgroundColor,
-                secondary: this.calendarsList[i].backgroundColor,
+                primary: calendarsToLoad[i].backgroundColor,
+                secondary: calendarsToLoad[i].backgroundColor,
               })
             );
           }
         }
 
+        this.refresh.next();
         this.isReady = true;
       },
       (error) => console.log(error)
@@ -235,6 +277,7 @@ export class CalendarComponent implements OnInit {
     Parse events fetched from google calendar to something that angular-calendar understands
     @param events List of events in the calendar
     @param color Color of the calendar the event belongs to
+    @returns Event that angular-calendar plugin understands
   */
   private getEventToInsert(events: any, color: any) {
     let eventsList: CalendarEvent[] = [];
@@ -257,7 +300,7 @@ export class CalendarComponent implements OnInit {
 
       // If event has some type of recurrence (Rrule)
       if (event.recurrence) {
-        // Parse the Rrule to something angular-calendar understands. Limited to 3 events for performance
+        // Parse the Rrule to something angular-calendar understands. Limited to 10 events for performance
 
         // prettier-ignore
         let startRrule = rrulestr(`DTSTART;TZID=America/Adak:${format(start, "yyyyMMdd'T'HHmmss'Z'")}\n${event.recurrence[0]};COUNT=10`, {cache: true}).all();
@@ -273,6 +316,7 @@ export class CalendarComponent implements OnInit {
             allDay: allDay,
             meta: {
               location: event.location,
+              description: event.description
             },
           };
           eventsList.push(entry);
@@ -353,8 +397,21 @@ export class CalendarComponent implements OnInit {
 
   /**
     Present the calendars popover
+    @returns Display the popover
   */
-  async presentCalendars() {
+  public async presentCalendars() {
+    const popover = await this.popoverController.create({
+      component: DisplayCalendarsPopoverComponent,
+      componentProps: {
+        calendars: this.calendarsList,
+        isChecked: this.isChecked
+      }
+    })
 
+    popover.onDidDismiss().then(() => {
+      this.getUserCalendarsRequest();
+    })
+
+    return await popover.present();
   }
 }

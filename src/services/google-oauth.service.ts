@@ -27,6 +27,7 @@ export class GoogleOauthService {
     try {
       await GooglePlus.logout();
       this.nativeStorage.remove('google_session');
+      this.nativeStorage.remove('calendars');
     } catch(err) {
       console.error(err);
     }
