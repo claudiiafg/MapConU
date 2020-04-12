@@ -119,14 +119,8 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
 
   async poiUnselected()
   {
-    console.log("unselected")
     this.selectedPoi = null
     this.isGoToButtonHidden = true
-  }
-
-  async createRoute($event)
-  {
-
   }
 
   async presentPopover(ev: any, mode: string) {

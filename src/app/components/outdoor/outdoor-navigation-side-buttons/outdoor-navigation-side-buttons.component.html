@@ -39,10 +39,9 @@
     <ion-button
       class="ml1"
       (click)="handleGoToClick($event)"
-      [selectedPoiName]="selectedPoiName"
       [hidden]="isGoToButtonHidden"
       >
-      Go to selected location
+      <ion-label>{{ 'gotolocation-label' | translate}}</ion-label>
     </ion-button>
   </ion-row>
 

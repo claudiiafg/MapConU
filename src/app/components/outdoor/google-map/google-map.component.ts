@@ -212,19 +212,12 @@ export class GoogleMapComponent implements OnInit {
     this.map.addListener('click', (event) => {
         this.events.publish('mapClicked');
         if (event.placeId) {
-          console.log('You clicked on place:' + event.placeId)
           this.events.publish("poi-selected", {placeId: event.placeId, latLng: event.latLng});
         }
         else{
           this.events.publish("poi-unselected");
         }
-
     });
-  }
-
-  public handleMapClicked()
-  {
-    //this.events.publish('mapClicked');
   }
 
   public subscribeToChangeInPOI() {
