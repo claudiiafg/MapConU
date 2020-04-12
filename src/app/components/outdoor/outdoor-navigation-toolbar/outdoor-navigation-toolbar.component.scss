@@ -15,6 +15,7 @@
 .search-location {
   position: relative;
   padding: 0;
+  --box-shadow: none;
 }
 
 .sc-ion-searchbar-ios-h {
@@ -52,4 +53,25 @@
   --shape: round;
   --size: large;
   padding-right: 0.5em;
+}
+
+.mic-icon {
+  color: #929292;
+}
+
+.parent {
+  display: flex;
+}
+
+.left {
+  width: 90%;
+}
+
+.right {
+  flex: 1;
+}
+
+.searchbar-color {
+  background: #ffffff;
+  --box-shadow: none;
 }

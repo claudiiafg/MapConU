@@ -39,7 +39,7 @@
       <ion-icon name="close"></ion-icon>
     </ion-fab-button>
   </ng-container>
-  <ng-container *ngIf="isDirectionSet && isClassToClass">
+  <ng-container *ngIf="isDirectionSet && (isClassToClass || isBuildingToClass)">
     <ion-fab-button class="close-button" (click)="next()">
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-fab-button>
