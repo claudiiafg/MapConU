@@ -14,7 +14,7 @@
     <ion-icon name="md-close" size="large" color="black" (click)="close()"></ion-icon>
   </ion-header>
 
-  <h3 id="title">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  <h3 id="title">{{ viewDate | calendarDate:(view + 'ViewTitle'): this.language }}</h3>
   <div class="outside-wrapper">
     <div class="month-change-buttons">
       <button
@@ -82,6 +82,7 @@
       [activeDayIsOpen]="activeDayIsOpen"
       (dayClicked)="dayClicked($event.day)"
       (eventClicked)="requestDirections($event)"
+      [locale]="language"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -89,6 +90,7 @@
       [viewDate]="viewDate"
       [events]="events"
       [refresh]="refresh"
+      [locale]="language"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -96,6 +98,7 @@
       [viewDate]="viewDate"
       [events]="events"
       [refresh]="refresh"
+      [locale]="language"
     >
     </mwl-calendar-day-view>
   </div>
