@@ -38,11 +38,11 @@
 
     <ion-button
       class="ml1"
-      (click)="createRoute($event)"
+      (click)="handleGoToClick($event)"
       [selectedPoiName]="selectedPoiName"
-      [hidden]="!isPoiSelected"
+      [hidden]="isGoToButtonHidden"
       >
-      Go to {{selectedPoiName}}
+      Go to selected location
     </ion-button>
   </ion-row>
 
