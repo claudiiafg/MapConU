@@ -48,23 +48,31 @@ export class DirectionsManagerService {
 
   private subscribeToEvents() {
     //when all components of map have been set, route can begin
+      //indoor-map.component publishes event after floorplan has been loaded and map has been set
+      //indoor-page publishes event when floor was already loaded and map set, but path no initiated, so to initiate it
     this.events.subscribe('map-set', res => {
       if (this.isIndoorInRoute.getValue() === true || this.isMixedInRoute.getValue() === true ) {
         this.initNewPath();
       }
     });
 
+    //subscribe to directions currently in place
+    //mixedInRoute means the steps in direction have both floor plans and outside paths
     this.isMixedInRoute.subscribe(res => {
       if(res === true){
         let building;
+        //if first step is indoor (has a floor)
         if(this.steps[0].floor){
+          //get building
           building = (this.steps[0].floor === 'mb1') ? 'jmsb' : 'hall';
         }
+        //route to that building
         this.router.navigateByUrl('indoor/' + building);
       }
     });
   }
 
+  //triggered after floorplan has been loaded, map has been set and there's directions on route
   //initiate path in the current floorplan
   private initNewPath(){
     if(!this.stepsBeenInit || !this.currentStep){
@@ -80,6 +88,7 @@ export class DirectionsManagerService {
   }
 
   //open popup to input type of directions wanted
+  //triggered in the indoor-map.component when room has been clicked on
   public async initiateIndoorDirections(
     building: string,
     destination: string,
@@ -130,7 +139,7 @@ export class DirectionsManagerService {
       const data = {
         source: defaultStartingPoint,
         destination: destination,
-        points: points
+        points: this.indoorDirections.getPoints()
       };
       this.events.publish('open-indoor-popup', data, Date.now());
 
@@ -156,14 +165,20 @@ export class DirectionsManagerService {
     }
   }
 
+  //user wants to find a path between a classroom and somewhere else other than the current building
+  //(either outside or another building)
   private initDifferentBuilding(isInit: boolean, floor: string, interest: string){
     if(isInit){
       this.steps = [];
     }
     let dest : string = '';
+
+    //if its 8th floor, set destination
     if(floor === 'h8'){
       dest = 'escalators-down';
 
+    //if its 9th floor, push 9th floor and recall funtion with 8th floor
+    //(in order leave the building, user must go down first)
     } else if(floor === 'h9'){
       dest = 'escalators-down';
       const tempPath = {
@@ -175,6 +190,8 @@ export class DirectionsManagerService {
       this.steps.push(tempPath);
       this.initDifferentBuilding(false, 'h8', 'escalators-down');
       return;
+
+    //if it's mb, set destination
     } else if(floor === 'mb1'){
       dest = 'entrance';
     }
@@ -184,11 +201,12 @@ export class DirectionsManagerService {
       dest: dest,
       wasDone: false
     };
+    //push step and go outside
     this.steps.push(tempPath);
-    console.log(this.steps);
     this.getOutsideInfo(floor);
   }
 
+  //user wants to find a path within the same building, but on a different floor
   //setup steps of route
   public initDifferentFloorDir(
     isInit: boolean,
@@ -206,7 +224,8 @@ export class DirectionsManagerService {
       };
       this.steps.push(tempPath);
 
-      //ask user to choose source and initiate the path steps
+    //if not init, the isSelectMode is on -> room clicked will be source
+    //ask user to choose source and initiate the path steps
     } else {
       if(floor === 'h9' && this.mixedType === MixedDirectionsType.classToClass){
         const tempPath = {
@@ -227,20 +246,25 @@ export class DirectionsManagerService {
         isLast: true
       };
       this.steps.push(tempPath);
+
+      //since is not init, all steps have bene chosen so path can be initiated
       this.initiatePathSteps();
     }
-    console.log(this.steps);
   }
 
   private initiatePathSteps() {
+    //time footer is subscribed to changes in isIndoorInRoute
+    //button clicked in that component will trigger the initiation of path, change of steps and end of path
     this.isIndoorInRoute.next(true);
   }
 
+  //same source building in router url to set the outdoor navigation (origin)
   private getOutsideInfo(floor: string){
     let id = (floor === 'mb1') ? 'jmsb' : 'hall';
     this.router.navigateByUrl('/outdoor/isMixedNav/' + id);
   }
 
+  //change floor, in the same building
   private changeFloor(building: any) {
     //if isIndoorInRoute -> change floor to the input value of bulding
     if (this.isIndoorInRoute.getValue() === true) {
@@ -264,7 +288,7 @@ export class DirectionsManagerService {
     }
   }
 
-//************************************helpers************************************
+//************************************HELPERS************************************
   //return if is select mode or not
   public getIsSelectMode(): boolean {
     return this.isSelectMode;
@@ -304,6 +328,7 @@ export class DirectionsManagerService {
   }
 
   //get next step to perform, perform it and set it as done
+  //called by time-footer, when start or next is pressed
   public getNextStep() {
     if(!this.pathHasBeenInit){
       this.initNewPath();
@@ -326,12 +351,22 @@ export class DirectionsManagerService {
       // } else if(this.router.url.includes('jmsb') && this.currentStep.floor.includes('mb1')) {
       //   return this.currentStep;
       } else {
+        //THERE A BUG HERE
         this.continueWithIndoorDirections();
       }
     }
     return this.currentStep;
   }
 
+  /*
+    What Happens:
+      when the arrow in the outdoor-side-buttons is pressed, we get the next step in order to travel inside
+      when we get the next step, it is set to wasDone = true
+      means that when the floorplan is initiated, that step has already been done and it won't be performed
+    This fixes it by:
+      when coming from outside during mixedRoute, we'll get the step after outside, although it has been set as done
+      and we'll set is as current, in order to perform it.
+  */
   public getStepAfterOutdoor(){
     let i = 0;
     for (i = 0; i < this.steps.length; i++) {
@@ -345,6 +380,12 @@ export class DirectionsManagerService {
     return this.currentStep;
   }
 
+  /*
+    Triggered when start is clicked in time-footer
+    Although it's not first step, everytime the path starts on a new building, coming from outside
+    the start button will show, so to give time for the floor to be loaded and map set
+    The user will click on start and we'll perform current step, which has been set in previous funciton (getStepAfterOutdoor)
+  */
   public startFromCurrentStep(){
     if(this.currentStep.floor){
       if(this.router.url.includes('hall') && this.currentStep.floor.includes('h')){
@@ -385,25 +426,25 @@ export class DirectionsManagerService {
     if(!this.router.url.includes('outdoor')) {
       this.router.navigateByUrl('/outdoor');
     }
-    //set timeout to allow all components to be loaded
-    setTimeout( () => {
-      //move to the hall buildin
-      if (this.currentStep.floor.includes('h')) {
-        if(this.currentStep.floor === 'h8'){
-          this.router.navigateByUrl('/indoor/hall');
-        } else {
-          this.router.navigateByUrl('/indoor/hall');
+
+    //move to the hall buildin
+    if (this.currentStep.floor.includes('h')) {
+      if (this.currentStep.floor === 'h8') {
+        this.router.navigateByUrl('/indoor/hall');
+      } else {
+        this.router.navigateByUrl('/indoor/hall');
+        //set timeout to allow all components to be loaded
+        setTimeout(() => {
           this.changeFloor(this.currentStep.floor);
-        }
+        }, 1000);
+      }
 
       //move to jmsb
-      } else {
-        if(this.router.url !== '/indoor/jmsb'){
-          this.router.navigateByUrl('/indoor/jmsb');
-        }
+    } else {
+      if (this.router.url !== '/indoor/jmsb') {
+        this.router.navigateByUrl('/indoor/jmsb');
       }
-    }, 500)
-
+    }
   }
 
   //returns step before the first that wasn't done yet
@@ -425,6 +466,7 @@ export class DirectionsManagerService {
   }
 
   //set type of mixed directions
+  //used in both inside and outside directions, when mixed
   public setMixedType(type){
     if(type === MixedDirectionsType.floorToBuilding || type === MixedDirectionsType.classToClass || type === MixedDirectionsType.buildingToFloor){
       this.mixedType = type;
@@ -434,6 +476,7 @@ export class DirectionsManagerService {
   }
 
   //get type of mixed directions
+  //used in both inside and outside directions, when mixed
   public getMixedType(){
     if(this.mixedType === MixedDirectionsType.floorToBuilding || this.mixedType === MixedDirectionsType.classToClass || this.mixedType === MixedDirectionsType.buildingToFloor ){
       return this.mixedType;
@@ -462,7 +505,7 @@ export class DirectionsManagerService {
         tempIndoorStep = {
           floor: 'mb1',
           source: 'entrance',
-          dest: classroomFormatted,
+          dest: 'mb1-210',
           wasDone: false,
           isLast: true
         }
@@ -471,7 +514,7 @@ export class DirectionsManagerService {
         toBuilding = "hall";
         toBuildingLat = this.hallCoords.lat;
         toBuildingLng = this.hallCoords.lng;
-        
+
         //indoor path to hall building classroomFormatted
         tempIndoorStep = {
           floor: (classroomFormatted.includes('h8')) ? 'h8' : 'h9',

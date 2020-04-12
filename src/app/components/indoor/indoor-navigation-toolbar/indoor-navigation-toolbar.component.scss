@@ -4,10 +4,8 @@
   --inner-padding-bottom: 0px;
   --padding-start: 0;
   --padding-end: 0;
-  padding-left: 5em;
   color: white;
   display: contents;
-  max-width: fit-content;
 
   .input-wrapper {
     display: block !important;
@@ -27,6 +25,8 @@
 
 .building-info-wrapper {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .select-floor {
@@ -38,8 +38,7 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   color: white;
-  width: 60%;
-  display: contents;
+  min-width: 70%;
 }
 
 .up-button,

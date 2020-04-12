@@ -16,10 +16,13 @@ import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../../../services/translation.service';
-import {
-  DirectionsManagerService,
-  MixedDirectionsType,
-} from 'src/services/directionsManager.service';
+import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
+
+//DO NOT REMOVE
+//code will be used for dev purposes
+//see extraInfo.ts for more info
+// this.overlayCoords = externalOverlayCoords;
+import { externalOverlayCoords } from './extraInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -51,11 +54,8 @@ export class GoogleMapComponent implements OnInit {
   };
   public provideRouteAlternatives: boolean = true;
   public map: any;
-
   static isOpen: boolean;
-
-  public overlayCoords: Buildinginfo[] = [];
-
+  public overlayCoords: any[] = [];
   // Directions rendering options
   public walkingNotSelectedRenderOptions = {
     polylineOptions: {
@@ -183,9 +183,7 @@ export class GoogleMapComponent implements OnInit {
     private dataSharingService: DataSharingService,
 
     private translate: TranslationService,
-
     private db: SqliteService,
-
     private route: ActivatedRoute,
     private directionsManager: DirectionsManagerService
   ) {
@@ -195,14 +193,20 @@ export class GoogleMapComponent implements OnInit {
   async ngOnInit() {
     await this.db.platform.ready();
 
-    this.db.dbState().subscribe((res) => {
-      if (res) {
-        this.db.fetchBuildings().subscribe((item) => {
+    //DO NOT REMOVE
+    //code will be used for dev purposes
+    //see extraInfo.ts for more info
+    // this.overlayCoords = externalOverlayCoords;
+
+    this.db.dbState().subscribe((res) =>{
+      if (res){
+        this.db.fetchBuildings().subscribe(item => {
           //console.log(item);
-          if (item.length != 0) {
+          if (item.length != 0){
+
             this.overlayCoords = item;
           }
-        });
+        })
       }
     });
 
@@ -214,14 +218,28 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToTravelMode();
     this.subscribeToChangeInCurrentPOS();
     this.subscribeToChangeInPOI();
+    this.subscribeToIndoorDirectionsCompleted();
+    this.subscribeToToggleCenterLocation();
+  }
+
+  public subscribeToIndoorDirectionsCompleted(){
+    //when user ends route -> reset navidation
+    this.events.subscribe('path-completed', res => {
+      this.directionsManager.resetSteps();
+    });
   }
 
   public mapReady($event: any) {
     this.map = $event;
-  }
-
-  public handleMapClicked() {
-    this.events.publish('mapClicked');
+    this.map.addListener('click', (event) => {
+        this.events.publish('mapClicked');
+        if (event.placeId) {
+          this.events.publish("poi-selected", {placeId: event.placeId, latitude: event.latLng.lat(), longitude: event.latLng.lng()});
+        }
+        else{
+          this.events.publish("poi-unselected");
+        }
+    });
   }
 
   public subscribeToChangeInPOI() {
@@ -285,8 +303,16 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('campusChanged', () => {
       this.poiMarkers = [];
       this.currentToggles = this.poiServices.resetPOIMarkers();
-      this.map.zoom = this.defaultCampusZoom;
+      this.map.setZoom(this.defaultCampusZoom);
     });
+  }
+
+  public subscribeToToggleCenterLocation()
+  {
+    this.events.subscribe('centerLocation', (coordinates) => {
+      this.map.setCenter(new google.maps.LatLng(coordinates.latitude, coordinates.longitude));
+      this.map.setZoom(this.defaultCampusZoom);
+    })
   }
 
   public subscribeToChangeInCurrentPOS() {
@@ -312,10 +338,12 @@ export class GoogleMapComponent implements OnInit {
 
   //show name of POI when clicked on a marker
   public clickedMarker(infowindow: any) {
+    console.log(infowindow.hostMarker)
     if (this.previous) {
       this.previous.close();
     }
     this.previous = infowindow;
+    this.events.publish("poi-selected", {latitude: infowindow.hostMarker.latitude, longitude: infowindow.hostMarker.longitude});
   }
 
   public subscribeToUserInput() {

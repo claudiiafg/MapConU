@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
@@ -8,6 +8,7 @@ import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 import { DirectionService } from 'src/services/direction.service';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
+import { GeolocationServices } from 'src/services/geolocation.services';
 
 @Component({
   selector: 'app-outdoor-navigation-side-buttons',
@@ -18,6 +19,8 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
   public isDirectionSet: boolean = false;
   public bottomStyle: number = 0;
+  public selectedPoi: any
+  public isGoToButtonHidden: boolean = true
   private mixedDirectionsType = null;
   public isClassToClass: boolean = false;
   public isClassToBuilding: boolean = false;
@@ -25,7 +28,9 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
 
   constructor(
     public popoverController: PopoverController,
+    private geolocationServices: GeolocationServices,
     private events: Events,
+    private zone: NgZone,
     public modalController: ModalController,
     public directionService: DirectionService,
     private dataSharingService: DataSharingService,
@@ -57,7 +62,18 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.events.subscribe('poi-selected', poi => {
+      this.zone.run(() => {
+        this.poiSelected(poi)
+      });
+    });
+    this.events.subscribe('poi-unselected', poi => {
+      this.zone.run(() => {
+        this.poiUnselected()
+      });
+    });
+  }
 
   async openViewer() {
     const modal = await this.modalController.create({
@@ -79,6 +95,40 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     })
 
     return await modal.present();
+  }
+
+  async handleGoToClick()
+  {
+    let latitude = this.selectedPoi.latitude
+    let longitude = this.selectedPoi.longitude
+    this.directionService.isDirectionSet.next(true);
+
+    if (this.directionService.alternateDirection) {
+      this.directionService.alternateDirection.set('directions', null);
+      this.directionService.alternateDirectionSet = false;
+    }
+
+    this.dataSharingService.updateMapSize(-210);
+
+    this.directionService.origin.next([
+      this.geolocationServices.getLatitude(),
+      this.geolocationServices.getLongitude()
+    ]);
+    this.directionService.destination.next([latitude, longitude]);
+
+    this.poiUnselected()
+  }
+
+  async poiSelected(poi: any)
+  {
+    this.selectedPoi = poi
+    this.isGoToButtonHidden = false
+  }
+
+  async poiUnselected()
+  {
+    this.selectedPoi = null
+    this.isGoToButtonHidden = true
   }
 
   async presentPopover(ev: any, mode: string) {
@@ -111,13 +161,31 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     }
   }
 
+  async centerLocation()
+  {
+    // this.dataSharingService.updateMessage({
+    //   latitude: null,
+    //   longitude: null,
+    //   mapBounds: null,
+    // });
+    // this.dataSharingService.updateMessage({
+    //   latitude: this.geolocationServices.getLatitude(),
+    //   longitude: this.geolocationServices.getLongitude(),
+    //   mapBounds: null,
+    // });
+    this.events.publish('centerLocation', {
+      latitude: this.geolocationServices.getLatitude(),
+      longitude: this.geolocationServices.getLongitude(),
+    });
+  }
+
   public close() {
     this.events.publish('reset-indoor', Date.now());
     this.resetOutdoor();
   }
 
   public next(){
-    this.events.publish('get-next-step', true, Date.now());
+    this.events.publish('longitude-next-step', true, Date.now());
     this.resetOutdoor();
   }
 
