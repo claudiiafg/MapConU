@@ -1,4 +1,6 @@
+import { registerLocaleData } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import localeFr from '@angular/common/locales/fr';
 import { Component, OnInit } from '@angular/core';
 import {
   NativeGeocoder,
@@ -10,17 +12,16 @@ import { format, isSameDay, isSameMonth } from 'date-fns';
 import { rrulestr } from 'rrule';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Coordinates } from 'src/models/coordinates';
+import { Direction } from 'src/models/directionModel';
 import { DataSharingService } from 'src/services/data-sharing.service';
 import { DirectionService } from 'src/services/direction.service';
+import { DirectionsManagerService } from 'src/services/directionsManager.service';
 import { GeolocationServices } from 'src/services/geolocation.services';
+import { TranslationService } from 'src/services/translation.service';
 import { CalendarEventClicked } from '../../../../models/calendarEventClickedModel';
 import { GoogleOauthService } from '../../../../services/google-oauth.service';
 import { HttpClientService } from '../../../../services/httpclient.service';
-import { DirectionsManagerService } from 'src/services/directionsManager.service';
-import { Direction } from 'src/models/directionModel';
-import { Coordinates } from 'src/models/coordinates';
-import localeFr from '@angular/common/locales/fr';
-import { TranslationService } from 'src/services/translation.service';
 registerLocaleData(localeFr);
 
 @Component({
@@ -28,7 +29,6 @@ registerLocaleData(localeFr);
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-
 
 /**
   This class is in charge of controlling the Calendar data. If a google instance is found, the user events would be fetched
@@ -60,7 +60,7 @@ export class CalendarComponent implements OnInit {
     private geolocationService: GeolocationServices,
     private directionManager: DirectionsManagerService,
     private ionicEvents: Events,
-    private translate: TranslationService,
+    private translate: TranslationService
   ) {}
 
   /**
@@ -79,11 +79,10 @@ export class CalendarComponent implements OnInit {
       this.events = [];
       this.googleSession = null;
 
-      this.dataSharingService.language.subscribe( lang =>{
-        if (lang == 'fr'){
+      this.dataSharingService.language.subscribe((lang) => {
+        if (lang == 'fr') {
           this.language = 'fr';
-        }
-        else{
+        } else {
           this.language = 'en';
         }
       });
@@ -133,7 +132,9 @@ export class CalendarComponent implements OnInit {
       }
       this.close();
     } else {
-      alert('There isn\'t any location or room number associated with this event');
+      alert(
+        "There isn't any location or room number associated with this event"
+      );
     }
   }
 
@@ -255,6 +256,11 @@ export class CalendarComponent implements OnInit {
 
     // If the event does not have a dateTime, it means the event is a full day event.
     for (let event of events) {
+      // Cancelled events
+      if (!event.start) {
+        continue;
+      }
+
       if (event.start.dateTime) {
         start = new Date(event.start.dateTime);
         end = new Date(event.end.dateTime);
@@ -343,7 +349,8 @@ export class CalendarComponent implements OnInit {
 
     if (
       titleToLowerCase.includes('mb1-210') ||
-      titleToLowerCase.includes('mb1210')
+      titleToLowerCase.includes('mb1210') ||
+      titleToLowerCase.includes('mb1.210')
     ) {
       return (room = 'mb1-210');
     }
@@ -352,7 +359,8 @@ export class CalendarComponent implements OnInit {
       let descriptionToLowerCase: string = calendarEvent.meta.description.toLocaleLowerCase();
       if (
         descriptionToLowerCase.includes('mb1-210') ||
-        descriptionToLowerCase.includes('mb1210')
+        descriptionToLowerCase.includes('mb1210') ||
+        descriptionToLowerCase.includes('mb1.210')
       ) {
         return (room = 'mb1-210');
       }

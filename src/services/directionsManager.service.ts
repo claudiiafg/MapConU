@@ -185,7 +185,6 @@ export class DirectionsManagerService {
       wasDone: false
     };
     this.steps.push(tempPath);
-    console.log(this.steps);
     this.getOutsideInfo(floor);
   }
 
@@ -229,7 +228,6 @@ export class DirectionsManagerService {
       this.steps.push(tempPath);
       this.initiatePathSteps();
     }
-    console.log(this.steps);
   }
 
   private initiatePathSteps() {
@@ -384,26 +382,26 @@ export class DirectionsManagerService {
     //move outside first so there's a clean start in the next building without any corruption of data
     if(!this.router.url.includes('outdoor')) {
       this.router.navigateByUrl('/outdoor');
-    }
-    //set timeout to allow all components to be loaded
-    setTimeout( () => {
-      //move to the hall buildin
-      if (this.currentStep.floor.includes('h')) {
-        if(this.currentStep.floor === 'h8'){
-          this.router.navigateByUrl('/indoor/hall');
-        } else {
-          this.router.navigateByUrl('/indoor/hall');
+    } 
+    
+    //move to the hall buildin
+    if (this.currentStep.floor.includes('h')) {
+      if (this.currentStep.floor === 'h8') {
+        this.router.navigateByUrl('/indoor/hall');
+      } else {
+        this.router.navigateByUrl('/indoor/hall');
+        //set timeout to allow all components to be loaded
+        setTimeout(() => {
           this.changeFloor(this.currentStep.floor);
-        }
+        }, 1000);
+      }
 
       //move to jmsb
-      } else {
-        if(this.router.url !== '/indoor/jmsb'){
-          this.router.navigateByUrl('/indoor/jmsb');
-        }
+    } else {
+      if (this.router.url !== '/indoor/jmsb') {
+        this.router.navigateByUrl('/indoor/jmsb');
       }
-    }, 500)
-
+    }
   }
 
   //returns step before the first that wasn't done yet
@@ -462,7 +460,7 @@ export class DirectionsManagerService {
         tempIndoorStep = {
           floor: 'mb1',
           source: 'entrance',
-          dest: classroomFormatted,
+          dest: 'mb1-210',
           wasDone: false,
           isLast: true
         }
