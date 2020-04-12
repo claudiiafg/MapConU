@@ -107,23 +107,20 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
 
   async centerLocation()
   {
-    this.geolocationServices.getCurrentPosition()
-    console.log(this.geolocationServices.getLatitude())
-    console.log(this.geolocationServices.getLongitude())
-    this.dataSharingService.updateMessage({
-      latitude: null,
-      longitude: null,
-      mapBounds: null,
-    });
-    this.dataSharingService.updateMessage({
-      latitude: this.geolocationServices.getLatitude(),
-      longitude: this.geolocationServices.getLongitude(),
-      mapBounds: null,
-    });
-    // this.events.publish('coordinatesChanged', {
+    // this.dataSharingService.updateMessage({
+    //   latitude: null,
+    //   longitude: null,
+    //   mapBounds: null,
+    // });
+    // this.dataSharingService.updateMessage({
     //   latitude: this.geolocationServices.getLatitude(),
     //   longitude: this.geolocationServices.getLongitude(),
+    //   mapBounds: null,
     // });
+    this.events.publish('centerLocation', {
+      latitude: this.geolocationServices.getLatitude(),
+      longitude: this.geolocationServices.getLongitude(),
+    });
   }
 
   public close() {
