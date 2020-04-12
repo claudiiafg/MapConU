@@ -30,8 +30,10 @@
     </ng-template>
     <ng-template #logoutBlock>
       <ion-label>{{ googleSession.email }}</ion-label>
-      <ion-button (click)="logout()">
-        Logout
+      <ion-button class = "logout" (click)="logout()">
+        <ion-label>
+          {{'logout' | translate}}
+        </ion-label>
       </ion-button>
     </ng-template>
   </ion-item>

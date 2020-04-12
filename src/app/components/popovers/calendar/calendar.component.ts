@@ -13,6 +13,8 @@ import {
   CalendarEvent,
   CalendarView
 } from 'angular-calendar';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 import { ModalController } from '@ionic/angular';
 import { HttpClientService } from '../../../../services/httpclient.service';
 import { GoogleOauthService } from '../../../../services/google-oauth.service';
@@ -20,12 +22,17 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { rrulestr } from 'rrule'
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslationService } from '../../../../services/translation.service';
+import { DataSharingService } from '../../../../services/data-sharing.service';
+
+registerLocaleData(localeFr);
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
+
 
 /**
   This class is in charge of controlling the Calendar data. If a google instance is found, the user events would be fetched
@@ -46,8 +53,15 @@ export class CalendarComponent implements OnInit {
   isReady = false;
 
   events: CalendarEvent[] = [];
+  language: string;
 
-  constructor(private modalController: ModalController, private http: HttpClientService, private googleOAuth: GoogleOauthService) { }
+  constructor(
+      private modalController: ModalController,
+      private http: HttpClientService,
+      private googleOAuth: GoogleOauthService,
+      private translate: TranslationService,
+      private dataSharing: DataSharingService
+  ) { }
 
   /**
     Check if the user is logged in to his google account.
@@ -58,12 +72,21 @@ export class CalendarComponent implements OnInit {
     try {
       this.googleSession = await this.googleOAuth.getStoredSession();
       this.isReady = false;
-      this.calendarTitle = "Your Calendar";
+      this.calendarTitle = this.translate.getTranslation('calendar-title');
       this.getUserCalendarsRequest();
     } catch(err) {
       this.isReady = true;
       this.events = [];
       this.googleSession = null;
+
+      this.dataSharing.language.subscribe( lang =>{
+        if (lang == 'fr'){
+          this.language = 'fr';
+        }
+        else{
+          this.language = 'en';
+        }
+      });
     }
   }
 
