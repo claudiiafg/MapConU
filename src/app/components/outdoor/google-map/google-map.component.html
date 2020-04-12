@@ -10,6 +10,7 @@
     id="map"
     (mapReady)="mapReady($event)"
     (click)="handleMapClicked()"
+    [streetViewControl]="'true'"
   >
     <agm-polygon
       *ngFor="let oc of overlayCoords"

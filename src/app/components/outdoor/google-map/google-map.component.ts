@@ -217,8 +217,16 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToChangeInPOI();
   }
 
-  public mapReady($event: any) {
+public mapReady($event: any) {
     this.map = $event;
+    let panorama = this.map.getStreetView();
+    google.maps.event.addListener(panorama, 'visible_changed', function() {
+      if (panorama.getVisible()) {
+        console.log('visible')
+      } else {
+        console.log('not visible')
+      }
+    });
   }
 
   public handleMapClicked() {
