@@ -1,8 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SqliteService } from '../../../../services/sqlite.service';
-import { Buildinginfo } from '../../../../services/buildinginfo';
-
+import { Buildinginfo } from '../../../../models/buildinginfo';
 import {
   AlertController,
   Events,
@@ -220,6 +219,7 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToChangeInCurrentPOS();
     this.subscribeToChangeInPOI();
     this.subscribeToIndoorDirectionsCompleted();
+    this.subscribeToToggleCenterLocation();
   }
 
   public subscribeToIndoorDirectionsCompleted(){
@@ -231,10 +231,15 @@ export class GoogleMapComponent implements OnInit {
 
   public mapReady($event: any) {
     this.map = $event;
-  }
-
-  public handleMapClicked() {
-    this.events.publish('mapClicked');
+    this.map.addListener('click', (event) => {
+        this.events.publish('mapClicked');
+        if (event.placeId) {
+          this.events.publish("poi-selected", {placeId: event.placeId, latitude: event.latLng.lat(), longitude: event.latLng.lng()});
+        }
+        else{
+          this.events.publish("poi-unselected");
+        }
+    });
   }
 
   public subscribeToChangeInPOI() {
@@ -298,8 +303,16 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('campusChanged', () => {
       this.poiMarkers = [];
       this.currentToggles = this.poiServices.resetPOIMarkers();
-      this.map.zoom = this.defaultCampusZoom;
+      this.map.setZoom(this.defaultCampusZoom);
     });
+  }
+
+  public subscribeToToggleCenterLocation()
+  {
+    this.events.subscribe('centerLocation', (coordinates) => {
+      this.map.setCenter(new google.maps.LatLng(coordinates.latitude, coordinates.longitude));
+      this.map.setZoom(this.defaultCampusZoom);
+    })
   }
 
   public subscribeToChangeInCurrentPOS() {
@@ -325,10 +338,12 @@ export class GoogleMapComponent implements OnInit {
 
   //show name of POI when clicked on a marker
   public clickedMarker(infowindow: any) {
+    console.log(infowindow.hostMarker)
     if (this.previous) {
       this.previous.close();
     }
     this.previous = infowindow;
+    this.events.publish("poi-selected", {latitude: infowindow.hostMarker.latitude, longitude: infowindow.hostMarker.longitude});
   }
 
   public subscribeToUserInput() {

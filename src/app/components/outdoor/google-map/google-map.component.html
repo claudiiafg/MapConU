@@ -9,7 +9,6 @@
     [gestureHandling]="'greedy'"
     id="map"
     (mapReady)="mapReady($event)"
-    (click)="handleMapClicked()"
   >
     <agm-polygon
       *ngFor="let oc of overlayCoords"

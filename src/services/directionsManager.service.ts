@@ -203,7 +203,6 @@ export class DirectionsManagerService {
     };
     //push step and go outside
     this.steps.push(tempPath);
-    console.log(this.steps);
     this.getOutsideInfo(floor);
   }
 
@@ -251,7 +250,6 @@ export class DirectionsManagerService {
       //since is not init, all steps have bene chosen so path can be initiated
       this.initiatePathSteps();
     }
-    console.log(this.steps);
   }
 
   private initiatePathSteps() {
@@ -427,26 +425,26 @@ export class DirectionsManagerService {
     //move outside first so there's a clean start in the next building without any corruption of data
     if(!this.router.url.includes('outdoor')) {
       this.router.navigateByUrl('/outdoor');
-    }
-    //set timeout to allow all components to be loaded
-    setTimeout( () => {
-      //move to the hall buildin
-      if (this.currentStep.floor.includes('h')) {
-        if(this.currentStep.floor === 'h8'){
-          this.router.navigateByUrl('/indoor/hall');
-        } else {
-          this.router.navigateByUrl('/indoor/hall');
+    } 
+    
+    //move to the hall buildin
+    if (this.currentStep.floor.includes('h')) {
+      if (this.currentStep.floor === 'h8') {
+        this.router.navigateByUrl('/indoor/hall');
+      } else {
+        this.router.navigateByUrl('/indoor/hall');
+        //set timeout to allow all components to be loaded
+        setTimeout(() => {
           this.changeFloor(this.currentStep.floor);
-        }
+        }, 1000);
+      }
 
       //move to jmsb
-      } else {
-        if(this.router.url !== '/indoor/jmsb'){
-          this.router.navigateByUrl('/indoor/jmsb');
-        }
+    } else {
+      if (this.router.url !== '/indoor/jmsb') {
+        this.router.navigateByUrl('/indoor/jmsb');
       }
-    }, 500)
-
+    }
   }
 
   //returns step before the first that wasn't done yet
@@ -490,7 +488,7 @@ export class DirectionsManagerService {
   //create path from current location to class room using destination classroom string
   public getPathToRoom(classroom: string){
     //remove all white space or symbols from classroom string
-    classroom = classroom.replace(/[\s|\W]*/g, '');
+    let classroomFormatted = classroom.replace(/[\s|\W]*/g, '').toLocaleLowerCase();
 
     const coordinates = this.geolocationService.getCoordinates();
     if(coordinates){
@@ -498,35 +496,35 @@ export class DirectionsManagerService {
       let toBuildingLng: number;
       let toBuilding: any;
       let tempIndoorStep: any;
-      if(classroom.includes('mb1')){
+      if(classroomFormatted.includes('mb1')){
         toBuilding = 'jmsb';
         toBuildingLat = this.jmsbCoords.lat;
         toBuildingLng = this.jmsbCoords.lng;
 
-        //indoor path to jmsb classroom
+        //indoor path to jmsb classroomFormatted
         tempIndoorStep = {
           floor: 'mb1',
           source: 'entrance',
-          dest: classroom,
+          dest: 'mb1-210',
           wasDone: false,
           isLast: true
         }
 
-      } else if(classroom.includes('h8') || classroom.includes('h9')){
+      } else if(classroomFormatted.includes('h8') || classroomFormatted.includes('h9')){
         toBuilding = "hall";
         toBuildingLat = this.hallCoords.lat;
         toBuildingLng = this.hallCoords.lng;
-
-        //indoor path to hall building classroom
+        
+        //indoor path to hall building classroomFormatted
         tempIndoorStep = {
-          floor: (classroom.includes('h8')) ? 'h8' : 'h9',
+          floor: (classroomFormatted.includes('h8')) ? 'h8' : 'h9',
           source: 'escalators-up',
-          dest: classroom,
+          dest: classroomFormatted,
           wasDone: false,
           isLast: true
         }
       }
-      //building of classroom
+      //building of classroomFormatted
       const to = {
         building: toBuilding,
         lat: toBuildingLat,
@@ -548,6 +546,7 @@ export class DirectionsManagerService {
       this.pushStep(tempOutdoorStep);
       this.pushStep(tempIndoorStep);
       this.mixedType = MixedDirectionsType.buildingToFloor;
+      this.dataSharingService.updateMapSize(-210);
       this.initiatePathSteps();
 
     } else {
