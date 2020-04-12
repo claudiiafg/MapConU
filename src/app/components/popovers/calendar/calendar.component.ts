@@ -10,7 +10,7 @@ import { Events, ModalController } from '@ionic/angular';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { format, isSameDay, isSameMonth } from 'date-fns';
 import { rrulestr } from 'rrule';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Coordinates } from 'src/models/coordinates';
 import { Direction } from 'src/models/directionModel';
