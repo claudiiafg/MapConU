@@ -9,6 +9,7 @@ import {
 import { StringHelperService } from 'src/services/stringHelper.service';
 import { TranslationService } from 'src/services/translation.service';
 import { ModalDirectionsComponent } from '../../outdoor/modal-directions/modal-directions.component';
+import { DataSharingService } from 'src/services/data-sharing.service';
 
 @Component({
   selector: 'app-time-footer',
@@ -32,7 +33,9 @@ export class TimeFooterComponent implements OnInit {
     private directionsManager: DirectionsManagerService,
     private events: Events,
     private stringHelper: StringHelperService,
-    private translate: TranslationService
+    private translate: TranslationService,
+    private dataSharing: DataSharingService
+
   ) {
     //outdoor directions subscription
     this.directionService.isDirectionSet.subscribe((isDirectionSet) => {
@@ -129,6 +132,7 @@ export class TimeFooterComponent implements OnInit {
   public endRoute() {
     this.isIndoorInRoute = false;
     this.events.publish('path-completed', true, Date.now());
+    this.dataSharing.showIndoorToa(false);
   }
 
   private getStepAfterOutdoor() {

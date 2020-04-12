@@ -32,14 +32,12 @@ export class RoomSelectorPopoverComponent {
   ngOnInit(){
     if (this.navParams.get('data')) {
       const data = this.navParams.get('data');
+      console.log(data);
       this.source = data.source;
       this.destination = data.destination;
-      this.points = data.points;
-      this.prettifyTitles();
-    } else {
-      this.points = this.indoorDirectionsService.getPoints();
-      this.prettifyTitles();
     }
+    this.points = this.indoorDirectionsService.getPoints();
+    this.prettifyTitles();
   }
 
   prettifyTitles() {

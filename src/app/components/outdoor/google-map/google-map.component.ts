@@ -17,10 +17,13 @@ import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../../../services/translation.service';
-import {
-  DirectionsManagerService,
-  MixedDirectionsType,
-} from 'src/services/directionsManager.service';
+import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
+
+//DO NOT REMOVE
+//code will be used for dev purposes
+//see extraInfo.ts for more info
+// this.overlayCoords = externalOverlayCoords;
+import { externalOverlayCoords } from './extraInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -52,11 +55,8 @@ export class GoogleMapComponent implements OnInit {
   };
   public provideRouteAlternatives: boolean = true;
   public map: any;
-
   static isOpen: boolean;
-
-  public overlayCoords: Buildinginfo[] = [];
-
+  public overlayCoords: any[] = [];
   // Directions rendering options
   public walkingNotSelectedRenderOptions = {
     polylineOptions: {
@@ -184,9 +184,7 @@ export class GoogleMapComponent implements OnInit {
     private dataSharingService: DataSharingService,
 
     private translate: TranslationService,
-
     private db: SqliteService,
-
     private route: ActivatedRoute,
     private directionsManager: DirectionsManagerService
   ) {
@@ -196,14 +194,20 @@ export class GoogleMapComponent implements OnInit {
   async ngOnInit() {
     await this.db.platform.ready();
 
-    this.db.dbState().subscribe((res) => {
-      if (res) {
-        this.db.fetchBuildings().subscribe((item) => {
+    //DO NOT REMOVE
+    //code will be used for dev purposes
+    //see extraInfo.ts for more info
+    // this.overlayCoords = externalOverlayCoords;
+
+    this.db.dbState().subscribe((res) =>{
+      if (res){
+        this.db.fetchBuildings().subscribe(item => {
           //console.log(item);
-          if (item.length != 0) {
+          if (item.length != 0){
+
             this.overlayCoords = item;
           }
-        });
+        })
       }
     });
 
@@ -215,6 +219,14 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToTravelMode();
     this.subscribeToChangeInCurrentPOS();
     this.subscribeToChangeInPOI();
+    this.subscribeToIndoorDirectionsCompleted();
+  }
+
+  public subscribeToIndoorDirectionsCompleted(){
+    //when user ends route -> reset navidation
+    this.events.subscribe('path-completed', res => {
+      this.directionsManager.resetSteps();
+    });
   }
 
   public mapReady($event: any) {
