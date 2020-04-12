@@ -1,5 +1,4 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { MapsAPILoader } from '@agm/core';
 import { ModalController } from '@ionic/angular';
 import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
 import { Events, PopoverController } from '@ionic/angular';
@@ -31,7 +30,6 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     private geolocationServices: GeolocationServices,
     private events: Events,
     private zone: NgZone,
-    public mapsAPILoader: MapsAPILoader,
     public modalController: ModalController,
     public directionService: DirectionService,
     private dataSharingService: DataSharingService,
