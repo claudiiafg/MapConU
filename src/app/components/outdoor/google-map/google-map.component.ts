@@ -215,6 +215,7 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToTravelMode();
     this.subscribeToChangeInCurrentPOS();
     this.subscribeToChangeInPOI();
+    this.subscribeToToggleCenterLocation();
   }
 
   public mapReady($event: any) {
@@ -291,8 +292,16 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('campusChanged', () => {
       this.poiMarkers = [];
       this.currentToggles = this.poiServices.resetPOIMarkers();
-      this.map.zoom = this.defaultCampusZoom;
+      this.map.setZoom(this.defaultCampusZoom);
     });
+  }
+
+  public subscribeToToggleCenterLocation()
+  {
+    this.events.subscribe('centerLocation', (coordinates) => {
+      this.map.setCenter(new google.maps.LatLng(coordinates.latitude, coordinates.longitude));
+      this.map.setZoom(this.defaultCampusZoom);
+    })
   }
 
   public subscribeToChangeInCurrentPOS() {

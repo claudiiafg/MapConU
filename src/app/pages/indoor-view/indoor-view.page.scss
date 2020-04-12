@@ -4,4 +4,8 @@ app-indoor-map{
 app-indoor-time-of-arrival{
   z-index: 1;
   position: absolute;
+  left: 50%;
+  margin-left: -8em;
+  display: flex;
+  align-content: center;
 }

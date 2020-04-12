@@ -22,6 +22,12 @@
   </ion-fab-button>
 </ion-fab>
 
+<ion-fab vertical="start" horizontal="end" slot="fixed">
+  <ion-fab-button id="bus-button">
+    <ion-icon name="locate" (click)="centerLocation()"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
 <ion-fab
   vertical="bottom"
   horizontal="start"
@@ -31,7 +37,7 @@
   <ion-row class="center-items">
     <ion-fab-button class="nav-button" id="navigation-button">
       <ion-icon
-      name="compass"
+      name="navigate"
       (click)="presentPopover($event, 'search')"
       ></ion-icon>
     </ion-fab-button>

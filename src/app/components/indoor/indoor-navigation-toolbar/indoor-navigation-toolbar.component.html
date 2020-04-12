@@ -21,9 +21,11 @@
     </ion-button>
     <div class="building-info-wrapper">
       <!-- name of floor selected-->
-      <ion-item slot="start" class="building">{{
-        building | translate
-      }}</ion-item>
+      <ion-item text-center class="building">
+        <ion-label>
+          {{ building | translate }}
+        </ion-label>
+      </ion-item>
 
       <!-- select floor button -->
       <ion-item id="floor-change">

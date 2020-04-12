@@ -153,13 +153,31 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     }
   }
 
+  async centerLocation()
+  {
+    // this.dataSharingService.updateMessage({
+    //   latitude: null,
+    //   longitude: null,
+    //   mapBounds: null,
+    // });
+    // this.dataSharingService.updateMessage({
+    //   latitude: this.geolocationServices.getLatitude(),
+    //   longitude: this.geolocationServices.getLongitude(),
+    //   mapBounds: null,
+    // });
+    this.events.publish('centerLocation', {
+      latitude: this.geolocationServices.getLatitude(),
+      longitude: this.geolocationServices.getLongitude(),
+    });
+  }
+
   public close() {
     this.events.publish('reset-indoor', Date.now());
     this.resetOutdoor();
   }
 
   public next(){
-    this.events.publish('get-next-step', true, Date.now());
+    this.events.publish('longitude-next-step', true, Date.now());
     this.resetOutdoor();
   }
 
