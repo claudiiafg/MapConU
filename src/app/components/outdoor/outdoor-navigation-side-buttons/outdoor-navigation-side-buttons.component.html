@@ -27,13 +27,24 @@
   horizontal="start"
   slot="fixed"
   [style.bottom.px]="bottomStyle"
->
-  <ion-fab-button class="nav-button" id="navigation-button">
-    <ion-icon
+  >
+  <ion-row class="center-items">
+    <ion-fab-button class="nav-button" id="navigation-button">
+      <ion-icon
       name="compass"
       (click)="presentPopover($event, 'search')"
-    ></ion-icon>
-  </ion-fab-button>
+      ></ion-icon>
+    </ion-fab-button>
+
+    <ion-button
+      class="ml1"
+      (click)="createRoute($event)"
+      [selectedPoiName]="selectedPoiName"
+      >
+      Go to {{selectedPoiName}}
+    </ion-button>
+  </ion-row>
+
   <ng-container *ngIf="isDirectionSet || isClassToBuilding">
     <ion-fab-button class="close-button" (click)="close()">
       <ion-icon name="close"></ion-icon>

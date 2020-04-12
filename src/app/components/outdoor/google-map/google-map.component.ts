@@ -209,6 +209,13 @@ export class GoogleMapComponent implements OnInit {
 
   public mapReady($event: any) {
     this.map = $event;
+    this.map.addListener('click', (e) => {
+      console.log('You clicked on: ' + e.latLng)
+        // If the event has a placeId, use it.
+        if (e.placeId) {
+          console.log('You clicked on place:' + e.placeId)
+        }
+    });
   }
 
   public handleMapClicked()

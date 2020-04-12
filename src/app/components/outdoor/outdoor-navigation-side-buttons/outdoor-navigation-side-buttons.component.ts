@@ -18,6 +18,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
   public isDirectionSet: boolean = false;
   public bottomStyle: number = 0;
+  public selectedPoiName: string = 'test2'
   private mixedDirectionsType = null;
   private isClassToClass: boolean = false;
   private isClassToBuilding: boolean = false;
@@ -49,7 +50,9 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.poiSelected(null)
+  }
 
   async openViewer() {
     const modal = await this.modalController.create({
@@ -71,6 +74,16 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     })
 
     return await modal.present();
+  }
+
+  async poiSelected($event)
+  {
+    this.selectedPoiName = 'newName'
+  }
+
+  async createRoute($event)
+  {
+
   }
 
   async presentPopover(ev: any, mode: string) {
