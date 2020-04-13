@@ -18,6 +18,7 @@
   "hotel-poi": "Hotels",
   "grocery-poi": "Grocery Stores",
   "location-searchbar": "Search for a location...",
+  "gotolocation-label": "Go to the location",
   "enter": "Enter",
   "Hall Building": "Hall Building",
   "John Molson Building": "John Molson Building",
@@ -79,6 +80,11 @@
   "estimated-toa": "Arrival time at",
   "from": "from",
   "time": "Time:",
-  "mins": "minutes"
-
+  "mins": "minutes",
+  "logout": "Logout",
+  "calendar-title":"Your Calendar",
+  "today": "Today",
+  "month": "Month",
+  "week": "Week",
+  "day": "Day"
 }

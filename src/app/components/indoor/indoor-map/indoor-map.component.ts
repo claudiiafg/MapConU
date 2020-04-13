@@ -38,12 +38,16 @@ export class IndoorMapComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    //subscribe to change in floor
+    //hen user changes floor in the indoor-toolbar
     this.events.subscribe('initNewMap', () =>{
       //if is new floor plan init new map
       this.isInit = true;
     });
 
-    //when floor component is loaded -> setup map
+    //subscribe to 'floorplan'.ts onInit
+    //when a floor component is loaded -> setup map
     this.events.subscribe('floor-loaded', res => {
       if(this.inputBuilding === res.building && this.isInit){
         this.isInit = false;
@@ -52,6 +56,7 @@ export class IndoorMapComponent implements OnInit {
       }
     });
 
+    //published by indoorDirectensService, when a path is found
     //when path is found -> display lines of path on map
     this.events.subscribe('path-found', () => {
       this.path = this.indoorDirectionsService.getPath();
@@ -63,11 +68,15 @@ export class IndoorMapComponent implements OnInit {
     });
 
     //when user ends route -> reset navidation
+    //published in indoor-side-buttons, when clicked on X
     this.events.subscribe('path-completed', res => {
       this.resetNav();
       this.directionManager.resetSteps();
     });
 
+    //published in 2 places:
+      //when user presses go in the room-selector-popover (same floor directions)
+      //after a floorplan is loaded, if directions are on route, initiate path in that floor plan
     //when user wants to start a new path -> get data necessary and compute path
     this.events.subscribe('init-new-path', data => {
       if (data) {
@@ -107,7 +116,6 @@ export class IndoorMapComponent implements OnInit {
 
     this.dataSharing.showPoi.subscribe( markerId =>{
       let poiMarkerId = markerId[0].concat('-marker');
-        console.log('poi with concatenation is ', poiMarkerId);
         this.poiMarker = document.getElementById(poiMarkerId);
       if(poiMarkerId != 'poiToShow-marker') {
         try {
@@ -178,6 +186,9 @@ export class IndoorMapComponent implements OnInit {
       building: this.inputBuilding,
       floor: this.floor,
     }
+
+    //publish that map has been set
+    //services are subscribred to this event so no directions begins before all elements have been set
     this.events.publish('map-set', data, Date.now());
   }
 
@@ -191,7 +202,8 @@ export class IndoorMapComponent implements OnInit {
       this.setMarker(point);
       this.isSelectMode = this.directionManager.getIsSelectMode();
 
-      //user wants floor to floor directions -> the room he just selected is to be concated to the already existing steps of navigation
+      //user wants floor to floor directions (isSelectMode)
+      //the room he just selected is to be concated to the already existing steps of navigation
       if (this.isSelectMode === true) {
         this.floor = this.checkCurrentFloorNumber();
         if (this.inputBuilding === 'hall' && this.floor === 8) {
@@ -214,8 +226,9 @@ export class IndoorMapComponent implements OnInit {
           );
         }
 
-      //initiating first step
+      //is not selecte mode -> initiating first step
       } else {
+        console.log(this.floor);
         if (this.inputBuilding === 'hall' && this.floor === 8) {
           this.directionManager.initiateIndoorDirections(
             'h8',
@@ -241,6 +254,8 @@ export class IndoorMapComponent implements OnInit {
     }
   }
 
+  //in order to avoid data corruption
+  //checks html to see which floorplan is currently loaded
   private checkCurrentFloorNumber(): number{
     let floor8 = document.getElementById('h8-plan-wrapper');
     let floor9 = document.getElementById('h9-plan-wrapper');
@@ -272,6 +287,7 @@ export class IndoorMapComponent implements OnInit {
     this.marker.style.visibility = 'hidden';
   }
 
+  //called when route is cancelled or ended
   //reset all navigations instance variables in component and indoor directions service
   public resetNav() {
     for (let line of this.path) {
@@ -285,6 +301,8 @@ export class IndoorMapComponent implements OnInit {
   }
 
   //important to reload route
+  //destroy component on unload so the ngAfterViewInit get's triggered everytime the indoor page is opened
+  //helps avoid data corruption -> data is reset everytime
   @HostListener('unloaded')
   ngOnDestroy() {}
 }

@@ -58,6 +58,42 @@ export class IndoorViewPage implements OnInit {
         this.router.navigated = false;
       }
     });
+  }
+
+  private subscribeToEvents() {
+    this.events.subscribe('isSelectMode', res => {
+      this.isSelectMode = res;
+      this.directionManager.setSelectMode(this.isSelectMode);
+    });
+
+    //when floor changes -> change view
+    //help trigger the change in floor to child components
+    this.events.subscribe('floor-changes', res => {
+      if (res) {
+        if(this.floor === parseInt(res)){
+          //if is the same floor trigger that map is set (aka has already been set, continue)
+          this.events.publish('map-set', Date.now());
+
+        } else {
+          //if floor is different initiate a new map
+          this.events.publish('initNewMap', Date.now());
+          this.floor = parseInt(res);
+        }
+      }
+    });
+
+    //suscribed to indoo-toolbar
+    //when goBackOutside is pressed, cancel all indoor directions
+    this.events.subscribe('reset-indoor', () => {
+      this.directionManager.resetSteps();
+      this.indoorDirections.resetNav()
+      this.building = null;
+      this.floor = null;
+    });
+
+    this.dataSharing.showToa.subscribe( updateShow => {
+      this.showToaComponent = updateShow;
+    });
 
     this.dataSharing.showPoi.subscribe( toggle =>{
       this.updateToggle(toggle[0], toggle[1]);
@@ -79,37 +115,6 @@ export class IndoorViewPage implements OnInit {
           this.entrance
         ]);
       }
-    });
-  }
-
-  private subscribeToEvents() {
-    this.events.subscribe('isSelectMode', res => {
-      this.isSelectMode = res;
-      this.directionManager.setSelectMode(this.isSelectMode);
-    });
-
-    //when floor changes -> change view
-    this.events.subscribe('floor-changes', res => {
-      if (res) {
-        if(this.floor === parseInt(res)){
-          this.events.publish('map-set', Date.now());
-
-        } else {
-          this.events.publish('initNewMap', Date.now());
-          this.floor = parseInt(res);
-        }
-      }
-    });
-
-    this.events.subscribe('reset-indoor', () => {
-      this.directionManager.resetSteps();
-      this.indoorDirections.resetNav()
-      this.building = null;
-      this.floor = null;
-    });
-
-    this.dataSharing.showToa.subscribe( updateShow => {
-      this.showToaComponent = updateShow;
     });
   }
 
