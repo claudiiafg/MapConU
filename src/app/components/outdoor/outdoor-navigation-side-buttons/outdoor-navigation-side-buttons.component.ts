@@ -18,6 +18,7 @@ import { GeolocationServices } from 'src/services/geolocation.services';
 export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public poiClicked: boolean = false;
   public isDirectionSet: boolean = false;
+  public showSideButtons: boolean = true;
   public bottomStyle: number = 0;
   public selectedPoi: any
   public isGoToButtonHidden: boolean = true
@@ -60,7 +61,11 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
         }
       }
     );
+
   }
+  
+  
+  
 
   ngOnInit() {
     this.events.subscribe('poi-selected', poi => {
@@ -73,6 +78,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
         this.poiUnselected()
       });
     });
+
   }
 
   async openViewer() {
@@ -201,5 +207,6 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       this.directionService.alternateDirectionSet = false;
     }
   }
+  
 
 }
