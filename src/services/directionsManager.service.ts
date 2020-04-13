@@ -425,26 +425,28 @@ export class DirectionsManagerService {
     //move outside first so there's a clean start in the next building without any corruption of data
     if(!this.router.url.includes('outdoor')) {
       this.router.navigateByUrl('/outdoor');
-    } 
-    
-    //move to the hall buildin
-    if (this.currentStep.floor.includes('h')) {
-      if (this.currentStep.floor === 'h8') {
-        this.router.navigateByUrl('/indoor/hall');
-      } else {
-        this.router.navigateByUrl('/indoor/hall');
-        //set timeout to allow all components to be loaded
-        setTimeout(() => {
+    }
+
+    //set timeout to allow all components to be loaded
+   setTimeout( () => {
+     //move to the hall buildin
+     if (this.currentStep.floor.includes('h')) {
+       if(this.currentStep.floor === 'h8'){
+         this.router.navigateByUrl('/indoor/hall');
+       } else {
+         this.router.navigateByUrl('/indoor/hall');
+         setTimeout(() => {
           this.changeFloor(this.currentStep.floor);
         }, 1000);
-      }
+       }
 
-      //move to jmsb
-    } else {
-      if (this.router.url !== '/indoor/jmsb') {
-        this.router.navigateByUrl('/indoor/jmsb');
-      }
-    }
+     //move to jmsb
+     } else {
+       if(this.router.url !== '/indoor/jmsb'){
+         this.router.navigateByUrl('/indoor/jmsb');
+       }
+     }
+   }, 500)
   }
 
   //returns step before the first that wasn't done yet
@@ -514,7 +516,7 @@ export class DirectionsManagerService {
         toBuilding = "hall";
         toBuildingLat = this.hallCoords.lat;
         toBuildingLng = this.hallCoords.lng;
-        
+
         //indoor path to hall building classroomFormatted
         tempIndoorStep = {
           floor: (classroomFormatted.includes('h8')) ? 'h8' : 'h9',
