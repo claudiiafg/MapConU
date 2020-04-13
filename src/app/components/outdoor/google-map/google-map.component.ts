@@ -175,7 +175,6 @@ export class GoogleMapComponent implements OnInit {
     private platform: Platform,
     private geolocationServices: GeolocationServices,
     private events: Events,
-    private data: DataSharingService,
     private directionService: DirectionService,
     private poiServices: PoiServices,
     private alertController: AlertController,
@@ -217,17 +216,17 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToChangeInPOI();
   }
 
-public mapReady($event: any) {
+  public mapReady($event: any) {
+    let self = this;
     this.map = $event;
     let panorama = this.map.getStreetView();
     google.maps.event.addListener(panorama, 'visible_changed', function() {
       if (panorama.getVisible()) {
         console.log('In 3d')
-        this.dataSharingService.updateShowSideButtons(false);
-        
+        self.dataSharingService.updateShowSideButtons(false);
       } else {
         console.log('not in 3d')
-        this.dataSharingService.updateShowSideButtons(true);
+        self.dataSharingService.updateShowSideButtons(true);
       }
     });
   }
@@ -315,7 +314,7 @@ public mapReady($event: any) {
       }
     });
 
-    this.data.currentMessage.subscribe((incomingMessage) => {
+    this.dataSharingService.currentMessage.subscribe((incomingMessage) => {
       this.latitude = incomingMessage.latitude;
       this.longitude = incomingMessage.longitude;
     });
@@ -596,7 +595,7 @@ public mapReady($event: any) {
 
   //use to send data to other components
   sendMessage(updatedMessage: any) {
-    this.data.updateMessage(updatedMessage);
+    this.dataSharingService.updateMessage(updatedMessage);
   }
 
   public subscribeToMapSize() {
