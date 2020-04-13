@@ -11,6 +11,7 @@ export class DataSharingService {
   public language = new BehaviorSubject<string>('lang'); //current language of the app ['fr', 'en']
   public toaParams = new BehaviorSubject<any>(['start', 'dest', 0]);
   public showToa = new BehaviorSubject<boolean>(false);
+  public showSideButtons = new BehaviorSubject<boolean>(true);
   public showPoi = new BehaviorSubject<any>(['poiToShow', false]);
   public hidePoi = new BehaviorSubject<any>(['poiToHide', false]);
   public setIndoorPoiToggles = new BehaviorSubject<boolean>(false);
@@ -64,5 +65,9 @@ export class DataSharingService {
 
   public updateCurrentBuilding ( updateBuilding: string){
     this.currentBuilding.next(updateBuilding);
+  }
+  public updateShowSideButtons ( showButtons: boolean){
+    this.showSideButtons.next(showButtons);
+    return showButtons;
   }
 }

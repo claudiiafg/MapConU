@@ -174,7 +174,6 @@ export class GoogleMapComponent implements OnInit {
     private platform: Platform,
     private geolocationServices: GeolocationServices,
     private events: Events,
-    private data: DataSharingService,
     private directionService: DirectionService,
     private poiServices: PoiServices,
     private alertController: AlertController,
@@ -230,7 +229,16 @@ export class GoogleMapComponent implements OnInit {
   }
 
   public mapReady($event: any) {
+    let self = this;
     this.map = $event;
+    let panorama = this.map.getStreetView();
+    google.maps.event.addListener(panorama, 'visible_changed', function() {
+      if (panorama.getVisible()) {
+        self.dataSharingService.updateShowSideButtons(false);
+      } else {
+        self.dataSharingService.updateShowSideButtons(true);
+      }
+    });
     this.map.addListener('click', (event) => {
         this.events.publish('mapClicked');
         if (event.placeId) {
@@ -329,7 +337,7 @@ export class GoogleMapComponent implements OnInit {
       }
     });
 
-    this.data.currentMessage.subscribe((incomingMessage) => {
+    this.dataSharingService.currentMessage.subscribe((incomingMessage) => {
       this.latitude = incomingMessage.latitude;
       this.longitude = incomingMessage.longitude;
     });
@@ -612,7 +620,7 @@ export class GoogleMapComponent implements OnInit {
 
   //use to send data to other components
   sendMessage(updatedMessage: any) {
-    this.data.updateMessage(updatedMessage);
+    this.dataSharingService.updateMessage(updatedMessage);
   }
 
   public subscribeToMapSize() {
