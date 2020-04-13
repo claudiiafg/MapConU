@@ -222,9 +222,12 @@ public mapReady($event: any) {
     let panorama = this.map.getStreetView();
     google.maps.event.addListener(panorama, 'visible_changed', function() {
       if (panorama.getVisible()) {
-        console.log('visible')
+        console.log('In 3d')
+        this.dataSharingService.updateShowSideButtons(false);
+        
       } else {
-        console.log('not visible')
+        console.log('not in 3d')
+        this.dataSharingService.updateShowSideButtons(true);
       }
     });
   }
