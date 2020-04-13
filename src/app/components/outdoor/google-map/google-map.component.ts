@@ -222,10 +222,8 @@ export class GoogleMapComponent implements OnInit {
     let panorama = this.map.getStreetView();
     google.maps.event.addListener(panorama, 'visible_changed', function() {
       if (panorama.getVisible()) {
-        console.log('In 3d')
         self.dataSharingService.updateShowSideButtons(false);
       } else {
-        console.log('not in 3d')
         self.dataSharingService.updateShowSideButtons(true);
       }
     });

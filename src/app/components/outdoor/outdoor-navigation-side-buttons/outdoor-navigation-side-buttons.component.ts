@@ -48,18 +48,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
         }
       }
     );
-    this.dataSharingService.showSideButtons.subscribe(
-      (showSideButtons: boolean)  => {
-      this.showSideButtons = showSideButtons;
-      if (showSideButtons){
-        //this.show
-        console.log('not In 3d')
-      }
-      else{
-        //this.hide
-        console.log('In 3d')
-      }
-    });
+
   }
   
   
