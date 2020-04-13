@@ -212,7 +212,10 @@ export class CalendarComponent implements OnInit {
           for(let calendar of data['items']) {
             // Newly added calendars
             if(!this.isChecked[`${calendar.summary}`]) {
-              this.isChecked[`${calendar.summary}`] = {isChecked: true, color: calendar.backgroundColor};
+              this.isChecked[`${calendar.summary}`] = {
+                isChecked: true,
+                color: `--background-checked: ${calendar.backgroundColor};--border-color: ${calendar.backgroundColor};--border-color-checked: ${calendar.backgroundColor}`
+              };
               await this.nativeStorage.setItem('calendars', this.isChecked);
               calendarsToLoad.push(calendar);
             } else if(this.isChecked[`${calendar.summary}`].isChecked) {
@@ -223,7 +226,10 @@ export class CalendarComponent implements OnInit {
         } catch(err) {
           let checkboxes: any = {};
           for(let calendar of this.calendarsList) {
-            checkboxes[`${calendar.summary}`] = {isChecked: true, color: calendar.backgroundColor};
+            checkboxes[`${calendar.summary}`] = {
+              isChecked: true,
+              color: `--background-checked: ${calendar.backgroundColor};--border-color: ${calendar.backgroundColor};--border-color-checked: ${calendar.backgroundColor}`
+            };
           }
           this.isChecked = checkboxes;
           await this.nativeStorage.setItem('calendars', checkboxes);

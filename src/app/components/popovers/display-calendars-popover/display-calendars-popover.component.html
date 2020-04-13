@@ -1,6 +1,6 @@
 <ion-list>
   <ion-item *ngFor="let calendar of calendars">
-    <ion-checkbox slot="end" [(ngModel)]="isChecked[calendar.summary].isChecked" (ionChange)="selectEvent()"></ion-checkbox>
+    <ion-checkbox slot="end" [(ngModel)]="isChecked[calendar.summary].isChecked" (ionChange)="selectEvent()" [attr.style]="sanitizer.bypassSecurityTrustStyle(isChecked[calendar.summary].color)"></ion-checkbox>
     <ion-label>{{ calendar.summary }}</ion-label>
   </ion-item>
 </ion-list>
