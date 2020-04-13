@@ -23,16 +23,13 @@ export class OutdoorViewPage implements OnInit {
     this.dataSharingService.showSideButtons.subscribe(
       (showSideButtons: boolean)  => {
       if (showSideButtons === true){
-        console.log('not In 3d')
         this.showSideButtons = true;
         document.getElementById('side-buttons').style.display = 'initial';
       }
       else{
-        console.log('In 3d')
         this.showSideButtons = false;
         document.getElementById('side-buttons').style.display = 'none';
       }
-      console.log(this.showSideButtons);
     });
   }
 
