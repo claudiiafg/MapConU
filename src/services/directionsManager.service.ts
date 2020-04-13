@@ -426,7 +426,7 @@ export class DirectionsManagerService {
     if(!this.router.url.includes('outdoor')) {
       this.router.navigateByUrl('/outdoor');
     }
-    
+
     //set timeout to allow all components to be loaded
    setTimeout( () => {
      //move to the hall buildin
@@ -435,7 +435,9 @@ export class DirectionsManagerService {
          this.router.navigateByUrl('/indoor/hall');
        } else {
          this.router.navigateByUrl('/indoor/hall');
-         this.changeFloor(this.currentStep.floor);
+         setTimeout(() => {
+          this.changeFloor(this.currentStep.floor);
+        }, 1000);
        }
 
      //move to jmsb
