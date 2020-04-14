@@ -34,6 +34,7 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 //env variables
 import { APIKey } from 'src/environments/env';
 import { environment } from '../environments/environment';
@@ -177,6 +178,7 @@ export function LanguageLoader(http: HttpClient) {
     SQLitePorter,
     SpeechRecognition,
     NativeGeocoder,
+    HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
