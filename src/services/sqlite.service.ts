@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "@ionic/angular";
-import { Buildinginfo } from "./buildinginfo";
-import { Coordinates } from "./coordinates";
+import { Buildinginfo } from "../models/buildinginfo";
+import { Coordinates } from "../models/coordinates";
 import { BehaviorSubject, Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { SQLitePorter } from "@ionic-native/sqlite-porter/ngx";

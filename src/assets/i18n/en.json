@@ -18,6 +18,7 @@
   "hotel-poi": "Hotels",
   "grocery-poi": "Grocery Stores",
   "location-searchbar": "Search for a location...",
+  "gotolocation-label": "Go to the location",
   "enter": "Enter",
   "Hall Building": "Hall Building",
   "John Molson Building": "John Molson Building",
@@ -57,6 +58,7 @@
   "stairs": "Stairs",
   "escalator": "Escalator",
   "elevators": "Elevators",
+  "fire-exit": "Emergency Exit",
   "exit": "Exit",
   "find-way": "Where do you wish to know directions from?",
   "fm-escalator": "From escalators",
@@ -71,10 +73,18 @@
   "start": "START",
   "next": "NEXT",
   "end": "END",
+  "Do you want to quit?": "Do you want to quit?",
+  "cancel": "Cancel",
+  "quit": "Quit",
   "no-floor-plan-msg" : "No floor plan available for ",
   "estimated-toa": "Arrival time at",
   "from": "from",
   "time": "Time:",
-  "mins": "minutes"
-
+  "mins": "minutes",
+  "logout": "Logout",
+  "calendar-title":"Your Calendar",
+  "today": "Today",
+  "month": "Month",
+  "week": "Week",
+  "day": "Day"
 }

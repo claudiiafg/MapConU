@@ -60,11 +60,20 @@
     </div>
   </ng-container>
 
-  <ion-searchbar
-    #search
-    class="search-location"
-    id="outdoor-search"
-    [placeholder]="'location-searchbar' | translate"
-    (ionClear)="closeAutocomplete($event)" class="searchButton"
-  ></ion-searchbar>
+  <div class="parent">
+    <div class="left">
+      <ion-searchbar
+        #search
+        class="search-location"
+        id="outdoor-search"
+        [placeholder]="'location-searchbar' | translate"
+      >
+      </ion-searchbar>
+    </div>
+    <div class="right searchbar-color" id="search-right-div">
+      <ion-button color="#fffff" class="searchbar-color" id="search-button" (click)="tryRecording()">
+        <ion-icon class="mic-icon" name="mic" id="icon-mic"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
 </ion-header>

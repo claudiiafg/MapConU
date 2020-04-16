@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { DataSharingService } from './data-sharing.service';
+import { Direction } from 'src/models/directionModel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DirectionService {
   public origin = new BehaviorSubject([]);
@@ -16,7 +18,7 @@ export class DirectionService {
   private alternateInfoWindow: any;
   private directionSteps: any;
 
-  constructor() {}
+  constructor(public dataSharingService: DataSharingService) {}
 
   public setDirectionsSteps(steps: any) {
     let stepsWithIcons = this.setStepsIcons(steps);
@@ -51,6 +53,9 @@ export class DirectionService {
       if (stepsWithIcons[key].maneuver.includes('merge')) {
         stepsWithIcons[key].maneuver_icon = 'git-merge';
       }
+      if (stepsWithIcons[key].maneuver.includes('straight')) {
+        stepsWithIcons[key].maneuver_icon = 'arrow-up';
+      }
 
       stepsWithIcons[key].position = counter;
       counter++;
@@ -83,5 +88,27 @@ export class DirectionService {
     if (this.alternateInfoWindow) {
       this.alternateInfoWindow.close();
     }
+  }
+
+  /**
+   * Function to set outside route with direction.
+   * @param Direction Direction has source and origin, which are both coordinates.
+   */
+  public outputDirectionOnMap(direction: Direction, mapSize: number) {
+    // set alternate direction to false if present
+    if (this.alternateDirectionSet) {
+      this.alternateDirection.set('directions', null);
+      this.alternateDirectionSet = false;
+    }
+
+    this.isDirectionSet.next(true);
+    this.dataSharingService.updateMapSize(mapSize);
+
+    this.origin.next([direction.origin.lat, direction.origin.lng]);
+
+    this.destination.next([
+      direction.destination.lat,
+      direction.destination.lng,
+    ]);
   }
 }

@@ -47,3 +47,13 @@ If you want to build on your phone, before doing so please change {{APIkey}} in 
 `<preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="{{APIkey}}" />`
 
 `<preference name="GOOGLE_MAPS_IOS_API_KEY" value="{{Apikey}}" />`
+
+## Typedoc:
+
+If you want to generate the current documentation for the application
+
+`npx typedoc --out ./docs ./src`
+
+Location of the generated documentation is: root_of_project/docs/index.html
+
+See typedoc full documentation here: https://typedoc.org/guides/installation/

@@ -1,16 +1,16 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SqliteService } from '../../../../services/sqlite.service';
-import { Buildinginfo } from '../../../../services/buildinginfo';
+import { Buildinginfo } from '../../../../models/buildinginfo';
 import {
   AlertController,
   Events,
   NavController,
-  Platform
+  Platform,
 } from '@ionic/angular';
 import { DirectionService } from 'src/services/direction.service';
 //services
+
 import { GeolocationServices } from 'src/services/geolocation.services';
 import { PoiServices } from 'src/services/poi.services';
 import { DataSharingService } from '../../../../services/data-sharing.service';
@@ -18,10 +18,19 @@ import { isPlatformBrowser } from '@angular/common';
 import { TranslationService } from '../../../../services/translation.service';
 import { DirectionsManagerService, MixedDirectionsType } from 'src/services/directionsManager.service';
 
+//DO NOT REMOVE
+//code will be used for dev purposes
+//see extraInfo.ts for more info
+// this.overlayCoords = externalOverlayCoords;
+import { externalOverlayCoords } from './extraInfo';
+
+@Injectable({
+  providedIn: 'root',
+})
 @Component({
   selector: 'app-google-map',
   templateUrl: './google-map.component.html',
-  styleUrls: ['./google-map.component.scss']
+  styleUrls: ['./google-map.component.scss'],
 })
 export class GoogleMapComponent implements OnInit {
   public height: number = 0;
@@ -41,11 +50,12 @@ export class GoogleMapComponent implements OnInit {
     gas: false,
     drugstore: false,
     hotels: false,
-    grocery: false
+    grocery: false,
   };
   public provideRouteAlternatives: boolean = true;
   public map: any;
-  public overlayCoords: Buildinginfo[] = [];
+  static isOpen: boolean;
+  public overlayCoords: any[] = [];
   // Directions rendering options
   public walkingNotSelectedRenderOptions = {
     polylineOptions: {
@@ -58,13 +68,13 @@ export class GoogleMapComponent implements OnInit {
             fillOpacity: 1,
             scale: 2,
             strokeColor: '#808080',
-            strokeOpacity: 1
+            strokeOpacity: 1,
           },
           offset: '0',
-          repeat: '10px'
-        }
-      ]
-    }
+          repeat: '10px',
+        },
+      ],
+    },
   };
 
   public walkingSelectedRenderOptions = {
@@ -78,25 +88,25 @@ export class GoogleMapComponent implements OnInit {
             fillOpacity: 1,
             scale: 2,
             strokeColor: '#339fff',
-            strokeOpacity: 1
+            strokeOpacity: 1,
           },
           offset: '0',
-          repeat: '10px'
-        }
-      ]
-    }
+          repeat: '10px',
+        },
+      ],
+    },
   };
 
   public notSelectedRenderOptions = {
     polylineOptions: {
-      strokeColor: '#808080'
-    }
+      strokeColor: '#808080',
+    },
   };
 
   public selectedRenderOptions = {
     polylineOptions: {
-      strokeColor: '#339fff'
-    }
+      strokeColor: '#339fff',
+    },
   };
 
   public renderOptions: any = this.walkingSelectedRenderOptions;
@@ -106,8 +116,8 @@ export class GoogleMapComponent implements OnInit {
     url: 'assets/icon/position-marker.png',
     scaledSize: {
       width: 15,
-      height: 15
-    }
+      height: 15,
+    },
   };
 
   private buildingToNavigateTo: string;
@@ -118,44 +128,44 @@ export class GoogleMapComponent implements OnInit {
       url: 'assets/icon/Marker_Restaurant.png',
       scaledSize: {
         width: 20,
-        height: 20
-      }
+        height: 20,
+      },
     },
     coffee: {
       url: 'assets/icon/Marker_Coffee.png',
       scaledSize: {
         width: 20,
-        height: 20
-      }
+        height: 20,
+      },
     },
     gas: {
       url: 'assets/icon/Marker_Gas_Station.png',
       scaledSize: {
         width: 20,
-        height: 20
-      }
+        height: 20,
+      },
     },
     hotel: {
       url: 'assets/icon/Marker_Hotel.png',
       scaledSize: {
         width: 20,
-        height: 20
-      }
+        height: 20,
+      },
     },
     drug: {
       url: 'assets/icon/Marker_Drugstore.png',
       scaledSize: {
         width: 20,
-        height: 20
-      }
+        height: 20,
+      },
     },
     groceries: {
       url: 'assets/icon/Marker_Groceries.png',
       scaledSize: {
         width: 20,
-        height: 20
-      }
-    }
+        height: 20,
+      },
+    },
   };
 
   private readonly defaultCampusZoom = 17;
@@ -164,26 +174,28 @@ export class GoogleMapComponent implements OnInit {
     private platform: Platform,
     private geolocationServices: GeolocationServices,
     private events: Events,
-    private data: DataSharingService,
     private directionService: DirectionService,
     private poiServices: PoiServices,
     private alertController: AlertController,
     private navController: NavController,
     private router: Router,
     private dataSharingService: DataSharingService,
+
     private translate: TranslationService,
-
     private db: SqliteService,
-
     private route: ActivatedRoute,
     private directionsManager: DirectionsManagerService
-
-
-  ) {}
+  ) {
+    GoogleMapComponent.isOpen = false;
+  }
 
   async ngOnInit() {
-
     await this.db.platform.ready();
+
+    //DO NOT REMOVE
+    //code will be used for dev purposes
+    //see extraInfo.ts for more info
+    // this.overlayCoords = externalOverlayCoords;
 
     this.db.dbState().subscribe((res) =>{
       if (res){
@@ -205,20 +217,42 @@ export class GoogleMapComponent implements OnInit {
     this.subscribeToTravelMode();
     this.subscribeToChangeInCurrentPOS();
     this.subscribeToChangeInPOI();
+    this.subscribeToIndoorDirectionsCompleted();
+    this.subscribeToToggleCenterLocation();
+  }
+
+  public subscribeToIndoorDirectionsCompleted(){
+    //when user ends route -> reset navidation
+    this.events.subscribe('path-completed', res => {
+      this.directionsManager.resetSteps();
+    });
   }
 
   public mapReady($event: any) {
+    let self = this;
     this.map = $event;
-  }
-
-  public handleMapClicked()
-  {
-    this.events.publish('mapClicked');
+    let panorama = this.map.getStreetView();
+    google.maps.event.addListener(panorama, 'visible_changed', function() {
+      if (panorama.getVisible()) {
+        self.dataSharingService.updateShowSideButtons(false);
+      } else {
+        self.dataSharingService.updateShowSideButtons(true);
+      }
+    });
+    this.map.addListener('click', (event) => {
+        this.events.publish('mapClicked');
+        if (event.placeId) {
+          this.events.publish("poi-selected", {placeId: event.placeId, latitude: event.latLng.lat(), longitude: event.latLng.lng()});
+        }
+        else{
+          this.events.publish("poi-unselected");
+        }
+    });
   }
 
   public subscribeToChangeInPOI() {
     //subscribe to changes in POI toggles
-    this.events.subscribe('poi-toggle-changed', async res => {
+    this.events.subscribe('poi-toggle-changed', async (res) => {
       const toggleName = res.toggle;
       const toggleValue = res.value;
       switch (toggleName) {
@@ -277,26 +311,33 @@ export class GoogleMapComponent implements OnInit {
     this.events.subscribe('campusChanged', () => {
       this.poiMarkers = [];
       this.currentToggles = this.poiServices.resetPOIMarkers();
-      this.map.zoom = this.defaultCampusZoom;
+      this.map.setZoom(this.defaultCampusZoom);
     });
+  }
+
+  public subscribeToToggleCenterLocation()
+  {
+    this.events.subscribe('centerLocation', (coordinates) => {
+      this.map.setCenter(new google.maps.LatLng(coordinates.latitude, coordinates.longitude));
+      this.map.setZoom(this.defaultCampusZoom);
+    })
   }
 
   public subscribeToChangeInCurrentPOS() {
     //subscribe to changes in current position
-    this.events.subscribe('coordinatesChanged', coordinates => {
+    this.events.subscribe('coordinatesChanged', (coordinates) => {
       let tempMarker = {
         latitude: coordinates.latitude,
-        longitude: coordinates.longitude
+        longitude: coordinates.longitude,
       };
       this.positionMarkers = [];
       this.positionMarkers.push(tempMarker);
-      if(coordinates.mapBounds)
-      {
-        this.map.fitBounds(coordinates.mapBounds)
+      if (coordinates.mapBounds) {
+        this.map.fitBounds(coordinates.mapBounds);
       }
     });
 
-    this.data.currentMessage.subscribe(incomingMessage => {
+    this.dataSharingService.currentMessage.subscribe((incomingMessage) => {
       this.latitude = incomingMessage.latitude;
       this.longitude = incomingMessage.longitude;
     });
@@ -305,21 +346,23 @@ export class GoogleMapComponent implements OnInit {
 
   //show name of POI when clicked on a marker
   public clickedMarker(infowindow: any) {
+    console.log(infowindow.hostMarker)
     if (this.previous) {
       this.previous.close();
     }
     this.previous = infowindow;
+    this.events.publish("poi-selected", {latitude: infowindow.hostMarker.latitude, longitude: infowindow.hostMarker.longitude});
   }
 
   public subscribeToUserInput() {
-    this.directionService.origin.subscribe(resp => {
+    this.directionService.origin.subscribe((resp) => {
       if (Array.isArray(resp) && resp.length) {
         this.origin = { lat: resp[0], lng: resp[1] };
       } else {
         this.origin = null;
       }
     });
-    this.directionService.destination.subscribe(resp => {
+    this.directionService.destination.subscribe((resp) => {
       if (Array.isArray(resp) && resp.length) {
         this.destination = { lat: resp[0], lng: resp[1] };
       } else {
@@ -348,6 +391,8 @@ export class GoogleMapComponent implements OnInit {
       Creates popup containing Concordia building descriptions.
        */
   async showAlert(building: string, address: string) {
+    GoogleMapComponent.isOpen = true;
+
     let urlSubString;
     switch (building) {
       case 'Hall Building':
@@ -422,28 +467,39 @@ export class GoogleMapComponent implements OnInit {
     const alert = await this.alertController.create({
       header: this.translate.getTranslation(building),
       subHeader: address,
-      message: "",
       cssClass: 'alert-css',
+      message: '',
+      //cssClass: 'alert-css',
       buttons: [
         {
           text: this.translate.getTranslation('enter'),
           cssClass: 'alert-button-map',
           handler: () => {
             if (urlSubString === 'jmsb' || urlSubString === 'hall') {
-              if(this.router.url.includes('/outdoor/isMixedNav')){
+              if (this.router.url.includes('/outdoor/isMixedNav')) {
                 this.pushIndoorStep(false);
-                this.directionsManager.setMixedType(MixedDirectionsType.classToClass);
-                this.events.publish("isSelectMode", true, Date.now());
+                this.directionsManager.setMixedType(
+                  MixedDirectionsType.classToClass
+                );
+                this.events.publish('isSelectMode', true, Date.now());
               }
               let url = '/indoor/' + urlSubString;
+
               this.router.navigateByUrl(url);
+              GoogleMapComponent.isOpen = false;
+
               return true;
             } else {
-              alert.message = this.translate.getTranslation('no-floor-plan-msg') + this.translate.getTranslation(building);
+              console.error('no floor plans for this building');
+              GoogleMapComponent.isOpen = false;
+
+              alert.message =
+                this.translate.getTranslation('no-floor-plan-msg') +
+                this.translate.getTranslation(building);
               console.error('no floor plans for this building');
               return false;
             }
-          }
+          },
         },
         /*This button has it's opacity set to 0 and does not show up on the building info box but it needs to be
           here so that the alert dismisses properly when the user clicks outside the box to close it.  DO NOT REMOVE!!
@@ -454,21 +510,26 @@ export class GoogleMapComponent implements OnInit {
           role: 'cancel',
           handler: () => {
             console.log('building-popup closed');
-          }
+            GoogleMapComponent.isOpen = false;
+          },
         },
         {
           text: this.translate.getTranslation('go'),
           cssClass: 'alert-button-go',
           handler: () => {
             this.goHere();
+            GoogleMapComponent.isOpen = false;
+
             return true;
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
     let result = await alert.onDidDismiss();
+
+    GoogleMapComponent.isOpen = false;
   }
 
   /*
@@ -476,11 +537,10 @@ export class GoogleMapComponent implements OnInit {
       'Go' button is clicked on the building information popup
        */
   goHere() {
-    if(this.router.url.includes('/outdoor/isMixedNav')){
+    if (this.router.url.includes('/outdoor/isMixedNav')) {
       this.pushIndoorStep(true);
       this.directionsManager.isIndoorInRoute.next(true);
       this.directionsManager.isMixedInRoute.next(true);
-
     } else {
       let buildingLat: number;
       let buildingLng: number;
@@ -502,7 +562,7 @@ export class GoogleMapComponent implements OnInit {
 
       this.directionService.origin.next([
         this.geolocationServices.getLatitude(),
-        this.geolocationServices.getLongitude()
+        this.geolocationServices.getLongitude(),
       ]);
       this.directionService.destination.next([buildingLat, buildingLng]);
 
@@ -510,62 +570,67 @@ export class GoogleMapComponent implements OnInit {
     }
   }
 
-  public pushIndoorStep(isLast: boolean){
+  public pushIndoorStep(isLast: boolean) {
     let fromBuildingLat: number;
     let fromBuildingLng: number;
     let fromBuilding: any;
     let toBuildingLat: number;
     let toBuildingLng: number;
     let toBuilding: any;
-    this.sub = this.route.params.subscribe(params => {
-      if(params['id']){
-        if(params['id'] === 'hall'){
-          fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'Hall Building')[0];
+    this.sub = this.route.params.subscribe((params) => {
+      if (params['id']) {
+        if (params['id'] === 'hall') {
+          fromBuilding = this.overlayCoords.filter(
+            (overlay) => overlay.name === 'Hall Building'
+          )[0];
           fromBuildingLat = fromBuilding.coords[0].lat;
           fromBuildingLng = fromBuilding.coords[0].lng;
-
-        } else if(params['id'] === 'jmsb'){
-          fromBuilding = this.overlayCoords.filter(overlay => overlay.name === 'John Molson Building')[0];
+        } else if (params['id'] === 'jmsb') {
+          fromBuilding = this.overlayCoords.filter(
+            (overlay) => overlay.name === 'John Molson Building'
+          )[0];
           fromBuildingLat = fromBuilding.coords[0].lat;
           fromBuildingLng = fromBuilding.coords[0].lng;
         }
       }
     });
-    toBuilding = this.overlayCoords.filter(overlay => overlay.name === this.buildingToNavigateTo)[0];
+    toBuilding = this.overlayCoords.filter(
+      (overlay) => overlay.name === this.buildingToNavigateTo
+    )[0];
     toBuildingLat = toBuilding.coords[0].lat;
     toBuildingLng = toBuilding.coords[0].lng;
     const to = {
       building: toBuilding,
       lat: toBuildingLat,
-      lng: toBuildingLng
-    }
+      lng: toBuildingLng,
+    };
     const from = {
       building: fromBuilding,
       lat: fromBuildingLat,
-      lng: fromBuildingLng
-    }
+      lng: fromBuildingLng,
+    };
     const tempStep = {
       source: from,
       dest: to,
       wasDone: false,
-      isLast: isLast
-    }
+      isLast: isLast,
+    };
     this.directionsManager.pushStep(tempStep);
   }
 
   //use to send data to other components
   sendMessage(updatedMessage: any) {
-    this.data.updateMessage(updatedMessage);
+    this.dataSharingService.updateMessage(updatedMessage);
   }
 
   public subscribeToMapSize() {
-    this.dataSharingService.mapSize.subscribe(size => {
+    this.dataSharingService.mapSize.subscribe((size) => {
       this.height = size;
     });
   }
 
   public subscribeToTravelMode() {
-    this.directionService.changeTravelMode.subscribe(travelMode => {
+    this.directionService.changeTravelMode.subscribe((travelMode) => {
       this.travelMode = travelMode;
     });
   }
@@ -603,7 +668,7 @@ export class GoogleMapComponent implements OnInit {
       time: route.legs[0].duration.text,
       distance: route.legs[0].distance.text,
       fare,
-      presentModal
+      presentModal,
     });
   }
 
@@ -625,7 +690,7 @@ export class GoogleMapComponent implements OnInit {
           map: this.map,
           directions: directionInfo,
           routeIndex: 1,
-          polylineOptions: polyLine.polylineOptions
+          polylineOptions: polyLine.polylineOptions,
         }
       );
 
@@ -714,7 +779,7 @@ export class GoogleMapComponent implements OnInit {
         }
       }
     }
-    if(this.directionService.alternateDirection){
+    if (this.directionService.alternateDirection) {
       this.directionService.alternateDirection.setMap(this.map);
     }
   }

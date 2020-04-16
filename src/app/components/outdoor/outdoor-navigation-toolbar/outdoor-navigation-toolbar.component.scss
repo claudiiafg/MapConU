@@ -2,19 +2,22 @@
   --background: var(--ConcordiaRed);
   --background-activated: var(--ConcordiaRed);
   --inner-padding-bottom: 0px;
-  float: right;
-  padding-right: 2em;
   color: white;
+  display: contents;
 }
 
 .select-campus {
-  position: absolute;
   max-width: fit-content;
+  margin: auto;
+  position: relative;
+  padding-right: -45px;
 }
 
 .search-location {
   position: relative;
+  display: contents;
   padding: 0;
+  --box-shadow: none;
 }
 
 .sc-ion-searchbar-ios-h {
@@ -24,10 +27,6 @@
 
 .searchbar-input-container .sc-ion-searchbar-ios {
   height: 40px;
-}
-
-.select-campus {
-  position: initial;
 }
 
 .settings-button {
@@ -52,4 +51,25 @@
   --shape: round;
   --size: large;
   padding-right: 0.5em;
+}
+
+.mic-icon {
+  color: #929292;
+}
+
+.parent {
+  display: flex;
+}
+
+.left {
+  width: 90%;
+}
+
+.right {
+  flex: 1;
+}
+
+.searchbar-color {
+  background: #ffffff;
+  --box-shadow: none;
 }

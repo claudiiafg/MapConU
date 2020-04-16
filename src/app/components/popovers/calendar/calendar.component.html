@@ -1,14 +1,20 @@
 <div *ngIf="isReady; then isLoaded else notLoaded"></div>
 <ng-template #isLoaded>
-  <ion-header>
-    <ion-icon name="logo-google" color="black" size="large"></ion-icon>
-    <ion-title>
-      Your Calendar
-    </ion-title>
+  <ion-header id="header">
+    <ion-icon class="logo-google" name="logo-google" [color]="googleSession ? 'secondary' : 'primary'" size="large"></ion-icon>
+    <ng-template [ngIf]="!googleSession">
+      <ion-button class="login-button" size="large" (click)="login()">
+        <ion-icon name="link"></ion-icon>
+      </ion-button>
+    </ng-template>
+    <strong id="calendar">
+      {{ calendarTitle }}
+    </strong>
     <!-- to center the title -->
-    <ion-icon name="md-close" color="black" size="large" (click)="close()"></ion-icon>
+    <ion-icon name="md-close" size="large" color="black" (click)="close()"></ion-icon>
   </ion-header>
 
+  <h3 id="title">{{ viewDate | calendarDate:(view + 'ViewTitle'): this.language }}</h3>
   <div class="outside-wrapper">
     <div class="month-change-buttons">
       <button
@@ -17,7 +23,7 @@
         mwlCalendarToday
         [(viewDate)]="viewDate"
       >
-        Today
+        <ion-label>{{'today'| translate}}</ion-label>
       </button>
       <button class="buttondiv back">
         <ion-icon
@@ -41,7 +47,6 @@
         >
         </ion-icon>
       </button>
-      <h3 id="title">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
     </div>
     <div class="view-calendar">
       <button
@@ -49,21 +54,21 @@
         (click)="setView(CalendarView.Month)"
         [class.active]="view === CalendarView.Month"
       >
-        Month
+        <ion-label>{{'month'| translate}}</ion-label>
       </button>
       <button
         class="buttondiv"
         (click)="setView(CalendarView.Week)"
         [class.active]="view === CalendarView.Week"
       >
-        Week
+        <ion-label>{{'week'| translate}}</ion-label>
       </button>
       <button
         class="buttondiv front"
         (click)="setView(CalendarView.Day)"
         [class.active]="view === CalendarView.Day"
       >
-        Day
+        <ion-label>{{'day'| translate}}</ion-label>
       </button>
     </div>
   </div>
@@ -77,6 +82,7 @@
       [activeDayIsOpen]="activeDayIsOpen"
       (dayClicked)="dayClicked($event.day)"
       (eventClicked)="requestDirections($event)"
+      [locale]="language"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -84,6 +90,7 @@
       [viewDate]="viewDate"
       [events]="events"
       [refresh]="refresh"
+      [locale]="language"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -91,6 +98,7 @@
       [viewDate]="viewDate"
       [events]="events"
       [refresh]="refresh"
+      [locale]="language"
     >
     </mwl-calendar-day-view>
   </div>
