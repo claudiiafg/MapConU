@@ -82,7 +82,7 @@ export class IndoorViewPage implements OnInit {
       }
     });
 
-    //suscribed to indoo-toolbar
+    //subscribed to indoor-toolbar
     //when goBackOutside is pressed, cancel all indoor directions
     this.events.subscribe('reset-indoor', () => {
       this.directionManager.resetSteps();
@@ -91,20 +91,33 @@ export class IndoorViewPage implements OnInit {
       this.floor = null;
     });
 
+    /**
+     * Subscribe to showToa from dataSharingService.ts so page knows when to display the time required to get to an
+     * indoor location
+     */
     this.dataSharing.showToa.subscribe( updateShow => {
       this.showToaComponent = updateShow;
     });
 
+    /**
+     * Subscribe to showPoi from dataSharingService.ts to get notified to display the markers for an indoor poi
+     */
     this.dataSharing.showPoi.subscribe( toggle =>{
       this.updateToggle(toggle[0], toggle[1]);
     });
 
+    /**
+     * Subscribe to hidePoi from dataSharingService.ts to get notified to hide the markers for an indoor poi
+     */
     this.dataSharing.hidePoi.subscribe( toggle =>{
       this.updateToggle(toggle[0], toggle[1]);
     });
 
     this.dataSharing.setIndoorPoiToggles.subscribe(status =>{
-      //send back toggle status when popover opens
+      /**
+       * When indoor poi popover opens, end back history of which poi's were toggled when the popover was last opened
+       * so that the appropriate locations will be toggled on an off at initialization.
+       */
       if(status) {
         this.dataSharing.updateToggleResponse([
           this.bathroom,
@@ -126,6 +139,11 @@ export class IndoorViewPage implements OnInit {
     }
   }
 
+  /**
+   * Updates the toggle status of a poi when it is changed
+   * @param poi The indoor point of interest that is to be updated
+   * @param condition Boolean true when the poi is toggled on and false when the poi is toggled off
+   */
   updateToggle(poi: string, condition: boolean){
     if(poi.includes('wc')){
       this.bathroom = condition;

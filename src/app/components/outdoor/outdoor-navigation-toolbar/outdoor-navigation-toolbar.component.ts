@@ -4,8 +4,7 @@ import {
   Component,
   NgZone,
   OnInit,
-  ViewChild,
-  Input,
+  ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
@@ -38,7 +37,9 @@ export class OutdoorNavigationToolbarComponent
   currentLat: number = 45.495729;
   currentLng: number = -73.578041;
 
-  //Array for lat, long of specific locations
+  /**
+   * Array for lat, long of SWG (locations[0]) and Loyola campuses (locations[1])
+   */
   public locations = [
     { latitude: 45.495729, longitude: -73.578041 },
     { latitude: 45.45824, longitude: -73.640452 },
@@ -56,6 +57,9 @@ export class OutdoorNavigationToolbarComponent
     private speechRecognition: SpeechRecognition,
     private deviceDetector: DeviceDetectorService
   ) {
+    /**
+     * Subscribe to notifcations to change campus from the dropdown menu in the toolbar
+     */
     this.dataSharingService.currentMessage.subscribe(
       (incomingMessage) => (this.message = incomingMessage)
     );
@@ -129,10 +133,17 @@ export class OutdoorNavigationToolbarComponent
     });
   }
 
+  /**
+   * Method triggered when the campus dropdown menu selection is changed, subscription variable is updated to
+   * the new campus location so that subscribers can be notified
+   */
   public changeCampus() {
-    /* Added as a workaround to get the select menu for campuses to reload when the language changes.
-    A variable change is required to trigger an automatic reload but campus should not be changed
+    /**
+     * @hidden
+     * Added as a workaround to get the select menu for campuses to reload when the language changes.
+     * A variable change is required to trigger an automatic reload but campus should not be changed
      */
+
     if (this.loc == '2') {
       this.loc = '0';
     }

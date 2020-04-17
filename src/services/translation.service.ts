@@ -13,7 +13,10 @@ export class TranslationService {
     private dataSharing: DataSharingService
   ) {}
 
-  //automatically sets the app to french is the users phone is french and english otherwise
+  /**
+   * Automatically sets the app to french is the users phone is french and english otherwise
+   *
+   */
   getDefaultLanguage() {
     let language = this.translate.getBrowserLang();
     console.log('default language is: ', language);
@@ -22,12 +25,18 @@ export class TranslationService {
     } else {
       this.translate.setDefaultLang('en');
     }
-    //notify subscribers of default language
+    /**
+     * Notify subscribers of default language
+     */
     this.currentLanguage = language;
     return language;
   }
 
-  //function to manually change to app language using the settings function
+  /**
+   * Function to manually change to app language using the settings function
+   *
+   * @param newLang the new language set for the app
+   */
   setLanguage(newLang) {
     this.translate.use(newLang);
     this.currentLanguage = newLang;
@@ -38,18 +47,26 @@ export class TranslationService {
     return this.currentLanguage;
   }
 
-  //encapsulate subscription to language changes (method for all components that have text)
+  /**
+   * Encapsulate subscription to language changes (method for all components that have text)
+   *
+   * @param currentLanguage The currently selected language for the app
+   */
   subscribeToAppLanguage(currentLanguage: string) {
     this.dataSharing.currentMessage.subscribe(updatedLanguage => {
       console.log('msg recieved');
       if (currentLanguage != updatedLanguage && currentLanguage != null) {
-        // window.location.reload();
       }
       currentLanguage = updatedLanguage;
     });
   }
 
-  //translate
+  /**
+   * Method to translate text
+   *
+   * @param toTranslate the key of the json object containing the translation
+   * @returns Translation from the correct json file
+   */
   getTranslation(toTranslate: string) {
     return this.translate.instant(toTranslate);
   }
