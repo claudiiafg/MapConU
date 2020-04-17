@@ -42,9 +42,18 @@ export class IndoorPoiPopoverComponent implements OnInit {
     });
   }
 
+  /**
+   * Method shows or hides indoor poi markers for the poi that is being toggled
+   *
+   * @param poi The poi that is being toggled on/off
+   * @param condition Boolean to represent toggle on (true) of toggle off (false)
+   */
   togglePoi(poi: string, condition: boolean){
     if(condition === undefined){
-      //without this empty condition hideLocation() fires and removes pois when the poi is closed
+      /**
+       * @hidden
+       * without this empty condition hideLocation() fires and removes pois when the poi is closed
+       */
     }
     else if(condition) {
       this.indoorPoi.showLocation(poi);

@@ -33,7 +33,10 @@ export class SettingsOptionsComponent implements OnInit {
       }
   }
 
-  //changes app language
+  /**
+   * Changes app language to either french or english and updates the language subscription variable so that all
+   * subscribers will be notified of the language change
+   */
   languageChange() {
     if (this.appLanguage == 'french') {
       this.translate.setLanguage('fr');

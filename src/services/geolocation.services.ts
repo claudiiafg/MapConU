@@ -30,6 +30,9 @@ export class GeolocationServices {
     this.subscribeToPosition();
   }
 
+  /**
+   * Notifies the user if MapConU does not have permission to access the users location services
+   */
   async locationOffAlert() {
     const alert = await this.alertController.create({
       header: 'Alert',

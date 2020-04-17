@@ -63,9 +63,6 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     );
 
   }
-  
-  
-  
 
   ngOnInit() {
     this.events.subscribe('poi-selected', poi => {
