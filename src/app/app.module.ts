@@ -34,6 +34,7 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 //env variables
 import { APIKey } from 'src/environments/env';
 import { environment } from '../environments/environment';
@@ -80,6 +81,7 @@ import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8
 import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { DisplayCalendarsPopoverComponent } from './components/popovers/display-calendars-popover/display-calendars-popover.component';
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -111,7 +113,8 @@ export function LanguageLoader(http: HttpClient) {
     InfoPopoverComponent,
     CalendarComponent,
     IndoorTimeOfArrivalComponent,
-    IndoorPoiPopoverComponent
+    IndoorPoiPopoverComponent,
+    DisplayCalendarsPopoverComponent
   ],
   entryComponents: [
     SearchPopoverComponent,
@@ -120,7 +123,8 @@ export function LanguageLoader(http: HttpClient) {
     RoomSelectorPopoverComponent,
     InfoPopoverComponent,
     CalendarComponent,
-    IndoorPoiPopoverComponent
+    IndoorPoiPopoverComponent,
+    DisplayCalendarsPopoverComponent
   ],
   imports: [
     CommonModule,
@@ -174,6 +178,7 @@ export function LanguageLoader(http: HttpClient) {
     SQLitePorter,
     SpeechRecognition,
     NativeGeocoder,
+    HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
