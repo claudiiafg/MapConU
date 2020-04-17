@@ -18,6 +18,7 @@ import { AgmDirectionModule } from "agm-direction";
 import { AgmOverlays } from "agm-overlays";
 import { AgmCoreModule } from "@agm/core";
 import { APIKey } from "../../../../environments/env";
+import { DeviceDetectorService } from "ngx-device-detector";
 import { TranslationService } from "../../../../services/translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -26,6 +27,7 @@ import { By } from "@angular/platform-browser";
 import { DirectionsManagerService } from "../../../../services/directionsManager.service";
 import { SQLite } from "@ionic-native/sqlite/ngx";
 import { SQLitePorter } from "@ionic-native/sqlite-porter/ngx";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -60,7 +62,7 @@ describe("OutdoorNavigationToolbarComponent ", () => {
         })
       ],
       declarations: [OutdoorNavigationToolbarComponent, GoogleMapComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         StatusBar,
         SplashScreen,
@@ -76,6 +78,8 @@ describe("OutdoorNavigationToolbarComponent ", () => {
         DirectionsManagerService,
         SQLite,
         SQLitePorter,
+        SpeechRecognition,
+        DeviceDetectorService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]
