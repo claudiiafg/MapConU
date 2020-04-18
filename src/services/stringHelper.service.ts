@@ -40,6 +40,8 @@ export class StringHelperService {
       prettyName = this.translate.getTranslation('elevators');
     } else if (pointName.includes('out')) {
       prettyName = this.translate.getTranslation('exit');
+    } else if (pointName.includes('study-hall')) {
+      prettyName = this.translate.getTranslation('studyHall');
     } else {
       prettyName = pointName;
     }

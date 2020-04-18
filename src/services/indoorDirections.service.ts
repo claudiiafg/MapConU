@@ -156,7 +156,7 @@ export class IndoorDirectionsService {
         this.setDest(destination);
         this.computePath();
       } catch (e) {
-        // console.error(e);
+        console.error(e);
       }
     }
   }
@@ -216,6 +216,8 @@ export class IndoorDirectionsService {
     } else if (name.includes('h8')) {
       point = this.interestPoints.filter(point => point.id === name)[0];
     } else if (name.includes('h9')) {
+      point = this.interestPoints.filter(point => point.id === name)[0];
+    } else if (name.includes('vl')) {
       point = this.interestPoints.filter(point => point.id === name)[0];
     } else if (name.includes('elevator')) {
       point = this.interestPoints.filter(point => point.id === 'elevator')[0];

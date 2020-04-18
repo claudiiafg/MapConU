@@ -11,7 +11,7 @@ import { DirectionsManagerService } from 'src/services/directionsManager.service
 })
 export class IndoorNavigationToolbarComponent {
   @Input() inputBuilding: string;
-  @Input() floor: any = 8;
+  @Input() floor;
   @Input() isSelectMode: boolean = false;
 
   private maxFloorIndex: number;
@@ -40,7 +40,7 @@ export class IndoorNavigationToolbarComponent {
       topFloorIndex: 5,
       bottomFloorIndex: 2
     },
-    { buildingName: "Vanier Extension", topFloorIndex: 5, bottomFloorIndex: 2 }
+    { buildingName: "Vanier Library", topFloorIndex: 2, bottomFloorIndex: 2 }
   ];
 
   private floors = [
@@ -93,8 +93,8 @@ export class IndoorNavigationToolbarComponent {
           "Communication Studies and Journalism Building"
         );
         break;
-      case "varnier":
-        this.building = this.translate.getTranslation("Vanier Extension");
+      case "vanier":
+        this.building = this.translate.getTranslation("Vanier Library");
         break;
     }
 

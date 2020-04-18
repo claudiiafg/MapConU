@@ -1,9 +1,17 @@
 <div class="indoor-map-wrapper">
+
   <div *ngIf="inputBuilding === 'jmsb'">
     <div *ngIf="floor === 1 || floor === '1'">
       <mb1-floor-plan></mb1-floor-plan>
     </div>
   </div>
+
+  <div *ngIf="inputBuilding === 'vanier'">
+    <div *ngIf="floor === 1 || floor === '1'">
+      <vl1-floor-plan></vl1-floor-plan>
+    </div>
+  </div>
+
   <div *ngIf="inputBuilding === 'hall'">
     <div *ngIf="floor === 8 || floor === '8'">
       <h8-floor-plan></h8-floor-plan>
@@ -12,4 +20,5 @@
       <h9-floor-plan></h9-floor-plan>
     </div>
   </div>
+
 </div>

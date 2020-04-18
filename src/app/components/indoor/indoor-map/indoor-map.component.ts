@@ -80,6 +80,7 @@ export class IndoorMapComponent implements OnInit {
     //when user wants to start a new path -> get data necessary and compute path
     this.events.subscribe('init-new-path', data => {
       if (data) {
+        console.log('init');
         this.resetNav();
         this.sourceID = data.source;
         this.destID = data.destination;
@@ -88,6 +89,7 @@ export class IndoorMapComponent implements OnInit {
         )[0];
         this.setMarker(p);
         if(this.sourceID !== this.destID){
+          console.log('before compute');
           this.indoorDirectionsService.computePathHelper(
             this.sourceID,
             this.destID
@@ -105,6 +107,7 @@ export class IndoorMapComponent implements OnInit {
         ele.includes('h8') ||
         ele.includes('h9') ||
         ele.includes('mb1') ||
+        ele.includes('vl1') ||
         ele.includes('elevator') ||
         ele.includes('escalator') ||
         ele.includes('stairs')
@@ -166,15 +169,15 @@ export class IndoorMapComponent implements OnInit {
       currentDoc = document.getElementById('h8-plan-wrapper');
     } else if(this.inputBuilding === 'hall' && this.floor === 9){
       currentDoc = document.getElementById('h9-plan-wrapper');
-    } else {
+    } else if(this.inputBuilding === 'jmsb'){
       currentDoc = document.getElementById('mb1-plan-wrapper');
+    } else if(this.inputBuilding === 'vanier'){
+      currentDoc = document.getElementById('vl1-plan-wrapper');
     }
     let docElementLines = currentDoc.getElementsByTagName('line');
     let docInterestPoints = currentDoc.getElementsByTagName('circle');
     this.marker = document.getElementById('marker');
-    if(this.marker){
-      this.marker.style.visibility = 'hidden';
-    }
+    this.unsetMarker();
 
     //set map in service and get all info from it
     this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
@@ -224,11 +227,16 @@ export class IndoorMapComponent implements OnInit {
             'mb1',
             this.destID
           );
+        } else if (this.inputBuilding === 'vanier') {
+          this.directionManager.initDifferentFloorDir(
+            false,
+            'vl1',
+            this.destID
+          );
         }
 
       //is not selecte mode -> initiating first step
       } else {
-        console.log(this.floor);
         if (this.inputBuilding === 'hall' && this.floor === 8) {
           this.directionManager.initiateIndoorDirections(
             'h8',
@@ -247,6 +255,12 @@ export class IndoorMapComponent implements OnInit {
             this.destID,
             this.interestPoints
           );
+        } else if (this.inputBuilding === 'vanier') {
+          this.directionManager.initiateIndoorDirections(
+            'vl1',
+            this.destID,
+            this.interestPoints
+          );
         }
       }
     } else {
@@ -257,15 +271,16 @@ export class IndoorMapComponent implements OnInit {
   //in order to avoid data corruption
   //checks html to see which floorplan is currently loaded
   private checkCurrentFloorNumber(): number{
-    let floor8 = document.getElementById('h8-plan-wrapper');
-    let floor9 = document.getElementById('h9-plan-wrapper');
-    let floor1 = document.getElementById('mb1-plan-wrapper');
+    let h8 = document.getElementById('h8-plan-wrapper');
+    let h9 = document.getElementById('h9-plan-wrapper');
+    let mb1 = document.getElementById('mb1-plan-wrapper');
+    let vl1 = document.getElementById('vl1-plan-wrapper');
 
-    if(floor8){
+    if(h8){
       return 8;
-    } else if(floor9) {
+    } else if(h9) {
       return 9;
-    } else if(floor1) {
+    } else if(mb1 || vl1) {
       return 1;
     }
 
@@ -284,7 +299,9 @@ export class IndoorMapComponent implements OnInit {
   }
 
   unsetMarker(){
-    this.marker.style.visibility = 'hidden';
+    if(this.marker){
+      this.marker.style.visibility = 'hidden';
+    }
   }
 
   //called when route is cancelled or ended
