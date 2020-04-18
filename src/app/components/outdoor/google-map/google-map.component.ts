@@ -1,7 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SqliteService } from '../../../../services/sqlite.service';
-import { Buildinginfo } from '../../../../models/buildinginfo';
 import {
   AlertController,
   Events,
@@ -535,8 +534,6 @@ export class GoogleMapComponent implements OnInit {
     });
 
     await alert.present();
-    let result = await alert.onDidDismiss();
-
     GoogleMapComponent.isOpen = false;
   }
 
