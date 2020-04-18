@@ -22,6 +22,7 @@
         class="buttondiv"
         mwlCalendarToday
         [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
       >
         <ion-label>{{'today'| translate}}</ion-label>
       </button>
@@ -33,6 +34,7 @@
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
         >
         </ion-icon>
       </button>
@@ -44,6 +46,7 @@
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
         >
         </ion-icon>
       </button>

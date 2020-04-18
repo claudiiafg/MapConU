@@ -124,6 +124,13 @@ export class CalendarComponent implements OnInit {
   }
 
   /**
+    Closes date dropdown when moving to another month
+  */
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
+
+  /**
    * Function to calculate steps after user clic on class or event with location
    * @param CalendarEventClicked Calendar object with Calendar Event and Mouse Event
    */
