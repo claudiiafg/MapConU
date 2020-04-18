@@ -1,5 +1,5 @@
-import { TestBed } from "@angular/core/testing";
-import { DirectionsManagerService } from "./directionsManager.service";
+import {TestBed} from "@angular/core/testing";
+import {DirectionsManagerService} from "./directionsManager.service";
 import { GeolocationServices } from "./geolocation.services";
 import { TranslationService } from "./translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
@@ -15,10 +15,7 @@ import {
   Routes
 } from "@angular/router";
 import {BehaviorSubject} from "rxjs";
-
-// import { IndoorViewPage } from "src/app/pages/indoor-view/indoor-view.page";
-// import { OutdoorViewPage } from "src/app/pages/outdoor-view/outdoor-view.page";
-// import { SettingsPage } from "src/app/pages/settings/settings.page";
+import {RouterTestingModule} from "@angular/router/testing";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -35,7 +32,10 @@ export function LanguageLoader(http: HttpClient) {
 //   { path: "**", redirectTo: "outdoor" }
 // ];
 
+
 describe("DirectionsManagerService", () => {
+  let router: Router;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -47,15 +47,20 @@ describe("DirectionsManagerService", () => {
             deps: [HttpClient]
           }
         }),
-        RouterModule.forRoot([])
+        RouterModule.forRoot([]),
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
         TranslationService,
         DirectionsManagerService,
         Geolocation,
         GeolocationServices,
-        { provide: Router },
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+        {
+          provide: Router, useClass: class {
+            navigate = jasmine.createSpy("navigateByUrl");
+          }
+        },
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
       ]
     }).compileComponents();
   });
@@ -88,26 +93,26 @@ describe("DirectionsManagerService", () => {
 
   it('should subscribe to events', () => {
     const service: DirectionsManagerService = TestBed.get(DirectionsManagerService);
+    router = TestBed.get(Router);
+    service['events']['publish']('map-set', Date.now());
+    service['events']['publish']('map-set', {
+      building: 'jmsb',
+      floor: 'mb1'
+    }, Date.now());
     service.isIndoorInRoute = new BehaviorSubject(true);
     service.isMixedInRoute = new BehaviorSubject(true);
+    const data = {source: 'here', destination: 'there'};
+    service['events']['publish']('init-new-path', data, Date.now());
+    service['pathHasBeenInit'] = true;
     service.stepsBeenInit();
-    const tempService = service['router'];
     service['steps'] = [{floor: 'mb1', source: 'here', dest: 'there', wasDone: false}];
-    const mySpy1 = spyOn<any>(service.isMixedInRoute, "subscribe").and.callFake((res => {
-          if (res === true) {
-            let building;
-            //if first step is indoor (has a floor)
-            if (service['steps']) {
-              building = (service['steps'][0]['floor'] === 'mb1') ? 'jmsb' : 'hall';
-            }
-            //get building
-            service['router']['navigateByUrl']('indoor/' + building);
-            return 'indoor/' + building;
-          }
-        }
-    ));
+    const mySpy = spyOn<any>(service, 'subscribeToEvents').and.callThrough();
+    const mySpy1 = spyOn<any>(service.isMixedInRoute, "subscribe").and.callThrough();
     service['subscribeToEvents']();
     expect(mySpy1).toHaveBeenCalled();
+    expect(mySpy).toHaveBeenCalled();
+    //expect(router.navigate).toHaveBeenCalledWith('indoor/jmsb');
+
   });
 
   it("should get hall floor number", () => {
@@ -132,6 +137,36 @@ describe("DirectionsManagerService", () => {
     service['currentStep'] = service['steps'][0];
     service['currentStep']['floor'] = 'mb1';
     expect(() => service.getHallFloor()).toThrowError("First step is not in the hall building");
+  });
+
+  it("should get current step", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service['steps'] = [
+      {floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: true},
+      {floor: 'h8', source: 'escalators-down', dest: 'escalators-up', wasDone: true}
+    ];
+    const current = service.getCurrentStep();
+    expect(current).toEqual({floor: 'h8', source: 'escalators-down', dest: 'escalators-up', wasDone: true});
+  });
+
+  it("should start from current step", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    const mySpy = spyOn<any>(service, 'startFromCurrentStep').and.callThrough();
+    service.isIndoorInRoute = new BehaviorSubject(true);
+    router = TestBed.get(Router);
+    service['steps'] = [
+      {floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: false},
+      {floor: 'h9', source: 'escalators-down', dest: 'escalators-up', wasDone: false}
+    ];
+    service['currentStep'] = ['steps'][0];
+    const current = service.startFromCurrentStep();
+    //expect(router.navigate).toHaveBeenCalledWith('/indoor/hall');
+    expect(mySpy).toHaveBeenCalled();
+    expect(current).toEqual('steps');
   });
 
   afterEach(() => {

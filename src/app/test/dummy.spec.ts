@@ -8,16 +8,16 @@ describe("dummy ", () => {
     const hello = 1;
     expect(hello * hello).toEqual(1);
   });
-
-  it("dummy test 2+2", () => {
-    const hello = 2;
-    expect(hello * 2).toEqual(4);
-  });
-
-  it("dummy test 2*2", () => {
-    const hello = 2;
-    expect(hello * hello).toEqual(4);
-  });
+  //
+  // it("dummy test 2+2", () => {
+  //   const hello = 2;
+  //   expect(hello * 2).toEqual(4);
+  // });
+  //
+  // it("dummy test 2*2", () => {
+  //   const hello = 2;
+  //   expect(hello * hello).toEqual(4);
+  // });
   // it("dummy test 1*2", () => {
   //   const hello = 2;
   //   expect(1 * hello).toEqual(2);
