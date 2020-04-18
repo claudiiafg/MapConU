@@ -18,16 +18,20 @@ describe("dummy ", () => {
     const hello = 2;
     expect(hello * hello).toEqual(4);
   });
-  it("dummy test 2*2", () => {
+  it("dummy test 1*2", () => {
     const hello = 2;
-    expect(hello * hello).toEqual(4);
+    expect(1 * hello).toEqual(2);
   });
-  it("dummy test 2*2", () => {
-    const hello = 2;
-    expect(hello * hello).toEqual(4);
+  it("dummy test 1*3", () => {
+    const hello = 3;
+    expect(1 * hello).toEqual(3);
   });
-  it("dummy test 2*2", () => {
-    const hello = 2;
-    expect(hello * hello).toEqual(4);
+  it("dummy test 1*4", () => {
+    const hello = 4;
+    expect(1 * hello).toEqual(4);
   });
+  // it("dummy test 1*5", () => {
+  //   const hello = 5;
+  //   expect(1 * hello).toEqual(5);
+  // });
 });
