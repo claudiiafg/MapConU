@@ -80,7 +80,6 @@ export class IndoorMapComponent implements OnInit {
     //when user wants to start a new path -> get data necessary and compute path
     this.events.subscribe('init-new-path', data => {
       if (data) {
-        console.log('init');
         this.resetNav();
         this.sourceID = data.source;
         this.destID = data.destination;
@@ -89,7 +88,6 @@ export class IndoorMapComponent implements OnInit {
         )[0];
         this.setMarker(p);
         if(this.sourceID !== this.destID){
-          console.log('before compute');
           this.indoorDirectionsService.computePathHelper(
             this.sourceID,
             this.destID

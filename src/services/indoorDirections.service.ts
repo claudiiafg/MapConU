@@ -156,7 +156,7 @@ export class IndoorDirectionsService {
         this.setDest(destination);
         this.computePath();
       } catch (e) {
-        console.error(e);
+        // console.error(e);
       }
     }
   }

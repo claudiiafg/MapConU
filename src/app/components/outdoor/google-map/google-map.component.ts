@@ -601,6 +601,12 @@ export class GoogleMapComponent implements OnInit {
           )[0];
           fromBuildingLat = fromBuilding.coords[0].lat;
           fromBuildingLng = fromBuilding.coords[0].lng;
+        } else if (params['id'] === 'vanier') {
+          fromBuilding = this.overlayCoords.filter(
+            (overlay) => overlay.name === 'Vanier Library'
+          )[0];
+          fromBuildingLat = fromBuilding.coords[0].lat;
+          fromBuildingLng = fromBuilding.coords[0].lng;
         }
       }
     });

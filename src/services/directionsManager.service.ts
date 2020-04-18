@@ -69,7 +69,7 @@ export class DirectionsManagerService {
         //if first step is indoor (has a floor)
         if(this.steps[0].floor){
           //get building
-          building = (this.steps[0].floor === 'mb1') ? 'jmsb' : ('vl1' ? 'vanier' : 'hall');
+          building = (this.steps[0].floor === 'mb1') ? 'jmsb' : ((this.steps[0].floor === 'vl1') ? 'vanier' : 'hall');
         }
         //route to that building
         this.router.navigateByUrl('indoor/' + building);
@@ -267,7 +267,7 @@ export class DirectionsManagerService {
 
   //same source building in router url to set the outdoor navigation (origin)
   private getOutsideInfo(floor: string){
-    let id = (floor === 'mb1') ? 'jmsb' : ('vl1' ? 'vanier' : 'hall');
+    let id = (floor === 'mb1') ? 'jmsb' : ((floor === 'vl1') ? 'vanier' : 'hall');
     this.router.navigateByUrl('/outdoor/isMixedNav/' + id);
   }
 
