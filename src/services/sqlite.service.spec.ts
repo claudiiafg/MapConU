@@ -1,7 +1,7 @@
 import { TestBed } from "@angular/core/testing";
-
+import { BehaviorSubject, Observable } from "rxjs";
 import { SqliteService } from "./sqlite.service";
-import { SQLite } from "@ionic-native/sqlite/ngx";
+import { SQLite, SQLiteObject } from "@ionic-native/sqlite/ngx";
 import { SQLitePorter } from "@ionic-native/sqlite-porter/ngx";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { RouterModule } from "@angular/router";
@@ -47,5 +47,32 @@ describe("SqliteService", () => {
   it("should be created", () => {
     const service: SqliteService = TestBed.get(SqliteService);
     expect(service).toBeTruthy();
+  });
+  it("should test getData", () => {
+    const service: SqliteService = TestBed.get(SqliteService);
+    // callThrough will use the real nested funtions from the service
+    const mySpy = spyOn(service["httpClient"], "get").and.callThrough();
+    service.getData();
+    expect(mySpy).toHaveBeenCalled();
+  });
+  // it("should test getBuildingsInfo", () => {
+  //   let service: SqliteService = TestBed.get(SqliteService);
+  //   let storage: SQLiteObject;
+  //   expect(service["getBuildingsInfo"]()).toEqual(storage);
+  // });
+  it("should test dbState", () => {
+    const service: SqliteService = TestBed.get(SqliteService);
+    // callThrough will use the real nested funtions from the service
+    const mySpy = spyOn(service["isDbReady"], "asObservable").and.callThrough();
+    service.dbState();
+    expect(mySpy).toHaveBeenCalled();
+  });
+  it("should test fetchBuildings", () => {
+    const service: SqliteService = TestBed.get(SqliteService);
+    const buildingList = new BehaviorSubject([]).asObservable();
+    expect(service.fetchBuildings()).toEqual(buildingList);
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });
