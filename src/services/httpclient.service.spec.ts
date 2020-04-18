@@ -32,4 +32,25 @@ describe("HttpclientService", () => {
     const service: HttpClientService = TestBed.get(HttpClientService);
     expect(service).toBeTruthy();
   });
+  it("should test getUserCalendars", () => {
+    const service: HttpClientService = TestBed.get(HttpClientService);
+    // callThrough will use the real nested funtions from the service
+    const mySpy = spyOn(service["http"], "get").and.callThrough();
+    service.getUserCalendars(1);
+    // we can't really call this without being logged in which does not work with unit test
+    // we can only test if the call was made
+    expect(mySpy).toHaveBeenCalled();
+  });
+  it("should test getEvents", () => {
+    const service: HttpClientService = TestBed.get(HttpClientService);
+    // callThrough will use the real nested funtions from the service
+    const mySpy = spyOn(service["http"], "get").and.callThrough();
+    service.getEvents(1, 1);
+    // we can't really call this without being logged in which does not work with unit test
+    // we can only test if the call was made
+    expect(mySpy).toHaveBeenCalled();
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

@@ -22,11 +22,12 @@ describe("dummy ", () => {
     const hello = 2;
     expect(hello * hello).toEqual(4);
   });
-  // it('dummy test 2*2', () => {
-  //   const hello = 2;
-  //   expect(hello*hello).toEqual(4);
-  // });  // it('dummy test 2*2', () => {
-  //   const hello = 2;
-  //   expect(hello*hello).toEqual(4);
-  // });
+  it("dummy test 2*2", () => {
+    const hello = 2;
+    expect(hello * hello).toEqual(4);
+  });
+  it("dummy test 2*2", () => {
+    const hello = 2;
+    expect(hello * hello).toEqual(4);
+  });
 });
