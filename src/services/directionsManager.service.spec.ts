@@ -14,6 +14,7 @@ import {
   RouterModule,
   Routes
 } from "@angular/router";
+import {BehaviorSubject} from "rxjs";
 
 // import { IndoorViewPage } from "src/app/pages/indoor-view/indoor-view.page";
 // import { OutdoorViewPage } from "src/app/pages/outdoor-view/outdoor-view.page";
@@ -78,32 +79,60 @@ describe("DirectionsManagerService", () => {
 
   it("should set and get selectmode", () => {
     const service: DirectionsManagerService = TestBed.get(
-      DirectionsManagerService
+        DirectionsManagerService
     );
     service.setSelectMode(true);
     service.getIsSelectMode();
     expect(service["isSelectMode"]).toEqual(true);
   });
 
-  // it('should subscribe to events', () => {
-  //   const service: DirectionsManagerService = TestBed.get(DirectionsManagerService);
-  //   service.isInRoute.next(true);
-  //   service['currentStep'] = '';
-  //   const mySpy = spyOn<any>(service, "subscribeToEvents").and.callFake(
-  //       () => {
-  //           const data = {
-  //             source: 'here',
-  //             destination: 'there'}
-  //             return data;
-  //       }
-  //       );
-  //   service['initiatePathSteps']();
-  //   service['this.currentStep.source']='here';
-  //   service['this.currentStep.dest']='there';
-  //   service['subscribeToEvents']();
-  //   expect(mySpy).toHaveBeenCalled();
-  //   expect(service['data']).toBeDefined();
-  // });
+  it('should subscribe to events', () => {
+    const service: DirectionsManagerService = TestBed.get(DirectionsManagerService);
+    service.isIndoorInRoute = new BehaviorSubject(true);
+    service.isMixedInRoute = new BehaviorSubject(true);
+    service.stepsBeenInit();
+    const tempService = service['router'];
+    service['steps'] = [{floor: 'mb1', source: 'here', dest: 'there', wasDone: false}];
+    const mySpy1 = spyOn<any>(service.isMixedInRoute, "subscribe").and.callFake((res => {
+          if (res === true) {
+            let building;
+            //if first step is indoor (has a floor)
+            if (service['steps']) {
+              building = (service['steps'][0]['floor'] === 'mb1') ? 'jmsb' : 'hall';
+            }
+            //get building
+            service['router']['navigateByUrl']('indoor/' + building);
+            return 'indoor/' + building;
+          }
+        }
+    ));
+    service['subscribeToEvents']();
+    expect(mySpy1).toHaveBeenCalled();
+  });
+
+  it("should get hall floor number", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service.stepsBeenInit();
+    service['steps'] = [{floor: 'h8', source: 'here', dest: 'there', wasDone: false}];
+    service['currentStep'] = service['steps'][0];
+    service['currentStep']['floor'] = 'h8';
+    service['currentStep']['floor'].includes('h');
+    const number = service.getHallFloor();
+    expect(number).toEqual(8);
+  });
+
+  it("should not be able to get hall floor number", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service.stepsBeenInit();
+    service['steps'] = [{floor: 'mb1', source: 'here', dest: 'there', wasDone: false}];
+    service['currentStep'] = service['steps'][0];
+    service['currentStep']['floor'] = 'mb1';
+    expect(() => service.getHallFloor()).toThrowError("First step is not in the hall building");
+  });
 
   afterEach(() => {
     TestBed.resetTestingModule();
