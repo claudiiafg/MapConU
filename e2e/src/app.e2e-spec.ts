@@ -80,10 +80,10 @@ it("Should open up the bus schedule", () => {
     .click()
     .perform();
   expect(element(by.css('src="./assets/schedule/schedule.png"'))).toBeDefined();
-  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'BusScheduleTest');});
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'BusScheduleTest.png');});
   });
 it("Should look up Hall building in the searchbar", () => {
-  browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
+  //browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
   browser.actions().sendKeys("hall").perform();
   expect(element(by.css('value="Henry F.Hall Building, Boulevard de Maisonneuve Ouest, Montreal, QC, Canada"'))).toBeDefined();
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorSearchTest.png');});
@@ -96,5 +96,126 @@ it("Should bring up a menu to input current address and destination address", ()
     .perform();
   expect(element(by.id("fromAddress"))).toBeDefined();
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'toandfromTest.png');});
+  });
+it("Should direct to settings page", () => {
+  browser.actions().mouseMove(element(by.id("button-settings"))).click().perform();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'SettingsPage.png');});
+  expect(element(by.id("settings-title")).getText()).toContain("Settings + More");
+  });
+it("Should change the language of the settings page", () => {
+  browser.actions().mouseMove(element(by.id("button-settings"))).click().perform();
+
+  browser
+  .actions()
+  .mouseMove(element(by.id("language-selection")))
+  .click()
+  .perform();
+
+  browser.driver.sleep(200);
+
+  //set location to Loyola
+  browser
+    .actions()
+    .mouseMove(element(by.id("ion-rb-1-lbl")))
+    .click()
+    .perform();
+  browser.driver.sleep(200);
+
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'SettingsPageinFrench.png');});
+  expect(element(by.id("settings-title")).getText()).toContain("Paramètres + Plus");
+  });
+it("Should change the language of the outdoor page", () => {
+  browser.actions().mouseMove(element(by.id("button-settings"))).click().perform();
+
+  browser
+  .actions()
+  .mouseMove(element(by.id("language-selection")))
+  .click()
+  .perform();
+
+  browser.driver.sleep(200);
+
+  browser
+    .actions()
+    .mouseMove(element(by.id("ion-rb-1-lbl")))
+    .click()
+    .perform();
+  browser.driver.sleep(200);
+
+
+  browser
+  .actions()
+  .mouseMove(element(by.id("button-back")))
+  .click()
+  .perform();
+
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorPageinFrench.png');});
+  expect(element(by.id("campus-change")).getText()).toContain("Campus SGW");
+
+  });
+it("Should load the indoor hall page", () => {
+  browser.get("/indoor/hall");
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'IndoorHallPage.png');});
+  expect(element(by.id("indoor-title"))).toBeDefined();
+  });
+it("Should give a path from h811 to h819", () => {
+  browser.get("/indoor/hall");
+  browser
+  .actions()
+  .mouseMove(element(by.id("button-nav")))
+  .click()
+  .perform();
+  //load start popover
+  browser.driver.sleep(1000);
+  browser
+  .actions()
+  .mouseMove(element(by.id("indoor-poi-start")))
+  .click()
+  .perform();
+  browser.driver.sleep(1000);
+  browser
+  .actions()
+  .mouseMove(element(by.id("alert-input-2-0")))
+  .click()
+  .perform();
+  browser
+  .actions()
+  .mouseMove(element(by.xpath("/html/body/app-root/ion-app/ion-alert/div/div[4]/button[2]")))
+  .click()
+  .perform();
+  //load destination popover
+  browser.driver.sleep(1000);
+  browser
+  .actions()
+  .mouseMove(element(by.id("indoor-poi-end")))
+  .click()
+  .perform();
+  browser.driver.sleep(1000);
+  browser
+  .actions()
+  .mouseMove(element(by.id("alert-input-3-4")))
+  .click()
+  .perform();
+  browser
+  .actions()
+  .mouseMove(element(by.xpath("/html/body/app-root/ion-app/ion-alert/div/div[4]/button[2]")))
+  .click()
+  .perform();
+  browser.driver.sleep(1000);
+  browser
+  .actions()
+  .mouseMove(element(by.id("goButton")))
+  .click()
+  .perform();
+  browser.driver.sleep(1000);  
+
+
+
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'IndoorHallPageWithPath.png');});
+  expect(element(by.id("line1")).getCssValue('stroke')).toBe('rgb(0, 0, 255)');
+  expect(element(by.id("line3")).getCssValue('stroke')).toBe('rgb(0, 0, 255)');
+  expect(element(by.id("line6")).getCssValue('stroke')).toBe('rgb(0, 0, 255)');
+  expect(element(by.id("line8")).getCssValue('stroke')).toBe('rgb(0, 0, 255)');
+  expect(element(by.id("line13")).getCssValue('stroke')).toBe('rgb(0, 0, 255)');
   });
 });
