@@ -250,7 +250,7 @@ export class DirectionsManagerService {
     //ask user to choose source and initiate the path steps
     } else {
       if(floor === 'h9' && this.mixedType === MixedDirectionsType.classToClass){
-        const tempPath = {
+        let tempPath = {
           floor: 'h8',
           source: 'escalators-up',
           dest: 'escalators-up',
