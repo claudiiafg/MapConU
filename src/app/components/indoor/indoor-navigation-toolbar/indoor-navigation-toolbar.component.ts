@@ -18,6 +18,7 @@ export class IndoorNavigationToolbarComponent {
   private minFloorIndex: number;
   private currentFloorIndex: number;
   private building: string;
+  private handicap: boolean = false;
 
   // Array with building information to dynamically create a toolbar with the proper building name and floors
   private buildingInfo = [
@@ -134,6 +135,18 @@ export class IndoorNavigationToolbarComponent {
       this.events.publish('initNewMap', Date.now());
       this.events.publish("floor-changes", this.floor, Date.now());
     }
+  }
+
+  //Method for people with disabilities
+   private disabilityDirections(){
+    this.handicap = !this.handicap;
+    if (this.handicap){
+      document.getElementById('disabilityButton').classList.toggle('active', true);
+    }else{
+      document.getElementById('disabilityButton').classList.toggle('active', false);
+    }
+    console.log(this.handicap);
+    this.directionsManager.handicapRequest = this.handicap;
   }
 
   // Takes the user back to the outdoor view

@@ -93,8 +93,28 @@
 .move-floor {
   justify-content: center;
   display: flex;
+  position: relative;
 }
 
 .up-button .down-button {
   padding: 0 20px;
 }
+
+.disability-button{
+  background-color: white;
+  //border: 2px solid white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  bottom: 5px;
+  position: absolute;
+  left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.active{
+    box-shadow: inset 0 0 15px #000000;
+}
+
+

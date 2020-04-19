@@ -38,6 +38,7 @@ export class DirectionsManagerService {
     lng: -73.638234
   };
 
+  public handicapRequest: boolean = false;
   constructor(
     private events: Events,
     private indoorDirections: IndoorDirectionsService,
@@ -101,7 +102,12 @@ export class DirectionsManagerService {
   ) {
     let defaultStartingPoint: string;
     if (building === 'h8' || building === 'h9') {
-      defaultStartingPoint = 'escalators-up';
+      if(this.handicapRequest){
+        defaultStartingPoint = 'elevators';
+      }else{
+        defaultStartingPoint = 'escalators-up';
+      }
+
     } else if (building === 'mb1' || building === 'vl1') {
       defaultStartingPoint = 'entrance';
     }
@@ -180,12 +186,21 @@ export class DirectionsManagerService {
 
     //if its 8th floor, set destination
     if(floor === 'h8'){
-      dest = 'escalators-down';
+      if(this.handicapRequest){
+        dest = 'elevators';
+      }else{
+        dest = 'escalators-down';
+      }
+
 
     //if its 9th floor, push 9th floor and recall funtion with 8th floor
     //(in order leave the building, user must go down first)
     } else if(floor === 'h9'){
-      dest = 'escalators-down';
+      if(this.handicapRequest){
+        dest = 'elevators';
+      }else{
+        dest = 'escalators-down';
+      }
       const tempPath = {
         floor: floor,
         source: interest,
@@ -193,7 +208,12 @@ export class DirectionsManagerService {
         wasDone: false
       };
       this.steps.push(tempPath);
-      this.initDifferentBuilding(false, 'h8', 'escalators-down');
+      if(this.handicapRequest){
+        this.initDifferentBuilding(false, 'h8', 'elevators');
+      }else{
+        this.initDifferentBuilding(false, 'h8', 'escalators-down');
+      }
+
       return;
 
     //if it's mb or vl, set destination
@@ -223,6 +243,9 @@ export class DirectionsManagerService {
     if (isInit) {
       this.steps = [];
       let dest: string = floor === 'h8' ? 'escalators-up' : 'escalators-down';
+      if (this.handicapRequest){
+        dest = 'elevators';
+      }
       const tempPath = {
         floor: floor,
         source: interest,
@@ -235,16 +258,25 @@ export class DirectionsManagerService {
     //ask user to choose source and initiate the path steps
     } else {
       if(floor === 'h9' && this.mixedType === MixedDirectionsType.classToClass){
-        const tempPath = {
+        let tempPath = {
           floor: 'h8',
           source: 'escalators-up',
           dest: 'escalators-up',
           wasDone: false,
           isLast: false
         };
+
+        if(this.handicapRequest){
+          tempPath.source = 'elevators';
+          tempPath.dest = 'elevators';
+        }
+
         this.steps.push(tempPath);
       }
       let source: string = (floor === 'h8') ? 'escalators-down' : ((floor === 'h9') ? 'escalators-up' : 'entrance');
+      if(this.handicapRequest){
+        source = (floor === 'h8') ? 'elevators' : ((floor === 'h9') ? 'elevators' : 'entrance');
+      }
       const tempPath = {
         floor: floor,
         source: source,
