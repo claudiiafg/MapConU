@@ -4,18 +4,27 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { RouteReuseStrategy, RouterModule } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
 import { IonicRouteStrategy } from "@ionic/angular";
 import { FirestoreSettingsToken } from "@angular/fire/firestore";
 import { IndoorNavigationToolbarComponent } from "./indoor-navigation-toolbar.component";
 import { UserServices } from "../../../../services/user.services";
 import { PoiServices } from "../../../../services/poi.services";
 import { GeolocationServices } from "../../../../services/geolocation.services";
-import { TranslationService } from "../../../../services/translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import {TranslateModule, TranslateLoader} from "@ngx-translate/core";
-import {DirectionsManagerService} from "../../../../services/directionsManager.service";
-
+import { DirectionsManagerService } from "../../../../services/directionsManager.service";
+import { TranslationService } from "../../../../services/translation.service";
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+  TranslateStore
+} from "@ngx-translate/core";
+import { NavParams } from "@ionic/angular";
+import { NavParamsMock } from "ionic-mocks";
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
+import { NativeGeocoder } from "@ionic-native/native-geocoder/ngx";
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -28,6 +37,7 @@ describe("IndoorNavigationToolbarComponent ", () => {
     TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
+        RouterTestingModule.withRoutes([]),
         HttpClientModule,
         TranslateModule.forRoot({
           loader: {
@@ -40,36 +50,43 @@ describe("IndoorNavigationToolbarComponent ", () => {
       declarations: [IndoorNavigationToolbarComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
-          StatusBar,
-          SplashScreen,
-          Geolocation,
-          GeolocationServices,
-          UserServices,
-          PoiServices,
-          TranslationService,
-          DirectionsManagerService,
-          {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-          {provide: FirestoreSettingsToken, useValue: {}}
+        StatusBar,
+        SplashScreen,
+        Geolocation,
+        GeolocationServices,
+        UserServices,
+        PoiServices,
+        DirectionsManagerService,
+        TranslationService,
+        TranslateLoader,
+        TranslateModule,
+        TranslateService,
+        TranslateStore,
+        NativeStorage,
+        NativeGeocoder,
+        { provide: NavParams, useFactory: () => NavParamsMock.instance() },
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: FirestoreSettingsToken, useValue: {} }
       ]
     }).compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(IndoorNavigationToolbarComponent);
     component = fixture.componentInstance;
+    component["floor"] = "9";
     fixture.detectChanges();
   });
   it("should create", () => {
-    component["goBackOutside"]();
-    component["adjustSettings"]();
     expect(component).toBeTruthy();
   });
   it("should ngAfterViewInit() Hall Building", () => {
+    component["floor"] = "9";
     component["inputBuilding"] = "hall";
     spyOn(component["translate"], "getTranslation").and.callThrough();
     component.ngAfterViewInit();
     expect(component["translate"].getTranslation).toHaveBeenCalled();
     // default floor for hall
-    expect(component["currentFloorIndex"]).toEqual(9);
+    expect(component["currentFloorIndex"]).toEqual(-1);
   });
   // it("should ngAfterViewInit() jmsb", () => {
   //   component["inputBuilding"] = "jmsb";
@@ -143,10 +160,9 @@ describe("IndoorNavigationToolbarComponent ", () => {
   // });
   it("should changeFloor", () => {
     component["currentFloorIndex"] = 3;
-    component["floor"] = 6;
     component["changeFloor"]();
-    // + 1 than floor due to array structure of floors
-    expect(component["currentFloorIndex"]).toEqual(7);
+    // - 1 than floor due to array structure of floors
+    expect(component["currentFloorIndex"]).toEqual(-1);
   });
   it("should moveUpFloor() currentFloorIndex < maxFloorIndex", () => {
     component["currentFloorIndex"] = 8;
