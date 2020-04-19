@@ -320,6 +320,21 @@ describe("DirectionsManagerService", () => {
     expect(() => service.setMixedType(3)).toThrowError('Wrong type of Mixed Directions');
   });
 
+  it("should initNewPath", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service['steps'] = [
+      {floor: 'h9', source: 'escalators-up', dest: 'escalators-down', wasDone: false, isLast: false},
+      {floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: false, isLast: false}];
+    service['currentStep'] = service.getCurrentStep();
+    const mySpy = spyOn<any>(service['events'], 'publish').and.callThrough();
+    service['initNewPath']();
+    expect(mySpy).toHaveBeenCalledWith('init-new-path',
+        {source: 'escalators-up', destination: 'escalators-down'}, Date.now());
+    expect(service['pathHasBeenInit']).toBe(true);
+  });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
