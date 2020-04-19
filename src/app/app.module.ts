@@ -79,6 +79,9 @@ import { IndoorPoiPopoverComponent} from './components/popovers/indoor-poi-popov
 import { MB1FloorPlanComponent } from './components/indoor/floor-plans/jmsb/mb1/mb1.component';
 import { H8FloorPlanComponent } from './components/indoor/floor-plans/hall/h8/h8.component';
 import { H9FloorPlanComponent } from './components/indoor/floor-plans/hall/h9/h9.component';
+import { Vl1FloorPlanComponent } from './components/indoor/floor-plans/varnier/vl1/vl1.component';
+
+
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { DisplayCalendarsPopoverComponent } from './components/popovers/display-calendars-popover/display-calendars-popover.component';
@@ -103,6 +106,7 @@ export function LanguageLoader(http: HttpClient) {
     MB1FloorPlanComponent,
     H8FloorPlanComponent,
     H9FloorPlanComponent,
+    Vl1FloorPlanComponent,
     OutdoorViewPage,
     IndoorViewPage,
     SettingsPage,

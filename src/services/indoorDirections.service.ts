@@ -217,6 +217,8 @@ export class IndoorDirectionsService {
       point = this.interestPoints.filter(point => point.id === name)[0];
     } else if (name.includes('h9')) {
       point = this.interestPoints.filter(point => point.id === name)[0];
+    } else if (name.includes('vl')) {
+      point = this.interestPoints.filter(point => point.id === name)[0];
     } else if (name.includes('elevator')) {
       point = this.interestPoints.filter(point => point.id === 'elevator')[0];
     } else if (name.includes('female')) {
@@ -466,7 +468,7 @@ export class IndoorDirectionsService {
       }
     } while (
       nextLine &&
-      !(this.isLeaf(nextLine) && nextLine !== this.destLine.id)
+      (!this.isLeaf(nextLine) && nextLine !== this.destLine.id)
     );
 
     this.computePath();
@@ -538,21 +540,24 @@ export class IndoorDirectionsService {
     if (this.isLeaf(line.id) && line.id !== this.sourceLine.id) {
       //line is equal to the line we're looking for
       if (line.id === this.destLine.id) {
+        //PATH FOUND
         this.getShortestWithin();
+        //notify indoor-time-of-arrival component of path and time required to get there
+        this.setArrivalTime();
 
         //found leaf line but not the destination -> must ROLL BACK
       } else {
         this.rollPathBack();
       }
 
-      //connected lines are previous and next (no intersection) -> ROLL FORWARD
+    //connected lines are previous and next (no intersection) -> ROLL FORWARD
     } else if (
       !this.isIntersection(line.id) &&
       (!this.isLeaf(line.id) || line.id !== this.sourceLine.id)
     ) {
       this.rollPathForward(line);
 
-      //first line has an initial straight path -> ROLL FORWARD
+    //first line has an initial straight path -> ROLL FORWARD
     } else if (
       line.id === this.sourceLine.id &&
       line.id !== this.destLine.id &&
@@ -561,17 +566,15 @@ export class IndoorDirectionsService {
     ) {
       this.rollFirstLineForward(line);
 
-      //multiple lines connected to it (is intersection) WITH unvisited lines
+    //multiple lines connected to it (is intersection) WITH unvisited lines
     } else if (this.isIntersection(line.id) && this.hasUnvisitedLine(line)) {
       this.path.push(this.getNextUnvisitedLine(line).id);
       this.computePath();
       return;
 
-      //multiple lines connected to it (is intersection) WITHOUT unvisited lines
+    //multiple lines connected to it (is intersection) WITHOUT unvisited lines
     } else if (this.isIntersection(line.id) && !this.hasUnvisitedLine(line)) {
       this.rollPathBack();
     }
-    //notify indoor-time-of-arrival component of path and time required to get there
-    this.setArrivalTime();
   }
 }

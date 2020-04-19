@@ -1,0 +1,17 @@
+.vl1-plan-wrapper {
+  display: contents;
+
+  svg {
+    transform: scale(1.05);
+    left: 1%;
+    position: relative;
+    bottom: -120px;
+  }
+
+  text{
+    fill: #1e2023;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+}

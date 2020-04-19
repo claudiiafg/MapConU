@@ -10,7 +10,7 @@
       ></ion-toggle>
     </ion-item>
 
-    <ion-item class="poi-item">
+    <ion-item class="poi-item" *ngIf="building === 'jmsb' || building === 'hall'">
       <img src="/assets/icon/elevator.png" class="icon" />
       <ion-label>{{ 'elevators' | translate }}</ion-label>
       <ion-toggle
@@ -30,7 +30,7 @@
       ></ion-toggle>
     </ion-item>
 
-    <ion-item class="poi-item">
+    <ion-item class="poi-item" *ngIf="building === 'jmsb' || building === 'hall'">
       <img src="/assets/icon/escalator.png" class="icon" />
       <ion-label>{{ 'escalator' | translate }}</ion-label>
       <ion-toggle
@@ -48,7 +48,7 @@
               (ionChange)="togglePoi('fireExit', fireExit)"
       ></ion-toggle>
     </ion-item>
-    <ion-item class="poi-item" *ngIf="building === 'jmsb'">
+    <ion-item class="poi-item" *ngIf="building === 'jmsb' || building === 'vanier'">
       <img src="/assets/icon/entrance.png" class="icon" />
       <ion-label>{{ 'entrance' | translate}}</ion-label>
       <ion-toggle
