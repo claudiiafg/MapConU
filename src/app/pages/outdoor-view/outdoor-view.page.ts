@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { OutdoorNavigationToolbarComponent } from '../../components/outdoor/outdoor-navigation-toolbar/outdoor-navigation-toolbar.component';
 import { DataSharingService } from '../../../services/data-sharing.service';
