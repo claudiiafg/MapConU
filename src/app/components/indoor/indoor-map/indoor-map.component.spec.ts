@@ -7,6 +7,9 @@ import { RouteReuseStrategy, RouterModule } from "@angular/router";
 import { IonicRouteStrategy } from "@ionic/angular";
 import { FirestoreSettingsToken } from "@angular/fire/firestore";
 import { IndoorMapComponent } from "./indoor-map.component";
+import { H8FloorPlanComponent } from "../../indoor/floor-plans/hall/h8/h8.component";
+import { H9FloorPlanComponent } from "../../indoor/floor-plans/hall/h9/h9.component";
+import { MB1FloorPlanComponent } from "../../indoor/floor-plans/jmsb/mb1/mb1.component";
 import { UserServices } from "../../../../services/user.services";
 import { PoiServices } from "../../../../services/poi.services";
 import { GeolocationServices } from "../../../../services/geolocation.services";
@@ -36,7 +39,7 @@ describe("IndoorMapComponent ", () => {
           }
         })
       ],
-      declarations: [IndoorMapComponent],
+      declarations: [IndoorMapComponent, H8FloorPlanComponent, H9FloorPlanComponent, MB1FloorPlanComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         StatusBar,
@@ -152,6 +155,100 @@ describe("IndoorMapComponent ", () => {
     component["resetNav"]();
     // foundPath is reset and should be false
     expect(component["foundPath"]).toBeFalsy();
+  });
+  it("should setMap() for hall 8th floor", () => {
+    component["inputBuilding"] = "hall";
+    component["floor"] = 8;
+
+    fixture.detectChanges();
+
+    spyOn(component["indoorDirectionsService"], "setMap");
+    spyOn(component["indoorDirectionsService"], "getLines");
+    spyOn(component["indoorDirectionsService"], "getPoints");
+    spyOn(component["events"], "publish");
+
+    component.setMap();
+
+    expect(component["indoorDirectionsService"].setMap).toHaveBeenCalled();
+    expect(component["indoorDirectionsService"].getLines).toHaveBeenCalled();
+    expect(component["indoorDirectionsService"].getPoints).toHaveBeenCalled();
+    expect(component["events"].publish).toHaveBeenCalledWith('map-set', Object({ building: 'hall', floor: 8 }), jasmine.any(Number));
+  });
+  it("should setMap() for hall 9th floor", () => {
+    component["inputBuilding"] = "hall";
+    component["floor"] = 9;
+
+    fixture.detectChanges();
+
+    spyOn(component["indoorDirectionsService"], "setMap");
+    spyOn(component["indoorDirectionsService"], "getLines");
+    spyOn(component["indoorDirectionsService"], "getPoints");
+    spyOn(component["events"], "publish");
+
+    component.setMap();
+
+    expect(component["indoorDirectionsService"].setMap).toHaveBeenCalled();
+    expect(component["indoorDirectionsService"].getLines).toHaveBeenCalled();
+    expect(component["indoorDirectionsService"].getPoints).toHaveBeenCalled();
+    expect(component["events"].publish).toHaveBeenCalledWith('map-set', Object({ building: 'hall', floor: 9 }), jasmine.any(Number));
+  });
+  it("should setMap() for jmsb 1st floor", () => {
+    component["inputBuilding"] = "jmsb";
+    component["floor"] = 1;
+
+    fixture.detectChanges();
+
+    spyOn(component["indoorDirectionsService"], "setMap");
+    spyOn(component["indoorDirectionsService"], "getLines");
+    spyOn(component["indoorDirectionsService"], "getPoints");
+    spyOn(component["events"], "publish");
+
+    component.setMap();
+
+    expect(component["indoorDirectionsService"].setMap).toHaveBeenCalled();
+    expect(component["indoorDirectionsService"].getLines).toHaveBeenCalled();
+    expect(component["indoorDirectionsService"].getPoints).toHaveBeenCalled();
+    expect(component["events"].publish).toHaveBeenCalledWith('map-set', Object({ building: 'jmsb', floor: 1 }), jasmine.any(Number));
+  });
+  it("should check floor number of hall 8th floor", () => {
+    component["inputBuilding"] = "hall";
+    component["floor"] = 8;
+
+    fixture.detectChanges();
+
+    expect(component["checkCurrentFloorNumber"]()).toEqual(8);
+  });
+  it("should check floor number of hall 9th floor", () => {
+    component["inputBuilding"] = "hall";
+    component["floor"] = 9;
+
+    fixture.detectChanges();
+
+    expect(component["checkCurrentFloorNumber"]()).toEqual(9);
+  });
+  it("should check floor number of jmsb 1st floor", () => {
+    component["inputBuilding"] = "jmsb";
+    component["floor"] = 1;
+
+    fixture.detectChanges();
+
+    expect(component["checkCurrentFloorNumber"]()).toEqual(1);
+  });
+  it("should hide marker", () => {
+    component["marker"] = document.createElement("image");
+    component["marker"].setAttribute("x", "50");
+    component["marker"].setAttribute("y", "50");
+    component["marker"].setAttribute("id", "marker");
+    component["marker"].setAttribute(
+      "href",
+      "../../../../assets/icon/logo_as_marker.png"
+    );
+    component["marker"].style.visibility = "visible";
+
+    fixture.detectChanges();
+
+    component.unsetMarker();
+    expect(component["marker"].style.visibility).toBe("hidden");
   });
   afterEach(() => {
     TestBed.resetTestingModule();
