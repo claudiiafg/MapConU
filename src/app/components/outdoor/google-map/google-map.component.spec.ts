@@ -172,24 +172,30 @@ describe("GoogleMapComponent ", () => {
   });
   it("should getIcon for drugstore", () => {
     const poiMarkerIcon = component.getIcon({type: "drugstore"});
-    expect(poiMarkerIcon).toEqual({ url: 'assets/icon/Marker_Drugstore.png', scaledSize: Object({ width: 20, height: 20 }) });
+    expect(poiMarkerIcon).toEqual({
+      url: 'assets/icon/Marker_Drugstore.png',
+      scaledSize: Object({width: 20, height: 20})
+    });
   });
   it("should getIcon for hotel", () => {
     const poiMarkerIcon = component.getIcon({type: "hotel"});
-    expect(poiMarkerIcon).toEqual({ url: 'assets/icon/Marker_Hotel.png', scaledSize: Object({ width: 20, height: 20 }) });
+    expect(poiMarkerIcon).toEqual({url: 'assets/icon/Marker_Hotel.png', scaledSize: Object({width: 20, height: 20})});
   });
   it("should getIcon for groceries", () => {
     const poiMarkerIcon = component.getIcon({type: "groceries"});
-    expect(poiMarkerIcon).toEqual({ url: 'assets/icon/Marker_Groceries.png', scaledSize: Object({ width: 20, height: 20 }) });
+    expect(poiMarkerIcon).toEqual({
+      url: 'assets/icon/Marker_Groceries.png',
+      scaledSize: Object({width: 20, height: 20})
+    });
   });
-  it("should send message", () => {
-    const message = "test";
-    spyOn(component["dataSharingService"], "updateMessage");
-
-    component.sendMessage(message);
-
-    expect(component["dataSharingService"].updateMessage).toHaveBeenCalledWith("test");
-  });
+  // it("should send message", () => {
+  //   const message = "test";
+  //   spyOn(component["dataSharingService"], "updateMessage");
+  //
+  //   component.sendMessage(message);
+  //
+  //   expect(component["dataSharingService"].updateMessage).toHaveBeenCalledWith("test");
+  // });
   it("should send message", () => {
     spyOn(component["dataSharingService"].mapSize, "subscribe");
 
