@@ -16,6 +16,7 @@ import {
 } from "@angular/router";
 import {BehaviorSubject} from "rxjs";
 import {RouterTestingModule} from "@angular/router/testing";
+import {url} from "inspector";
 
 //function that loads the external JSON files to the app using http-loader.
 export function LanguageLoader(http: HttpClient) {
@@ -34,7 +35,6 @@ export function LanguageLoader(http: HttpClient) {
 
 
 describe("DirectionsManagerService", () => {
-  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,9 +56,7 @@ describe("DirectionsManagerService", () => {
         Geolocation,
         GeolocationServices,
         {
-          provide: Router, useClass: class {
-            navigate = jasmine.createSpy("navigateByUrl");
-          }
+          provide: Router
         },
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
       ]
@@ -77,8 +75,10 @@ describe("DirectionsManagerService", () => {
       DirectionsManagerService
     );
     service["steps"] = [2];
+    //asserts that steps exists
     expect(service["steps"]).toEqual([2]);
     service.resetSteps();
+    //asserts that steps reset after function call
     expect(service["steps"]).toEqual([]);
   });
 
@@ -93,7 +93,6 @@ describe("DirectionsManagerService", () => {
 
   it('should subscribe to events', () => {
     const service: DirectionsManagerService = TestBed.get(DirectionsManagerService);
-    router = TestBed.get(Router);
     service['events']['publish']('map-set', Date.now());
     service['events']['publish']('map-set', {
       building: 'jmsb',
@@ -111,8 +110,6 @@ describe("DirectionsManagerService", () => {
     service['subscribeToEvents']();
     expect(mySpy1).toHaveBeenCalled();
     expect(mySpy).toHaveBeenCalled();
-    //expect(router.navigate).toHaveBeenCalledWith('indoor/jmsb');
-
   });
 
   it("should get hall floor number", () => {
@@ -120,11 +117,13 @@ describe("DirectionsManagerService", () => {
         DirectionsManagerService
     );
     service.stepsBeenInit();
+    //prepare data
     service['steps'] = [{floor: 'h8', source: 'here', dest: 'there', wasDone: false}];
     service['currentStep'] = service['steps'][0];
     service['currentStep']['floor'] = 'h8';
     service['currentStep']['floor'].includes('h');
     const number = service.getHallFloor();
+    //asserts and returns the correct hall building floor
     expect(number).toEqual(8);
   });
 
@@ -133,9 +132,11 @@ describe("DirectionsManagerService", () => {
         DirectionsManagerService
     );
     service.stepsBeenInit();
+    //prepare data
     service['steps'] = [{floor: 'mb1', source: 'here', dest: 'there', wasDone: false}];
     service['currentStep'] = service['steps'][0];
     service['currentStep']['floor'] = 'mb1';
+    //since data is not of hall building, throws error
     expect(() => service.getHallFloor()).toThrowError("First step is not in the hall building");
   });
 
@@ -157,14 +158,13 @@ describe("DirectionsManagerService", () => {
     );
     const mySpy = spyOn<any>(service, 'startFromCurrentStep').and.callThrough();
     service.isIndoorInRoute = new BehaviorSubject(true);
-    router = TestBed.get(Router);
+    //order data
     service['steps'] = [
       {floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: false},
       {floor: 'h9', source: 'escalators-down', dest: 'escalators-up', wasDone: false}
     ];
     service['currentStep'] = ['steps'][0];
     const current = service.startFromCurrentStep();
-    //expect(router.navigate).toHaveBeenCalledWith('/indoor/hall');
     expect(mySpy).toHaveBeenCalled();
     expect(current).toEqual('steps');
   });
@@ -181,11 +181,13 @@ describe("DirectionsManagerService", () => {
     const mySpy1 = spyOn<any>(service['dataSharingService'], 'updateMapSize').and.callThrough();
     const mySpy3 = spyOn(service, 'getPathToRoom').and.callThrough();
     const mySpy2 = spyOn(service, 'pushStep').and.callThrough();
-
+    //path to hall building
     service.getPathToRoom('h831');
+    //assertions
     expect(mySpy1).toHaveBeenCalled();
     expect(mySpy2).toHaveBeenCalled();
     expect(mySpy3).toHaveBeenCalled();
+    //asserts that building location has been pushed
     expect(service['steps'][1]['dest']['building']).toEqual('hall');
   });
 
@@ -193,17 +195,53 @@ describe("DirectionsManagerService", () => {
     const service: DirectionsManagerService = TestBed.get(
         DirectionsManagerService
     );
+    //define geolocation and steps
     service['steps'] = [
       {floor: 'h8', source: 'escalators-up', dest: 'h831', wasDone: false, isLast: true}];
     service['geolocationService']['latitude'] = 45.496834;
     service['geolocationService']['longitude'] = -73.578856;
     const mySpy3 = spyOn(service, 'getPathToRoom').and.callThrough();
     const mySpy2 = spyOn(service, 'pushStep').and.callThrough();
-
+    //path to jmsb room
     service.getPathToRoom('mb1-110');
+    //assertions
     expect(mySpy2).toHaveBeenCalled();
     expect(mySpy3).toHaveBeenCalled();
+    //assert that the proper step has been pushed with the function
     expect(service['steps'][1]['dest']['building']).toEqual('jmsb');
+  });
+
+  it("should pushStep", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    // throws exception if the source and destination are not set
+    expect(() => service
+        .pushStep({floor: 'h8', wasDone: false, isLast: true}))
+        .toThrowError('Must set source and destination in order to push a a new navigation step.');
+    service['steps'] = [];
+    // works now since source and destination set
+    service.pushStep({floor: 'h8', source: 'escalators-up', dest: 'h831', wasDone: false, isLast: true});
+    // asserts on whether step has been pushed
+    expect(service['steps'][0]['floor']).toEqual('h8');
+  });
+
+  // fails but increases coverage (url of undefined)
+  it("should get step after outdoors", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    const mySpy = spyOn<any>(service, 'getStepAfterOutdoor').and.callThrough();
+    //order data
+    service['steps'] = [
+      {floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: false},
+      {floor: 'h9', source: 'escalators-down', dest: 'escalators-up', wasDone: false}
+    ];
+    service['path'] = 'indoor/hall';
+    service['currentStep'] = ['steps'][0];
+    const after = service.getStepAfterOutdoor();
+    expect(mySpy).toHaveBeenCalled();
+    expect(after).toEqual({floor: 'h9', source: 'escalators-down', dest: 'escalators-up', wasDone: false});
   });
 
   afterEach(() => {
