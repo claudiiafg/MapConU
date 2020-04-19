@@ -61,10 +61,13 @@ export class IndoorMapComponent implements OnInit {
     this.events.subscribe('path-found', () => {
       this.path = this.indoorDirectionsService.getPath();
       this.foundPath = true;
-      for (let line of this.path) {
-        let docElement = document.getElementById(line);
-        docElement.style.stroke = 'blue';
-      }
+      setTimeout(() => {
+        for (let line of this.path) {
+          let docElement = document.getElementById(line);
+          docElement.style.stroke = 'blue';
+        }
+      }, 500)
+
     });
 
     //when user ends route -> reset navidation

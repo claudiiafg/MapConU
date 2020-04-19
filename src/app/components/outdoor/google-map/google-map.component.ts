@@ -195,19 +195,19 @@ export class GoogleMapComponent implements OnInit {
     //DO NOT REMOVE
     //code will be used for dev purposes
     //see extraInfo.ts for more info
-    // this.overlayCoords = externalOverlayCoords;
+    this.overlayCoords = externalOverlayCoords;
 
-    this.db.dbState().subscribe((res) =>{
-      if (res){
-        this.db.fetchBuildings().subscribe(item => {
-          //console.log(item);
-          if (item.length != 0){
-
-            this.overlayCoords = item;
-          }
-        })
-      }
-    });
+    // this.db.dbState().subscribe((res) =>{
+    //   if (res){
+    //     this.db.fetchBuildings().subscribe(item => {
+    //       //console.log(item);
+    //       if (item.length != 0){
+    //
+    //         this.overlayCoords = item;
+    //       }
+    //     })
+    //   }
+    // });
 
     await this.platform.ready();
     this.height = this.platform.height() - 106;

@@ -387,10 +387,7 @@ export class DirectionsManagerService {
     if(this.currentStep.floor){
       if(this.router.url.includes('hall') && this.currentStep.floor.includes('h')){
         this.changeFloor(this.currentStep.floor);
-      // } else if(this.router.url.includes('jmsb') && this.currentStep.floor.includes('mb1')) {
-      //   return this.currentStep;
       } else {
-        //THERE A BUG HERE
         this.continueWithIndoorDirections();
       }
     }
