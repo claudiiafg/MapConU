@@ -20,7 +20,7 @@ import { DirectionService } from "../../../../services/direction.service";
 import { IndoorDirectionsService } from "../../../../services/indoorDirections.service";
 import { By } from "@angular/platform-browser";
 
-fdescribe("ModalDirectionsComponent ", () => {
+describe("ModalDirectionsComponent ", () => {
   let component: ModalDirectionsComponent;
   let fixture: ComponentFixture<ModalDirectionsComponent>;
   beforeEach(async(() => {
