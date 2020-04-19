@@ -54,10 +54,9 @@ export class TranslationService {
    */
   subscribeToAppLanguage(currentLanguage: string) {
     this.dataSharing.currentMessage.subscribe(updatedLanguage => {
-      console.log('msg recieved');
       if (currentLanguage != updatedLanguage && currentLanguage != null) {
+        currentLanguage = updatedLanguage;
       }
-      currentLanguage = updatedLanguage;
     });
   }
 

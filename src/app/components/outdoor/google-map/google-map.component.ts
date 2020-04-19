@@ -1,7 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SqliteService } from '../../../../services/sqlite.service';
-import { Buildinginfo } from '../../../../models/buildinginfo';
 import {
   AlertController,
   Events,
@@ -480,7 +479,7 @@ export class GoogleMapComponent implements OnInit {
           text: this.translate.getTranslation('enter'),
           cssClass: 'alert-button-map',
           handler: () => {
-            if (urlSubString === 'jmsb' || urlSubString === 'hall') {
+            if (urlSubString === 'jmsb' || urlSubString === 'hall' || urlSubString === 'vanier') {
               if (this.router.url.includes('/outdoor/isMixedNav')) {
                 this.pushIndoorStep(false);
                 this.directionsManager.setMixedType(
@@ -535,8 +534,6 @@ export class GoogleMapComponent implements OnInit {
     });
 
     await alert.present();
-    let result = await alert.onDidDismiss();
-
     GoogleMapComponent.isOpen = false;
   }
 
@@ -598,6 +595,12 @@ export class GoogleMapComponent implements OnInit {
         } else if (params['id'] === 'jmsb') {
           fromBuilding = this.overlayCoords.filter(
             (overlay) => overlay.name === 'John Molson Building'
+          )[0];
+          fromBuildingLat = fromBuilding.coords[0].lat;
+          fromBuildingLng = fromBuilding.coords[0].lng;
+        } else if (params['id'] === 'vanier') {
+          fromBuilding = this.overlayCoords.filter(
+            (overlay) => overlay.name === 'Vanier Library'
           )[0];
           fromBuildingLat = fromBuilding.coords[0].lat;
           fromBuildingLng = fromBuilding.coords[0].lng;
