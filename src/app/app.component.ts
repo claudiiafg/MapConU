@@ -8,6 +8,7 @@ import { UserServices } from 'src/services/user.services';
 import { TranslationService } from '../services/translation.service';
 import { Router } from '@angular/router';
 import { GoogleMapComponent } from './components/outdoor/google-map/google-map.component';
+import { OutdoorNavigationSideButtonsComponent} from "./components/outdoor/outdoor-navigation-side-buttons/outdoor-navigation-side-buttons.component";
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   private concordiaRed: string = '#800000';
   message: any;
   subscribe: any;
-
+  isOpen: boolean;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -30,17 +31,19 @@ export class AppComponent {
     private translationService: TranslationService
   ) {
     this.initializeApp();
+    this.isOpen = false;
     this.subscribe = this.platform.backButton.subscribeWithPriority(
       666666,
       () => {
         //&& !this.googleMapComp.isOpen
-        if (this.router.url == '/outdoor' && !GoogleMapComponent.isOpen) {
+        if (this.router.url == '/outdoor' && !GoogleMapComponent.isOpen && !this.isOpen && !OutdoorNavigationSideButtonsComponent.isOpen) {
           this.confirmMessage();
         }
       }
     );
   }
   async confirmMessage() {
+    this.isOpen = true;
     let alert = await this.alertController.create({
       header: this.translationService.getTranslation('Do you want to quit?'),
       cssClass: 'alert-css',
@@ -51,6 +54,7 @@ export class AppComponent {
           role: 'cancel',
           handler: () => {
             // close popup
+            this.isOpen = false;
           },
         },
         {
@@ -58,11 +62,13 @@ export class AppComponent {
           cssClass: 'alert-button-map',
           role: 'quit',
           handler: () => {
+            this.isOpen = false;
             navigator['app'].exitApp();
           },
         },
       ],
     });
+    this.isOpen = true;
     await alert.present();
   }
 

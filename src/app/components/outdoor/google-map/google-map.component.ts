@@ -1,7 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SqliteService } from '../../../../services/sqlite.service';
-import { Buildinginfo } from '../../../../models/buildinginfo';
 import {
   AlertController,
   Events,
@@ -387,9 +386,15 @@ export class GoogleMapComponent implements OnInit {
     }
   }
 
-  /*
-      Creates popup containing Concordia building descriptions.
-       */
+  /**
+   * Creates popup containing Concordia building descriptions and buttons "Go" to give the user directions
+   * to this building from their current location and "Enter" to take the user to the indoor layout of the building
+   * if it is available.
+   *
+   * @param building Name of the Concordia building to generate popup for
+   * @param address Address of the Concordia building to generate popup for
+   *
+   */
   async showAlert(building: string, address: string) {
     GoogleMapComponent.isOpen = true;
 
@@ -469,13 +474,12 @@ export class GoogleMapComponent implements OnInit {
       subHeader: address,
       cssClass: 'alert-css',
       message: '',
-      //cssClass: 'alert-css',
       buttons: [
         {
           text: this.translate.getTranslation('enter'),
           cssClass: 'alert-button-map',
           handler: () => {
-            if (urlSubString === 'jmsb' || urlSubString === 'hall') {
+            if (urlSubString === 'jmsb' || urlSubString === 'hall' || urlSubString === 'vanier') {
               if (this.router.url.includes('/outdoor/isMixedNav')) {
                 this.pushIndoorStep(false);
                 this.directionsManager.setMixedType(
@@ -501,9 +505,12 @@ export class GoogleMapComponent implements OnInit {
             }
           },
         },
-        /*This button has it's opacity set to 0 and does not show up on the building info box but it needs to be
-          here so that the alert dismisses properly when the user clicks outside the box to close it.  DO NOT REMOVE!!
-           */
+        /**
+         * @hidden
+         * This button has it's opacity set to 0 and does not show up on the building info box but it needs to be
+         * here so that the alert dismisses properly when the user clicks outside the box to close it.
+         * DO NOT REMOVE!!
+         */
         {
           text: 'x',
           cssClass: 'alert-button-cancel',
@@ -527,15 +534,15 @@ export class GoogleMapComponent implements OnInit {
     });
 
     await alert.present();
-    let result = await alert.onDidDismiss();
-
     GoogleMapComponent.isOpen = false;
   }
 
-  /*
-      Shows the user a path from their location to the Concordia building whose information they are looking at when the
-      'Go' button is clicked on the building information popup
-       */
+  /**
+   *  Shows the user a path from their location to the Concordia building whose information they are looking at when
+   *  the'Go' button is clicked on the building information popup
+   *
+   */
+
   goHere() {
     if (this.router.url.includes('/outdoor/isMixedNav')) {
       this.pushIndoorStep(true);
@@ -591,6 +598,12 @@ export class GoogleMapComponent implements OnInit {
           )[0];
           fromBuildingLat = fromBuilding.coords[0].lat;
           fromBuildingLng = fromBuilding.coords[0].lng;
+        } else if (params['id'] === 'vanier') {
+          fromBuilding = this.overlayCoords.filter(
+            (overlay) => overlay.name === 'Vanier Library'
+          )[0];
+          fromBuildingLat = fromBuilding.coords[0].lat;
+          fromBuildingLng = fromBuilding.coords[0].lng;
         }
       }
     });
@@ -616,11 +629,6 @@ export class GoogleMapComponent implements OnInit {
       isLast: isLast,
     };
     this.directionsManager.pushStep(tempStep);
-  }
-
-  //use to send data to other components
-  sendMessage(updatedMessage: any) {
-    this.dataSharingService.updateMessage(updatedMessage);
   }
 
   public subscribeToMapSize() {

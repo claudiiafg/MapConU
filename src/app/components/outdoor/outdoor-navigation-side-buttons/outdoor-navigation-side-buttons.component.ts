@@ -26,6 +26,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   public isClassToClass: boolean = false;
   public isClassToBuilding: boolean = false;
   public isBuildingToClass: boolean = false;
+  static isOpen: boolean = false;
 
   constructor(
     public popoverController: PopoverController,
@@ -63,9 +64,6 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
     );
 
   }
-  
-  
-  
 
   ngOnInit() {
     this.events.subscribe('poi-selected', poi => {
@@ -82,6 +80,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   }
 
   async openViewer() {
+    OutdoorNavigationSideButtonsComponent.isOpen = true;
     const modal = await this.modalController.create({
       component: ViewerModalComponent,
       componentProps: {
@@ -92,13 +91,22 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       showBackdrop: true
     });
 
+    modal.onDidDismiss().then(() => {
+      OutdoorNavigationSideButtonsComponent.isOpen = false;
+    });
+
     return await modal.present();
   }
 
   async openCalendar() {
+    OutdoorNavigationSideButtonsComponent.isOpen = true;
     const modal = await this.modalController.create({
       component: CalendarComponent
     })
+
+    modal.onDidDismiss().then(() => {
+      OutdoorNavigationSideButtonsComponent.isOpen = false;
+    });
 
     return await modal.present();
   }
@@ -138,11 +146,16 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
   }
 
   async presentPopover(ev: any, mode: string) {
+    OutdoorNavigationSideButtonsComponent.isOpen = true;
     if (mode === 'search') {
       const popover = await this.popoverController.create({
         component: SearchPopoverComponent,
         event: ev,
         translucent: false
+      });
+
+      popover.onDidDismiss().then(() => {
+        OutdoorNavigationSideButtonsComponent.isOpen = false;
       });
 
       popover.style.cssText =
@@ -158,6 +171,7 @@ export class OutdoorNavigationSideButtonsComponent implements OnInit {
       });
 
       popover.onDidDismiss().then(() => {
+        OutdoorNavigationSideButtonsComponent.isOpen = false;
         this.poiClicked = false;
       });
 

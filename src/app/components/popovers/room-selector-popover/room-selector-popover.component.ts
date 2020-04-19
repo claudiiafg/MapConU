@@ -32,7 +32,6 @@ export class RoomSelectorPopoverComponent {
   ngOnInit(){
     if (this.navParams.get('data')) {
       const data = this.navParams.get('data');
-      console.log(data);
       this.source = data.source;
       this.destination = data.destination;
     }
@@ -75,6 +74,7 @@ export class RoomSelectorPopoverComponent {
   }
 
   async closePopover() {
-    await this.popoverController.dismiss();
+    this.events.publish('close-indoor-popup');
+    await this.popoverController.dismiss(true);
   }
 }

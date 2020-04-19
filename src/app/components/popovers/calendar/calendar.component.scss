@@ -40,6 +40,7 @@ pre {
   border-width: 1px;
   border-color: grey;
   padding: 5px;
+  height: 2em;
 }
 
 .back {
@@ -55,11 +56,6 @@ pre {
   border-left-style: none;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
-}
-
-.middle {
-  border-left-style: none;
-  border-right-style: none;
 }
 
 .view-calendar {

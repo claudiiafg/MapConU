@@ -49,8 +49,14 @@
         </ion-select>
       </ion-item>
     </div>
+
   </ion-toolbar>
   <div class="move-floor">
+
+    <div class="disability-button" id="disabilityButton" (click)="disabilityDirections()">
+      <img src="../../../../assets/icon/Disability.png" height="70%">
+    </div>
+
     <ion-button
       class="down-button ion-float-end"
       (click)="moveDownFloor()"

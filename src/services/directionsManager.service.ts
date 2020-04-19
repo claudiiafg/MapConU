@@ -33,6 +33,12 @@ export class DirectionsManagerService {
     lng: -73.579197
   };
 
+  private vanierCoords = {
+    lat: 45.458869,
+    lng: -73.638234
+  };
+
+  public handicapRequest: boolean = false;
   constructor(
     private events: Events,
     private indoorDirections: IndoorDirectionsService,
@@ -64,7 +70,7 @@ export class DirectionsManagerService {
         //if first step is indoor (has a floor)
         if(this.steps[0].floor){
           //get building
-          building = (this.steps[0].floor === 'mb1') ? 'jmsb' : 'hall';
+          building = (this.steps[0].floor === 'mb1') ? 'jmsb' : ((this.steps[0].floor === 'vl1') ? 'vanier' : 'hall');
         }
         //route to that building
         this.router.navigateByUrl('indoor/' + building);
@@ -96,8 +102,13 @@ export class DirectionsManagerService {
   ) {
     let defaultStartingPoint: string;
     if (building === 'h8' || building === 'h9') {
-      defaultStartingPoint = 'escalators-up';
-    } else if (building === 'mb1') {
+      if(this.handicapRequest){
+        defaultStartingPoint = 'elevators';
+      }else{
+        defaultStartingPoint = 'escalators-up';
+      }
+
+    } else if (building === 'mb1' || building === 'vl1') {
       defaultStartingPoint = 'entrance';
     }
 
@@ -122,7 +133,7 @@ export class DirectionsManagerService {
 
     await alert.present().then(() => {
       /** disable the different floor is mb1 */
-      if (building === 'mb1') {
+      if (building === 'mb1' || building === 'vl1') {
         document
           .querySelector(
             'ion-alert div.alert-button-group button:nth-of-type(2)'
@@ -175,12 +186,21 @@ export class DirectionsManagerService {
 
     //if its 8th floor, set destination
     if(floor === 'h8'){
-      dest = 'escalators-down';
+      if(this.handicapRequest){
+        dest = 'elevators';
+      }else{
+        dest = 'escalators-down';
+      }
+
 
     //if its 9th floor, push 9th floor and recall funtion with 8th floor
     //(in order leave the building, user must go down first)
     } else if(floor === 'h9'){
-      dest = 'escalators-down';
+      if(this.handicapRequest){
+        dest = 'elevators';
+      }else{
+        dest = 'escalators-down';
+      }
       const tempPath = {
         floor: floor,
         source: interest,
@@ -188,13 +208,20 @@ export class DirectionsManagerService {
         wasDone: false
       };
       this.steps.push(tempPath);
-      this.initDifferentBuilding(false, 'h8', 'escalators-down');
+      if(this.handicapRequest){
+        this.initDifferentBuilding(false, 'h8', 'elevators');
+      }else{
+        this.initDifferentBuilding(false, 'h8', 'escalators-down');
+      }
+
       return;
 
-    //if it's mb, set destination
-    } else if(floor === 'mb1'){
+    //if it's mb or vl, set destination
+    } else if(floor === 'mb1' || floor === 'vl1'){
       dest = 'entrance';
+
     }
+
     const tempPath = {
       floor: floor,
       source: interest,
@@ -216,6 +243,9 @@ export class DirectionsManagerService {
     if (isInit) {
       this.steps = [];
       let dest: string = floor === 'h8' ? 'escalators-up' : 'escalators-down';
+      if (this.handicapRequest){
+        dest = 'elevators';
+      }
       const tempPath = {
         floor: floor,
         source: interest,
@@ -228,16 +258,25 @@ export class DirectionsManagerService {
     //ask user to choose source and initiate the path steps
     } else {
       if(floor === 'h9' && this.mixedType === MixedDirectionsType.classToClass){
-        const tempPath = {
+        let tempPath = {
           floor: 'h8',
           source: 'escalators-up',
           dest: 'escalators-up',
           wasDone: false,
           isLast: false
         };
+
+        if(this.handicapRequest){
+          tempPath.source = 'elevators';
+          tempPath.dest = 'elevators';
+        }
+
         this.steps.push(tempPath);
       }
       let source: string = (floor === 'h8') ? 'escalators-down' : ((floor === 'h9') ? 'escalators-up' : 'entrance');
+      if(this.handicapRequest){
+        source = (floor === 'h8') ? 'elevators' : ((floor === 'h9') ? 'elevators' : 'entrance');
+      }
       const tempPath = {
         floor: floor,
         source: source,
@@ -260,7 +299,7 @@ export class DirectionsManagerService {
 
   //same source building in router url to set the outdoor navigation (origin)
   private getOutsideInfo(floor: string){
-    let id = (floor === 'mb1') ? 'jmsb' : 'hall';
+    let id = (floor === 'mb1') ? 'jmsb' : ((floor === 'vl1') ? 'vanier' : 'hall');
     this.router.navigateByUrl('/outdoor/isMixedNav/' + id);
   }
 
@@ -394,6 +433,9 @@ export class DirectionsManagerService {
       } else if(this.router.url.includes('jmsb') && this.currentStep.floor.includes('mb1')) {
         return this.currentStep;
 
+      } else if(this.router.url.includes('vanier') && this.currentStep.floor.includes('vl1')) {
+        return this.currentStep;
+
       } else {
         this.continueWithIndoorDirections();
       }
@@ -441,11 +483,19 @@ export class DirectionsManagerService {
        }
 
      //move to jmsb
-     } else {
+    } else if (this.currentStep.floor.includes('mb')) {
        if(this.router.url !== '/indoor/jmsb'){
          this.router.navigateByUrl('/indoor/jmsb');
        }
      }
+
+     //move to vanier library
+     else if (this.currentStep.floor.includes('vl')) {
+        if(this.router.url !== '/indoor/vanier'){
+          this.router.navigateByUrl('/indoor/vanier');
+        }
+      }
+
    }, 500)
   }
 
@@ -525,7 +575,23 @@ export class DirectionsManagerService {
           wasDone: false,
           isLast: true
         }
+
+      } else if(classroomFormatted.includes('vl1')){
+        toBuilding = 'vanier';
+        toBuildingLat = this.vanierCoords.lat;
+        toBuildingLng = this.vanierCoords.lng;
+
+        //indoor path to jmsb classroomFormatted
+        tempIndoorStep = {
+          floor: 'vl1',
+          source: 'entrance',
+          dest: classroomFormatted,
+          wasDone: false,
+          isLast: true
+        }
       }
+
+
       //building of classroomFormatted
       const to = {
         building: toBuilding,

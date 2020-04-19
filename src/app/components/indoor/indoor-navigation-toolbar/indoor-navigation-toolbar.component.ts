@@ -11,13 +11,14 @@ import { DirectionsManagerService } from 'src/services/directionsManager.service
 })
 export class IndoorNavigationToolbarComponent {
   @Input() inputBuilding: string;
-  @Input() floor: any = 8;
+  @Input() floor;
   @Input() isSelectMode: boolean = false;
 
   private maxFloorIndex: number;
   private minFloorIndex: number;
   private currentFloorIndex: number;
   private building: string;
+  private handicap: boolean = false;
 
   // Array with building information to dynamically create a toolbar with the proper building name and floors
   private buildingInfo = [
@@ -40,7 +41,7 @@ export class IndoorNavigationToolbarComponent {
       topFloorIndex: 5,
       bottomFloorIndex: 2
     },
-    { buildingName: "Vanier Extension", topFloorIndex: 5, bottomFloorIndex: 2 }
+    { buildingName: "Vanier Library", topFloorIndex: 2, bottomFloorIndex: 2 }
   ];
 
   private floors = [
@@ -93,8 +94,8 @@ export class IndoorNavigationToolbarComponent {
           "Communication Studies and Journalism Building"
         );
         break;
-      case "varnier":
-        this.building = this.translate.getTranslation("Vanier Extension");
+      case "vanier":
+        this.building = this.translate.getTranslation("Vanier Library");
         break;
     }
 
@@ -134,6 +135,18 @@ export class IndoorNavigationToolbarComponent {
       this.events.publish('initNewMap', Date.now());
       this.events.publish("floor-changes", this.floor, Date.now());
     }
+  }
+
+  //Method for people with disabilities
+   private disabilityDirections(){
+    this.handicap = !this.handicap;
+    if (this.handicap){
+      document.getElementById('disabilityButton').classList.toggle('active', true);
+    }else{
+      document.getElementById('disabilityButton').classList.toggle('active', false);
+    }
+    console.log(this.handicap);
+    this.directionsManager.handicapRequest = this.handicap;
   }
 
   // Takes the user back to the outdoor view

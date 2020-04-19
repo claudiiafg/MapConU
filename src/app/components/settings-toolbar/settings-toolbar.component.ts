@@ -11,8 +11,8 @@ export class SettingsToolbarComponent implements OnInit {
 
   ngOnInit() {}
 
-  /*
-  Takes the user back to whichever page they came from, indoor or outdoor
+  /**
+   * Takes the user back to whichever page they came from, indoor or outdoor
    */
   public goBack() {
     this.location.back();

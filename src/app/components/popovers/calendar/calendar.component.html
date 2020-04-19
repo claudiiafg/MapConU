@@ -22,6 +22,7 @@
         class="buttondiv"
         mwlCalendarToday
         [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
       >
         <ion-label>{{'today'| translate}}</ion-label>
       </button>
@@ -33,6 +34,7 @@
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
         >
         </ion-icon>
       </button>
@@ -44,6 +46,7 @@
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
         >
         </ion-icon>
       </button>
@@ -57,19 +60,27 @@
         <ion-label>{{'month'| translate}}</ion-label>
       </button>
       <button
-        class="buttondiv"
+        class="buttondiv back2"
         (click)="setView(CalendarView.Week)"
         [class.active]="view === CalendarView.Week"
       >
         <ion-label>{{'week'| translate}}</ion-label>
       </button>
       <button
-        class="buttondiv front"
+        class="buttondiv"
         (click)="setView(CalendarView.Day)"
         [class.active]="view === CalendarView.Day"
       >
         <ion-label>{{'day'| translate}}</ion-label>
       </button>
+      <ng-template [ngIf]="googleSession">
+        <button
+          class="buttondiv front"
+          (click)="presentCalendars()"
+        >
+          <ion-icon name="md-calendar"></ion-icon><ion-icon name="ios-arrow-down"></ion-icon>
+        </button>
+      </ng-template>
     </div>
   </div>
 
