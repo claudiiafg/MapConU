@@ -48,7 +48,7 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
         RouterModule.forRoot([]),
         IonicModule.forRoot(),
         HttpClientModule,
-        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -57,7 +57,7 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
           }
         })
       ],
-      declarations: [OutdoorNavigationSideButtonsComponent],
+      declarations: [OutdoorNavigationSideButtonsComponent, CalendarComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         StatusBar,
