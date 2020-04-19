@@ -1,6 +1,6 @@
 import {TestBed} from "@angular/core/testing";
-import {DirectionsManagerService} from "./directionsManager.service";
-import { GeolocationServices } from "./geolocation.services";
+import {DirectionsManagerService, MixedDirectionsType} from "./directionsManager.service";
+import {GeolocationServices} from "./geolocation.services";
 import { TranslationService } from "./translation.service";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -167,6 +167,43 @@ describe("DirectionsManagerService", () => {
     //expect(router.navigate).toHaveBeenCalledWith('/indoor/hall');
     expect(mySpy).toHaveBeenCalled();
     expect(current).toEqual('steps');
+  });
+
+  // test create a path from a room
+  it("should get path to room in hall building", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service['steps'] = [
+      {floor: 'h8', source: 'escalators-up', dest: 'h831', wasDone: false, isLast: true}];
+    service['geolocationService']['latitude'] = 45.496834;
+    service['geolocationService']['longitude'] = -73.578856;
+    const mySpy1 = spyOn<any>(service['dataSharingService'], 'updateMapSize').and.callThrough();
+    const mySpy3 = spyOn(service, 'getPathToRoom').and.callThrough();
+    const mySpy2 = spyOn(service, 'pushStep').and.callThrough();
+
+    service.getPathToRoom('h831');
+    expect(mySpy1).toHaveBeenCalled();
+    expect(mySpy2).toHaveBeenCalled();
+    expect(mySpy3).toHaveBeenCalled();
+    expect(service['steps'][1]['dest']['building']).toEqual('hall');
+  });
+
+  it("should get path to room in jmsb building", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service['steps'] = [
+      {floor: 'h8', source: 'escalators-up', dest: 'h831', wasDone: false, isLast: true}];
+    service['geolocationService']['latitude'] = 45.496834;
+    service['geolocationService']['longitude'] = -73.578856;
+    const mySpy3 = spyOn(service, 'getPathToRoom').and.callThrough();
+    const mySpy2 = spyOn(service, 'pushStep').and.callThrough();
+
+    service.getPathToRoom('mb1-110');
+    expect(mySpy2).toHaveBeenCalled();
+    expect(mySpy3).toHaveBeenCalled();
+    expect(service['steps'][1]['dest']['building']).toEqual('jmsb');
   });
 
   afterEach(() => {
