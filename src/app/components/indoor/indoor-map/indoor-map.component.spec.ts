@@ -39,7 +39,12 @@ describe("IndoorMapComponent ", () => {
           }
         })
       ],
-      declarations: [IndoorMapComponent, H8FloorPlanComponent, H9FloorPlanComponent, MB1FloorPlanComponent],
+      declarations: [
+        IndoorMapComponent,
+        H8FloorPlanComponent,
+        H9FloorPlanComponent,
+        MB1FloorPlanComponent
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         StatusBar,
@@ -81,43 +86,46 @@ describe("IndoorMapComponent ", () => {
     expect(console.log).toHaveBeenCalledWith("Point not available.");
     expect(component["isSelectMode"]).toBeFalsy();
   });
+
   it("should initNav() without point and valid name mb valid point isSelectMode", () => {
     component["inputBuilding"] = "hall";
-    let point: Point[];
-    point = [
-      {
-        id: "mb",
-        x: 123,
-        y: 123
-      }
-    ];
-    component["inputBuilding"] = "jmsb";
-    spyOn(
+    let point: Point;
+    point = {
+      id: "mb",
+      x: 123,
+      y: 123
+    };
+    component["inputBuilding"] = "hall";
+    component["floor"] = 8;
+    component["isSelectMode"] = true;
+    component["interestPoints"] = [];
+    spyOn<any>(
       component["indoorDirectionsService"],
       "getPointByName"
-    ).and.callThrough();
-    spyOn(component["interestPoints"], "filter").and.callFake(() => {
+    ).and.callFake(() => {
       return point;
     });
+    spyOn<any>(component["router"]["url"], "substring").and.callFake(() => {
+      return "hall";
+    });
+    spyOn<any>(component, "setMarker").and.callFake(() => {});
 
-    component["inputBuilding"] = "hall";
-    component["floor"] = 9;
-    component["isSelectMode"] = false;
     spyOn(component["directionManager"], "getIsSelectMode").and.callFake(() => {
       return true;
     });
-    spyOn(
-      component["directionManager"],
-      "initDifferentFloorDir"
-    ).and.callThrough();
+    spyOn<any>(component, "checkCurrentFloorNumber").and.callFake(() => {
+      return 9;
+    });
     component["initNav"]("escalator-down");
     expect(component["isSelectMode"]).toBeTruthy();
     expect(
-      component["directionManager"].initDifferentFloorDir
-    ).toHaveBeenCalled();
+      spyOn(
+        component["directionManager"],
+        "initiateIndoorDirections"
+      ).and.callThrough()
+    ).toHaveBeenCalledTimes(0);
   });
   it("should initNav() without point and valid name escalator up", () => {
-    console.log = jasmine.createSpy("Point not available.");
     component["initNav"]("invalidname");
     expect(console.log).toHaveBeenCalledWith("Point not available.");
   });
@@ -172,7 +180,11 @@ describe("IndoorMapComponent ", () => {
     expect(component["indoorDirectionsService"].setMap).toHaveBeenCalled();
     expect(component["indoorDirectionsService"].getLines).toHaveBeenCalled();
     expect(component["indoorDirectionsService"].getPoints).toHaveBeenCalled();
-    expect(component["events"].publish).toHaveBeenCalledWith('map-set', Object({ building: 'hall', floor: 8 }), jasmine.any(Number));
+    expect(component["events"].publish).toHaveBeenCalledWith(
+      "map-set",
+      Object({ building: "hall", floor: 8 }),
+      jasmine.any(Number)
+    );
   });
   it("should setMap() for hall 9th floor", () => {
     component["inputBuilding"] = "hall";
@@ -190,7 +202,11 @@ describe("IndoorMapComponent ", () => {
     expect(component["indoorDirectionsService"].setMap).toHaveBeenCalled();
     expect(component["indoorDirectionsService"].getLines).toHaveBeenCalled();
     expect(component["indoorDirectionsService"].getPoints).toHaveBeenCalled();
-    expect(component["events"].publish).toHaveBeenCalledWith('map-set', Object({ building: 'hall', floor: 9 }), jasmine.any(Number));
+    expect(component["events"].publish).toHaveBeenCalledWith(
+      "map-set",
+      Object({ building: "hall", floor: 9 }),
+      jasmine.any(Number)
+    );
   });
   it("should setMap() for jmsb 1st floor", () => {
     component["inputBuilding"] = "jmsb";
@@ -208,7 +224,11 @@ describe("IndoorMapComponent ", () => {
     expect(component["indoorDirectionsService"].setMap).toHaveBeenCalled();
     expect(component["indoorDirectionsService"].getLines).toHaveBeenCalled();
     expect(component["indoorDirectionsService"].getPoints).toHaveBeenCalled();
-    expect(component["events"].publish).toHaveBeenCalledWith('map-set', Object({ building: 'jmsb', floor: 1 }), jasmine.any(Number));
+    expect(component["events"].publish).toHaveBeenCalledWith(
+      "map-set",
+      Object({ building: "jmsb", floor: 1 }),
+      jasmine.any(Number)
+    );
   });
   it("should check floor number of hall 8th floor", () => {
     component["inputBuilding"] = "hall";
