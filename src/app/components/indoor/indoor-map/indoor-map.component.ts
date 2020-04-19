@@ -66,6 +66,7 @@ export class IndoorMapComponent implements OnInit {
           let docElement = document.getElementById(line);
           docElement.style.stroke = 'blue';
         }
+        this.setMarker();
       }, 500)
 
     });
@@ -86,10 +87,6 @@ export class IndoorMapComponent implements OnInit {
         this.resetNav();
         this.sourceID = data.source;
         this.destID = data.destination;
-        let p = this.interestPoints.filter(
-          point => point.id === this.destID
-        )[0];
-        this.setMarker(p);
         if(this.sourceID !== this.destID){
           this.indoorDirectionsService.computePathHelper(
             this.sourceID,
@@ -177,8 +174,6 @@ export class IndoorMapComponent implements OnInit {
     }
     let docElementLines = currentDoc.getElementsByTagName('line');
     let docInterestPoints = currentDoc.getElementsByTagName('circle');
-    this.marker = document.getElementById('marker');
-    this.unsetMarker();
 
     //set map in service and get all info from it
     this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
@@ -194,6 +189,8 @@ export class IndoorMapComponent implements OnInit {
     //publish that map has been set
     //services are subscribred to this event so no directions begins before all elements have been set
     this.events.publish('map-set', data, Date.now());
+    this.marker = document.getElementById('marker');
+    this.unsetMarker();
   }
 
   //initiate the process of navigation (when user click on a element)
@@ -203,7 +200,6 @@ export class IndoorMapComponent implements OnInit {
       this.inputBuilding = this.router.url.substring(this.router.url.lastIndexOf('/') + 1, this.router.url.length);
 
       this.destID = point.id;
-      this.setMarker(point);
       this.isSelectMode = this.directionManager.getIsSelectMode();
 
       //user wants floor to floor directions (isSelectMode)
@@ -288,7 +284,8 @@ export class IndoorMapComponent implements OnInit {
   }
 
   //set marker on the map
-  private setMarker(point: Point) {
+  private setMarker() {
+    const point = this.indoorDirectionsService.getPointByName(this.destID);
     if(point && point.x && point.y){
       if(!this.marker){
         this.marker = document.getElementById('marker');
