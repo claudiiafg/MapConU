@@ -226,22 +226,98 @@ describe("DirectionsManagerService", () => {
     expect(service['steps'][0]['floor']).toEqual('h8');
   });
 
-  // fails but increases coverage (url of undefined)
-  it("should get step after outdoors", () => {
+
+  it("should get next step", () => {
     const service: DirectionsManagerService = TestBed.get(
         DirectionsManagerService
     );
-    const mySpy = spyOn<any>(service, 'getStepAfterOutdoor').and.callThrough();
     //order data
     service['steps'] = [
       {floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: false},
       {floor: 'h9', source: 'escalators-down', dest: 'escalators-up', wasDone: false}
     ];
+    const mySpy = spyOn<any>(service, 'getNextStep').and.callFake(() => {
+
+      service['initNewPath']();
+
+      let i = 0;
+      for (i = 0; i < service['steps']['length']; i++) {
+        if (!service['steps'][i].wasDone) {
+          service['steps'][i].wasDone = true;
+          break;
+        }
+      }
+      //if out of the loop use last one;
+      if (!service['steps'][i]) {
+        i--;
+      }
+      service['currentStep'] = service['steps'][i];
+      return service['currentStep']
+    });
+    service['path'] = 'indoor/hall';
+    service['currentStep'] = ['steps'][0];
+    const after = service.getNextStep();
+    expect(mySpy).toHaveBeenCalled();
+    expect(after).toEqual({floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: true});
+  });
+
+  it("should get step after outside", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    //order data
+    service['steps'] = [
+      {floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: false},
+      {floor: 'h9', source: 'escalators-down', dest: 'escalators-up', wasDone: false}
+    ];
+    const mySpy = spyOn<any>(service, 'getStepAfterOutdoor').and.callFake(() => {
+
+      let i = 0;
+      for (i = 0; i < service['steps']['length']; i++) {
+        if (!service['steps'][i].wasDone) {
+          service['steps'][i].wasDone = true;
+          break;
+        }
+      }
+      service['currentStep'] = service['steps'][i];
+      return service['currentStep']
+    });
     service['path'] = 'indoor/hall';
     service['currentStep'] = ['steps'][0];
     const after = service.getStepAfterOutdoor();
     expect(mySpy).toHaveBeenCalled();
-    expect(after).toEqual({floor: 'h9', source: 'escalators-down', dest: 'escalators-up', wasDone: false});
+    expect(after).toEqual({floor: 'h8', source: 'escalators-up', dest: 'escalators-down', wasDone: true});
+  });
+
+  it("should get mixed type", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service['mixedType'] = 0;
+    const returned0 = service.getMixedType();
+    expect(returned0).toEqual(MixedDirectionsType.floorToBuilding);
+    service['mixedType'] = 1;
+    const returned1 = service.getMixedType();
+    expect(returned1).toEqual(MixedDirectionsType.buildingToFloor);
+    service['mixedType'] = 2;
+    const returned2 = service.getMixedType();
+    expect(returned2).toEqual(MixedDirectionsType.classToClass);
+    service['mixedType'] = 3;
+    const returned3 = service.getMixedType();
+    expect(returned3).toBeNull();
+  });
+
+  it("should set mixed type", () => {
+    const service: DirectionsManagerService = TestBed.get(
+        DirectionsManagerService
+    );
+    service.setMixedType(MixedDirectionsType.floorToBuilding);
+    expect(service['mixedType']).toBe(0);
+    service.setMixedType(MixedDirectionsType.buildingToFloor);
+    expect(service['mixedType']).toBe(1);
+    service.setMixedType(MixedDirectionsType.classToClass);
+    expect(service['mixedType']).toBe(2);
+    expect(() => service.setMixedType(3)).toThrowError('Wrong type of Mixed Directions');
   });
 
   afterEach(() => {
