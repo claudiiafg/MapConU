@@ -53,6 +53,7 @@ export class IndoorMapComponent implements OnInit {
         this.isInit = false;
         this.setMap();
         this.dataSharing.updateCurrentBuilding(this.inputBuilding);
+        this.events.publish('close-indoor-popup');
       }
     });
 
@@ -313,11 +314,14 @@ export class IndoorMapComponent implements OnInit {
     }
     this.foundPath = false;
     this.indoorDirectionsService.resetNav();
+    this.dataSharing.showIndoorToa(false);
   }
 
   //important to reload route
   //destroy component on unload so the ngAfterViewInit get's triggered everytime the indoor page is opened
   //helps avoid data corruption -> data is reset everytime
   @HostListener('unloaded')
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.events.unsubscribe('open-indoor-popup');
+  }
 }

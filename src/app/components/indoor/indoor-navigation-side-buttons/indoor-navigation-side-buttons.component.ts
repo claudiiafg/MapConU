@@ -16,7 +16,8 @@ import { CalendarComponent } from '../../popovers/calendar/calendar.component';
 export class IndoorNavigationSideButtonsComponent {
   @Input() isSelectMode: boolean;
   private showToa: boolean = false;
-  private currentPopover: any;
+  private currentPopover = null;
+
 
   constructor(
     public popoverController: PopoverController,
@@ -26,7 +27,7 @@ export class IndoorNavigationSideButtonsComponent {
     private dataSharing: DataSharingService,
     private modalController: ModalController
   ) {
-    this.events.subscribe('open-indoor-popup', data => {
+    this.events.subscribe('open-indoor-popup', (data, time) => {
       this.presentPopover(data);
     });
     this.events.subscribe('close-indoor-popup', () => {
@@ -39,7 +40,7 @@ export class IndoorNavigationSideButtonsComponent {
   }
 
   async presentPopover(data?: any) {
-    if(!this.currentPopover){
+    if(this.currentPopover === null){
       this.currentPopover = await this.popoverController.create({
         component: RoomSelectorPopoverComponent,
         componentProps: {
@@ -50,6 +51,9 @@ export class IndoorNavigationSideButtonsComponent {
 
       this.currentPopover.style.cssText = '--width: calc(100% - 10px); top: 0px; right: 5px;';
       await this.currentPopover.present();
+      setTimeout(()=> {
+        this.currentPopover = null;
+      }, 500);
     }
   }
 
