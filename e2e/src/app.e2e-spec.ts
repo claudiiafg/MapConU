@@ -4,7 +4,7 @@ import { protractor } from 'protractor/built/ptor';
 var fs = require('fs')
 // abstract writing screen shot to a file
 function writeScreenShot(data, filename) {
-  var stream = fs.createWriteStream('./e2e/screenshots/'+filename);
+  var stream = fs.createWriteStream('./screenshots/'+filename);
   stream.write(new Buffer(data, 'base64'));
   stream.end();
 }
@@ -80,10 +80,10 @@ it("Should open up the bus schedule", () => {
     .click()
     .perform();
   expect(element(by.css('src="./assets/schedule/schedule.png"'))).toBeDefined();
-  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'BusScheduleTest');});
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'BusScheduleTest.png');});
   });
 it("Should look up Hall building in the searchbar", () => {
-  browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
+  //browser.actions().mouseMove(element(by.id("outdoor-search"))).click().perform();
   browser.actions().sendKeys("hall").perform();
   expect(element(by.css('value="Henry F.Hall Building, Boulevard de Maisonneuve Ouest, Montreal, QC, Canada"'))).toBeDefined();
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorSearchTest.png');});
@@ -96,5 +96,61 @@ it("Should bring up a menu to input current address and destination address", ()
     .perform();
   expect(element(by.id("fromAddress"))).toBeDefined();
   browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'toandfromTest.png');});
+  });
+it("Should direct to settings page", () => {
+  browser.actions().mouseMove(element(by.id("button-settings"))).click().perform();
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'SettingsPage.png');});
+  expect(element(by.id("settings-title")).getText()).toContain("Settings + More");
+  });
+it("Should change the language of the settings page", () => {
+  browser.actions().mouseMove(element(by.id("button-settings"))).click().perform();
+
+  browser
+  .actions()
+  .mouseMove(element(by.id("language-selection")))
+  .click()
+  .perform();
+
+  browser.driver.sleep(200);
+
+  //set location to Loyola
+  browser
+    .actions()
+    .mouseMove(element(by.id("ion-rb-1-lbl")))
+    .click()
+    .perform();
+  browser.driver.sleep(200);
+
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'SettingsPageinFrench.png');});
+  expect(element(by.id("settings-title")).getText()).toContain("Paramètres + Plus");
+  });
+it("Should change the language of the outdoor page", () => {
+  browser.actions().mouseMove(element(by.id("button-settings"))).click().perform();
+
+  browser
+  .actions()
+  .mouseMove(element(by.id("language-selection")))
+  .click()
+  .perform();
+
+  browser.driver.sleep(200);
+
+  browser
+    .actions()
+    .mouseMove(element(by.id("ion-rb-1-lbl")))
+    .click()
+    .perform();
+  browser.driver.sleep(200);
+
+
+  browser
+  .actions()
+  .mouseMove(element(by.id("button-back")))
+  .click()
+  .perform();
+
+  browser.takeScreenshot().then(function (png) {writeScreenShot(png, 'OutdoorPageinFrench.png');});
+  expect(element(by.id("campus-change")).getText()).toContain("Campus SGW");
+
   });
 });
