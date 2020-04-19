@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="10" time="63.776">
- <testsuite name="MapConU" timestamp="2020-04-19T13:24:25" hostname="localhost" time="63.776" errors="0" tests="10" skipped="0" disabled="0" failures="0">
-  <testcase classname="MapConU" name="Has MapConU as the Title " time="7.787" />
-  <testcase classname="MapConU" name="Should toggle Campuses when selected at top of the UI" time="5.857" />
-  <testcase classname="MapConU" name="Should open up the bus schedule" time="5.941" />
-  <testcase classname="MapConU" name="Should look up Hall building in the searchbar" time="5.47" />
-  <testcase classname="MapConU" name="Should bring up a menu to input current address and destination address" time="5.721" />
-  <testcase classname="MapConU" name="Should direct to settings page" time="5.08" />
-  <testcase classname="MapConU" name="Should change the language of the settings page" time="5.74" />
-  <testcase classname="MapConU" name="Should change the language of the outdoor page" time="6.162" />
-  <testcase classname="MapConU" name="Should load the indoor hall page" time="6.416" />
-  <testcase classname="MapConU" name="Should give a path from h811 to h819" time="9.6" />
+<testsuites disabled="0" errors="0" failures="0" tests="10" time="63.649">
+ <testsuite name="MapConU" timestamp="2020-04-19T17:00:45" hostname="localhost" time="63.649" errors="0" tests="10" skipped="0" disabled="0" failures="0">
+  <testcase classname="MapConU" name="Has MapConU as the Title " time="8.049" />
+  <testcase classname="MapConU" name="Should toggle Campuses when selected at top of the UI" time="6.226" />
+  <testcase classname="MapConU" name="Should open up the bus schedule" time="5.93" />
+  <testcase classname="MapConU" name="Should look up Hall building in the searchbar" time="5.413" />
+  <testcase classname="MapConU" name="Should bring up a menu to input current address and destination address" time="5.6" />
+  <testcase classname="MapConU" name="Should direct to settings page" time="5.551" />
+  <testcase classname="MapConU" name="Should change the language of the settings page" time="5.699" />
+  <testcase classname="MapConU" name="Should change the language of the outdoor page" time="5.908" />
+  <testcase classname="MapConU" name="Should load the indoor hall page" time="6.138" />
+  <testcase classname="MapConU" name="Should give a path from h811 to h819" time="9.131" />
  </testsuite>
 </testsuites>
