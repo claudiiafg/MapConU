@@ -10,7 +10,7 @@
   <span class="highlight"></span>
   <span class="bar"></span>
   <label>Starting Point</label> -->
-  <ion-item>
+  <ion-item id="indoor-poi-start">
     <ion-label>{{ 'start-point' | translate }}</ion-label>
     <ion-select
       [(ngModel)]="prettySource"
@@ -38,12 +38,13 @@
   <span class="highlight"></span>
   <span class="bar"></span>
   <label>Destination</label> -->
-  <ion-item>
+  <ion-item id="indoor-poi-end">
     <ion-label>{{ 'end-location' | translate }}</ion-label>
     <ion-select
       [(ngModel)]="prettyDestination"
       value="{{ prettyDestination }}"
       class="select-option"
+      
     >
       <ion-select-option
         *ngFor="let point of prettyPoints"
