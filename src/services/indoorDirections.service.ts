@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Events } from '@ionic/angular';
-import { DataSharingService} from './data-sharing.service';
+import { Injectable } from "@angular/core";
+import { Events } from "@ionic/angular";
+import { DataSharingService } from "./data-sharing.service";
 
 export interface Line {
   id: string;
@@ -27,13 +27,13 @@ export interface Point {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class IndoorDirectionsService {
   private pathLines: Line[] = [];
   private interestPoints: Point[] = [];
-  private sourceID: string = 'entrance';
-  private destID: string = 'out';
+  private sourceID: string = "entrance";
+  private destID: string = "out";
   private sourceLine: Line;
   private destLine: Line;
   private path: string[] = []; //path of line ids
@@ -42,8 +42,8 @@ export class IndoorDirectionsService {
   private pathTime: number = 0;
 
   constructor(
-      private events: Events,
-      private dataSharing: DataSharingService
+    private events: Events,
+    private dataSharing: DataSharingService
   ) {}
 
   //**********************PUBLC HELPERS**********************
@@ -55,7 +55,7 @@ export class IndoorDirectionsService {
 
     for (let i in docElementLines) {
       if (docElementLines[i].style) {
-        docElementLines[i].style.stroke = 'transparent';
+        docElementLines[i].style.stroke = "transparent";
       }
 
       //set temporaty lines with right structure
@@ -134,14 +134,14 @@ export class IndoorDirectionsService {
     this.path = [];
     this.sourceLine = null;
     this.destLine = null;
-    this.sourceID = '';
-    this.destID = '';
+    this.sourceID = "";
+    this.destID = "";
     for (let each of this.pathLines) {
       each._wasVisited = false;
     }
   }
 
-  private resetAll(){
+  private resetAll() {
     this.reset();
     this.pathLines = null;
     this.interestPoints = null;
@@ -184,7 +184,7 @@ export class IndoorDirectionsService {
     if (this.foundPath) {
       return this.pathLength;
     } else {
-      throw new Error('No found path to calculate length on');
+      throw new Error("No found path to calculate length on");
     }
   }
 
@@ -195,7 +195,7 @@ export class IndoorDirectionsService {
       this.path = [];
       this.path.push(this.sourceLine.id);
     } else {
-      throw new Error(pointID + ': Point does not exist');
+      throw new Error(pointID + ": Point does not exist");
     }
   }
 
@@ -204,48 +204,40 @@ export class IndoorDirectionsService {
       this.destID = pointID;
       this.destLine = this.getInterestLineById(pointID);
     } else {
-      throw new Error(pointID + ': Point does not exist');
+      throw new Error(pointID + ": Point does not exist");
     }
   }
 
   //get specific point element by its name
   public getPointByName(name): Point {
     let point;
-    if (name.includes('mb')) {
+    if (name.includes("mb")) {
       point = this.interestPoints.filter(point => point.id === name)[0];
-    } else if (name.includes('h8')) {
+    } else if (name.includes("h8")) {
       point = this.interestPoints.filter(point => point.id === name)[0];
-    } else if (name.includes('h9')) {
+    } else if (name.includes("h9")) {
       point = this.interestPoints.filter(point => point.id === name)[0];
-    } else if (name.includes('elevator')) {
-      point = this.interestPoints.filter(point => point.id === 'elevator')[0];
-    } else if (name.includes('female')) {
-      point = this.interestPoints.filter(point => point.id === 'wc-female')[0];
-    } else if (name.includes('male')) {
-      point = this.interestPoints.filter(point => point.id === 'wc-male')[0];
-    } else if (name.includes('ne')) {
+    } else if (name.includes("elevator")) {
+      point = this.interestPoints.filter(point => point.id === "elevator")[0];
+    } else if (name.includes("female")) {
+      point = this.interestPoints.filter(point => point.id === "wc-female")[0];
+    } else if (name.includes("male")) {
+      point = this.interestPoints.filter(point => point.id === "wc-male")[0];
+    } else if (name.includes("ne")) {
+      point = this.interestPoints.filter(point => point.id === "stairs-ne")[0];
+    } else if (name.includes("nw")) {
+      point = this.interestPoints.filter(point => point.id === "stairs-nw")[0];
+    } else if (name.includes("sw")) {
+      point = this.interestPoints.filter(point => point.id === "stairs-sw")[0];
+    } else if (name.includes("se")) {
+      point = this.interestPoints.filter(point => point.id === "stairs-se")[0];
+    } else if (name.includes("escalator-down")) {
       point = this.interestPoints.filter(
-        point => point.id === 'stairs-ne'
+        point => point.id === "escalator-down"
       )[0];
-    } else if (name.includes('nw')) {
+    } else if (name.includes("escalator-up")) {
       point = this.interestPoints.filter(
-        point => point.id === 'stairs-nw'
-      )[0];
-    } else if (name.includes('sw')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'stairs-sw'
-      )[0];
-    } else if (name.includes('se')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'stairs-se'
-      )[0];
-    } else if (name.includes('escalator-down')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'escalator-down'
-      )[0];
-    } else if (name.includes('escalator-up')) {
-      point = this.interestPoints.filter(
-        point => point.id === 'escalator-up'
+        point => point.id === "escalator-up"
       )[0];
     }
     return point;
@@ -513,20 +505,23 @@ export class IndoorDirectionsService {
 
     //shortest path, whithin orinal path:
     this.path = tempPath;
-    this.events.publish('path-found', true, Date.now());
+    this.events.publish("path-found", true, Date.now());
     this.calculateLength();
   }
 
-  setArrivalTime(){
+  setArrivalTime() {
     /*found that the average human walk speed is 1.35m/s and the and the distance between 2 adjacent classrooms is
-    *approximately 7m at pathlength = 40, so for pathlength = 1 we have 0.175m.
+     *approximately 7m at pathlength = 40, so for pathlength = 1 we have 0.175m.
      */
-    this.pathTime = ((this.pathLength * 0.175) * 1.35)/60;
-    this.pathTime = (Math.round((this.pathTime*10))/10);
-    this.dataSharing.updateIndoorToaParameters([this.sourceID, this.destID, this.pathTime]);
+    this.pathTime = (this.pathLength * 0.175 * 1.35) / 60;
+    this.pathTime = Math.round(this.pathTime * 10) / 10;
+    this.dataSharing.updateIndoorToaParameters([
+      this.sourceID,
+      this.destID,
+      this.pathTime
+    ]);
     this.dataSharing.showIndoorToa(true);
   }
-
 
   //********************** MAIN ALGORITHM **********************
   private computePath() {
