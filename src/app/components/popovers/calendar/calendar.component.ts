@@ -1,5 +1,4 @@
 import { registerLocaleData } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import localeFr from '@angular/common/locales/fr';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -11,7 +10,6 @@ import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { format, isSameDay, isSameMonth } from 'date-fns';
 import { rrulestr } from 'rrule';
 import { forkJoin, of, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Coordinates } from 'src/models/coordinates';
 import { Direction } from 'src/models/directionModel';
 import { DataSharingService } from 'src/services/data-sharing.service';
@@ -417,7 +415,8 @@ export class CalendarComponent implements OnInit {
       titleToLowerCase.includes('mb1210') ||
       titleToLowerCase.includes('mb1.210')
     ) {
-      return (room = 'mb1-210');
+
+      return 'mb1-210';
     }
 
     if (calendarEvent.meta.description) {
@@ -427,7 +426,7 @@ export class CalendarComponent implements OnInit {
         descriptionToLowerCase.includes('mb1210') ||
         descriptionToLowerCase.includes('mb1.210')
       ) {
-        return (room = 'mb1-210');
+        return 'mb1-210';
       }
     }
 
