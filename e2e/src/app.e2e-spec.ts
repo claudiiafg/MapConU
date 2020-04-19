@@ -4,7 +4,7 @@ import { protractor } from 'protractor/built/ptor';
 var fs = require('fs')
 // abstract writing screen shot to a file
 function writeScreenShot(data, filename) {
-  var stream = fs.createWriteStream('./screenshots/'+filename);
+  var stream = fs.createWriteStream('./e2e/screenshots/'+filename);
   stream.write(new Buffer(data, 'base64'));
   stream.end();
 }
