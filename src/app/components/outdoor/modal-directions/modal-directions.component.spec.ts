@@ -20,7 +20,7 @@ import { DirectionService } from "../../../../services/direction.service";
 import { IndoorDirectionsService } from "../../../../services/indoorDirections.service";
 import { By } from "@angular/platform-browser";
 
-describe("ModalDirectionsComponent ", () => {
+fdescribe("ModalDirectionsComponent ", () => {
   let component: ModalDirectionsComponent;
   let fixture: ComponentFixture<ModalDirectionsComponent>;
   beforeEach(async(() => {
@@ -49,6 +49,11 @@ describe("ModalDirectionsComponent ", () => {
   });
   it("should create", () => {
     // component.dismiss();
+    expect(component).toBeTruthy();
+  });
+  it("should create the component on init", () => {
+    component.ngOnInit();
+    fixture.detectChanges()
     expect(component).toBeTruthy();
   });
   it("should test dismiss()", () => {

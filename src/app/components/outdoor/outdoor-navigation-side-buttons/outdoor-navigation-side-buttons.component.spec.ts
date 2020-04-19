@@ -28,6 +28,12 @@ import {
 } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { CalendarComponent } from '../../popovers/calendar/calendar.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -42,6 +48,7 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
         RouterModule.forRoot([]),
         IonicModule.forRoot(),
         HttpClientModule,
+        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -67,10 +74,15 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
         TranslateModule,
         TranslateService,
         TranslateStore,
+        CalendarComponent,
+        NativeStorage,
+        NativeGeocoder,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: FirestoreSettingsToken, useValue: {} }
       ]
-    }).compileComponents();
+    })
+    .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [CalendarComponent] } })
+    .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(OutdoorNavigationSideButtonsComponent);
@@ -132,6 +144,29 @@ describe("OutdoorNavigationSideButtonsComponent ", () => {
     expect(spyDirectionClose).toHaveBeenCalled();
   });
 
+  it("should set up component on init", () => {
+    spyOn(component["events"], "subscribe");
+
+    expect(component["events"].subscribe).toHaveBeenCalledWith("poi-selected", jasmine.any(Function));
+    expect(component["events"].subscribe).toHaveBeenCalledWith("poi-unselected", jasmine.any(Function));
+  })
+
+  it("should display the calendar", async () => {
+    fixture.detectChanges();
+    spyOn(component["modalController"], "create");
+
+    component.openCalendar();
+
+    expect(component["modalController"].create).toHaveBeenCalledWith({component: CalendarComponent});
+  });
+
+  it("should call next", () => {
+    spyOn(component["events"], "publish");
+
+    component.next();
+
+    expect(component["events"].publish).toHaveBeenCalledWith("get-next-step", true, jasmine.any(Number));
+  });
   afterEach(() => {
     TestBed.resetTestingModule();
   });

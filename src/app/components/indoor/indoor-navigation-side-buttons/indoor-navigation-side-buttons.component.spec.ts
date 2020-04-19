@@ -35,7 +35,7 @@ export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
 
-fdescribe("IndoorNavigationSideButtonsComponent ", () => {
+describe("IndoorNavigationSideButtonsComponent ", () => {
   let component: IndoorNavigationSideButtonsComponent;
   let fixture: ComponentFixture<IndoorNavigationSideButtonsComponent>;
   beforeEach(async(() => {
