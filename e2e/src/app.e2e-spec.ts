@@ -166,13 +166,13 @@ it("Should give a path from h811 to h819", () => {
   .click()
   .perform();
   //load start popover
-  browser.driver.sleep(400);
+  browser.driver.sleep(1000);
   browser
   .actions()
   .mouseMove(element(by.id("indoor-poi-start")))
   .click()
   .perform();
-  browser.driver.sleep(400);
+  browser.driver.sleep(1000);
   browser
   .actions()
   .mouseMove(element(by.id("alert-input-2-0")))
@@ -184,13 +184,13 @@ it("Should give a path from h811 to h819", () => {
   .click()
   .perform();
   //load destination popover
-  browser.driver.sleep(400);
+  browser.driver.sleep(1000);
   browser
   .actions()
   .mouseMove(element(by.id("indoor-poi-end")))
   .click()
   .perform();
-  browser.driver.sleep(400);
+  browser.driver.sleep(1000);
   browser
   .actions()
   .mouseMove(element(by.id("alert-input-3-4")))
@@ -201,13 +201,13 @@ it("Should give a path from h811 to h819", () => {
   .mouseMove(element(by.xpath("/html/body/app-root/ion-app/ion-alert/div/div[4]/button[2]")))
   .click()
   .perform();
-  browser.driver.sleep(400);
+  browser.driver.sleep(1000);
   browser
   .actions()
   .mouseMove(element(by.id("goButton")))
   .click()
   .perform();
-  browser.driver.sleep(400);  
+  browser.driver.sleep(1000);  
 
 
 
