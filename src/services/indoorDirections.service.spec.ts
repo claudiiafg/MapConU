@@ -25,6 +25,24 @@ let testLine = {
   _isLeaf: true
 };
 
+let testLine2 = {
+  id: "escalator",
+  p1: {
+    x: 123,
+    y: 123
+  },
+  p2: {
+    x: 123,
+    y: 123
+  },
+  length: 123,
+  connectedLines: ["elevator"],
+
+  _wasVisited: true,
+  _isIntersection: true,
+  _isLeaf: true
+};
+
 let tempDocElementLines = {
   id: "1",
   x1: {
@@ -322,6 +340,130 @@ describe("IndoorDirectionsService", () => {
     // only one line, this no previous possible
     expect(service["sharesLastLineWithPrevious"](testLine)).toBeFalsy();
   });
+
+  it("should test rollPathBack", () => {
+    const service: IndoorDirectionsService = TestBed.get(
+      IndoorDirectionsService
+    );
+    let path = ["elevator", "test", "escalator", "elevator"];
+    service["pathLines"] = [testLine];
+    const mySpy = spyOn<any>(service, "computePath").and.callThrough();
+    service["rollPathBack"]();
+    expect(path.length).toEqual(4);
+    // there's no top this shouldn't go in the if loop
+    expect(mySpy).toHaveBeenCalledTimes(0);
+  });
+
+  // it("should test rollPathForward", () => {
+  //   const service: IndoorDirectionsService = TestBed.get(
+  //     IndoorDirectionsService
+  //   );
+  //   let path = ["elevator", "test", "escalator", "elevator"];
+  //   service["pathLines"] = [testLine2];
+  //   const mySpy = spyOn<any>(service, "computePath").and.callThrough();
+  //   // this is tested elsewhere
+  //   spyOn<any>(testLine2.connectedLines, "filter").and.callFake(() => {
+  //     return false;
+  //   });
+  //   spyOn<any>(service, "getLineById").and.callFake(() => {
+  //     return false;
+  //   });
+  //   service["rollPathForward"](testLine2);
+  //   // we only have 1 set of lines id that matches with path
+  //   // nothing is added to it
+  //   expect(path.length).toEqual(4);
+  //   expect(mySpy).toHaveBeenCalled();
+  // });
+
+  it("should test getShortestWithin", () => {
+    const service: IndoorDirectionsService = TestBed.get(
+      IndoorDirectionsService
+    );
+    service["foundPath"] = false;
+    service["path"] = ["testLine", "testLine2"];
+    // use Fake since the real method is tested already
+    spyOn<any>(service, "getLineById").and.callFake(() => {
+      return testLine2;
+    });
+    const mySpy = spyOn<any>(service, "calculateLength").and.callFake(() => {});
+    const myEventSpy = spyOn<any>(
+      service["events"],
+      "publish"
+    ).and.callThrough();
+    service["pathLines"] = [testLine2];
+    service["getShortestWithin"]();
+    expect(service["foundPath"]).toBeTruthy();
+    expect(mySpy).toHaveBeenCalled();
+    expect(myEventSpy).toHaveBeenCalled();
+  });
+
+  it("should test setArrivalTime", () => {
+    const service: IndoorDirectionsService = TestBed.get(
+      IndoorDirectionsService
+    );
+    service["pathTime"] = 0;
+    service["pathLength"] = 200;
+    const mySpy = spyOn<any>(
+      service["dataSharing"],
+      "showIndoorToa"
+    ).and.callThrough();
+    const myUpdateSpy = spyOn<any>(
+      service["dataSharing"],
+      "updateIndoorToaParameters"
+    ).and.callThrough();
+    service.setArrivalTime();
+    expect(mySpy).toHaveBeenCalled();
+    expect(myUpdateSpy).toHaveBeenCalled();
+    // (this.pathLength * 0.175 * 1.35) / 60;
+    // Math.round(this.pathTime * 10) / 10;
+    expect(service["pathTime"]).toEqual(0.8);
+  });
+
+  // this is merged with the computePath test as we can't overload
+  // the same spy getLineById spice
+  it("should test calculateLength and computePath", () => {
+    const service: IndoorDirectionsService = TestBed.get(
+      IndoorDirectionsService
+    );
+    service["pathLength"] = 0;
+    service["path"] = ["testLine", "testLine2"];
+    // use Fake since the real method is tested already
+    spyOn<any>(service, "getLineById").and.callFake(() => {
+      return testLine2;
+    });
+    service["pathLines"] = [testLine2];
+    service["calculateLength"]();
+    // 123 + 123 = 246
+    expect(service["pathLength"]).toEqual(246);
+
+    // computePath
+    // use Fake since the real method is tested already
+    spyOn<any>(service, "isLeaf").and.callFake(() => {
+      return true;
+    });
+    const myVisitedSpy = spyOn<any>(service, "setAsVisited").and.callFake(
+      () => {
+        return true;
+      }
+    );
+    spyOn<any>(service, "rollPathBack").and.callFake(() => {});
+    spyOn<any>(service, "rollPathForward").and.callFake(() => {});
+    spyOn<any>(service, "isIntersection").and.callFake(() => {
+      return true;
+    });
+    spyOn<any>(service, "hasUnvisitedLine").and.callFake(() => {
+      return true;
+    });
+    const myShortSpy = spyOn<any>(service, "getShortestWithin").and.callFake(
+      () => {}
+    );
+    service["sourceLine"] = testLine;
+    service["destLine"] = testLine2;
+    service["computePath"]();
+    expect(myVisitedSpy).toHaveBeenCalled();
+    expect(myShortSpy).toHaveBeenCalled();
+  });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
