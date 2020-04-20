@@ -57,6 +57,7 @@ export class IndoorMapComponent implements OnInit {
       }
     });
 
+
     //published by indoorDirectensService, when a path is found
     //when path is found -> display lines of path on map
     this.events.subscribe('path-found', () => {
@@ -64,18 +65,22 @@ export class IndoorMapComponent implements OnInit {
       this.foundPath = true;
       setTimeout(() => {
         for (let line of this.path) {
-          let docElement = document.getElementById(line);
+          let docElement : any = document.getElementById(line);
           docElement.style.stroke = 'blue';
-        }
-        this.setMarker();
-      }, 500)
 
+          if(line === this.path[this.path.length-1]){
+            this.setMarker(docElement);
+          }
+        }
+
+      }, 500);
     });
 
     //when user ends route -> reset navidation
     //published in indoor-side-buttons, when clicked on X
     this.events.subscribe('path-completed', res => {
       this.resetNav();
+      this.dataSharing.showIndoorToa(false);
       this.directionManager.resetSteps();
     });
 
@@ -173,25 +178,27 @@ export class IndoorMapComponent implements OnInit {
     } else if(this.inputBuilding === 'vanier'){
       currentDoc = document.getElementById('vl1-plan-wrapper');
     }
-    let docElementLines = currentDoc.getElementsByTagName('line');
-    let docInterestPoints = currentDoc.getElementsByTagName('circle');
+    if(currentDoc){
+      let docElementLines = currentDoc.getElementsByTagName('line');
+      let docInterestPoints = currentDoc.getElementsByTagName('circle');
 
-    //set map in service and get all info from it
-    this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
-    this.pathLines = this.indoorDirectionsService.getLines();
-    this.interestPoints = this.indoorDirectionsService.getPoints();
+      //set map in service and get all info from it
+      this.indoorDirectionsService.setMap(docElementLines, docInterestPoints);
+      this.pathLines = this.indoorDirectionsService.getLines();
+      this.interestPoints = this.indoorDirectionsService.getPoints();
 
-    //when map is set, send event so any path waiting to start can begin
-    const data = {
-      building: this.inputBuilding,
-      floor: this.floor,
+      //when map is set, send event so any path waiting to start can begin
+      const data = {
+        building: this.inputBuilding,
+        floor: this.floor,
+      }
+
+      //publish that map has been set
+      //services are subscribred to this event so no directions begins before all elements have been set
+      this.events.publish('map-set', data, Date.now());
+      this.marker = document.getElementById('marker');
+      this.unsetMarker();
     }
-
-    //publish that map has been set
-    //services are subscribred to this event so no directions begins before all elements have been set
-    this.events.publish('map-set', data, Date.now());
-    this.marker = document.getElementById('marker');
-    this.unsetMarker();
   }
 
   //initiate the process of navigation (when user click on a element)
@@ -284,17 +291,22 @@ export class IndoorMapComponent implements OnInit {
 
   }
 
-  //set marker on the map
-  private setMarker() {
-    const point = this.indoorDirectionsService.getPointByName(this.destID);
-    if(point && point.x && point.y){
-      if(!this.marker){
-        this.marker = document.getElementById('marker');
-      }
-      this.marker.setAttribute('x', point.x - 26);
-      this.marker.setAttribute('y', point.y - 26);
-      this.marker.style.visibility = 'visible';
+  setMarker(docElement){
+    let xDif = 0;
+    let yDif = 0;
+    if(document.getElementById('h9-plan-wrapper')){
+      xDif = 538;
+      yDif = -100;
+
+    } else if(document.getElementById('vl1-plan-wrapper')){
+      xDif = -144;
+      yDif = -100;
     }
+
+    this.marker = document.getElementById('marker');
+    this.marker.setAttribute('x', docElement.x2.baseVal.value - 26 + xDif);
+    this.marker.setAttribute('y', docElement.y2.baseVal.value - 26 + yDif);
+    this.marker.style.visibility = 'visible';
   }
 
   unsetMarker(){
@@ -314,7 +326,6 @@ export class IndoorMapComponent implements OnInit {
     }
     this.foundPath = false;
     this.indoorDirectionsService.resetNav();
-    this.dataSharing.showIndoorToa(false);
   }
 
   //important to reload route
@@ -323,5 +334,9 @@ export class IndoorMapComponent implements OnInit {
   @HostListener('unloaded')
   ngOnDestroy() {
     this.events.unsubscribe('open-indoor-popup');
+    this.events.unsubscribe('path-found');
+    this.events.unsubscribe('floor-loaded');
+    this.events.unsubscribe('init-new-path');
+    this.events.unsubscribe('initNewMap');
   }
 }
