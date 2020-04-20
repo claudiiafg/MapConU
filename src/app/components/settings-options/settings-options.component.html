@@ -1,36 +1,36 @@
 <ion-list>
   <ion-item>
     <img src="/assets/icon/language-icon.png" class="lang-icon" />
-    <ion-label>{{ 'language-select' | translate }}</ion-label>
+    <ion-label>{{ "language-select" | translate }}</ion-label>
     <ion-item id="language-selection">
       <ion-select
         [(ngModel)]="appLanguage"
-        class="select-language"
+        class="select-language selectLanguageButton"
         interface="popover"
         placeholder="English"
         (ionChange)="languageChange()"
       >
         <ion-select-option value="english">{{
-          'english' | translate
+          "english" | translate
         }}</ion-select-option>
         <ion-select-option value="french">{{
-          'french' | translate
+          "french" | translate
         }}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-item>
   <ion-item>
     <ion-icon name="logo-google" color="black" size="large"></ion-icon>
-    <div *ngIf="!googleSession; then loginBlock else logoutBlock"></div>
+    <div *ngIf="!googleSession; then loginBlock; else logoutBlock"></div>
     <ng-template #loginBlock>
-      <ion-label>{{'google'| translate}}</ion-label>
-      <ion-button (click)="login()">
+      <ion-label>{{ "google" | translate }}</ion-label>
+      <ion-button (click)="login()" class="loginButton">
         <ion-icon name="link"></ion-icon>
       </ion-button>
     </ng-template>
     <ng-template #logoutBlock>
       <ion-label>{{ googleSession.email }}</ion-label>
-      <ion-button class = "logout" (click)="logout()">
+      <ion-button class = "logout" (click)="logout()" class="logoutButton">
         <ion-label>
           {{'logout' | translate}}
         </ion-label>
@@ -39,9 +39,9 @@
   </ion-item>
   <ion-item>
     <ion-icon name="code" color="black" size="large"></ion-icon>
-    <ion-label>{{'source-code'| translate}}</ion-label>
-    <a href="https://github.com/claudiiafg/MapConU"><ion-button>
-      <ion-icon name="logo-github"></ion-icon>
-    </ion-button></a>
+    <ion-label>{{ "source-code" | translate }}</ion-label>
+    <a href="https://github.com/claudiiafg/MapConU"
+      ><ion-button> <ion-icon name="logo-github"></ion-icon> </ion-button
+    ></a>
   </ion-item>
 </ion-list>

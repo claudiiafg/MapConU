@@ -37,9 +37,10 @@ describe('InfoPopoverComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
+    component.closePopover();
     expect(component).toBeTruthy();
   });
-  afterAll(() => {
+  afterEach(() => {
     TestBed.resetTestingModule();
   });
 });

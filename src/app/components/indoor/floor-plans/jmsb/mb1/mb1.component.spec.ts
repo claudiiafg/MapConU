@@ -23,9 +23,7 @@ describe("MB1FloorPlanComponent ", () => {
   });
   it("should set events after view init", () => {
     let tempComponent = component["events"];
-    spyOn(tempComponent, "publish").and.callFake(() => {
-      return null;
-    });
+    spyOn(tempComponent, "publish").and.callThrough();
     component.ngAfterViewInit();
     expect(tempComponent.publish).toHaveBeenCalled();
   });

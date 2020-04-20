@@ -59,7 +59,12 @@ describe('PoiPopoverComponent ', () => {
     fixture.detectChanges();
   });
   it('should create', () => {
+    component.closePopover();
     expect(component).toBeTruthy();
+    const tempComponent = component['events'];
+    const mySpy = spyOn(tempComponent, 'publish').and.callThrough();
+    component.update('restaurant');
+    expect(mySpy).toHaveBeenCalled();
   });
   afterEach(() => {
     TestBed.resetTestingModule();

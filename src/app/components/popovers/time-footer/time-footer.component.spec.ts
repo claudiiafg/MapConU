@@ -25,6 +25,7 @@ export function LanguageLoader(http: HttpClient) {
 describe('TimeFooterComponent ', () => {
   let component: TimeFooterComponent;
   let fixture: ComponentFixture<TimeFooterComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), IonicModule.forRoot(),HttpClientModule,
@@ -57,9 +58,14 @@ describe('TimeFooterComponent ', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TimeFooterComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
   it('should create', () => {
+    // component["initRoute"]();
+    // DirectionsManagerService["floor"] = 1;
+    // component["getNextStep"]();
+    component["endRoute"]();
     expect(component).toBeTruthy();
   });
   afterEach(() => {
