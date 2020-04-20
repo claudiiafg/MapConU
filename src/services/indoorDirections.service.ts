@@ -242,6 +242,11 @@ export class IndoorDirectionsService {
         point => point.id === "escalator-up"
       )[0];
     }
+    else if (name.includes('entrance')) {
+     point = this.interestPoints.filter(
+       point => point.id === 'entrance'
+     )[0];
+   }
     return point;
   }
 

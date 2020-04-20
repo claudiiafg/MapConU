@@ -385,12 +385,12 @@ export class DirectionsManagerService {
     }
     this.currentStep = this.steps[i];
     if(this.currentStep.floor){
+      //if different floor directions -> already in the hall building
       if(this.router.url.includes('hall') && this.currentStep.floor.includes('h')){
         this.changeFloor(this.currentStep.floor);
-      // } else if(this.router.url.includes('jmsb') && this.currentStep.floor.includes('mb1')) {
-      //   return this.currentStep;
+
+      //if mixed directions
       } else {
-        //THERE A BUG HERE
         this.continueWithIndoorDirections();
       }
     }
