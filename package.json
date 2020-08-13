@@ -77,7 +77,7 @@
     "rrule": "^2.6.4",
     "rxjs": "~6.5.1",
     "rxjs-compat": "^6.5.5",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^3.1.0",
     "tslib": "^1.9.0",
     "typedoc": "^0.15.0",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "1.1.1",
