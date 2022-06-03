@@ -19,7 +19,7 @@
     "@angular/animations": "~8.1.2",
     "@angular/cdk": "~8.2.3",
     "@angular/common": "~8.1.2",
-    "@angular/core": "~8.1.2",
+    "@angular/core": "~11.0.5",
     "@angular/fire": "^5.4.2",
     "@angular/forms": "~8.1.2",
     "@angular/localize": "^9.1.1",
